@@ -9,8 +9,8 @@ import { GITHUB_APP_ID, GITHUB_BRANCH, GITHUB_OWNER, GITHUB_PRIVATE_KEY, GITHUB_
 import type { ImageFile } from '@/types/files'
 
 const app = new App({
-  appId: GITHUB_APP_ID,
-  privateKey: GITHUB_PRIVATE_KEY,
+  appId: GITHUB_APP_ID as number,
+  privateKey: GITHUB_PRIVATE_KEY as string,
 })
 
 async function getOctokit(appId: number) {

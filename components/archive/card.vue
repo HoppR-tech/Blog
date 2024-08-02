@@ -9,6 +9,7 @@ interface Props {
   ogImage?: string
   tags?: Array<string>
   published?: boolean
+  imageSize?: string
 }
 
 withDefaults(defineProps<Props>(), {
@@ -21,22 +22,25 @@ withDefaults(defineProps<Props>(), {
   ogImage: '/blogs-img/blog.jpg',
   tags: () => [],
   published: false,
+  imageSize: 'h-48',
 })
 </script>
 
 <template>
-  <article class="group border dark:border-zinc-500 m-2 rounded-2xl overflow-hidden shadow-sm text-zinc-700 dark:text-zinc-300  ">
+  <article
+    class="group border dark:border-zinc-500 m-2 rounded-2xl overflow-hidden shadow-sm text-zinc-700 dark:text-zinc-300  "
+  >
     <NuxtLink :to="path" class="grid grid-cols-1 sm:grid-cols-10 gap-1">
       <div class="sm:col-span-3">
-        <NuxtImg
-          class="h-full w-full object-cover object-center rounded-t-2xl sm:rounded-l-2xl sm:rounded-t-none shadow-lg group-hover:scale-[1.02] transition-all duration-500"
-          width="300"
-          :src="image"
-          :alt="alt"
-        />
+        <img
+          :class="`w-full object-cover object-center rounded-t-2xl sm:rounded-l-2xl sm:rounded-t-none shadow-lg group-hover:scale-[1.02] transition-all duration-500 ${imageSize}`"
+          width="300" :src="image" :alt="alt"
+        >
       </div>
       <div class="sm:col-span-7 p-5">
-        <h2 class="text-xl font-semibold text-black dark:text-zinc-300   pb-1 group-hover:text-hoppr-red dark:group-hover:text-hoppr-red">
+        <h2
+          class="text-xl font-semibold text-black dark:text-zinc-300   pb-1 group-hover:text-hoppr-red dark:group-hover:text-hoppr-red"
+        >
           {{ title }}
         </h2>
         <p class="text-ellipsis line-clamp-2">

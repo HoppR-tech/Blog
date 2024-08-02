@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  compatibilityDate: '2024-07-31',
   app: {
     head: {
       charset: 'utf-16',
@@ -28,6 +29,7 @@ export default defineNuxtConfig({
   },
 
   nitro: {
+    preset: 'vercel',
     prerender: {
       crawlLinks: true,
       routes: [
@@ -46,25 +48,40 @@ export default defineNuxtConfig({
     public: {
       baseUrl: 'https://blog.hoppr.tech',
     },
+    notion: {
+      apiKey: '',
+      databasePostsId: '',
+    },
+    github: {
+      owner: '',
+      repo: '',
+      branch: '',
+      appId: '',
+      privateKey: '',
+    },
   },
 
   modules: [
     'nuxt-icon',
-    '@nuxt/image',
     '@vueuse/nuxt',
     'nuxt-og-image',
+    'nuxt-content-assets', // make sure to add before @nuxt/content !
     '@nuxt/content',
     '@nuxtjs/robots',
     '@nuxtjs/fontaine',
     '@nuxtjs/color-mode',
     'nuxt-simple-sitemap',
     '@nuxtjs/tailwindcss',
-    'nuxt-papa-parse',
   ],
 
   content: {
     highlight: {
       theme: 'dracula',
     },
+  },
+
+  contentAssets: {
+    // contentExtensions: 'mdx? csv',
+    debug: false,
   },
 })

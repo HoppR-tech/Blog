@@ -13,6 +13,8 @@ export default defineNuxtConfig({
     layoutTransition: { name: 'layout', mode: 'out-in' },
   },
 
+  build: { transpile: ['vue-sonner', 'shiki'] },
+
   sitemap: {
     strictNuxtContentPaths: true,
   },

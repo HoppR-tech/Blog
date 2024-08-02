@@ -1,7 +1,10 @@
 {
+  "framework": "nuxtjs",
+
   "functions": {
-    "server/api/syncPosts.ts": {
-      "maxDuration": 60
+    "api/**/*.ts": {
+      "maxDuration": 60,
+      "memory": 3009
     }
   }
 }

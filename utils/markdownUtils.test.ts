@@ -7,7 +7,7 @@ describe('Markdown Utils', () => {
     const post: BlogPost = {
       notionId: '1',
       title: 'Test Title',
-      date: new Date().toISOString(),
+      date: new Date('2024-08-02T15:59:20.808Z').toISOString(),
       description: 'This is a test description.',
       image: 'http://example.com/image.jpg',
       alt: 'Test Image',
@@ -25,7 +25,7 @@ describe('Markdown Utils', () => {
     expect(markdown).toContain(`title: ${post.title}`)
     expect(markdown).toContain(`date: ${post.date}`)
     expect(markdown).toContain(`description: ${post.description}`)
-    expect(markdown).toContain(`image: ${post.image}`)
+    expect(markdown).toContain('image: ./assets/cover-image.webp')
     expect(markdown).toContain(`alt: ${post.alt}`)
     expect(markdown).toContain(`tags: [${post.tags.map(tag => `'${tag}'`).join(', ')}]`)
     expect(markdown).toContain('---')

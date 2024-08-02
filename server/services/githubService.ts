@@ -86,7 +86,7 @@ async function uploadToGitHub(octokit: any, path: string, message: string, conte
   }
   catch (error: unknown) {
     if (error instanceof Error && (error as any).status !== 404) {
-      console.error('Erreur lors de la récupération du contenu du fichier:', error)
+      console.error('Error while retrieving file content:', error)
       throw error
     }
   }

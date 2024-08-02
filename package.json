@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "build": "nuxt build",
+    "build": "NODE_OPTIONS='--experimental-specifier-resolution=node' nuxt build",
     "dev": "NODE_ENV=development nuxt dev",
     "test": "vitest --config vitest.config.ts",
     "coverage": "vitest run --coverage",

@@ -7,9 +7,9 @@ import type { Person } from '@/types/blog'
 export async function downloadAndConvertImage(imageUrl: string, imageName: string): Promise<{ webpImageName: string; imageContent: string }> {
   try {
     if (imageUrl.startsWith('./'))
-      throw new Error(`L'URL est un chemin relatif: ${imageUrl}`)
+      throw new Error(`The URL is a relative path: ${imageUrl}`)
 
-    console.error(`Téléchargement de l'image depuis l'URL: ${imageUrl}`)
+    // console.error(`Téléchargement de l'image depuis l'URL: ${imageUrl}`)
     const response = await axios.get(imageUrl, { responseType: 'arraybuffer', maxRedirects: 0 })
     const slugifiedImageName = slugify(imageName)
     const webpImageName = `${slugifiedImageName}.webp`
@@ -21,8 +21,8 @@ export async function downloadAndConvertImage(imageUrl: string, imageName: strin
     return { webpImageName, imageContent: webpBuffer.toString('base64') }
   }
   catch (error) {
-    console.error(`Erreur lors du téléchargement ou de la conversion de l'image ${imageUrl}:`, error as Error)
-    throw new Error(`Erreur lors du téléchargement de l'image: ${(error as Error).message}`)
+    console.error(`Error while downloading or converting image ${imageUrl}:`, error as Error)
+    throw new Error(`Error while downloading image: ${(error as Error).message}`)
   }
 }
 
@@ -50,8 +50,8 @@ export async function processAuthorsImages(authors: Person[]): Promise<{ updated
   const updatedAuthors = await Promise.all(authors.map(async (author) => {
     if (author.image && !author.image.startsWith('./assets/')) {
       if (!author.image.startsWith('http://') && !author.image.startsWith('https://')) {
-        console.error(`L'image n'est pas une URL absolue: ${author.image}`)
-        throw new Error(`L'image n'est pas une URL absolue: ${author.image}`)
+        console.error(`The image is not an absolute URL: ${author.image}`)
+        throw new Error(`The image is not an absolute URL: ${author.image}`)
       }
 
       const { webpImageName, imageContent } = await downloadAndConvertImage(author.image, `author-${author.name}`)

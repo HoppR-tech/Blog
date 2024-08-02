@@ -31,7 +31,7 @@ export async function fetchPostsToPublishFromNotion(): Promise<BlogPost[]> {
     }))
   }
   catch (error) {
-    console.error('Erreur lors de la récupération des articles :', error)
+    console.error('Error while fetching articles:', error)
     throw error
   }
 }
@@ -50,7 +50,7 @@ export async function updatePostStatusInNotion(pageId: string, newStatus: string
     })
   }
   catch (error) {
-    console.error('Erreur lors de la mise à jour du statut dans Notion :', error)
+    console.error('Error while updating status in Notion:', error)
     throw error
   }
 }

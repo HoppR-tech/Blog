@@ -1,7 +1,6 @@
 import type { Client } from '@notionhq/client'
 import type { NotionBlock, NotionPage } from '@/types/notion'
 import type { PageContent, Person } from '@/types/blog'
-import { downloadAndConvertImage } from '@/utils/imageUtils'
 
 export function safeGetProperty(obj: any, path: string[], defaultValue: any = undefined) {
   return path.reduce((acc, key) => (acc && acc[key] !== undefined) ? acc[key] : defaultValue, obj)
@@ -92,7 +91,7 @@ export async function getPageContent(notionClient: Client, page: NotionPage): Pr
     }
   }
   catch (error) {
-    console.error('Erreur lors de la récupération de la page:', error)
+    console.error('Error while retrieving the page:', error)
     throw error
   }
 }

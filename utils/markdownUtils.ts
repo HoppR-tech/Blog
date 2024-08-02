@@ -18,7 +18,7 @@ description: ${post.description}
 image: ${assetsFolder}/cover-image.webp
 alt: ${post.alt}
 ogImage: ${assetsFolder}/cover-image.webp
-tags: [${post.tags.map(tag => `'${tag}'`).join(', ')}]
+tags: [${post.tags.map(tag => `'${tag.toLowerCase()}'`).join(', ')}]
 published: ${post.published}
 authors:
 ${formattedAuthors}

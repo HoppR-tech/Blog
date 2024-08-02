@@ -5,7 +5,7 @@ description:    Eligendi nisi quaerat veniam. Adipisci corrupti qui earum fugiat
 image: ./assets/cover-image.webp
 alt: 
 ogImage: ./assets/cover-image.webp
-tags: ['Cloud Native', 'Kubernetes', 'Microservices']
+tags: ['cloud native', 'kubernetes', 'microservices']
 published: true
 authors:
   - id: 838dec96-f9fc-404f-a302-07719225d785

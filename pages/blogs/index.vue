@@ -22,12 +22,14 @@ const formattedData = computed(() => {
 })
 
 const searchData = computed(() => {
+  if (!searchTest.value)
+    return formattedData.value
   return formattedData.value.filter((data) => {
-    const lowerTitle = data.title.toLocaleLowerCase()
-    if (lowerTitle.search(searchTest.value) !== -1)
-      return true
-    else return false
-  }) || []
+    const lowerTitle = data.title.toLowerCase()
+    const lowerDescription = data.description.toLowerCase()
+    const lowerSearchTerm = searchTest.value.toLowerCase()
+    return lowerTitle.includes(lowerSearchTerm) || lowerDescription.includes(lowerSearchTerm)
+  })
 })
 
 const paginatedData = computed(() => {

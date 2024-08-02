@@ -1,22 +1,27 @@
 <script lang="ts" setup>
 const route = useRoute()
 
-// take category from route params & make first char upper
+// Récupérer la catégorie depuis les paramètres de route et la convertir en minuscules
 const category = computed(() => {
   const name = route.params.category || ''
   let strName = ''
 
   if (Array.isArray(name))
     strName = name.at(0) || ''
-  else strName = name
-  return strName
+  else
+    strName = name
+  return strName.toLowerCase()
 })
 
+// Récupérer les articles correspondant à la catégorie
 const { data } = await useAsyncData(`category-data-${category.value}`, () =>
   queryContent('/blogs')
-    .where({ tags: { $contains: category.value } })
+    .where({ tags: { $containsAny: [category.value] } })
     .find(),
 )
+
+console.error('Category:', category.value)
+console.error('Articles trouvés:', data.value)
 
 const formattedData = computed(() => {
   return data.value?.map((articles) => {
@@ -27,7 +32,7 @@ const formattedData = computed(() => {
       image: articles.image || '/blogs-img/blog.jpg',
       alt: articles.alt || 'no alter data available',
       ogImage: articles.ogImage || '/blogs-img/blog.jpg',
-      date: articles.date || 'not-date-available',
+      date: formatDate(articles.date) || 'not-date-available',
       tags: articles.tags || [],
       published: articles.published || false,
     }

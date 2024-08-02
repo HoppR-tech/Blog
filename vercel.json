@@ -1,6 +1,6 @@
 {
   "functions": {
-    "api/syncPosts.ts": {
+    "server/api/syncPosts.ts": {
       "maxDuration": 60
     }
   }

@@ -17,6 +17,7 @@ const formattedData = computed(() => {
       date: formatDate(articles.date) || 'not-date-available',
       tags: articles.tags || [],
       published: articles.published || false,
+      content: articles.body?.children?.map(child => child.children?.map(c => c.value).join(' ')).join(' ') || '',
     }
   }) || []
 })
@@ -27,8 +28,13 @@ const searchData = computed(() => {
   return formattedData.value.filter((data) => {
     const lowerTitle = data.title.toLowerCase()
     const lowerDescription = data.description.toLowerCase()
+    const lowerContent = data.content.toLowerCase()
+    const lowerTags = data.tags.map((tag: string) => tag.toLowerCase())
     const lowerSearchTerm = searchTest.value.toLowerCase()
-    return lowerTitle.includes(lowerSearchTerm) || lowerDescription.includes(lowerSearchTerm)
+    return lowerTitle.includes(lowerSearchTerm)
+      || lowerDescription.includes(lowerSearchTerm)
+      || lowerContent.includes(lowerSearchTerm)
+      || lowerTags.some((tag: string | string[]) => tag.includes(lowerSearchTerm))
   })
 })
 

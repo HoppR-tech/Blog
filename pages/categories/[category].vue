@@ -20,8 +20,8 @@ const { data } = await useAsyncData(`category-data-${category.value}`, () =>
     .find(),
 )
 
-console.error('Category:', category.value)
-console.error('Articles trouvés:', data.value)
+// console.error('Category:', category.value)
+// console.error('Articles trouvés:', data.value)
 
 const formattedData = computed(() => {
   return data.value?.map((articles) => {

@@ -1,9 +1,23 @@
 <script lang="ts" setup>
+import { computed, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
 const { data } = await useAsyncData('home', () => queryContent('/blogs').sort({ _id: -1 }).find())
 
 const elementPerPage = ref(5)
 const pageNumber = ref(1)
 const searchTest = ref('')
+
+watch(() => route.query.search, (newSearch) => {
+  if (newSearch) {
+    searchTest.value = newSearch as string
+    pageNumber.value = 1
+  }
+  else {
+    searchTest.value = ''
+  }
+}, { immediate: true })
 
 const formattedData = computed(() => {
   return data.value?.map((articles) => {

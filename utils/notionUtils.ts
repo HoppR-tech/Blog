@@ -65,7 +65,7 @@ export async function getPersonsInfo(notionClient: Client, personIds: string[], 
 
 export async function getPageContent(notionClient: Client, page: NotionPage): Promise<PageContent> {
   try {
-    console.error('Page reçue de Notion:', JSON.stringify(page, null, 2))
+    // console.error('Page reçue de Notion:', JSON.stringify(page, null, 2))
     const blocks = await notionClient.blocks.children.list({ block_id: page.id })
     const { markdownContent, images } = convertBlocksToMarkdown(blocks.results as NotionBlock[])
 

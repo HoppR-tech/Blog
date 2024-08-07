@@ -29,7 +29,7 @@ export function convertBlocksToMarkdown(blocks: NotionBlock[]): { markdownConten
 }
 
 export function extractTitleFromPage(page: NotionPage): string {
-  const titleProperty = page.properties.Post as { title: Array<{ plain_text: string }> }
+  const titleProperty = page.properties.Articles as { title: Array<{ plain_text: string }> }
   return titleProperty?.title[0]?.plain_text || 'Sans titre'
 }
 
@@ -65,18 +65,23 @@ export async function getPersonsInfo(notionClient: Client, personIds: string[], 
 
 export async function getPageContent(notionClient: Client, page: NotionPage): Promise<PageContent> {
   try {
+    console.error('Page reçue de Notion:', JSON.stringify(page, null, 2))
     const blocks = await notionClient.blocks.children.list({ block_id: page.id })
     const { markdownContent, images } = convertBlocksToMarkdown(blocks.results as NotionBlock[])
-    const authorsProperty = page.properties.Authors as { relation?: { id: string }[] }
-    const authorIds = authorsProperty.relation?.map(author => author.id) || []
+
+    const authorsProperty = page.properties.Auteurs as { relation?: { id: string }[] }
+    const authorIds = authorsProperty?.relation?.map(author => author.id) || []
     const authors = await getPersonsInfo(notionClient, authorIds, 'Author')
-    const reviewersProperty = page.properties.Reviewers as { relation?: { id: string }[] }
-    const reviewerIds = reviewersProperty.relation?.map(reviewer => reviewer.id) || []
+
+    const reviewersProperty = page.properties.Relecteurs as { relation?: { id: string }[] }
+    const reviewerIds = reviewersProperty?.relation?.map(reviewer => reviewer.id) || []
     const reviewers = await getPersonsInfo(notionClient, reviewerIds, 'Reviewer')
+
     const tags = page.properties.Tags as { multi_select?: { name: string }[] }
     const tagsNames = tags.multi_select?.map(tag => tag.name) || []
+
     const coverImage = safeGetProperty(page, ['properties', 'Cover Image', 'files', '0', 'file', 'url'], '')
-    const coverImageAlt = safeGetProperty(page, ['properties', 'Cover Image', 'rich_text', '0', 'plain_text'], '')
+    const coverImageAlt = safeGetProperty(page, ['properties', 'Cover Image Alt', 'rich_text', '0', 'plain_text'], '')
 
     return {
       notionId: page.id,

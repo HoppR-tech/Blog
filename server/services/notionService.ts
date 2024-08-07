@@ -12,7 +12,7 @@ export async function fetchPostsToPublishFromNotion(): Promise<BlogPost[]> {
       database_id: DATABASE_POSTS_ID,
       filter: {
         property: 'Status',
-        status: { equals: 'To Publish' },
+        status: { equals: 'Bon pour Publication' },
       },
     })
 

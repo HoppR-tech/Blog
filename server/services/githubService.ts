@@ -45,7 +45,7 @@ export async function publishPostToGitHub(post: BlogPost) {
 
     await uploadToGitHub(octokit, filePath, `Upload post: ${post.title}`, generateMarkdownContent(updatedPost, updatedContent))
 
-    await updatePostStatusInNotion(post.notionId, 'Published')
+    await updatePostStatusInNotion(post.notionId, 'Publié')
   }
   catch (error) {
     console.error(`Error while publishing post "${post.title}" to GitHub:`, error)

@@ -8,12 +8,13 @@ const currentYear = new Date().getFullYear()
 <template>
   <div class="py-5 border-t-2 dark:border-zinc-500 mt-10 text-zinc-700 dark:text-zinc-300 bg-gray-100 dark:bg-slate-900 shadow-md font-sans text-sm">
     <div class="px-6 container max-w-5xl mx-auto">
-      <div class="grid grid-cols-1 md:grid-cols-3">
-        <FooterSite v-if="path === 'about'" />
-        <FooterDevloper v-else />
-
-        <FooterLink />
-        <FooterConnect />
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="space-y-4">
+          <FooterSite v-if="path === 'about'" />
+          <FooterDevloper v-else />
+        </div>
+        <FooterLink class="space-y-4" />
+        <FooterConnect class="space-y-4" />
       </div>
 
       <div class="border-t dark:border-zinc-500 mt-5 text-center p-2">

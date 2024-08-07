@@ -31,7 +31,7 @@ function toggleSearch() {
 
 <template>
   <div>
-    <div class="bg-indigo-600 fixed top-0 left-0 right-0 z-50">
+    <div class="bg-hoppr-purple fixed top-0 left-0 right-0 z-50">
       <nav class="container px-6 py-2 mx-auto">
         <div class="flex items-center justify-between">
           <router-link to="/" class="text-xl font-bold text-gray-100 md:text-2xl hover:text-hoppr-green">

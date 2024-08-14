@@ -43,7 +43,7 @@ defineExpose({ toggleSearch })
         v-model="searchQuery"
         type="text"
         placeholder="Rechercher..."
-        class="w-full bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full px-4 py-2 pr-10 outline-none transition-all duration-300 ease-in-out ml-2 mr-2 border-2 border-transparent focus:border-hoppr-green focus:ring-2 focus:ring-hoppr-green focus:ring-opacity-50"
+        class="w-full bg-gray-200 dark:bg-hoppr-black text-gray-800 dark:text-gray-200 rounded-full px-4 py-2 pr-10 outline-none transition-all duration-300 ease-in-out ml-2 mr-2 border-2 border-transparent focus:border-hoppr-green focus:ring-2 focus:ring-hoppr-green focus:ring-opacity-50"
         @keyup.enter="performSearch"
       >
       <button

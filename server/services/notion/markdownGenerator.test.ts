@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { generateMarkdownContent } from '@/utils/markdownUtils'
+import { generateMarkdownContent } from './markdownGenerator'
 import type { BlogPost } from '@/types/blog'
 
 describe('Markdown Utils', () => {

@@ -4,7 +4,12 @@ import { slugify } from '@/utils/stringUtils'
 import type { ImageFile } from '@/types/files'
 import type { Person } from '@/types/blog'
 
-export async function downloadAndConvertImage(imageUrl: string, imageName: string): Promise<{ webpImageName: string; imageContent: string }> {
+interface ConvertedImage {
+  webpImageName: string
+  imageContent: string
+}
+
+export async function downloadAndConvertImage(imageUrl: string, imageName: string): Promise<ConvertedImage> {
   try {
     if (imageUrl.startsWith('./'))
       throw new Error(`The URL is a relative path: ${imageUrl}`)

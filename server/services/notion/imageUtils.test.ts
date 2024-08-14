@@ -1,7 +1,7 @@
 import { Buffer } from 'node:buffer'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import axios from 'axios'
-import { downloadAndConvertImage, extractImagesAndUpdateContent } from '@/utils/imageUtils'
+import { downloadAndConvertImage, extractImagesAndUpdateContent } from '~/server/services/notion/imageUtils'
 
 vi.mock('axios')
 

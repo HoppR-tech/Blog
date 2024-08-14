@@ -74,6 +74,7 @@ export default defineNuxtConfig({
     '@nuxtjs/color-mode',
     'nuxt-simple-sitemap',
     '@nuxtjs/tailwindcss',
+    ...(import.meta.env.NODE_ENV === 'test' ? ['@nuxt/test-utils/module'] : []),
   ],
 
   content: {

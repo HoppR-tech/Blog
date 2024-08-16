@@ -14,32 +14,34 @@ const props = defineProps<Props>()
       <h3 class="text-xl font-semibold mb-4 text-center">
         À propos des auteurs
       </h3>
-      <div class="flex flex-wrap justify-center items-center gap-6">
-        <template v-for="(author, index) in props.authors" :key="author.notionId">
-          <div class="flex items-center">
-            <img :src="author.image" :alt="author.name" class="w-16 h-16 rounded-full mr-4 object-cover">
-            <div>
-              <p class="font-semibold text-base">
-                {{ author.name }}
-              </p>
-              <div class="flex space-x-2 mt-2">
-                <a
-                  v-if="author.linkedin" :href="author.linkedin" target="_blank" rel="noopener noreferrer"
-                  class="text-hoppr-green hover:text-opacity-80" aria-label="LinkedIn"
-                >
-                  <Icon name="fa:linkedin-square" size="1.5em" />
-                </a>
-                <a
-                  v-if="author.x" :href="author.x" target="_blank" rel="noopener noreferrer"
-                  class="text-hoppr-green hover:text-opacity-80" aria-label="Twitter"
-                >
-                  <Icon name="fa:twitter-square" size="1.5em" />
-                </a>
+      <div class="flex flex-col items-center">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl">
+          <template v-for="(author, index) in props.authors" :key="author.notionId">
+            <div class="flex flex-col sm:flex-row items-center mb-4 sm:mb-0 relative sm:px-4">
+              <img :src="author.image" :alt="author.name" class="w-16 h-16 rounded-full mb-2 sm:mb-0 sm:mr-4 object-cover">
+              <div class="text-center sm:text-left">
+                <p class="font-semibold text-base">
+                  {{ author.name }}
+                </p>
+                <div class="flex justify-center sm:justify-start space-x-2 mt-2">
+                  <a
+                    v-if="author.linkedin" :href="author.linkedin" target="_blank" rel="noopener noreferrer"
+                    class="text-hoppr-green hover:text-opacity-80" aria-label="LinkedIn"
+                  >
+                    <Icon name="fa:linkedin-square" size="1.5em" />
+                  </a>
+                  <a
+                    v-if="author.x" :href="author.x" target="_blank" rel="noopener noreferrer"
+                    class="text-hoppr-green hover:text-opacity-80" aria-label="Twitter"
+                  >
+                    <Icon name="fa:twitter-square" size="1.5em" />
+                  </a>
+                </div>
               </div>
+              <div v-if="index % 2 === 0 && index !== props.authors.length - 1" class="hidden sm:block absolute right-0 top-0 bottom-0 w-px bg-gray-300 dark:bg-zinc-600" />
             </div>
-          </div>
-          <div v-if="index < props.authors.length - 1" class="h-16 w-px bg-gray-300 dark:bg-zinc-600" />
-        </template>
+          </template>
+        </div>
       </div>
     </div>
   </div>

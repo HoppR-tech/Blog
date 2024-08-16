@@ -8,7 +8,7 @@ const props = defineProps({
   },
   language: {
     type: String,
-    default: null,
+    default: '',
   },
   filename: {
     type: String,
@@ -41,15 +41,23 @@ async function copyCode() {
 </script>
 
 <template>
-  <div class="relative">
-    <slot />
-    <button
-      class="absolute top-2 right-2 bg-gray-700 hover:bg-gray-600 text-white rounded px-2 py-1 text-sm"
-      :aria-label="copied ? 'Code copié' : 'Copier le code'"
-      @click="copyCode"
-    >
-      {{ copied ? 'Copié !' : 'Copier' }}
-    </button>
+  <div class="relative bg-gray-900 rounded-lg overflow-hidden">
+    <div class="absolute top-0 left-0 m-2 text-xs text-gray-500">
+      {{ language }}
+    </div>
+    <div class="absolute top-0 right-0 m-2">
+      <button
+        class="bg-gray-700 hover:bg-gray-600 text-white rounded px-2 py-1 text-xs sm:text-sm flex items-center"
+        :aria-label="copied ? 'Code copié' : 'Copier le code'"
+        @click="copyCode"
+      >
+        <span class="mr-1">{{ copied ? 'Copié' : 'Copier' }}</span>
+        <Icon name="mdi:content-copy" size="16" />
+      </button>
+    </div>
+    <div class="p-4 pt-8 bg-gray-900">
+      <slot />
+    </div>
   </div>
 </template>
 
@@ -57,6 +65,14 @@ async function copyCode() {
 pre code .line {
   display: block;
   min-height: 1rem;
+}
+
+.dark .prose pre {
+  background-color: #101827;
+}
+
+.dark .prose pre code {
+  color: #e2e8f0;
 }
 
 .dark .prose pre button {

@@ -64,11 +64,11 @@ function toggleSearch() {
               <ClientOnly>
                 <button
                   v-if="colorMode.value === 'light'" class="text-gray-100 hover:text-indigo-400"
-                  aria-label="Mode sombre" @click="onClick"
+                  aria-label="Activer le mode sombre" @click="onClick"
                 >
                   <Icon name="icon-park:moon" size="20" />
                 </button>
-                <button v-else class="text-gray-100 hover:text-indigo-400" aria-label="Mode clair" @click="onClick">
+                <button v-else class="text-gray-100 hover:text-indigo-400" aria-label="Activer le mode clair" @click="onClick">
                   <Icon name="noto:sun" size="20" />
                 </button>
               </ClientOnly>

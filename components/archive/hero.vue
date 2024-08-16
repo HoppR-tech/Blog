@@ -6,7 +6,7 @@
           Tous nos Articles
         </h1>
         <p class="dark:text-zinc-300">
-          Tu trouveras des articles sur les thèmes du oftware Craftsmanship, du Cloud, de l'architecture et de la Tech
+          Tu trouveras des articles sur les thèmes du Software Craftsmanship, du Cloud, de l'Architecture et de la Tech
           en générale.
         </p>
       </div>

@@ -23,7 +23,7 @@ export default defineNuxtConfig({
     identity: {
       type: 'Company',
     },
-    twitter: '@qdnvubp',
+    twitter: '@HoppR_Tech',
   },
 
   typescript: {
@@ -79,7 +79,7 @@ export default defineNuxtConfig({
 
   content: {
     highlight: {
-      theme: 'dracula',
+      theme: 'github-dark',
     },
   },
 

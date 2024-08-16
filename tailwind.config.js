@@ -10,6 +10,7 @@ module.exports = {
         spacegrotesk: ['Space Grotesk', 'sans-serif'],
         orbitron: ['Orbitron', 'sans-serif'],
         opensans: ['Open Sans', 'sans-serif'],
+        inter: ['Inter', 'sans-serif'],
       },
       colors: {
         'hoppr-black': '#23272A',

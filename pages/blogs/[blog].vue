@@ -95,8 +95,12 @@ defineOgImageComponent('Test', {
         :authors="authors" :reviewers="reviewers"
       />
       <div
-        class="prose prose-pre:max-w-xs sm:prose-pre:max-w-full prose-sm sm:prose-base md:prose-lg
-        prose-h1:no-underline max-w-5xl mx-auto prose-zinc dark:prose-invert prose-img:rounded-lg"
+        class="prose prose-pre:max-w-xs sm:prose-pre:max-w-full prose-base sm:prose-base lg:prose-lg
+  prose-h1:text-2xl sm:prose-h1:text-3xl lg:prose-h1:text-4xl
+  prose-h2:text-xl sm:prose-h2:text-2xl lg:prose-h2:text-3xl
+  prose-h3:text-lg sm:prose-h3:text-xl lg:prose-h3:text-2xl
+  prose-p:text-base sm:prose-p:text-base lg:prose-p:text-lg
+  prose-h1:no-underline max-w-5xl mx-auto prose-zinc dark:prose-invert prose-img:rounded-lg"
       >
         <ContentRenderer v-if="article" :value="article">
           <template #empty>

@@ -39,10 +39,10 @@ withDefaults(defineProps<Props>(), {
             <LogoDate />
             {{ date }}
           </div>
-          <div class="flex items-center gap-1 flex-wrap">
+          <div class="flex items-center gap-2 flex-wrap mt-2">
             <LogoTag />
             <template v-for="tag in tags" :key="tag">
-              <span>{{ tag }}</span>
+              <span class="bg-hoppr-purple text-white px-2 py-1 rounded-full text-xs font-semibold">{{ tag }}</span>
             </template>
           </div>
         </div>

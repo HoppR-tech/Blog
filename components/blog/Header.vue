@@ -35,19 +35,19 @@ function formatDate(dateString: string) {
 
 <template>
   <header>
-    <h1 class="text-xl dark:text-zinc-300 md:text-3xl lg:text-4xl m-7 font-bold text-center">
+    <h1 class="text-2xl dark:text-zinc-300 md:text-3xl lg:text-4xl m-7 font-bold text-center">
       {{ title || '' }}
     </h1>
     <img
-      :src="image || ''" :alt="alt || ''" width="600"
+      :src="image || ''" :alt="alt || `Image illustrant l'article : ${title}`" width="600"
       class="m-auto rounded-2xl shadow-lg h-32 md:h-72 w-4/6 md:w-4/5 content-center object-cover"
     >
     <!-- <p class="text-xs sm:text-sm my-3 max-w-xl mx-auto text-center text-zinc-600 dark:text-zinc-400">
       {{ description }}
     </p> -->
-    <div class="flex flex-col w-full justify-start text-xs md:text-base my-8">
-      <div class="flex flex-wrap justify-start text-black dark:text-zinc-300 content-center gap-4 text-xs sm:text-sm">
-        <div class="flex items-center font-semibold">
+    <div class="flex flex-col w-full justify-start text-sm md:text-base my-8">
+      <div class="flex flex-wrap justify-start text-black dark:text-zinc-300 content-center gap-4 text-sm sm:text-base">
+        <div class="flex items-center font-semibold w-full mb-2">
           <LogoAuthor />
           <p>
             Écrit par :
@@ -61,18 +61,18 @@ function formatDate(dateString: string) {
             </template>
           </p>
         </div>
-        <div class="flex items-center font-semibold">
+        <div class="flex items-center font-semibold w-full mb-2">
           <LogoDate />
           <p>{{ formatDate(date) }}</p>
         </div>
-        <div class="flex items-center gap-2 flex-wrap">
+        <div class="flex items-center gap-2 flex-wrap w-full">
           <LogoTag />
           <template v-for="tag in props.tags" :key="tag">
             <span class="bg-gray-200 dark:bg-slate-900 rounded-md px-2 py-1 font-semibold">{{ tag }}</span>
           </template>
         </div>
       </div>
-      <div v-if="props.reviewers.length > 0" class="flex justify-start mt-4 text-black dark:text-zinc-300 text-xs sm:text-sm">
+      <div v-if="props.reviewers.length > 0" class="flex justify-start mt-4 text-black dark:text-zinc-300 text-sm sm:text-base">
         <div class="flex items-center font-semibold">
           <LogoAuthor />
           <p>
@@ -90,4 +90,5 @@ function formatDate(dateString: string) {
       </div>
     </div>
   </header>
+  <hr class="border-t border-gray-300 dark:border-zinc-700 my-8 w-full max-w-5xl mx-auto">
 </template>

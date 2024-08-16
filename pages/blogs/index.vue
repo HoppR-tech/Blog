@@ -106,11 +106,13 @@ defineOgImage({
     <ArchiveHero />
 
     <div class="px-6">
+      <label for="search-input" class="sr-only">Rechercher un article</label>
       <input
+        id="search-input"
         v-model="searchTest"
-        placeholder="Search"
+        placeholder="Rechercher"
         type="text"
-        class="block w-full bg-[#F1F2F4] dark:bg-slate-900 dark:placeholder-zinc-500 text-zinc-800 dark:text-zinc-300 rounded-md border-gray-300 dark:border-zinc-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        class="block w-full bg-[#F1F2F4] dark:bg-slate-900 dark:placeholder-zinc-500 text-zinc-800 dark:text-zinc-300 rounded-md border-gray-300 dark:border-zinc-500 shadow-sm focus:border-hoppr-green focus:ring focus:ring-hoppr-green focus:ring-opacity-50"
       >
     </div>
 

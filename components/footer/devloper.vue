@@ -10,27 +10,31 @@
     <div class="my-3 space-x-3 pb-3">
       <NuxtLink
         to="https://github.com/HoppR-tech" target="_blank"
-        class="p-2 bg-hoppr-green text-gray-200 rounded-md hover:bg-opacity-80" aria-label="Github"
+        class="p-2 bg-hoppr-green text-gray-200 rounded-md hover:bg-opacity-80" 
+        aria-label="Visitez notre page GitHub"
       >
-        <Icon name="fa:github" size="1em" />
+        <Icon name="fa:github" size="1em" aria-hidden="true" />
       </NuxtLink>
       <NuxtLink
         to="https://www.linkedin.com/company/hopprtech" target="_blank"
-        class="p-2 bg-hoppr-green text-gray-200 rounded-md hover:bg-opacity-80" aria-label="LinkedIn"
+        class="p-2 bg-hoppr-green text-gray-200 rounded-md hover:bg-opacity-80" 
+        aria-label="Suivez-nous sur LinkedIn"
       >
-        <Icon name="fa:linkedin-square" size="1em" />
+        <Icon name="fa:linkedin-square" size="1em" aria-hidden="true" />
       </NuxtLink>
       <NuxtLink
         to="https://twitter.com/HoppR_Tech" target="_blank"
-        class="p-2 bg-hoppr-green text-gray-200 rounded-md hover:bg-opacity-80" aria-label="X"
+        class="p-2 bg-hoppr-green text-gray-200 rounded-md hover:bg-opacity-80" 
+        aria-label="Suivez-nous sur X (anciennement Twitter)"
       >
-        <Icon name="fa:twitter-square" size="1em" />
+        <Icon name="fa:twitter-square" size="1em" aria-hidden="true" />
       </NuxtLink>
       <NuxtLink
         to="https://hoppr.tech" target="_blank"
-        class="p-2 bg-hoppr-green text-gray-200 rounded-md hover:bg-opacity-80" aria-label="Website"
+        class="p-2 bg-hoppr-green text-gray-200 rounded-md hover:bg-opacity-80" 
+        aria-label="Visitez notre site web"
       >
-        <Icon name="fa:globe" size="1em" />
+        <Icon name="fa:globe" size="1em" aria-hidden="true" />
       </NuxtLink>
     </div>
   </div>

@@ -63,6 +63,19 @@ export default defineNuxtConfig({
         '/',
       ],
     },
+    routeRules: {
+      '/insights/**': {
+        cache: {
+          maxAge: 60 * 60 * 24 * 7, // 7 jours en secondes
+        },
+      },
+      '/_nuxt/**': {
+        cache: { maxAge: 60 * 60 * 24 * 365 }, // 1 an pour les assets générés par Nuxt
+      },
+      '/images/**': {
+        cache: { maxAge: 60 * 60 * 24 * 30 }, // 30 jours pour les images
+      },
+    },
   },
 
   colorMode: {

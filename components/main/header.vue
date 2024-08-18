@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { useRoute } from 'vue-router'
 import SearchBar from '~/components/blog/SearchBar.vue'
 import LogoSvg from '~/components/logo/headerLogo.vue'
 
 const route = useRoute()
 const path = computed(() => route.fullPath.replace('/', ''))
 const colorMode = useColorMode()
+
+const isSearchActive = computed(() => !!route.query.search)
 
 const showMenu = ref(false)
 const toggleNav = () => (showMenu.value = !showMenu.value)
@@ -46,8 +49,11 @@ function toggleSearch() {
                 <ul class="flex space-x-4">
                   <li v-for="(item, index) in menuItems" :key="index">
                     <NuxtLink
-                      :to="item.to" class="text-sm text-gray-100 hover:text-hoppr-green"
-                      :class="{ 'text-hoppr-green font-semibold': path === item.path && item.path !== 'about' }"
+                      :to="item.to"
+                      class="text-sm text-gray-100 hover:text-hoppr-green"
+                      :class="{
+                        'text-hoppr-green font-semibold': (path === item.path && item.path !== 'about') || (item.path === 'blogs' && isSearchActive),
+                      }"
                       :target="item.path === 'about' ? '_blank' : '_self'"
                       :rel="item.path === 'about' ? 'noopener noreferrer' : ''"
                     >

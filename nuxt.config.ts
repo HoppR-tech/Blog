@@ -22,14 +22,23 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/tailwind.css'],
 
-  // postcss: {
-  //   plugins: {
-  //     'postcss-import': {},
-  //     'tailwindcss': {},
-  //     'autoprefixer': {},
-  //     // ...(import.meta.env.NODE_ENV === 'production' ? { cssnano: {} } : {}),
-  //   },
-  // },
+  postcss: {
+    plugins: {
+      'postcss-import': {},
+      'tailwindcss': {},
+      'autoprefixer': {},
+      ...(import.meta.env.NODE_ENV === 'production' ? { cssnano: {} } : {}),
+    },
+  },
+
+  purgecss: {
+    enabled: true,
+  },
+
+  icon: {
+    size: '24px',
+    class: 'icon',
+  },
 
   sitemap: {
     strictNuxtContentPaths: true,

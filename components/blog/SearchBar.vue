@@ -50,6 +50,7 @@ defineExpose({ toggleSearch })
       <button
         v-if="isExpanded"
         class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-600 dark:text-gray-300 md:hidden"
+        aria-label="Fermer la recherche"
         @click="toggleSearch"
       >
         <Icon name="mdi:close" size="20" />
@@ -57,12 +58,14 @@ defineExpose({ toggleSearch })
     </div>
     <button
       class="ml-2 text-gray-100 hover:text-hoppr-green transition-transform duration-300 ease-in-out md:hidden"
+      :aria-label="isExpanded ? 'Effectuer la recherche' : 'Ouvrir la recherche'"
       @click="isExpanded ? performSearch : toggleSearch"
     >
       <Icon name="mdi:magnify" size="24" />
     </button>
     <button
       class="ml-2 text-gray-100 hover:text-hoppr-green transition-transform duration-300 ease-in-out hidden md:block"
+      aria-label="Effectuer la recherche"
       @click="performSearch"
     >
       <Icon name="mdi:magnify" size="24" />

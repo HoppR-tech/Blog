@@ -11,8 +11,10 @@
       Tu es à un clic de trouver la solution !
     </p>
 
-    <a href="mailto: hello@hoppr.tech"
-      class="block text-center w-full bg-hoppr-green p-2 rounded-lg text-[#F1F2F4]  mt-3 text-sm hover:bg-opacity-80">
+    <a
+      href="mailto: hello@hoppr.tech"
+      class="block text-center w-full bg-hoppr-green p-2 rounded-lg text-hoppr-black font-semibold mt-3 text-sm hover:bg-opacity-80 transition-colors duration-300"
+    >
       Nous contacter
     </a>
   </div>

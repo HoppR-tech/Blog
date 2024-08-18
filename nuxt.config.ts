@@ -22,6 +22,15 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/tailwind.css'],
 
+  postcss: {
+    plugins: {
+      'postcss-import': {},
+      'tailwindcss': {},
+      'autoprefixer': {},
+      ...(import.meta.env.NODE_ENV === 'production' ? { cssnano: {} } : {}),
+    },
+  },
+
   sitemap: {
     strictNuxtContentPaths: true,
   },

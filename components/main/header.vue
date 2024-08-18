@@ -74,7 +74,11 @@ function toggleSearch() {
               </ClientOnly>
             </div>
             <div class="md:hidden">
-              <button class="text-gray-100 focus:outline-none" @click="toggleNav">
+              <button
+                class="text-gray-100 focus:outline-none"
+                aria-label="Ouvrir le menu de navigation"
+                @click="toggleNav"
+              >
                 <svg viewBox="0 0 24 24" class="w-6 h-6 fill-current">
                   <path
                     fill-rule="evenodd"
@@ -97,7 +101,11 @@ function toggleSearch() {
     >
       <div v-if="showMenu" class="fixed top-0 left-0 right-0 bottom-0 bg-hoppr-purple z-50 md:hidden">
         <div class="flex justify-end p-4">
-          <button class="text-white" @click="closeMenu">
+          <button
+            class="text-white"
+            aria-label="Fermer le menu de navigation"
+            @click="closeMenu"
+          >
             <Icon name="mdi:close" size="24" />
           </button>
         </div>

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-// Get the 3 oldest posts published within the last 3 months
+// Get the 6 oldest posts published within the last 3 months
 const threeMonthsAgo = new Date()
 threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3)
 const { data } = await useAsyncData('trending-post', () =>
@@ -9,7 +9,7 @@ const { data } = await useAsyncData('trending-post', () =>
       date: { $gte: threeMonthsAgo.toISOString().split('T')[0] } as any,
     })
     .sort({ date: 1 })
-    .limit(3)
+    .limit(6)
     .find(),
 )
 

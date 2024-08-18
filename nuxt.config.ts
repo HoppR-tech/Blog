@@ -27,7 +27,7 @@ export default defineNuxtConfig({
       'postcss-import': {},
       'tailwindcss': {},
       'autoprefixer': {},
-      ...(import.meta.env.NODE_ENV === 'production' ? { cssnano: {} } : {}),
+      // ...(import.meta.env.NODE_ENV === 'production' ? { cssnano: {} } : {}),
     },
   },
 

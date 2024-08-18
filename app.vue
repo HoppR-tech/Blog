@@ -69,49 +69,41 @@ useHead({
 </template>
 
 <style>
-::selection {
-  background-color: theme('colors.hoppr-green');
-  /* Couleur verte de HoppR */
-  color: #ffffff;
+@import '@/assets/css/tailwind.css';
+
+@layer base {
+  ::selection {
+    @apply bg-hoppr-green text-white;
+  }
+
+  body {
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', sans-serif;
+  }
 }
 
-::-moz-selection {
-  background-color: theme('colors.hoppr-green');
-  color: #ffffff;
-}
+@layer utilities {
+  .page-enter-active,
+  .page-leave-active,
+  .layout-enter-active,
+  .layout-leave-active {
+    transition: all 0.4s;
+  }
 
-.page-enter-active,
-.page-leave-active {
-  transition: all 0.4s;
-}
-
-.page-enter-from,
-.page-leave-to {
-  opacity: 0;
-  filter: blur(1rem);
-}
-
-.layout-enter-active,
-.layout-leave-active {
-  transition: all 0.4s;
-}
-
-.layout-enter-from,
-.layout-leave-to {
-  opacity: 0;
-  filter: blur(1rem);
+  .page-enter-from,
+  .page-leave-to,
+  .layout-enter-from,
+  .layout-leave-to {
+    opacity: 0;
+    filter: blur(1rem);
+  }
 }
 
 html.dark {
   color-scheme: dark;
-}
-
-body {
-  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
 }
 </style>
 

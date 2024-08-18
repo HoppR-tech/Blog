@@ -16,7 +16,11 @@ export default defineNuxtConfig({
     layoutTransition: { name: 'layout', mode: 'out-in' },
   },
 
-  build: { transpile: ['vue-sonner', 'shiki'] },
+  build: {
+    transpile: ['vue-sonner', 'shiki'],
+  },
+
+  css: ['~/assets/css/tailwind.css'],
 
   sitemap: {
     strictNuxtContentPaths: true,
@@ -77,6 +81,7 @@ export default defineNuxtConfig({
     '@nuxtjs/color-mode',
     'nuxt-simple-sitemap',
     '@nuxtjs/tailwindcss',
+    'nuxt-purgecss',
     ...(import.meta.env.NODE_ENV === 'test' ? ['@nuxt/test-utils/module'] : []),
   ],
 

@@ -1,9 +1,13 @@
-// remember to fix this issue wint the tailwind/nuxt
-// https://github.com/tailwindlabs/tailwindcss-intellisense/issues/663#issuecomment-1316788128
-
 module.exports = {
   darkMode: 'class',
-  content: [],
+  content: [
+    './components/**/*.{js,vue,ts}',
+    './layouts/**/*.vue',
+    './pages/**/*.vue',
+    './plugins/**/*.{js,ts}',
+    './nuxt.config.{js,ts}',
+    './app.vue',
+  ],
   theme: {
     extend: {
       fontFamily: {

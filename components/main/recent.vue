@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 // Get Last 6 Publish Post from the content/blog directory
 const { data } = await useAsyncData('recent-post', () =>
-  queryContent('/blogs').limit(3).sort({ _id: -1 }).find(),
+  queryContent('/blogs').limit(3).sort({ _id: -1 }).find(), { server: true },
 )
 
 const formattedData = computed(() => {
@@ -54,16 +54,7 @@ useHead({
           :og-image="post.ogImage"
           :tags="post.tags"
           :published="post.published"
-        >
-          <!-- <img
-            :src="post.image"
-            :alt="post.alt"
-            width="300"
-            height="200"
-            loading="lazy"
-            class="w-full h-auto object-cover"
-          > -->
-        </BlogCard>
+        />
       </template>
       <template v-if="data?.length === 0">
         <BlogEmpty />

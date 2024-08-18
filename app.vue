@@ -121,3 +121,5 @@ html.dark {
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Inter:wght@400;600;700&display=swap">
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Inter:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+
+<link rel="preload" as="image" href="/images/blog.webp">

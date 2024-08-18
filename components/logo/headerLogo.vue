@@ -26,7 +26,7 @@ defineProps({
       </clipPath>
     </defs>
     <g clip-path="url(#logo-clip-path)">
-      <image x="0" y="0" width="375" height="375" xlink:href="/logo-header.png" preserveAspectRatio="xMidYMid meet" />
+      <image x="0" y="0" width="375" height="375" xlink:href="/images/logo-header.webp" preserveAspectRatio="xMidYMid meet" />
     </g>
   </svg>
 </template>

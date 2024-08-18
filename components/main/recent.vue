@@ -54,7 +54,16 @@ useHead({
           :og-image="post.ogImage"
           :tags="post.tags"
           :published="post.published"
-        />
+        >
+          <img
+            :src="post.image"
+            :alt="post.alt"
+            width="300"
+            height="200"
+            loading="lazy"
+            class="w-full h-auto object-cover"
+          >
+        </BlogCard>
       </template>
       <template v-if="data?.length === 0">
         <BlogEmpty />

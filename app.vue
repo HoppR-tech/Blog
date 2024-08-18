@@ -70,7 +70,7 @@ useHead({
   </div>
 </template>
 
-<style>
+<style media="print" onload="this.media='all'">
 @import '@/assets/css/tailwind.css';
 
 @layer base {
@@ -104,14 +104,19 @@ useHead({
   }
 }
 
+.off-screen-content {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
+}
+
 html.dark {
   color-scheme: dark;
 }
 </style>
 
-<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="anonymous">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
 
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Inter:wght@400;600;700&display=swap">
 

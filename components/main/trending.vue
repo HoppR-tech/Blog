@@ -1,7 +1,16 @@
 <script lang="ts" setup>
-// Get Last 6 Publish Post from the content/blog directory
+// Get the 3 oldest posts published within the last 3 months
+const threeMonthsAgo = new Date()
+threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3)
 const { data } = await useAsyncData('trending-post', () =>
-  queryContent('/blogs').limit(3).sort({ _id: 1 }).find(),
+  queryContent('/blogs')
+    .where({
+      published: true,
+      date: { $gte: threeMonthsAgo.toISOString().split('T')[0] } as any,
+    })
+    .sort({ date: 1 })
+    .limit(3)
+    .find(),
 )
 
 const formattedData = computed(() => {
@@ -38,9 +47,9 @@ useHead({
 <template>
   <div class="px-4">
     <div class="flex flex-row items-center space-x-3 pt-5 pb-3">
-      <Icon name="mdi:trending-up" size="2em" class="text-black dark:text-zinc-300" />
+      <Icon name="mdi:star-outline" size="2em" class="text-black dark:text-zinc-300" />
       <h2 class="text-4xl font-semibold text-black dark:text-zinc-300 font-inter">
-        Articles Populaires
+        Articles à la Une
       </h2>
     </div>
     <div class="grid grid-cols-1 gap-6">

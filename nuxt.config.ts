@@ -1,6 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2024-07-31',
+
+  ssr: true,
+
   app: {
     head: {
       charset: 'utf-16',

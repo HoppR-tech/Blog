@@ -24,7 +24,7 @@ const formattedDescription = computed(() => props.description.length > 100 ? `${
 const formattedLink = computed(() => {
   if (props.link.endsWith('jpg') || props.link.endsWith('png'))
     return props.link
-  else return '/blogs-img/blog.jpg'
+  else return '/not-found.jpg'
 })
 </script>
 

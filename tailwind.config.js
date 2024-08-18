@@ -7,8 +7,6 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        spacegrotesk: ['Space Grotesk', 'sans-serif'],
-        orbitron: ['Orbitron', 'sans-serif'],
         opensans: ['Open Sans', 'sans-serif'],
         inter: ['Inter', 'sans-serif'],
       },

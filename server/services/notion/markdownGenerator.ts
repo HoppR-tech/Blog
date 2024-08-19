@@ -25,6 +25,8 @@ ${formattedAuthors}
 reviewers:
 ${formattedReviewers}
 ---
+
+<!-- markdownlint-disable -->
 `
 }
 

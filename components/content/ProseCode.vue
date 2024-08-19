@@ -45,7 +45,7 @@ async function copyCode() {
 
 <template>
   <div class="relative bg-gray-900 rounded-lg overflow-hidden">
-    <div class="absolute top-0 left-0 m-2 text-xs text-gray-500">
+    <div class="absolute top-0 left-0 m-2 text-xs font-semibold text-gray-300">
       {{ language }}
     </div>
     <div class="absolute top-0 right-0 m-2">

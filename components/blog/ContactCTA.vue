@@ -85,9 +85,9 @@ async function submitForm() {
       <div class="p-6 bg-gray-100 dark:bg-slate-900 rounded-lg border border-gray-300 dark:border-zinc-500">
         <div class="flex items-start mb-4">
           <Icon name="mdi:lightbulb" class="text-hoppr-green text-2xl mr-2 flex-shrink-0 mt-1" />
-          <h3 class="text-2xl font-bold text-black dark:text-white">
+          <h1 class="text-2xl font-bold text-black dark:text-white">
             Cet article vous a inspiré ?
-          </h3>
+          </h1>
         </div>
         <p class="mb-6 text-gray-700 dark:text-gray-300">
           Vous avez des questions ou des défis techniques suite à cet article ? Nos experts sont là pour vous aider à

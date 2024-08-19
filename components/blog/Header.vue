@@ -47,8 +47,8 @@ function formatDate(dateString: string) {
     </p> -->
     <div class="flex flex-col w-full justify-start text-sm md:text-base my-8">
       <div class="flex flex-wrap justify-start text-black dark:text-zinc-300 content-center gap-4 text-sm sm:text-base">
-        <div class="flex items-center font-semibold w-full mb-2">
-          <LogoAuthor />
+        <div class="flex items-start font-semibold w-full mb-2">
+          <LogoAuthor class="flex-shrink-0 mt-0.5 mr-2" />
           <p>
             Écrit par :
             <template v-for="(author, index) in props.authors" :key="author.notionId">
@@ -61,20 +61,20 @@ function formatDate(dateString: string) {
             </template>
           </p>
         </div>
-        <div class="flex items-center font-semibold w-full mb-2">
-          <LogoDate />
+        <div class="flex items-start font-semibold w-full mb-2">
+          <LogoDate class="flex-shrink-0 mt-0.5 mr-2" />
           <p>{{ formatDate(date) }}</p>
         </div>
-        <div class="flex items-center gap-2 flex-wrap w-full">
-          <LogoTag />
+        <div class="flex items-start gap-2 flex-wrap w-full">
+          <LogoTag class="flex-shrink-0 mt-0.5" />
           <template v-for="tag in props.tags" :key="tag">
             <span class="bg-gray-200 dark:bg-slate-900 rounded-md px-2 py-1 font-semibold">{{ tag }}</span>
           </template>
         </div>
       </div>
       <div v-if="props.reviewers.length > 0" class="flex justify-start mt-4 text-black dark:text-zinc-300 text-sm sm:text-base">
-        <div class="flex items-center font-semibold">
-          <LogoAuthor />
+        <div class="flex items-start font-semibold">
+          <LogoAuthor class="flex-shrink-0 mt-0.5 mr-2" />
           <p>
             Relu par :
             <template v-for="(reviewer, index) in props.reviewers" :key="reviewer.notionId">

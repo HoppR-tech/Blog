@@ -45,7 +45,7 @@ function toggleSearch() {
               <router-link to="/" class="text-xl font-bold text-gray-100 md:text-2xl hover:text-hoppr-green">
                 HoppR Tech
               </router-link>
-              <div class="hidden md:flex md:items-center mt-1">
+              <div class="hidden lg:flex lg:items-center mt-1">
                 <ul class="flex space-x-4">
                   <li v-for="(item, index) in menuItems" :key="index">
                     <NuxtLink
@@ -65,7 +65,7 @@ function toggleSearch() {
             </div>
           </div>
           <div class="flex items-center space-x-4">
-            <div class="hidden md:flex items-center space-x-4">
+            <div class="hidden lg:flex lg:items-center space-x-4">
               <SearchBar @close="() => {}" />
               <ClientOnly>
                 <button
@@ -79,7 +79,7 @@ function toggleSearch() {
                 </button>
               </ClientOnly>
             </div>
-            <div class="md:hidden">
+            <div class="lg:hidden">
               <button
                 class="text-gray-100 focus:outline-none"
                 aria-label="Ouvrir le menu de navigation"
@@ -105,7 +105,7 @@ function toggleSearch() {
       leave-active-class="transition duration-200 ease-in" leave-from-class="transform translate-y-0 opacity-100"
       leave-to-class="transform -translate-y-full opacity-0"
     >
-      <div v-if="showMenu" class="fixed top-0 left-0 right-0 bottom-0 bg-hoppr-purple z-50 md:hidden">
+      <div v-if="showMenu" class="fixed top-0 left-0 right-0 bottom-0 bg-hoppr-purple z-50 lg:hidden">
         <div class="flex justify-end p-4">
           <button
             class="text-white"

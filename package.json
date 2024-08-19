@@ -17,6 +17,7 @@
     "axios": "^1.7.2",
     "nuxt-content-assets": "^1.4.4",
     "octokit": "^4.0.2",
+    "rss": "^1.2.2",
     "sharp": "^0.33.4",
     "shiki": "^1.12.1",
     "sitemap": "^8.0.0"
@@ -33,6 +34,7 @@
     "@nuxtjs/tailwindcss": "^6.12.1",
     "@tailwindcss/forms": "^0.5.7",
     "@tailwindcss/typography": "^0.5.13",
+    "@types/rss": "^0.0.32",
     "@vue/test-utils": "^2.4.6",
     "@vueuse/core": "^10.9.0",
     "@vueuse/nuxt": "^10.11.0",

@@ -36,6 +36,13 @@
       >
         <Icon name="fa:globe" size="1em" aria-hidden="true" />
       </NuxtLink>
+      <NuxtLink
+        to="/rss.xml" target="_blank"
+        class="p-2 bg-hoppr-green text-hoppr-black font-semibold rounded-md hover:bg-opacity-80 transition-colors duration-300"
+        aria-label="Abonnez-vous à notre flux RSS"
+      >
+        <Icon name="fa:rss" size="1em" aria-hidden="true" />
+      </NuxtLink>
     </div>
   </div>
 </template>

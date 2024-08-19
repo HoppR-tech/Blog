@@ -61,6 +61,7 @@ export default defineNuxtConfig({
       crawlLinks: true,
       routes: [
         '/',
+        '/rss.xml',
       ],
     },
     routeRules: {
@@ -87,6 +88,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       baseUrl: 'https://blog.hoppr.tech',
+      contactEmail: 'hello@hoppr.tech',
+      contactName: 'HoppR',
     },
     notion: {
       apiKey: '',

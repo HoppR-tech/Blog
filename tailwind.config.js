@@ -13,6 +13,7 @@ module.exports = {
       fontFamily: {
         opensans: ['Open Sans', 'sans-serif'],
         inter: ['Inter', 'sans-serif'],
+        varela: ['Varela Round', 'sans-serif'],
       },
       colors: {
         'hoppr-black': '#23272A',

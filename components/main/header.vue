@@ -42,19 +42,19 @@ function toggleSearch() {
             <LogoSvg class="h-14 w-auto mr-4" />
             <div class="h-12 border-r border-gray-300 mx-4 mr-9" />
             <div class="flex flex-col">
-              <router-link to="/" class="text-xl font-bold text-gray-100 md:text-2xl hover:text-hoppr-green">
+              <router-link
+                to="/"
+                class="text-xl font-bold text-gray-100 md:text-2xl hover:text-hoppr-green font-varela"
+              >
                 HoppR Tech
               </router-link>
               <div class="hidden lg:flex lg:items-center mt-1">
                 <ul class="flex space-x-4">
                   <li v-for="(item, index) in menuItems" :key="index">
                     <NuxtLink
-                      :to="item.to"
-                      class="text-sm text-gray-100 hover:text-hoppr-green"
-                      :class="{
-                        'text-hoppr-green font-semibold': (path === item.path && item.path !== 'about') || (item.path === 'blogs' && isSearchActive),
-                      }"
-                      :target="item.path === 'about' ? '_blank' : '_self'"
+                      :to="item.to" class="text-sm text-gray-100 hover:text-hoppr-green font-varela" :class="{
+                        'text-hoppr-green font-semibold font-varela': (path === item.path && item.path !== 'about') || (item.path === 'blogs' && isSearchActive),
+                      }" :target="item.path === 'about' ? '_blank' : '_self'"
                       :rel="item.path === 'about' ? 'noopener noreferrer' : ''"
                     >
                       {{ item.label }}
@@ -74,15 +74,17 @@ function toggleSearch() {
                 >
                   <Icon name="icon-park:moon" size="20" />
                 </button>
-                <button v-else class="text-gray-100 hover:text-indigo-400" aria-label="Activer le mode clair" @click="onClick">
+                <button
+                  v-else class="text-gray-100 hover:text-indigo-400" aria-label="Activer le mode clair"
+                  @click="onClick"
+                >
                   <Icon name="noto:sun" size="20" />
                 </button>
               </ClientOnly>
             </div>
             <div class="lg:hidden">
               <button
-                class="text-gray-100 focus:outline-none"
-                aria-label="Ouvrir le menu de navigation"
+                class="text-gray-100 focus:outline-none" aria-label="Ouvrir le menu de navigation"
                 @click="toggleNav"
               >
                 <svg viewBox="0 0 24 24" class="w-6 h-6 fill-current">
@@ -107,11 +109,7 @@ function toggleSearch() {
     >
       <div v-if="showMenu" class="fixed top-0 left-0 right-0 bottom-0 bg-hoppr-purple z-50 lg:hidden">
         <div class="flex justify-end p-4">
-          <button
-            class="text-white"
-            aria-label="Fermer le menu de navigation"
-            @click="closeMenu"
-          >
+          <button class="text-white" aria-label="Fermer le menu de navigation" @click="closeMenu">
             <Icon name="mdi:close" size="24" />
           </button>
         </div>

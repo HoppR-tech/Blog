@@ -47,7 +47,7 @@ async function copyCode() {
     </div>
     <div class="absolute top-0 right-0 m-2">
       <button
-        class="bg-hoppr-green hover:bg-opacity-80 text-white rounded px-2 py-1 text-xs sm:text-sm flex items-center"
+        class="bg-hoppr-green hover:bg-opacity-80 text-hoppr-black rounded px-2 py-1 text-xs sm:text-sm flex items-center"
         :aria-label="copied ? 'Code copié' : 'Copier le code'"
         @click="copyCode"
       >
@@ -67,19 +67,7 @@ pre code .line {
   min-height: 1rem;
 }
 
-.prose pre {
-  background-color: #101827;
-}
-
-.dark .prose pre code {
-  color: #e2e8f0;
-}
-
-.dark .prose pre button {
-  background-color: #4a5568;
-}
-
-.dark .prose pre button:hover {
-  background-color: #2d3748;
+.shiki {
+  background-color: transparent;
 }
 </style>

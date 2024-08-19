@@ -44,7 +44,7 @@ export default defineNuxtConfig({
     strictNuxtContentPaths: true,
   },
   site: {
-    url: 'https://blog.hoppr.tech',
+    url: import.meta.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://blog.hoppr.tech',
     identity: {
       type: 'Company',
     },
@@ -87,7 +87,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      baseUrl: 'https://blog.hoppr.tech',
+      baseUrl: import.meta.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://blog.hoppr.tech',
       contactEmail: 'hello@hoppr.tech',
       contactName: 'HoppR',
     },
@@ -101,6 +101,10 @@ export default defineNuxtConfig({
       branch: '',
       appId: '',
       privateKey: '',
+    },
+    slack: {
+      botToken: '',
+      channelId: '',
     },
   },
 

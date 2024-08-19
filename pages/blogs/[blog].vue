@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Person } from '@/types/blog'
+import ContactCTA from '@/components/blog/ContactCTA.vue'
 
 const { path } = useRoute()
 
@@ -87,29 +88,37 @@ defineOgImageComponent('Test', {
 </script>
 
 <template>
-  <div class="px-6 container max-w-5xl mx-auto sm:grid grid-cols-12 gap-x-12 ">
-    <div class="col-span-12 lg:col-span-9">
-      <BlogHeader
-        :title="blogPostProps.title" :image="blogPostProps.image" :alt="blogPostProps.alt"
-        :date="blogPostProps.date" :description="blogPostProps.description" :tags="blogPostProps.tags"
-        :authors="authors" :reviewers="reviewers"
-      />
-      <div
-        class="prose prose-pre:max-w-xs sm:prose-pre:max-w-full prose-base sm:prose-base lg:prose-lg
-  prose-h1:text-2xl sm:prose-h1:text-3xl lg:prose-h1:text-4xl
-  prose-h2:text-xl sm:prose-h2:text-2xl lg:prose-h2:text-3xl
-  prose-h3:text-lg sm:prose-h3:text-xl lg:prose-h3:text-2xl
-  prose-p:text-base sm:prose-p:text-base lg:prose-p:text-lg
-  prose-h1:no-underline max-w-5xl mx-auto prose-zinc dark:prose-invert prose-img:rounded-lg"
-      >
-        <ContentRenderer v-if="article" :value="article">
-          <template #empty>
-            <p>No content found.</p>
-          </template>
-        </ContentRenderer>
+  <div>
+    <div class="px-6 container max-w-5xl mx-auto sm:grid grid-cols-12 gap-x-12 ">
+      <div class="col-span-12 lg:col-span-9">
+        <BlogHeader
+          :title="blogPostProps.title" :image="blogPostProps.image" :alt="blogPostProps.alt"
+          :date="blogPostProps.date" :description="blogPostProps.description" :tags="blogPostProps.tags"
+          :authors="authors" :reviewers="reviewers"
+        />
+        <div
+          class="prose prose-pre:max-w-xs sm:prose-pre:max-w-full prose-base sm:prose-base lg:prose-lg
+            prose-h1:text-2xl sm:prose-h1:text-3xl lg:prose-h1:text-4xl
+            prose-h2:text-xl sm:prose-h2:text-2xl lg:prose-h2:text-3xl
+            prose-h3:text-lg sm:prose-h3:text-xl lg:prose-h3:text-2xl
+            prose-p:text-base sm:prose-p:text-base lg:prose-p:text-lg
+            prose-h1:no-underline max-w-5xl mx-auto prose-zinc dark:prose-invert prose-img:rounded-lg"
+        >
+          <ContentRenderer v-if="article" :value="article">
+            <template #empty>
+              <p>No content found.</p>
+            </template>
+          </ContentRenderer>
+        </div>
+        <BlogFooter :authors="authors" />
       </div>
-      <BlogFooter :authors="authors" />
+      <BlogToc />
     </div>
-    <BlogToc />
+    <ContactCTA
+      :article-title="blogPostProps.title"
+      :article-link="path"
+      :authors="authors.map(author => ({ name: author.name, id: author.notionId }))"
+      :published-date="blogPostProps.date"
+    />
   </div>
 </template>

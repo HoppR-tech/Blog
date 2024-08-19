@@ -80,7 +80,7 @@ async function submitForm() {
 
 <template>
   <div class="mt-8 mb-4 mx-auto max-w-5xl grid grid-cols-1 lg:grid-cols-4 gap-8">
-    <div class="lg:col-span-3">
+    <div class="lg:col-span-3 px-2">
       <div class="p-6 bg-gray-100 dark:bg-slate-900 rounded-lg border border-gray-300 dark:border-zinc-500">
         <div class="flex items-center mb-4">
           <Icon name="mdi:lightbulb" class="text-hoppr-green text-2xl mr-2" />

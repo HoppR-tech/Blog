@@ -41,7 +41,8 @@ async function submitForm() {
   // console.error('Formulaire soumis:', formData)
 
   try {
-    const slackMessage = `\`Nouveau message reçu pour l'article\`: "${formData.articleTitle}"\n`
+    const slackMessage = '📥🔥 Nous avons reçu un nouveau message du Blog HoppR !\n'
+    + `\`pour l'article\`: "${formData.articleTitle}"\n`
     + `\`Ecrit par\`: ${formData.authors}\n`
     + `\`Publié le\`: ${new Date(formData.publishedDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}\n`
     + `\`Lien vers l'article\`: ${formData.articleLink}\n`

@@ -25,13 +25,16 @@ const props = defineProps({
 })
 
 const copied = ref(false)
+const copyIcon = ref('mdi:content-copy')
 
 async function copyCode() {
   try {
     await navigator.clipboard.writeText(props.code)
     copied.value = true
+    copyIcon.value = 'mdi:check'
     setTimeout(() => {
       copied.value = false
+      copyIcon.value = 'mdi:content-copy'
     }, 2000)
   }
   catch (error) {
@@ -52,7 +55,7 @@ async function copyCode() {
         @click="copyCode"
       >
         <span class="mr-1">{{ copied ? 'Copié' : 'Copier' }}</span>
-        <Icon name="mdi:content-copy" size="16" />
+        <Icon :name="copyIcon" size="16" />
       </button>
     </div>
     <div class="p-4 pt-8 bg-gray-900">

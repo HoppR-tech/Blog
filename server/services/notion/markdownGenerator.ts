@@ -26,7 +26,7 @@ reviewers:
 ${formattedReviewers}
 ---
 
-<!-- markdownlint-disable -->
+<!-- markdownlint-disable-file -->
 `
 }
 

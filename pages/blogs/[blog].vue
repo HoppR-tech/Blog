@@ -29,6 +29,33 @@ const blogPostProps = computed(() => {
 const authors: Person[] = article.value?.authors || []
 const reviewers: Person[] = article.value?.reviewers || []
 
+function generateStructuredData() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    'headline': blogPostProps.value.title,
+    'image': blogPostProps.value.ogImage || blogPostProps.value.image,
+    'datePublished': blogPostProps.value.date,
+    'author': authors.map(author => ({
+      '@type': 'Person',
+      'name': author.name,
+    })),
+    'publisher': {
+      '@type': 'Organization',
+      'name': 'HoppR',
+      'logo': {
+        '@type': 'ImageObject',
+        'url': 'https://blog.hoppr.tech/hoppr.png',
+      },
+    },
+    'description': blogPostProps.value.description,
+    'mainEntityOfPage': {
+      '@type': 'WebPage',
+      '@id': `https://blog.hoppr.tech/${path}`,
+    },
+  }
+}
+
 useHead({
   title: blogPostProps.value.title || '',
   meta: [
@@ -74,6 +101,12 @@ useHead({
     {
       rel: 'canonical',
       href: `https://blog.hoppr.tech/${path}`,
+    },
+  ],
+  script: [
+    {
+      type: 'application/ld+json',
+      children: JSON.stringify(generateStructuredData()),
     },
   ],
 })

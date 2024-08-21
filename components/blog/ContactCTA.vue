@@ -142,7 +142,7 @@ async function submitForm() {
             >
               Annuler
             </button>
-            <button type="submit" class="px-4 py-2 bg-hoppr-green text-white rounded-md hover:bg-opacity-90">
+            <button type="submit" class="px-4 py-2 bg-hoppr-green text-hoppr-black rounded-md hover:bg-opacity-90">
               Envoyer
             </button>
           </div>

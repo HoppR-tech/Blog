@@ -4,7 +4,7 @@ date: 2024-08-02T17:37:20.503Z
 description:    Eligendi nisi quaerat veniam. Adipisci corrupti qui earum fugiat beatae mollitia hic omnis est. Dolorum dolor alias libero enim nihil tempore totam voluptatem. Sint quaerat dolor in ipsum. Exceptur
 image: ./assets/cover-image.webp
 alt: 
-ogImage: ./assets/cover-image.webp
+ogImage: /images/og-post.png
 tags: ['cloud native', 'kubernetes', 'microservices']
 published: true
 authors:

@@ -33,6 +33,7 @@ export default defineNuxtConfig({
 
   purgecss: {
     enabled: true,
+    safelist: [/nuxt-devtools-./],
   },
 
   icon: {
@@ -120,6 +121,7 @@ export default defineNuxtConfig({
     'nuxt-simple-sitemap',
     '@nuxtjs/tailwindcss',
     'nuxt-purgecss',
+    '@nuxt/devtools',
     ...(import.meta.env.NODE_ENV === 'test' ? ['@nuxt/test-utils/module'] : []),
   ],
 

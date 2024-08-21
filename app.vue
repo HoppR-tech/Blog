@@ -6,7 +6,7 @@ const ogTitle
 const twitterDescription
   = 'Partage, veille et ressources de la communauté sur les thématiques du Software Craftsmanship, du Cloud, de l\'architecture et de la Tech en générale.'
 const image
-  = 'https://res.cloudinary.com/dmecmyphj/image/upload/v1673548905/nuxt-blog/cover_ntgs6u.webp'
+  = '/hoppr-white.png'
 const mySite = 'https://blog.hoppr.tech/'
 useHead({
   htmlAttrs: {

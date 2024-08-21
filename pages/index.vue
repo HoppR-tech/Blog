@@ -16,7 +16,8 @@ defineOgImageComponent('About', {
   headline: 'Bienvenue 👋',
   title: 'Blog Hoppr Tech',
   description: 'Partage, veille et ressources de la communauté sur les thématiques du Software Craftsmanship, du Cloud, de l\'architecture et de la Tech en générale.',
-  link: '/hoppr.png',
+  imageTop: '/images/og-post.png',
+  imageBottom: '/images/og-home.png',
 })
 </script>
 

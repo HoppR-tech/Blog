@@ -13,7 +13,7 @@ export async function uploadCoverImage(octokit: any, post: BlogPost, assetsFolde
   return {
     ...post,
     image: `./assets/${webpImageName}`,
-    ogImage: `./assets/${webpImageName}`,
+    ogImage: '/images/og-post.png',
   }
 }
 

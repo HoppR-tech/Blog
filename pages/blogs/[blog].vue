@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Person } from '@/types/blog'
 import ContactCTA from '@/components/blog/ContactCTA.vue'
+import { useRuntimeConfig } from '#app'
 
 const { path } = useRoute()
 
@@ -55,6 +56,8 @@ function generateStructuredData() {
     },
   }
 }
+
+const config = useRuntimeConfig()
 
 useHead({
   title: blogPostProps.value.title || '',
@@ -112,11 +115,13 @@ useHead({
 })
 
 // Generate OG Image
-defineOgImageComponent('Test', {
+defineOgImageComponent('About', {
   headline: 'Bienvenue 👋',
   title: blogPostProps.value.title || '',
   description: blogPostProps.value.description || '',
-  link: blogPostProps.value.ogImage,
+  link: blogPostProps.value.ogImage ? new URL(blogPostProps.value.ogImage, config.public.baseUrl).href : '',
+  imageTop: '/images/og-post.png',
+  imageBottom: '/images/og-home.png',
 })
 </script>
 

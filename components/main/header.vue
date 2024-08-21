@@ -69,16 +69,20 @@ function toggleSearch() {
               <SearchBar @close="() => {}" />
               <ClientOnly>
                 <button
-                  v-if="colorMode.value === 'light'" class="text-gray-100 hover:text-indigo-400"
-                  aria-label="Activer le mode sombre" @click="onClick"
-                >
-                  <Icon name="icon-park:moon" size="20" />
-                </button>
-                <button
-                  v-else class="text-gray-100 hover:text-indigo-400" aria-label="Activer le mode clair"
+                  v-if="colorMode.value === 'light'"
+                  class="p-2 text-white hover:text-hoppr-green rounded-full transition-colors duration-300 group"
+                  aria-label="Activer le mode sombre"
                   @click="onClick"
                 >
-                  <Icon name="noto:sun" size="20" />
+                  <Icon name="mdi:weather-night" size="24" class="transform transition-transform duration-300 group-hover:rotate-12" />
+                </button>
+                <button
+                  v-else
+                  class="p-2 text-white hover:text-hoppr-green rounded-full transition-colors duration-300 group"
+                  aria-label="Activer le mode clair"
+                  @click="onClick"
+                >
+                  <Icon name="mdi:weather-sunny" size="24" class="transform transition-transform duration-300 group-hover:rotate-12" />
                 </button>
               </ClientOnly>
             </div>
@@ -129,13 +133,17 @@ function toggleSearch() {
             <SearchBar ref="searchBarRef" @close="closeMenu" />
           </li>
           <li class="flex items-center justify-between py-2" @click="onClick">
-            <span class="text-gray-100">Thème</span>
+            <span class="text-gray-100">Thème clair / sombre</span>
             <ClientOnly>
               <button
-                class="p-2 text-gray-100 bg-indigo-700 rounded-full hover:bg-indigo-600"
-                :aria-label="colorMode.value === 'light' ? 'Mode sombre' : 'Mode clair'"
+                class="p-2 text-white hover:text-hoppr-green rounded-full transition-colors duration-300 group"
+                :aria-label="colorMode.value === 'light' ? 'Activer le mode sombre' : 'Activer le mode clair'"
               >
-                <Icon :name="colorMode.value === 'light' ? 'icon-park:moon' : 'noto:sun'" size="20" />
+                <Icon
+                  :name="colorMode.value === 'light' ? 'mdi:weather-night' : 'mdi:weather-sunny'"
+                  size="20"
+                  class="transform transition-transform duration-300 group-hover:rotate-12"
+                />
               </button>
             </ClientOnly>
           </li>

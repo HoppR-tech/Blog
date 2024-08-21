@@ -1,5 +1,5 @@
 import { getNotionClient } from './notionClient'
-import { fetchPostsToPublish, updatePostStatus } from './postRepository'
+import { fetchPostsToPublish, updatePostStatus, updatePublishedDate } from './postRepository'
 import { downloadAndConvertImage, extractImagesAndUpdateContent, processAuthorsImages } from './imageUtils'
 import { generateMarkdownContent } from './markdownGenerator'
 import type { BlogPost } from '@/types/blog'
@@ -14,6 +14,10 @@ export class NotionService {
 
   async updatePostStatusInNotion(pageId: string, newStatus: string): Promise<void> {
     await updatePostStatus(this.notionClient, pageId, newStatus)
+  }
+
+  async updatePublishedDateInNotion(pageId: string): Promise<void> {
+    await updatePublishedDate(this.notionClient, pageId)
   }
 
   async downloadAndConvertImage(imageUrl: string, imageName: string): Promise<{ webpImageName: string; imageContent: string }> {

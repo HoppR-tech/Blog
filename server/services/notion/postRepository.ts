@@ -59,7 +59,27 @@ export async function updatePostStatus(notionClient: NotionClientInterface, page
     })
   }
   catch (error) {
-    console.error('Error updating status in Notion:', error)
+    console.error('Error while updating the status in Notion:', error)
+    throw error
+  }
+}
+
+export async function updatePublishedDate(notionClient: NotionClientInterface, pageId: string): Promise<void> {
+  try {
+    const currentDate = new Date().toISOString()
+    await notionClient.pages.update({
+      page_id: pageId,
+      properties: {
+        'Published Date': {
+          date: {
+            start: currentDate,
+          },
+        },
+      },
+    })
+  }
+  catch (error) {
+    console.error('Error while updating the published date in Notion:', error)
     throw error
   }
 }

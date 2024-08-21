@@ -49,6 +49,7 @@ export class GitHubService {
       await deleteBranch(this.octokit, branchName)
 
       await this.notionService.updatePostStatusInNotion(post.notionId, 'Publié')
+      await this.notionService.updatePublishedDateInNotion(post.notionId)
     }
     catch (error) {
       console.error(`Error while publishing post "${post.title}" to GitHub:`, error)

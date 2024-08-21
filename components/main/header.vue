@@ -70,7 +70,7 @@ function toggleSearch() {
               <ClientOnly>
                 <button
                   v-if="colorMode.value === 'light'"
-                  class="p-2 text-white hover:text-hoppr-green rounded-full transition-colors duration-300 group"
+                  class="p-2 text-hoppr-green hover:text-hoppr-green rounded-full transition-colors duration-300 group"
                   aria-label="Activer le mode sombre"
                   @click="onClick"
                 >
@@ -78,7 +78,7 @@ function toggleSearch() {
                 </button>
                 <button
                   v-else
-                  class="p-2 text-white hover:text-hoppr-green rounded-full transition-colors duration-300 group"
+                  class="p-2 text-hoppr-green hover:text-hoppr-green rounded-full transition-colors duration-300 group"
                   aria-label="Activer le mode clair"
                   @click="onClick"
                 >

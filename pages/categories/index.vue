@@ -62,8 +62,10 @@ defineOgImage({
     </div>
     <div class="flex flex-wrap px-6 mt-6 gap-3">
       <CategoryCard
-        v-for="topic in filteredTags" :key="topic[0]" :title="makeFirstCharUpper(topic[0])"
+        v-for="(topic, index) in filteredTags" :key="topic[0]" :title="makeFirstCharUpper(topic[0])"
         :count="topic[1]"
+        :index="index"
+        :total-categories="filteredTags.size"
       />
     </div>
   </main>

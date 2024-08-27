@@ -1,51 +1,41 @@
-<p align="center">
-  <a href="https://blog.nurriyad.xyz" target="_blank">
-    <img  src="./assets/images/dark.png">
-  </a>
-</p>
+# Blog HoppR - Documentation
 
-<h1 align="center">HoppR's Blog</h1>
+Bienvenue dans la documentation du Blog HoppR. Ce projet est une plateforme de blog moderne utilisant Nuxt.js, intégrant Notion pour la gestion de contenu et GitHub pour le contrôle de version.
 
-### Built with
+## Table des matières
 
-<p align="center">
-    <img width="200" src="./assets/images/logo.png">
-</p>
+1. [Blog HoppR - Documentation](#blog-hoppr---documentation)
+   1. [Table des matières](#table-des-matières)
+   2. [Pour commencer](#pour-commencer)
+   3. [Guide utilisateur](#guide-utilisateur)
+   4. [Documentation technique](#documentation-technique)
+   5. [API](#api)
 
- Nuxt Blog built with [Nuxt3](https://nuxt.com), [Nuxt-Content2](https://content.nuxtjs.org/blog/announcing-v2/), [Vue3](https://vuejs.org) & [TailwindCss](https://tailwindcss.com/)
+## Pour commencer
 
-## Features
+- [Installation](docs/getting-started/01_installation.md)
+- [Configuration](docs/getting-started/02_configuration.md)
+- [Démarrage rapide](docs/getting-started/03_quick_start.md)
 
-- Write blog with markdown file
-- Auto generate category from blog post
-- Blog list page with search and pagination
-- About me page for user info
-- Auto generate table of content for blog post
-- Auto generate Sitemap
-- Url preview with Nuxt ogImage
-- Dark and light mode
-- Server Side Rendered(SSR) with Nuxt3
+## Guide utilisateur
 
-## Build Setup
+- [Rédiger un article de blog](docs/user-guide/01_writing_blog_post.md)
+- [Publier un article](docs/user-guide/02_publishing_article.md)
+- [Gérer les auteurs](docs/user-guide/03_managing_authors.md)
 
-**Requires Node.js 20+**
+## Documentation technique
 
-```bash
-# install dependencies
-npm install
+- [Architecture globale](docs/technical/01_architecture.md)
+- [Intégration Notion](docs/technical/02_notion_integration.md)
+- [Intégration GitHub](docs/technical/03_github_integration.md)
+- [Génération de Markdown](docs/technical/04_markdown_generation.md)
+- [Configuration Nuxt](docs/technical/05_nuxt_configuration.md)
+- [Déploiement](docs/technical/06_deployment.md)
 
-# serve in dev mode, with hot reload at localhost:5173
-npm run dev
+## API
 
-# build for production
-npm run build
+- [API Notion](docs/api/01_notion_api.md)
+- [API GitHub](docs/api/02_github_api.md)
+- [API Slack](docs/api/03_slack_api.md)
 
-# serve in production mode
-npm run  preview
-
-```
-
-## User Documentation
-
-- [Comment publier un article de blog ?](/docs/01_publish_blog_post.md)
-- [Comment ajouter un nouvel auteur ?](/docs/02_add_new_author.md)
+Pour plus d'informations sur l'utilisation du blog, veuillez consulter notre [documentation utilisateur sur Notion](https://www.notion.so/hoppr-tech/Blog-HoppR-2cb814dde33e4356b0034a4457d6d3c4?p=95fafd7733564616b75bc8947216a4da&pm=s).

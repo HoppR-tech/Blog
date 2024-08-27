@@ -1,5 +1,7 @@
 # Intégration Notion
 
+L'intégration avec Notion est un composant clé du Blog HoppR, permettant une gestion efficace du contenu et une collaboration fluide entre les auteurs.
+
 ## Configuration de l'API et authentification
 
 L'intégration avec Notion utilise l'API officielle de Notion. La configuration et l'authentification sont gérées dans le dossier `/server/services/notion`. Les clés d'API et autres paramètres de configuration sont stockés de manière sécurisée et ne sont pas exposés publiquement.
@@ -29,5 +31,3 @@ Le mappage des structures Notion vers le format d'article de blog se fait en plu
 4. **Création de la structure finale** : Toutes ces informations sont combinées pour créer un objet `PageContent` qui représente l'article de blog complet.
 
 Le résultat final est une structure qui peut être facilement utilisée par le système de blog pour générer les pages Markdown et les métadonnées associées.
-
-Cette approche permet une transition fluide du contenu de Notion vers le format requis par le blog, tout en préservant le contenu initial et les métadonnées importantes.

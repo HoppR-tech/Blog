@@ -1,7 +1,12 @@
 import type { NotionBlock } from '@/types/notion'
 
 function extractText(blockContent: any): string {
-  return blockContent?.rich_text.map((text: any) => text.plain_text).join('')
+  return blockContent?.rich_text.map((text: any) => {
+    if (text.href)
+      return `[${text.plain_text}](${text.href})`
+
+    return text.plain_text
+  }).join('')
 }
 
 function codeToMarkdown(block: any): string {

@@ -85,4 +85,22 @@ describe('blockConverter', () => {
     expect(markdownContent).toBe('')
     expect(images).toEqual([])
   })
+
+  it('should convert paragraphs with links to markdown', () => {
+    const blocks = [
+      {
+        type: 'paragraph',
+        paragraph: {
+          rich_text: [
+            { plain_text: 'Ceci est un ', href: null },
+            { plain_text: 'lien', href: 'https://example.com' },
+            { plain_text: ' dans un paragraphe.', href: null },
+          ],
+        },
+      },
+    ]
+    const { markdownContent } = convertBlocksToMarkdown(blocks)
+
+    expect(markdownContent).toBe('Ceci est un [lien](https://example.com) dans un paragraphe.\n\n')
+  })
 })

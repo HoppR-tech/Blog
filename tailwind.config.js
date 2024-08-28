@@ -11,9 +11,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        opensans: ['Open Sans', 'sans-serif'],
-        inter: ['Inter', 'sans-serif'],
-        varela: ['Varela Round', 'sans-serif'],
+        fira: ['Fira Sans', 'sans-serif'],
+        orbitron: ['Orbitron', 'sans-serif'],
+        luciole: ['Luciole', 'sans-serif'],
       },
       colors: {
         'hoppr-black': '#23272A',

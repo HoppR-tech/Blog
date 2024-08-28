@@ -35,7 +35,7 @@ function toggleSearch() {
 
 <template>
   <div>
-    <div class="bg-hoppr-purple fixed top-0 left-0 right-0 z-50">
+    <div class="bg-hoppr-purple fixed top-0 left-0 right-0 z-1000">
       <nav class="container px-6 py-2 mx-auto">
         <div class="flex items-center justify-between">
           <div class="flex items-center">
@@ -44,7 +44,7 @@ function toggleSearch() {
             <div class="flex flex-col">
               <router-link
                 to="/"
-                class="text-xl font-bold text-gray-100 md:text-2xl hover:text-hoppr-green font-varela"
+                class="text-xl font-bold text-gray-100 md:text-2xl hover:text-hoppr-green font-orbitron"
               >
                 HoppR Tech
               </router-link>
@@ -52,8 +52,8 @@ function toggleSearch() {
                 <ul class="flex space-x-4">
                   <li v-for="(item, index) in menuItems" :key="index">
                     <NuxtLink
-                      :to="item.to" class="text-sm text-gray-100 hover:text-hoppr-green font-varela" :class="{
-                        'text-hoppr-green font-semibold font-varela': (path === item.path && item.path !== 'about') || (item.path === 'blogs' && isSearchActive),
+                      :to="item.to" class="text-sm text-gray-100 hover:text-hoppr-green font-fira font-light tracking-wider" :class="{
+                        'text-hoppr-green font-semibold font-fira': (path === item.path && item.path !== 'about') || (item.path === 'blogs' && isSearchActive),
                       }" :target="item.path === 'about' ? '_blank' : '_self'"
                       :rel="item.path === 'about' ? 'noopener noreferrer' : ''"
                     >

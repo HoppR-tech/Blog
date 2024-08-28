@@ -94,7 +94,7 @@ async function submitForm() {
           trouver des solutions concrètes à vos problématiques.
         </p>
         <button
-          class="w-full bg-hoppr-green text-hoppr-black px-6 py-3 rounded-md hover:bg-opacity-90 transition-colors duration-300 flex items-center justify-center"
+          class="w-full bg-hoppr-green text-hoppr-black px-6 py-3 rounded-md transition-all duration-300 hover:bg-hoppr-black hover:text-hoppr-green dark:bg-hoppr-green dark:text-hoppr-black dark:hover:bg-zinc-200 dark:hover:text-hoppr-green flex items-center justify-center"
           @click="openModal"
         >
           <Icon name="mdi:handshake" class="mr-2" />
@@ -142,7 +142,7 @@ async function submitForm() {
             >
               Annuler
             </button>
-            <button type="submit" class="px-4 py-2 bg-hoppr-green text-hoppr-black rounded-md hover:bg-opacity-90 font-semibold">
+            <button type="submit" class="px-4 py-2 bg-hoppr-green text-hoppr-black rounded-md transition-all duration-300 hover:bg-hoppr-black hover:text-hoppr-green dark:bg-hoppr-green dark:text-hoppr-black dark:hover:bg-zinc-200 dark:hover:text-hoppr-green font-semibold">
               Envoyer
             </button>
           </div>

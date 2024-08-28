@@ -66,6 +66,7 @@ defineOgImage({
         :count="topic[1]"
         :index="index"
         :total-categories="filteredTags.size"
+        class="w-full sm:w-auto tracking-wider"
       />
     </div>
   </main>

@@ -79,11 +79,11 @@ useHead({
   }
 
   body {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Luciole', sans-serif;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Fira Sans', sans-serif;
   }
 }
 

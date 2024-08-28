@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="text-black dark:text-zinc-300   text-base font-semibold">
+    <p class="text-black dark:text-zinc-300 text-xl font-semibold">
       Contactez-nous
     </p>
     <p class="dark:text-zinc-300  ">
@@ -13,7 +13,7 @@
 
     <a
       href="mailto: hello@hoppr.tech"
-      class="block text-center w-full bg-hoppr-green p-2 rounded-lg text-hoppr-black font-semibold mt-3 text-sm hover:bg-opacity-80 transition-colors duration-300"
+      class="block text-center w-full bg-hoppr-green text-hoppr-black p-2 rounded-lg font-semibold mt-3 text-sm transition-all duration-300 hover:bg-hoppr-black hover:text-hoppr-green dark:bg-hoppr-green dark:text-hoppr-black dark:hover:bg-zinc-200 dark:hover:text-hoppr-green"
     >
       Nous contacter
     </a>

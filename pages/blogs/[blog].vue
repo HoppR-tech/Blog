@@ -136,11 +136,15 @@ defineOgImageComponent('About', {
         />
         <div
           class="prose prose-pre:max-w-xs sm:prose-pre:max-w-full prose-base sm:prose-base lg:prose-lg
-            prose-h1:text-2xl sm:prose-h1:text-3xl lg:prose-h1:text-4xl
+            prose-h1:text-3xl sm:prose-h1:text-4xl lg:prose-h1:text-5xl prose-h1:font-bold prose-h1:text-hoppr-green prose-h1:mt-8 prose-h1:mb-6 prose-h1:border-b prose-h1:border-hoppr-green prose-h1:pb-2
             prose-h2:text-xl sm:prose-h2:text-2xl lg:prose-h2:text-3xl
             prose-h3:text-lg sm:prose-h3:text-xl lg:prose-h3:text-2xl
             prose-p:text-base sm:prose-p:text-base lg:prose-p:text-lg
-            prose-h1:no-underline max-w-5xl mx-auto prose-zinc dark:prose-invert prose-img:rounded-lg"
+            prose-h1:no-underline max-w-5xl mx-auto prose-zinc dark:prose-invert prose-img:rounded-lg
+            prose-headings:font-bold
+            prose-a:text-hoppr-green prose-a:no-underline prose-a:border-b prose-a:border-hoppr-green prose-a:border-opacity-30 hover:prose-a:border-opacity-100 hover:prose-a:bg-hoppr-green hover:prose-a:bg-opacity-10 transition-all duration-300 dark:prose-h1:border-zinc-700
+            prose-h2:border-l-4 prose-h2:border-hoppr-green prose-h2:pl-2
+            prose-h3:italic"
         >
           <ContentRenderer v-if="article" :value="article">
             <template #empty>
@@ -153,8 +157,7 @@ defineOgImageComponent('About', {
       <BlogToc />
     </div>
     <ContactCTA
-      :article-title="blogPostProps.title"
-      :article-link="path"
+      :article-title="blogPostProps.title" :article-link="path"
       :authors="authors.map(author => ({ name: author.name, id: author.notionId }))"
       :published-date="blogPostProps.date"
     />

@@ -42,10 +42,10 @@ async function submitForm() {
 
   try {
     const slackMessage = '📥🔥 Nous avons reçu un nouveau message du Blog HoppR !\n'
-    + `\`pour l'article\`: "${formData.articleTitle}"\n`
+    + `\`pour l\'article\`: "${formData.articleTitle}"\n`
     + `\`Ecrit par\`: ${formData.authors}\n`
     + `\`Publié le\`: ${new Date(formData.publishedDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}\n`
-    + `\`Lien vers l'article\`: ${formData.articleLink}\n`
+    + `\`Lien vers l\'article\`: ${formData.articleLink}\n`
     + '\n---\n\n'
     + `\`De\`: 👤 ${formData.name} | ✉️ *<mailto:${formData.email}|${formData.email}>*\n`
     + `\`Message\`: ${formData.message}\n`
@@ -94,7 +94,7 @@ async function submitForm() {
           trouver des solutions concrètes à vos problématiques.
         </p>
         <button
-          class="w-full bg-hoppr-green text-hoppr-black px-6 py-3 rounded-md transition-all duration-300 hover:bg-hoppr-black hover:text-hoppr-green dark:bg-hoppr-green dark:text-hoppr-black dark:hover:bg-zinc-200 dark:hover:text-hoppr-green flex items-center justify-center"
+          class="w-full bg-hoppr-green text-hoppr-black px-6 py-3 rounded-md transition-all duration-300 hover:bg-opacity-90 hover:shadow-lg hover:scale-105 dark:hover:bg-opacity-100 flex items-center justify-center"
           @click="openModal"
         >
           <Icon name="mdi:handshake" class="mr-2" />
@@ -142,14 +142,15 @@ async function submitForm() {
             >
               Annuler
             </button>
-            <button type="submit" class="px-4 py-2 bg-hoppr-green text-hoppr-black rounded-md transition-all duration-300 hover:bg-hoppr-black hover:text-hoppr-green dark:bg-hoppr-green dark:text-hoppr-black dark:hover:bg-zinc-200 dark:hover:text-hoppr-green font-semibold">
+            <button
+              type="submit"
+              class="px-4 py-2 bg-hoppr-green text-hoppr-black rounded-md transition-all duration-300 hover:bg-opacity-90 hover:shadow-md hover:scale-105 dark:hover:bg-opacity-100 font-semibold"
+            >
               Envoyer
             </button>
           </div>
           <div
-            v-if="messageStatus !== 'idle'"
-            class="mt-4 p-2 rounded-md text-center"
-            :class="{
+            v-if="messageStatus !== 'idle'" class="mt-4 p-2 rounded-md text-center" :class="{
               'bg-hoppr-green bg-opacity-20 text-hoppr-black dark:text-white': messageStatus === 'success',
               'bg-hoppr-red bg-opacity-20 text-hoppr-black dark:text-white': messageStatus === 'error',
             }"

@@ -11,7 +11,11 @@
         </p>
       </div>
       <div class="px-6 justify-self-center">
-        <LogoBlogimg class="w-full h-auto" alt="Image avec un lego et un mur écrit blog derrière" />
+        <LogoBlogimg
+          class="w-full h-auto"
+          alt="Image avec un lego et un mur écrit blog derrière"
+          aria-label="Illustration du blog HoppR Tech"
+        />
       </div>
     </div>
   </section>

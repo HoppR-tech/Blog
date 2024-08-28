@@ -13,7 +13,7 @@
 
     <a
       href="mailto: hello@hoppr.tech"
-      class="block text-center w-full bg-hoppr-green text-hoppr-black p-2 rounded-lg font-semibold mt-3 text-sm transition-all duration-300 hover:bg-hoppr-black hover:text-hoppr-green dark:bg-hoppr-green dark:text-hoppr-black dark:hover:bg-zinc-200 dark:hover:text-hoppr-green"
+      class="block text-center w-full bg-hoppr-green text-hoppr-black p-2 rounded-lg font-semibold mt-3 text-sm transition-all duration-300 hover:bg-opacity-90 hover:shadow-lg hover:scale-105 dark:hover:bg-opacity-100"
     >
       Nous contacter
     </a>

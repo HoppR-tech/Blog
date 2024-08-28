@@ -20,6 +20,7 @@ useHead({
     // Test on: https://developers.facebook.com/tools/debug/ or https://socialsharepreview.com/
     { property: 'og:site_name', content: mySite },
     { property: 'og:type', content: 'website' },
+    { property: 'og:locale', content: 'fr_FR' },
     {
       property: 'og:url',
       content: mySite,
@@ -37,7 +38,8 @@ useHead({
       content: image,
     },
     // Test on: https://cards-dev.twitter.com/validator or https://socialsharepreview.com/
-    { name: 'twitter:site', content: '@qdnvubp' },
+    { name: 'twitter:site', content: '@HoppR_Tech' },
+    { name: 'twitter:creator', content: '@HoppR_Tech' },
     { name: 'twitter:card', content: 'summary_large_image' },
     {
       name: 'twitter:url',

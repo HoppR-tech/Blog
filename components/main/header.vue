@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, defineAsyncComponent, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import SearchBar from '~/components/blog/SearchBar.vue'
 import LogoSvg from '~/components/logo/headerLogo.vue'
@@ -74,7 +74,7 @@ function toggleSearch() {
                   aria-label="Activer le mode sombre"
                   @click="onClick"
                 >
-                  <Icon name="mdi:weather-night" size="24" class="transform transition-transform duration-300 group-hover:rotate-12" />
+                  <LazyIcon name="mdi:weather-night" size="24" class="transform transition-transform duration-300 group-hover:rotate-12" />
                 </button>
                 <button
                   v-else
@@ -82,7 +82,7 @@ function toggleSearch() {
                   aria-label="Activer le mode clair"
                   @click="onClick"
                 >
-                  <Icon name="mdi:weather-sunny" size="24" class="transform transition-transform duration-300 group-hover:rotate-12" />
+                  <LazyIcon name="mdi:weather-sunny" size="24" class="transform transition-transform duration-300 group-hover:rotate-12" />
                 </button>
               </ClientOnly>
             </div>
@@ -114,7 +114,7 @@ function toggleSearch() {
       <div v-if="showMenu" class="fixed top-0 left-0 right-0 bottom-0 bg-hoppr-purple z-50 lg:hidden">
         <div class="flex justify-end p-4">
           <button class="text-white" aria-label="Fermer le menu de navigation" @click="closeMenu">
-            <Icon name="mdi:close" size="24" />
+            <LazyIcon name="mdi:close" size="24" />
           </button>
         </div>
         <ul class="flex flex-col mt-16 space-y-2 px-6 py-4">
@@ -133,13 +133,15 @@ function toggleSearch() {
             <SearchBar ref="searchBarRef" @close="closeMenu" />
           </li>
           <li class="flex items-center justify-between py-2" @click="onClick">
-            <span class="text-gray-100">Thème clair / sombre</span>
+            <span class="text-gray-100">
+              {{ colorMode.value === 'light' ? 'Passer au thème sombre' : 'Passer au thème clair' }}
+            </span>
             <ClientOnly>
               <button
                 class="p-2 text-white hover:text-hoppr-green rounded-full transition-colors duration-300 group"
                 :aria-label="colorMode.value === 'light' ? 'Activer le mode sombre' : 'Activer le mode clair'"
               >
-                <Icon
+                <LazyIcon
                   :name="colorMode.value === 'light' ? 'mdi:weather-night' : 'mdi:weather-sunny'"
                   size="20"
                   class="transform transition-transform duration-300 group-hover:rotate-12"

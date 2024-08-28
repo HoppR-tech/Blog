@@ -3,7 +3,16 @@ import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
-const { data } = await useAsyncData('home', () => queryContent('/blogs').sort({ _id: -1 }).find())
+const { data, error } = await useAsyncData('all-blog-post', () =>
+  queryContent('/blogs')
+    .sort({ date: -1 })
+    .find()
+    .catch((err) => {
+      console.error('Erreur lors de la récupération des articles:', err)
+      error.value = 'Impossible de charger les articles. Veuillez réessayer plus tard.'
+      return []
+    }),
+)
 
 const elementPerPage = ref(5)
 const pageNumber = ref(1)
@@ -105,6 +114,10 @@ defineOgImage({
   <main class="container max-w-5xl mx-auto text-zinc-600">
     <ArchiveHero />
 
+    <div v-if="error" class="px-6 py-4 bg-red-100 border border-red-400 text-red-700 rounded">
+      {{ error }}
+    </div>
+
     <div class="px-6">
       <label for="search-input" class="sr-only">Rechercher un article</label>
       <input
@@ -117,7 +130,15 @@ defineOgImage({
     </div>
 
     <ClientOnly>
-      <div v-auto-animate class="space-y-5 my-5 px-4">
+      <div v-if="isLoading" class="space-y-5 my-5 px-4">
+        <BlogLoader />
+        <BlogLoader />
+        <BlogLoader />
+      </div>
+      <div v-else-if="error" class="space-y-5 my-5 px-4">
+        <p>{{ error }}</p>
+      </div>
+      <div v-else v-auto-animate class="space-y-5 my-5 px-4">
         <template v-for="post in paginatedData" :key="post.title">
           <ArchiveCard
             :path="post.path"
@@ -141,6 +162,7 @@ defineOgImage({
 
       <template #fallback>
         <!-- this will be rendered on server side -->
+        <BlogLoader />
         <BlogLoader />
         <BlogLoader />
       </template>

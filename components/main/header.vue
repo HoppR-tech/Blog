@@ -52,9 +52,12 @@ function toggleSearch() {
                 <ul class="flex space-x-4">
                   <li v-for="(item, index) in menuItems" :key="index">
                     <NuxtLink
-                      :to="item.to" class="text-sm text-gray-100 hover:text-hoppr-green font-fira font-light tracking-wider" :class="{
-                        'text-hoppr-green font-semibold font-fira': (path === item.path && item.path !== 'about') || (item.path === 'blogs' && isSearchActive),
-                      }" :target="item.path === 'about' ? '_blank' : '_self'"
+                      :to="item.to"
+                      class="text-sm text-gray-100 hover:text-hoppr-green font-luciole font-lightest uppercase tracking-wider pb-1 border-b-2 border-transparent transition-all duration-300"
+                      :class="{
+                        'text-hoppr-green font-bold border-hoppr-green': (path === item.path && item.path !== 'about') || (item.path === 'blogs' && isSearchActive),
+                      }"
+                      :target="item.path === 'about' ? '_blank' : '_self'"
                       :rel="item.path === 'about' ? 'noopener noreferrer' : ''"
                     >
                       {{ item.label }}
@@ -120,19 +123,19 @@ function toggleSearch() {
         <ul class="flex flex-col mt-16 space-y-2 px-6 py-4">
           <li v-for="(item, index) in menuItems" :key="index">
             <NuxtLink
-              :to="item.to" class="block py-2 text-gray-100 hover:text-hoppr-green"
-              :class="{ 'text-hoppr-green font-semibold': path === item.path && item.path !== 'about' }"
+              :to="item.to" class="block py-2 text-gray-100 hover:text-hoppr-green uppercase tracking-wider"
+              :class="{ 'text-hoppr-green font-bold': path === item.path && item.path !== 'about' }"
               :target="item.path === 'about' ? '_blank' : '_self'"
               :rel="item.path === 'about' ? 'noopener noreferrer' : ''" @click="closeMenu"
             >
               {{ item.label }}
             </NuxtLink>
           </li>
-          <li class="flex items-center justify-between py-2" @click="toggleSearch">
+          <li class="flex items-center justify-between py-2 uppercase tracking-wider" @click="toggleSearch">
             <span class="text-gray-100 cursor-pointer">Recherche</span>
             <SearchBar ref="searchBarRef" @close="closeMenu" />
           </li>
-          <li class="flex items-center justify-between py-2" @click="onClick">
+          <li class="flex items-center justify-between py-2 uppercase tracking-wider" @click="onClick">
             <span class="text-gray-100">
               {{ colorMode.value === 'light' ? 'Passer au thème sombre' : 'Passer au thème clair' }}
             </span>

@@ -63,7 +63,8 @@ export default defineNuxtConfig({
         region: 'europe-west1',
         maxInstances: 3,
       },
-      nodeVersion: '20'
+      nodeVersion: '20',
+      serverFunctionName: 'server',
     },
     preset: 'firebase',
     prerender: {
@@ -120,16 +121,16 @@ export default defineNuxtConfig({
   modules: [
     'nuxt-icon',
     '@vueuse/nuxt',
-    'nuxt-og-image',
-    'nuxt-content-assets', // make sure to add before @nuxt/content !
+    'nuxt-og-image', // make sure to add before @nuxt/content !
+    'nuxt-content-assets',
     '@nuxt/content',
     '@nuxtjs/robots',
     '@nuxtjs/fontaine',
     '@nuxtjs/color-mode',
-    'nuxt-simple-sitemap',
     '@nuxtjs/tailwindcss',
     'nuxt-purgecss',
     '@nuxt/devtools',
+    '@nuxtjs/sitemap',
     ...(import.meta.env.NODE_ENV === 'test' ? ['@nuxt/test-utils/module'] : []),
   ],
 

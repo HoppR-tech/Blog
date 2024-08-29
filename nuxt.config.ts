@@ -57,7 +57,15 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    preset: 'vercel',
+    firebase: {
+      gen: 2,
+      httpsOptions: {
+        region: 'europe-west1',
+        maxInstances: 3,
+      },
+      nodeVersion: '20'
+    },
+    preset: 'firebase',
     prerender: {
       crawlLinks: true,
       routes: [

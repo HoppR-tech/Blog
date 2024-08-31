@@ -10,7 +10,7 @@ export default defineNuxtConfig({
       viewport: 'width=device-width,initial-scale=1',
       title: 'HoppR Blog',
       titleTemplate: '%s | HoppR Blog',
-      meta: [{ name: 'description', content: 'Blog Tech HoppR' }],
+      meta: [{ name: 'description', content: 'Blog Tech de HoppR' }],
     },
     pageTransition: { name: 'page', mode: 'out-in' },
     layoutTransition: { name: 'layout', mode: 'out-in' },

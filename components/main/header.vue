@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { computed, defineAsyncComponent, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import SearchBar from '~/components/blog/SearchBar.vue'
-import LogoSvg from '~/components/logo/headerLogo.vue'
+import SearchBar from '@/components/blog/SearchBar.vue'
+import LogoSvg from '@/components/logo/headerLogo.vue'
 
 const route = useRoute()
 const path = computed(() => route.fullPath.replace('/', ''))
@@ -22,7 +22,7 @@ function onClick() {
 const menuItems = [
   { label: 'Accueil', to: '/', path: '' },
   { label: 'Tous nos Articles', to: '/blogs', path: 'blogs' },
-  { label: 'Catégories', to: '/categories', path: 'categories' },
+  { label: 'Tags', to: '/tags', path: 'tags' },
   { label: 'À Propos', to: 'https://www.hoppr.tech/', path: 'about' },
 ]
 
@@ -44,23 +44,27 @@ function toggleSearch() {
             <div class="flex flex-col">
               <router-link
                 to="/"
-                class="text-xl font-bold text-gray-100 md:text-2xl hover:text-hoppr-green font-orbitron"
+                class="text-xl font-bold text-gray-100 md:text-2xl hover:text-hoppr-green font-orbitron mb-2"
               >
                 HoppR Tech
               </router-link>
               <div class="hidden lg:flex lg:items-center mt-1">
                 <ul class="flex space-x-4">
-                  <li v-for="(item, index) in menuItems" :key="index">
+                  <li v-for="(item, index) in menuItems" :key="index" class="relative">
                     <NuxtLink
                       :to="item.to"
-                      class="text-sm text-gray-100 hover:text-hoppr-green font-luciole font-lightest uppercase tracking-wider pb-1 border-b-2 border-transparent transition-all duration-300"
+                      class="text-sm text-gray-100 hover:text-hoppr-green font-luciole font-lightest uppercase tracking-wider pb-1 transition-all duration-300 relative"
                       :class="{
-                        'text-hoppr-green font-bold border-hoppr-green': (path === item.path && item.path !== 'about') || (item.path === 'blogs' && isSearchActive),
+                        'text-hoppr-green': (path === item.path && item.path !== 'about') || (item.path === 'blogs' && isSearchActive),
                       }"
                       :target="item.path === 'about' ? '_blank' : '_self'"
                       :rel="item.path === 'about' ? 'noopener noreferrer' : ''"
                     >
                       {{ item.label }}
+                      <span 
+                        class="absolute bottom-0 left-0 w-full h-0.5 bg-hoppr-green transform scale-x-0 transition-transform duration-300"
+                        :class="{ 'scale-x-100': (path === item.path && item.path !== 'about') || (item.path === 'blogs' && isSearchActive) }"
+                      ></span>
                     </NuxtLink>
                   </li>
                 </ul>
@@ -106,7 +110,6 @@ function toggleSearch() {
         </div>
       </nav>
     </div>
-
     <!-- Menu mobile -->
     <transition
       enter-active-class="transition duration-300 ease-out"

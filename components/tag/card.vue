@@ -3,14 +3,14 @@ interface Props {
   title: string
   count: number
   index: number
-  totalCategories: number
+  totalTags: number
 }
 
 const props = withDefaults(defineProps<Props>(), {
   title: 'No title available',
   count: 0,
   index: 0,
-  totalCategories: 1,
+  totalTags: 1,
 })
 
 const colors = {
@@ -57,7 +57,7 @@ const picAColor = computed(() => {
     class="px-5 py-3 rounded
     rand-bg-color hover:scale-110 transition-all duration-300"
   >
-    <NuxtLink :to="`/categories/${title.toLocaleLowerCase()}`" class="text-lg font-extrabold">
+    <NuxtLink :to="`/tags/${title.toLocaleLowerCase()}`" class="text-lg font-extrabold">
       <h1 :class="{ 'text-white': colorMode.value === 'light', 'text-hoppr-black': colorMode.value === 'dark' }">
         #{{ title }} ({{ count }})
       </h1>

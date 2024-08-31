@@ -1,10 +1,9 @@
 <template>
-  <div class="gd-container font-luciole">
+  <div class="gd-container mt-16 sm:mt-18 md:mt-20 lg:mt-24 font-luciole">
     <header class="fixed w-full bg-[#F1F2F4] dark:bg-slate-950 z-10">
       <MainHeader />
     </header>
     <main id="main">
-      <div class="p-9" />
       <slot />
     </main>
     <footer>

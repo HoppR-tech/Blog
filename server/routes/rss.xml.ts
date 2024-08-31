@@ -32,14 +32,14 @@ export default defineEventHandler(async (event) => {
       description: post.description,
       url,
       guid: url,
-      categories: post.tags,
+      tags: post.tags,
       author: post.authors.map((author: { name: string }) => author.name).join(', '),
       date: new Date(post.date),
       enclosure: {
         url: post.image,
         type: 'image/webp',
       },
-    })
+    } as RSS.ItemOptions)
   }
 
   event.node.res.setHeader('Content-Type', 'application/xml')

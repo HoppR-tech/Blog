@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { makeFirstCharUpper } from '@/utils/helper'
 
-const { data } = await useAsyncData('all-blog-post-for-category', () => queryContent('/blogs').sort({ _id: -1 }).find())
+const { data } = await useAsyncData('all-blog-post-for-tag', () => queryContent('/blogs').sort({ _id: -1 }).find())
 
 const allTags = new Map()
 
@@ -29,7 +29,7 @@ const filteredTags = computed(() => {
 })
 
 useHead({
-  title: 'Categories',
+  title: 'Tags',
   meta: [
     {
       name: 'description',
@@ -44,7 +44,7 @@ useHead({
 const siteData = useSiteConfig()
 defineOgImage({
   props: {
-    title: 'Categories',
+    title: 'Tags',
     description: 'Tous les sujets sur lesquels nous avons écrit un article ou sur lesquels nous allons écrire un article prochainement sont listés ci-dessous.',
     siteName: siteData.url,
   },
@@ -53,7 +53,7 @@ defineOgImage({
 
 <template>
   <main class="container max-w-5xl mx-auto text-zinc-600">
-    <CategoryHero />
+    <TagHero />
     <div class="px-6 mt-8">
       <input
         v-model="searchQuery" type="text" placeholder="Rechercher une catégorie"
@@ -61,11 +61,11 @@ defineOgImage({
       >
     </div>
     <div class="flex flex-wrap px-6 mt-6 gap-3">
-      <CategoryCard
+      <TagCard
         v-for="(topic, index) in filteredTags" :key="topic[0]" :title="makeFirstCharUpper(topic[0])"
         :count="topic[1]"
         :index="index"
-        :total-categories="filteredTags.size"
+        :total-tags="filteredTags.size"
         class="w-full sm:w-auto tracking-wider"
       />
     </div>

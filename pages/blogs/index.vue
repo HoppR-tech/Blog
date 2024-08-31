@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { NuxtError } from 'nuxt/app';
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
@@ -7,9 +8,9 @@ const { data, error } = await useAsyncData('all-blog-post', () =>
   queryContent('/blogs')
     .sort({ date: -1 })
     .find()
-    .catch((err) => {
+    .catch((err: Error) => {
       console.error('Erreur lors de la récupération des articles:', err)
-      error.value = 'Impossible de charger les articles. Veuillez réessayer plus tard.'
+      error.value = { statusCode: 500, message: 'Impossible de charger les articles. Veuillez réessayer plus tard.' } as NuxtError
       return []
     }),
 )
@@ -17,6 +18,7 @@ const { data, error } = await useAsyncData('all-blog-post', () =>
 const elementPerPage = ref(5)
 const pageNumber = ref(1)
 const searchTest = ref('')
+const isLoading = ref(true)
 
 watch(() => route.query.search, (newSearch) => {
   if (newSearch) {
@@ -26,6 +28,11 @@ watch(() => route.query.search, (newSearch) => {
   else {
     searchTest.value = ''
   }
+}, { immediate: true })
+
+watch(data, (newData) => {
+  if (newData !== undefined)
+    isLoading.value = false
 }, { immediate: true })
 
 const formattedData = computed(() => {

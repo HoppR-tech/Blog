@@ -10,7 +10,7 @@ const props = defineProps<Props>()
 
 <template>
   <div class="py-5 border-t dark:border-zinc-500 mt-5 text-zinc-700 dark:text-zinc-300">
-    <div class="container max-w-5xl mx-auto">
+    <div class="container max-w-6xl mx-auto">
       <h3 class="text-xl font-semibold mb-4 text-center">
         À propos des auteurs
       </h3>

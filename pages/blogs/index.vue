@@ -118,7 +118,7 @@ defineOgImage({
 </script>
 
 <template>
-  <main class="container max-w-5xl mx-auto text-zinc-600">
+  <main class="container max-w-6xl mx-auto text-zinc-600">
     <ArchiveHero />
 
     <div v-if="error" class="px-6 py-4 bg-red-100 border border-red-400 text-red-700 rounded">

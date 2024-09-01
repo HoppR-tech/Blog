@@ -90,5 +90,5 @@ function formatDate(dateString: string) {
       </div>
     </div>
   </header>
-  <hr class="border-t border-gray-300 dark:border-zinc-700 my-8 w-full max-w-5xl mx-auto">
+  <hr class="border-t border-gray-300 dark:border-zinc-700 my-8 w-full max-w-6xl mx-auto">
 </template>

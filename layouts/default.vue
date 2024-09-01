@@ -1,5 +1,5 @@
 <template>
-  <div class="gd-container mt-16 sm:mt-18 md:mt-20 lg:mt-24 font-luciole">
+  <div class="gd-container font-luciole">
     <header class="fixed w-full bg-[#F1F2F4] dark:bg-slate-950 z-10">
       <MainHeader />
     </header>
@@ -14,7 +14,7 @@
 
 <style scoped>
 #main{
-  margin-top: 40px;
+  margin-top: 8rem;
 }
 
 .gd-container {

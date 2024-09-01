@@ -54,7 +54,7 @@ defineOgImage({
 </script>
 
 <template>
-  <main class="container max-w-5xl mx-auto text-zinc-600">
+  <main class="container max-w-6xl mx-auto text-zinc-600">
     <TagHero />
     <div class="px-6 mt-8">
       <input

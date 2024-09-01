@@ -127,7 +127,7 @@ defineOgImageComponent('About', {
 
 <template>
   <div>
-    <div class="px-6 container max-w-5xl mx-auto sm:grid grid-cols-12 gap-x-12 ">
+    <div class="px-6 container max-w-6xl mx-auto sm:grid grid-cols-12 gap-x-12 ">
       <div class="col-span-12 lg:col-span-9">
         <BlogHeader
           :title="blogPostProps.title" :image="blogPostProps.image" :alt="blogPostProps.alt"
@@ -140,7 +140,7 @@ defineOgImageComponent('About', {
             prose-h2:text-xl sm:prose-h2:text-2xl lg:prose-h2:text-3xl
             prose-h3:text-lg sm:prose-h3:text-xl lg:prose-h3:text-2xl
             prose-p:text-base sm:prose-p:text-base lg:prose-p:text-lg
-            prose-h1:no-underline max-w-5xl mx-auto prose-zinc dark:prose-invert prose-img:rounded-lg
+            prose-h1:no-underline max-w-6xl mx-auto prose-zinc dark:prose-invert prose-img:rounded-lg
             prose-headings:font-bold
             prose-a:text-hoppr-green prose-a:no-underline prose-a:border-b prose-a:border-hoppr-green prose-a:border-opacity-30 hover:prose-a:border-opacity-100 hover:prose-a:bg-hoppr-green hover:prose-a:bg-opacity-10 transition-all duration-300 dark:prose-h1:border-zinc-700
             prose-h2:border-l-4 prose-h2:border-hoppr-green prose-h2:pl-2

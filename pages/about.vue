@@ -10,7 +10,7 @@ defineOgImageComponent('About', {
 
 <template>
   <div class="py-5">
-    <div class="sm:grid grid-cols-8 px-6 py-5 sm:py-9 gap-5 container max-w-5xl  mx-auto">
+    <div class="sm:grid grid-cols-8 px-6 py-5 sm:py-9 gap-5 container max-w-6xl  mx-auto">
       <div class="col-span-5  max-w-md">
         <div class="flex justify-between">
           <div>

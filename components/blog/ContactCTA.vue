@@ -80,7 +80,7 @@ async function submitForm() {
 </script>
 
 <template>
-  <div class="mt-8 mb-4 mx-auto max-w-5xl grid grid-cols-1 lg:grid-cols-4 gap-8 px-4 sm:px-6 lg:px-8">
+  <div class="mt-8 mb-4 mx-auto max-w-6xl grid grid-cols-1 lg:grid-cols-4 gap-8 px-4 sm:px-6 lg:px-8">
     <div class="lg:col-span-3 px-2">
       <div class="p-6 bg-gray-100 dark:bg-slate-900 rounded-lg border border-gray-300 dark:border-zinc-500">
         <div class="flex items-start mb-4">

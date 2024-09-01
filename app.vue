@@ -37,6 +37,10 @@ useHead({
       property: 'og:image',
       content: image,
     },
+    {
+      property: 'og:image:secure_url',
+      content: image.startsWith('https://') ? image : `https://${mySite.replace('https://', '')}${image}`,
+    },
     // Test on: https://cards-dev.twitter.com/validator or https://socialsharepreview.com/
     { name: 'twitter:site', content: '@HoppR_Tech' },
     { name: 'twitter:creator', content: '@HoppR_Tech' },

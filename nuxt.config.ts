@@ -57,15 +57,6 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    // firebase: {
-    //   gen: 2,
-    //   httpsOptions: {
-    //     region: 'europe-west1',
-    //     maxInstances: 3,
-    //   },
-    //   nodeVersion: '20',
-    //   serverFunctionName: 'server',
-    // },
     preset: 'netlify',
     prerender: {
       crawlLinks: true,
@@ -90,8 +81,7 @@ export default defineNuxtConfig({
   },
 
   colorMode: {
-    classSuffix: '',
-    preference: 'dark',
+    preference: 'system',
     fallback: 'light',
   },
 
@@ -121,8 +111,8 @@ export default defineNuxtConfig({
   modules: [
     'nuxt-icon',
     '@vueuse/nuxt',
-    'nuxt-og-image', // make sure to add before @nuxt/content !
-    'nuxt-content-assets',
+    'nuxt-og-image',
+    'nuxt-content-assets', // Assurez-vous d'ajouter cela avant '@nuxt/content' !
     '@nuxt/content',
     '@nuxtjs/robots',
     '@nuxtjs/fontaine',

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { NuxtError } from 'nuxt/app';
+import type { NuxtError } from 'nuxt/app'
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 

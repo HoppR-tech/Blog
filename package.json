@@ -58,7 +58,7 @@
     "nock": "^13.5.4",
     "nuxt": "^3.12.4",
     "nuxt-icon": "^0.6.10",
-    "nuxt-og-image": "^3.0.0-rc.38",
+    "nuxt-og-image": "latest",
     "nuxt-purgecss": "^2.0.0",
     "playwright-core": "^1.46.0",
     "postcss": "^8.4.41",

@@ -1,5 +1,7 @@
 # Blog HoppR - Documentation
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/136e6390-f800-44d7-90b4-c5074a4c65cc/deploy-status)](https://app.netlify.com/sites/blog-hoppr-tech/deploys)
+
 Bienvenue dans la documentation du Blog HoppR. Ce projet est une plateforme de blog moderne utilisant Nuxt.js, intégrant Notion pour la gestion de contenu et GitHub pour le contrôle de version.
 
 ## Table des matières

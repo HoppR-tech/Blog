@@ -1,5 +1,7 @@
 <script lang="ts" setup>
-import { makeFirstCharUpper } from '@/utils/helper'
+import { makeFirstCharUpper } from '../../utils/helper'
+import { defineOgImage, useHead, useSiteConfig, useAsyncData, queryContent } from '#imports'
+import { ref, computed } from 'vue'
 
 const { data } = await useAsyncData('all-blog-post-for-tag', () => queryContent('/blogs').sort({ _id: -1 }).find())
 

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+
 const route = useRoute()
 
 // Récupérer la catégorie depuis les paramètres de route et la convertir en minuscules

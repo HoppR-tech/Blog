@@ -2,16 +2,37 @@ import { createBranch, deleteBranch } from './branchManager'
 import { createPullRequest, mergePullRequest } from './pullRequestManager'
 import { uploadAllImages, uploadCoverImage } from './imageUploader'
 import { uploadToGitHub } from './contentUploader'
-import type { OctokitInterface } from '@/types/github'
+import { Octokit } from 'octokit'
 import { createFolderName } from '@/utils/stringUtils'
 import type { BlogPost } from '@/types/blog'
 import type { NotionService } from '@/server/services/notion/notionService'
+import { GITHUB_OWNER, GITHUB_REPO } from '@/server/config/githubConfig'
 
 export class GitHubService {
   constructor(
-    private octokit: OctokitInterface,
+    private octokit: Octokit,
     private notionService: NotionService,
   ) {}
+
+  async checkGitHubAccess() {
+    try {
+      console.log('Vérification de l\'accès GitHub...')
+      const { data: appData } = await this.octokit.rest.apps.getAuthenticated()
+      // console.log('Données de l\'application:', appData)
+
+      const { data: repoData } = await this.octokit.rest.repos.get({
+        owner: GITHUB_OWNER,
+        repo: GITHUB_REPO,
+      })
+      console.log('Accès au repository confirmé:', repoData.full_name)
+
+      return true
+    }
+    catch (error: any) {
+      console.error('Erreur lors de la vérification de l\'accès GitHub:', error.message)
+      return false
+    }
+  }
 
   async publishPostToGitHub(post: BlogPost) {
     const currentDate = new Date().toISOString().split('T')[0]

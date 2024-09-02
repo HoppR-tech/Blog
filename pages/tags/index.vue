@@ -1,7 +1,7 @@
 <script lang="ts" setup>
+import { computed, ref } from 'vue'
 import { makeFirstCharUpper } from '../../utils/helper'
-import { defineOgImage, useHead, useSiteConfig, useAsyncData, queryContent } from '#imports'
-import { ref, computed } from 'vue'
+import { defineOgImage, useHead } from '#imports'
 
 const { data } = await useAsyncData('all-blog-post-for-tag', () => queryContent('/blogs').sort({ _id: -1 }).find())
 
@@ -54,17 +54,19 @@ defineOgImage({
 </script>
 
 <template>
-  <main class="container max-w-6xl mx-auto text-zinc-600">
+  <main class="container max-w-5xl mx-auto text-zinc-600">
     <TagHero />
     <div class="px-6 mt-8">
       <input
-        v-model="searchQuery" type="text" placeholder="Rechercher une catégorie"
+        v-model="searchQuery" type="text" placeholder="Rechercher un tag"
         class="block w-full bg-[#F1F2F4] dark:bg-slate-900 dark:placeholder-zinc-500 text-zinc-800 dark:text-zinc-300 rounded-md border-gray-300 dark:border-zinc-500 shadow-sm focus:border-hoppr-green focus:ring focus:ring-hoppr-green focus:ring-opacity-50"
       >
     </div>
     <div class="flex flex-wrap px-6 mt-6 gap-3">
       <TagCard
-        v-for="(topic, index) in filteredTags" :key="topic[0]" :title="makeFirstCharUpper(topic[0])"
+        v-for="(topic, index) in filteredTags"
+        :key="topic[0]"
+        :title="makeFirstCharUpper(topic[0])"
         :count="topic[1]"
         :index="index"
         :total-tags="filteredTags.size"

@@ -4,6 +4,7 @@ import { convertToNotionPage } from './notionUtils'
 import { DATABASE_POSTS_ID } from '@/server/config/notionConfig'
 import type { NotionClientInterface } from '@/types/notion'
 import type { BlogPost } from '@/types/blog'
+import { categories } from '@/utils/categories'
 
 type NotionQueryResult = QueryDatabaseResponse
 
@@ -27,6 +28,15 @@ export async function fetchPostsToPublish(notionClient: NotionClientInterface): 
 }
 
 function convertToBlogPost(post: any): BlogPost {
+  const categoryValues = categories.map(category => category.value.toLowerCase())
+  const hasValidCategory = post.tags.some((tag: string) => categoryValues.includes(tag.toLowerCase()))
+
+  if (!hasValidCategory) {
+    const errorMessage = `The article "${post.title}" does not have a valid category. Please add one of the following categories to the article's tags: ${categories.map(c => c.value).join(', ')}.`
+    console.error(errorMessage)
+    throw new Error(errorMessage)
+  }
+
   return {
     ...post,
     date: new Date().toISOString(),

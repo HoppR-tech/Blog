@@ -56,7 +56,7 @@ const picAColor = computed(() => {
   <ClientOnly>
     <div class="px-5 py-3 rounded rand-bg-color hover:scale-110 transition-all duration-300">
       <NuxtLink :to="`/tags/${title.toLocaleLowerCase()}`" class="text-lg font-extrabold tracking-wider">
-        <h1 :class="{'text-white': colorMode.value === 'light', 'text-hoppr-black': colorMode.value === 'dark'}">
+        <h1 :class="{ 'text-white': colorMode.value === 'light', 'text-hoppr-black': colorMode.value === 'dark' }">
           #{{ title }} ({{ count }})
         </h1>
       </NuxtLink>

@@ -14,6 +14,9 @@ useHead({
   },
   meta: [
     {
+      charset: 'utf-8',
+    },
+    {
       name: 'description',
       content: description,
     },

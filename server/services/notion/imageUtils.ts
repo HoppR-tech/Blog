@@ -4,6 +4,8 @@ import { slugify } from '@/utils/stringUtils'
 import type { ImageFile } from '@/types/files'
 import type { Person } from '@/types/blog'
 
+const DEFAULT_AUTHOR_IMAGE = '/default-author-image.webp'
+
 interface ConvertedImage {
   webpImageName: string
   imageContent: string
@@ -53,18 +55,27 @@ export async function extractImagesAndUpdateContent(content: string): Promise<{ 
 export async function processAuthorsImages(authors: Person[]): Promise<{ updatedAuthors: Person[]; authorImages: ImageFile[] }> {
   const authorImages: ImageFile[] = []
   const updatedAuthors = await Promise.all(authors.map(async (author) => {
-    if (author.image && !author.image.startsWith('./assets/')) {
-      if (!author.image.startsWith('http://') && !author.image.startsWith('https://')) {
-        console.error(`The image is not an absolute URL: ${author.image}`)
-        throw new Error(`The image is not an absolute URL: ${author.image}`)
-      }
+    if (!author.image || author.image === '')
+      return { ...author, image: DEFAULT_AUTHOR_IMAGE }
 
+    if (author.image.startsWith('./assets/'))
+      return author
+
+    if (!author.image.startsWith('http://') && !author.image.startsWith('https://')) {
+      console.error(`The image is not an absolute URL: ${author.image}`)
+      return { ...author, image: DEFAULT_AUTHOR_IMAGE }
+    }
+
+    try {
       const { webpImageName, imageContent } = await downloadAndConvertImage(author.image, `author-${author.name}`)
       const newImagePath = `./assets/${webpImageName}`
       authorImages.push({ name: webpImageName, content: imageContent })
       return { ...author, image: newImagePath }
     }
-    return author
+    catch (error) {
+      console.error(`Error processing image for author ${author.name}:`, error)
+      return { ...author, image: DEFAULT_AUTHOR_IMAGE }
+    }
   }))
   return { updatedAuthors, authorImages }
 }

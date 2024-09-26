@@ -16,20 +16,22 @@ export async function downloadAndConvertImage(imageUrl: string, imageName: strin
     if (imageUrl.startsWith('./'))
       throw new Error(`The URL is a relative path: ${imageUrl}`)
 
-    // console.error(`Téléchargement de l'image depuis l'URL: ${imageUrl}`)
+    console.log(`Attempting to download image from URL: ${imageUrl}`)
     const response = await axios.get(imageUrl, { responseType: 'arraybuffer', maxRedirects: 0 })
     const slugifiedImageName = slugify(imageName)
     const webpImageName = `${slugifiedImageName}.webp`
 
+    console.log(`Successfully downloaded image. Converting to WebP: ${webpImageName}`)
     const webpBuffer = await sharp(response.data)
       .webp({ quality: 80 })
       .toBuffer()
 
+    console.log(`Image successfully converted to WebP: ${webpImageName}`)
     return { webpImageName, imageContent: webpBuffer.toString('base64') }
   }
   catch (error) {
-    console.error(`Error while downloading or converting image ${imageUrl}:`, error as Error)
-    throw new Error(`Error while downloading image: ${(error as Error).message}`)
+    console.error(`Error while processing image ${imageUrl}:`, error)
+    throw new Error(`Error while processing image ${imageUrl}: ${(error as Error).message}`)
   }
 }
 

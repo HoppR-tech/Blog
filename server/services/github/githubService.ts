@@ -1,8 +1,8 @@
+import type { Octokit } from 'octokit'
 import { createBranch, deleteBranch } from './branchManager'
 import { createPullRequest, mergePullRequest } from './pullRequestManager'
 import { uploadAllImages, uploadCoverImage } from './imageUploader'
 import { uploadToGitHub } from './contentUploader'
-import { Octokit } from 'octokit'
 import { createFolderName } from '@/utils/stringUtils'
 import type { BlogPost } from '@/types/blog'
 import type { NotionService } from '@/server/services/notion/notionService'
@@ -16,20 +16,20 @@ export class GitHubService {
 
   async checkGitHubAccess() {
     try {
-      console.log('Vérification de l\'accès GitHub...')
+      // console.log('Checking GitHub access...')
       const { data: appData } = await this.octokit.rest.apps.getAuthenticated()
-      // console.log('Données de l\'application:', appData)
+      // console.log('Application data:', appData)
 
       const { data: repoData } = await this.octokit.rest.repos.get({
         owner: GITHUB_OWNER,
         repo: GITHUB_REPO,
       })
-      console.log('Accès au repository confirmé:', repoData.full_name)
+      // console.log('Repository access confirmed:', repoData.full_name)
 
       return true
     }
     catch (error: any) {
-      console.error('Erreur lors de la vérification de l\'accès GitHub:', error.message)
+      console.error('Error checking GitHub access:', error.message)
       return false
     }
   }

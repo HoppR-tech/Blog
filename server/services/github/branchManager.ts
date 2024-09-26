@@ -2,6 +2,24 @@ import { GITHUB_BRANCH, GITHUB_OWNER, GITHUB_REPO } from '@/server/config/github
 
 export async function createBranch(octokit: any, branchName: string) {
   try {
+    // Check if the branch already exists
+    try {
+      await octokit.rest.repos.getBranch({
+        owner: GITHUB_OWNER,
+        repo: GITHUB_REPO,
+        branch: branchName,
+      })
+
+      // If the branch exists, delete it
+      await deleteBranch(octokit, branchName)
+      // console.log(`Existing branch ${branchName} deleted.`)
+    }
+    catch (error: any) {
+      // If the error is 404, the branch doesn't exist, which is normal
+      if (error.status !== 404)
+        throw error
+    }
+
     const { data: branches } = await octokit.rest.repos.listBranches({
       owner: GITHUB_OWNER,
       repo: GITHUB_REPO,
@@ -17,6 +35,8 @@ export async function createBranch(octokit: any, branchName: string) {
       ref: `refs/heads/${branchName}`,
       sha: mainBranch.commit.sha,
     })
+
+    // console.log(`Branch ${branchName} created successfully.`)
   }
   catch (error) {
     console.error(`Error creating branch ${branchName}:`, error)

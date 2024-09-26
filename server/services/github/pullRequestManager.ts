@@ -8,13 +8,13 @@ export async function createPullRequest(octokit: any, branchName: string, title:
       title,
       head: branchName,
       base: GITHUB_BRANCH,
-      body: 'Cet article a été automatiquement publié depuis Notion.',
+      body: 'This article has been automatically published from Notion.',
     })
     return pullRequest
   }
   catch (error: any) {
-    console.error('Erreur lors de la création de la pull request:', error)
-    throw new Error(`Impossible de créer la pull request: ${error.message}`)
+    console.error('Error creating pull request:', error)
+    throw new Error(`Unable to create pull request: ${error.message}`)
   }
 }
 

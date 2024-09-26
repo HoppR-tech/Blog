@@ -16,17 +16,17 @@ export async function downloadAndConvertImage(imageUrl: string, imageName: strin
     if (imageUrl.startsWith('./'))
       throw new Error(`The URL is a relative path: ${imageUrl}`)
 
-    console.log(`Attempting to download image from URL: ${imageUrl}`)
+    // console.log(`Attempting to download image from URL: ${imageUrl}`)
     const response = await axios.get(imageUrl, { responseType: 'arraybuffer', maxRedirects: 0 })
     const slugifiedImageName = slugify(imageName)
     const webpImageName = `${slugifiedImageName}.webp`
 
-    console.log(`Successfully downloaded image. Converting to WebP: ${webpImageName}`)
+    // console.log(`Successfully downloaded image. Converting to WebP: ${webpImageName}`)
     const webpBuffer = await sharp(response.data)
       .webp({ quality: 80 })
       .toBuffer()
 
-    console.log(`Image successfully converted to WebP: ${webpImageName}`)
+    // console.log(`Image successfully converted to WebP: ${webpImageName}`)
     return { webpImageName, imageContent: webpBuffer.toString('base64') }
   }
   catch (error) {
@@ -35,23 +35,30 @@ export async function downloadAndConvertImage(imageUrl: string, imageName: strin
   }
 }
 
-export async function extractImagesAndUpdateContent(content: string): Promise<{ updatedContent: string; imageFiles: ImageFile[] }> {
+export async function extractImagesAndUpdateContent(content: string): Promise<{ updatedContent: string; imageFiles: ImageFile[]; lastValidImageUrl: string | null }> {
   const imageRegex = /!\[.*?\]\((.*?)\)/g
   const imageUrls = content.match(imageRegex)?.map(match => match.match(/\((.*?)\)/)?.[1]) || []
   const imageFiles: ImageFile[] = []
   let updatedContent = content
   let imageCounter = 1
+  let lastValidImageUrl: string | null = null
 
   for (const imageUrl of imageUrls) {
     if (imageUrl) {
-      const imageName = `img${imageCounter}`
-      const { webpImageName, imageContent } = await downloadAndConvertImage(imageUrl, imageName)
-      imageFiles.push({ name: webpImageName, content: imageContent })
-      updatedContent = replaceImageLinkInMarkdown(updatedContent, imageUrl, webpImageName)
-      imageCounter++
+      try {
+        const imageName = `img${imageCounter}`
+        const { webpImageName, imageContent } = await downloadAndConvertImage(imageUrl, imageName)
+        imageFiles.push({ name: webpImageName, content: imageContent })
+        updatedContent = replaceImageLinkInMarkdown(updatedContent, imageUrl, webpImageName)
+        lastValidImageUrl = imageUrl
+        imageCounter++
+      }
+      catch (error) {
+        console.error(`Error processing image: ${imageUrl}`, error)
+      }
     }
   }
-  return { updatedContent, imageFiles }
+  return { updatedContent, imageFiles, lastValidImageUrl }
 }
 
 export async function processAuthorsImages(authors: Person[]): Promise<{ updatedAuthors: Person[]; authorImages: ImageFile[] }> {

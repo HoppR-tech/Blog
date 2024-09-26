@@ -34,23 +34,36 @@ export default defineEventHandler(async (event) => {
     const successfulPublishes = publishResults.filter(result => result.status === 'fulfilled')
     const failedPublishes = publishResults.filter(result => result.status === 'rejected')
 
-    // console.log(`Successfully published ${successfulPublishes.length} posts.`)
-    if (failedPublishes.length > 0)
-      console.error(`Failed to publish ${failedPublishes.length} posts.`)
+    if (failedPublishes.length > 0) {
+      console.error(`Failed to publish ${failedPublishes.length} articles.`)
+      return {
+        message: '❌ Error during article synchronization',
+        successCount: successfulPublishes.length,
+        failCount: failedPublishes.length,
+        failedPosts: failedPublishes.map((result, index) => {
+          const error = (result as PromiseRejectedResult).reason
+          const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+          const post = postsToPublish[index]
+          const lastValidImageUrl = errorMessage.includes('Invalid URL:')
+            ? errorMessage.split('Last valid image URL:')[1].trim()
+            : 'Not available'
+
+          return `Title: "${post.title}" - ${errorMessage} - Last valid image URL: ${lastValidImageUrl}`
+        }),
+      }
+    }
 
     return {
-      message: '✅ Articles synchronization process completed',
+      message: '✅ Article synchronization process completed successfully',
       successCount: successfulPublishes.length,
-      failCount: failedPublishes.length,
-      failedPosts: failedPublishes.map(result => (result as PromiseRejectedResult).reason.message),
+      failCount: 0,
     }
   }
   catch (error) {
     console.error('❌ Error during syncPosts process:', error)
     return {
-      error: true,
-      message: '❌ Error during articles synchronization process',
-      details: error instanceof Error ? error.message : 'An unknown error occurred',
+      message: '❌ Error during article synchronization',
+      error: error instanceof Error ? error.message : 'Unknown error',
     }
   }
 })

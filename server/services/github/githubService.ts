@@ -35,14 +35,14 @@ export class GitHubService {
   }
 
   async publishPostToGitHub(post: BlogPost) {
-    const currentDate = new Date().toISOString().split('T')[0]
-    const folderName = createFolderName(currentDate, post.title)
-    const folderPath = `content/blogs/${folderName}`
-    const assetsFolderPath = `${folderPath}/assets`
-    const filePath = `${folderPath}/index.md`
-    const branchName = `article/${folderName}`
-
     try {
+      const currentDate = new Date().toISOString().split('T')[0]
+      const folderName = createFolderName(currentDate, post.title)
+      const folderPath = `content/blogs/${folderName}`
+      const assetsFolderPath = `${folderPath}/assets`
+      const filePath = `${folderPath}/index.md`
+      const branchName = `article/${folderName}`
+
       await createBranch(this.octokit, branchName)
 
       const { updatedContent, imageFiles } = await this.notionService.extractImagesAndUpdateContent(post.content)
@@ -74,7 +74,14 @@ export class GitHubService {
     }
     catch (error) {
       console.error(`Error while publishing post "${post.title}" to GitHub:`, error)
-      throw error
+      if (error instanceof Error) {
+        const errorMessage = error.message
+        const lastValidImageUrl = (error as any).lastValidImageUrl || 'No valid image URL found'
+        throw new Error(`Error while publishing article "${post.title}": ${errorMessage}. Last valid image URL: ${lastValidImageUrl}`)
+      }
+      else {
+        throw new TypeError(`Unknown error while publishing article "${post.title}"`)
+      }
     }
   }
 }

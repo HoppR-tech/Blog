@@ -19,13 +19,13 @@ const isSingleAuthor = computed(() => props.authors.length === 1)
       <div class="flex flex-col items-center">
         <div :class="{ 'grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl': !isSingleAuthor, 'flex justify-center': isSingleAuthor }">
           <template v-for="(author, index) in props.authors" :key="author.notionId">
-            <div :class="{ 'flex flex-col sm:flex-row items-center mb-4 sm:mb-0 relative sm:px-4': !isSingleAuthor, 'flex flex-row items-center': isSingleAuthor }">
-              <img :src="author.image" :alt="author.name" class="w-16 h-16 rounded-full mb-2 sm:mb-0 sm:mr-4 object-cover">
-              <div :class="{ 'text-center sm:text-left': !isSingleAuthor, 'text-left ml-4': isSingleAuthor }">
+            <div :class="{ 'flex flex-row items-center mb-6 sm:mb-0 relative sm:px-4': !isSingleAuthor, 'flex flex-row items-center': isSingleAuthor }">
+              <img :src="author.image" :alt="author.name" class="w-16 h-16 rounded-full mb-0 sm:mr-4 object-cover">
+              <div class="text-left ml-4">
                 <p class="font-semibold text-base">
                   {{ author.name }}
                 </p>
-                <div class="flex justify-center sm:justify-start space-x-2 mt-2">
+                <div class="flex justify-start space-x-2 mt-2">
                   <a
                     v-if="author.linkedin" :href="author.linkedin" target="_blank" rel="noopener noreferrer"
                     class="text-hoppr-green hover:text-opacity-80" aria-label="LinkedIn"

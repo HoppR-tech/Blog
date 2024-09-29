@@ -72,7 +72,7 @@ describe('blockConverter', () => {
     ]
     const { markdownContent, images } = convertBlocksToMarkdown(blocks)
 
-    expect(markdownContent).toBe('\n\n# \n\n')
+    expect(markdownContent).toBe('\n\n## \n\n')
     expect(images).toEqual([])
   })
 
@@ -102,5 +102,28 @@ describe('blockConverter', () => {
     const { markdownContent } = convertBlocksToMarkdown(blocks)
 
     expect(markdownContent).toBe('Ceci est un [lien](https://example.com) dans un paragraphe.\n\n')
+  })
+
+  it('should keep H1 only if it is the first block', () => {
+    const blocks = [
+      { type: 'heading_1', heading_1: { rich_text: [{ plain_text: 'First Title' }] } },
+      { type: 'paragraph', paragraph: { rich_text: [{ plain_text: 'Some content' }] } },
+      { type: 'heading_1', heading_1: { rich_text: [{ plain_text: 'Second Title' }] } },
+    ]
+    const { markdownContent } = convertBlocksToMarkdown(blocks)
+
+    expect(markdownContent).toBe('# First Title\n\nSome content\n\n## Second Title\n\n')
+  })
+
+  it('should convert H1 to H2 if not the first block', () => {
+    const blocks = [
+      { type: 'paragraph', paragraph: { rich_text: [{ plain_text: 'Introduction' }] } },
+      { type: 'heading_1', heading_1: { rich_text: [{ plain_text: 'First Title' }] } },
+      { type: 'paragraph', paragraph: { rich_text: [{ plain_text: 'Some content' }] } },
+      { type: 'heading_1', heading_1: { rich_text: [{ plain_text: 'Second Title' }] } },
+    ]
+    const { markdownContent } = convertBlocksToMarkdown(blocks)
+
+    expect(markdownContent).toBe('Introduction\n\n## First Title\n\nSome content\n\n## Second Title\n\n')
   })
 })

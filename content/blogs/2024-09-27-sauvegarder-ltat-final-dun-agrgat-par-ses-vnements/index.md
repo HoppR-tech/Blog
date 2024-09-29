@@ -49,7 +49,7 @@ La notion d’agrégat du Domain Driven Design désigne un ensemble cohérent d�
 
 Je vous propose ainsi de voir comme l'on peut persister l'état final d'un agrégat en ne se basant que sur les décisions qu'il a prises.
 
-# L'agrégat
+## L'agrégat
 
 L'exemple que nous allons prendre parle de l'accès d'un utilisateur dont les règles de gestion sont les suivantes:
 
@@ -101,7 +101,7 @@ La décision métier est représentée ici de deux manières:
 - l'événement UserAccessSuspended
 > Bon à savoir, un événement s'étant déjà produit, une bonne manière de le nommer est de l'écrire au passé. L'exception quant à elle est écrite avec la convention IsXX pour décrire un fait.
 
-# Persister l'agrégat
+## Persister l'agrégat
 
 L'agrégat sera manipulé dans la couche application par un service qui couvrira la totalité du geste métier:
 
@@ -125,7 +125,7 @@ interface UserAccessPort {
 }
 ```
 
-## Implémentation
+### Implémentation
 
 Nous pourrions exposer un getter pour la propriété suspendedAt. Le problème s'il en est de cette méthode réside dans le fait que l'agrégat se mettrait à exposer tout ou partie de son état interne. D'une certaine manière, la modélisation de notre agrégat serait dépendante de la manière de la consommer. C'est là où les événements jouent un rôle important: ils sont faits pour être consommés.
 
@@ -202,7 +202,7 @@ interface JpaUserAccesses extends JpaRepository<UserAccessEntity, String> {
 
 Notez qu’il est bien sûr possible d’appliquer les événements en utilisant pleinement l’entity manager de Hibernate plutôt que d’exécuter des UPDATE directement sur la base.
 
-# Conclusion
+## Conclusion
 
 Il n'est pas très compliqué de modéliser les décisions métiers sous forme d'événements. Au travers d'une histoire, nous sommes capables de sauvegarder un état de fait. 
 Serions-nous maintenant capables de reconstruire l'agrégat à partir de ses décisions ? L'event sourcing attendra une prochaine fois.

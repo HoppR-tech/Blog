@@ -2,6 +2,7 @@
 import type { NuxtError } from 'nuxt/app'
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import type { Person } from '~/types/blog'
 
 const route = useRoute()
 const { data, error } = await useAsyncData('all-blog-post', () =>
@@ -47,29 +48,32 @@ const formattedData = computed(() => {
       date: formatDate(articles.date) || 'not-date-available',
       tags: articles.tags || [],
       published: articles.published || false,
-      content: articles.body?.children?.map(child => child.children?.map(c => c.value).join(' ')).join(' ') || '',
+      content: articles.content || '',
+      authors: articles.authors || [],
     }
-  }) || []
+  })
 })
 
 const searchData = computed(() => {
   if (!searchTest.value)
     return formattedData.value
-  return formattedData.value.filter((data) => {
+  return formattedData.value?.filter((data) => {
     const lowerTitle = data.title.toLowerCase()
     const lowerDescription = data.description.toLowerCase()
     const lowerContent = data.content.toLowerCase()
     const lowerTags = data.tags.map((tag: string) => tag.toLowerCase())
+    const lowerAuthors = data.authors.map((author: Person) => author.name.toLowerCase())
     const lowerSearchTerm = searchTest.value.toLowerCase()
     return lowerTitle.includes(lowerSearchTerm)
       || lowerDescription.includes(lowerSearchTerm)
       || lowerContent.includes(lowerSearchTerm)
       || lowerTags.some((tag: string | string[]) => tag.includes(lowerSearchTerm))
+      || lowerAuthors.some((author: string) => author.includes(lowerSearchTerm))
   })
 })
 
 const paginatedData = computed(() => {
-  return searchData.value.filter((data, idx) => {
+  return searchData.value?.filter((data, idx) => {
     const startInd = ((pageNumber.value - 1) * elementPerPage.value)
     const endInd = (pageNumber.value * elementPerPage.value) - 1
 
@@ -85,7 +89,7 @@ function onPreviousPageClick() {
 }
 
 const totalPage = computed(() => {
-  const ttlContent = searchData.value.length || 0
+  const ttlContent = searchData.value?.length || 0
   const totalPage = Math.ceil(ttlContent / elementPerPage.value)
   return totalPage
 })
@@ -128,9 +132,7 @@ defineOgImage({
     <div class="px-6">
       <label for="search-input" class="sr-only">Rechercher un article</label>
       <input
-        id="search-input"
-        v-model="searchTest"
-        placeholder="Rechercher"
+        id="search-input" v-model="searchTest" placeholder="Rechercher par titre, contenu, tag ou auteur..."
         type="text"
         class="block w-full bg-[#F1F2F4] dark:bg-slate-900 dark:placeholder-zinc-500 text-zinc-800 dark:text-zinc-300 rounded-md border-gray-300 dark:border-zinc-500 shadow-sm focus:border-hoppr-green focus:ring focus:ring-hoppr-green focus:ring-opacity-50"
       >
@@ -148,23 +150,13 @@ defineOgImage({
       <div v-else v-auto-animate class="space-y-5 my-5 px-4">
         <template v-for="post in paginatedData" :key="post.title">
           <ArchiveCard
-            :path="post.path"
-            :title="post.title"
-            :date="post.date"
-            :description="post.description"
-            :image="post.image"
-            :alt="post.alt"
-            :og-image="post.ogImage"
-            :tags="post.tags"
+            :path="post.path" :title="post.title" :date="post.date" :description="post.description"
+            :image="post.image" :alt="post.alt" :og-image="post.ogImage" :tags="post.tags"
             :published="post.published"
           />
         </template>
 
-        <ArchiveCard
-          v-if="paginatedData.length <= 0"
-          title="No Post Found"
-          image="/not-found.jpg"
-        />
+        <ArchiveCard v-if="paginatedData.length <= 0" title="No Post Found" image="/not-found.jpg" />
       </div>
 
       <template #fallback>
@@ -181,7 +173,10 @@ defineOgImage({
       </button>
       <p>{{ pageNumber }} / {{ totalPage }}</p>
       <button :disabled="pageNumber >= totalPage" @click="onNextPageClick">
-        <Icon name="mdi:code-greater-than" size="30" :class="{ 'text-sky-700 dark:text-sky-400': pageNumber < totalPage }" />
+        <Icon
+          name="mdi:code-greater-than" size="30"
+          :class="{ 'text-sky-700 dark:text-sky-400': pageNumber < totalPage }"
+        />
       </button>
     </div>
   </main>

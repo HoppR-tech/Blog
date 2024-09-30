@@ -59,14 +59,7 @@ defineExpose({ toggleSearch })
     <button
       class="ml-2 text-gray-100 hover:text-hoppr-green transition-transform duration-300 ease-in-out md:hidden"
       :aria-label="isExpanded ? 'Effectuer la recherche' : 'Ouvrir la recherche'"
-      @click="isExpanded ? performSearch : toggleSearch"
-    >
-      <Icon name="mdi:magnify" size="24" />
-    </button>
-    <button
-      class="ml-2 text-gray-100 hover:text-hoppr-green transition-transform duration-300 ease-in-out hidden md:block"
-      aria-label="Effectuer la recherche"
-      @click="performSearch"
+      @click="isExpanded ? performSearch() : toggleSearch()"
     >
       <Icon name="mdi:magnify" size="24" />
     </button>

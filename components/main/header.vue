@@ -3,6 +3,7 @@ import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import SearchBar from '@/components/blog/SearchBar.vue'
 import LogoSvg from '@/components/logo/headerLogo.vue'
+import type { SearchBarRef } from '@/components/blog/SearchBar.vue'
 
 const route = useRoute()
 const path = computed(() => route.fullPath.replace('/', ''))
@@ -27,10 +28,13 @@ const menuItems = [
   { label: 'À Propos', to: 'https://www.hoppr.tech/', path: 'about' },
 ]
 
-const searchBarRef = ref<{ toggleSearch: () => void } | null>(null)
+const searchBarRef = ref<SearchBarRef | null>(null)
 
 function toggleSearch() {
-  searchBarRef.value?.toggleSearch()
+  if (searchBarRef.value?.isExpanded)
+    searchBarRef.value?.performSearch()
+  else
+    searchBarRef.value?.toggleSearch()
 }
 </script>
 
@@ -63,7 +67,7 @@ function toggleSearch() {
                       {{ item.label }}
                       <span
                         class="absolute bottom-0 left-0 w-full h-0.5 bg-hoppr-green transform scale-x-0 transition-transform duration-300"
-                        :class="{ 'scale-x-100': (path === item.path && item.path !== 'about') || (item.path === 'blogs' && isSearchActive) }"
+                        :class="{ 'scale-x-100': (path === item.path && item.path !== 'about') || (path === 'blogs' && isSearchActive) }"
                       />
                     </NuxtLink>
                   </li>
@@ -73,7 +77,9 @@ function toggleSearch() {
           </div>
           <div class="flex items-center space-x-4">
             <div class="hidden lg:flex lg:items-center space-x-4">
-              <SearchBar @close="() => {}" />
+              <div class="relative">
+                <SearchBar @close="() => {}" />
+              </div>
               <ClientOnly>
                 <button
                   v-if="colorMode.value === 'light'"
@@ -138,9 +144,27 @@ function toggleSearch() {
               {{ item.label }}
             </NuxtLink>
           </li>
-          <li class="flex items-center justify-between py-2 uppercase tracking-wider" @click="toggleSearch">
-            <span class="text-gray-100 cursor-pointer">Recherche</span>
-            <SearchBar ref="searchBarRef" @close="closeMenu" />
+          <li class="flex items-center justify-between py-2 uppercase tracking-wider relative">
+            <div class="w-full relative">
+              <span
+                class="text-gray-100 cursor-pointer z-20 flex items-center justify-between w-full absolute inset-0"
+                :class="{ 'opacity-0': searchBarRef?.isExpanded }"
+                @click="toggleSearch"
+              >
+                Recherche
+                <Icon name="mdi:magnify" size="24" class="text-gray-100" />
+              </span>
+              <div class="w-full" :class="{ 'opacity-0': !searchBarRef?.isExpanded }">
+                <SearchBar ref="searchBarRef" @close="closeMenu" />
+              </div>
+            </div>
+            <Icon
+              v-if="searchBarRef?.isExpanded"
+              name="mdi:magnify"
+              size="24"
+              class="text-gray-100 cursor-pointer absolute right-0 top-1/2 transform -translate-y-1/2"
+              @click="toggleSearch"
+            />
           </li>
           <li class="flex items-center justify-between py-2 uppercase tracking-wider" @click="onClick">
             <span class="text-gray-100">

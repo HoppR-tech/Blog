@@ -17,7 +17,7 @@ reviewers:
   - id: 67adfd77-4b84-4496-b55d-3391541f59c5
     name: Michaël Bernasinski
     image: https://prod-files-secure.s3.us-west-2.amazonaws.com/5863e833-64f2-4f13-9f7a-2c92c72b5bbf/82ebd0fe-de28-43f3-ab7b-0431af41baad/Photo_HoppR.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240926%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240926T191417Z&X-Amz-Expires=3600&X-Amz-Signature=9a6ac271ef20e015de8631306a9a3d9ee599b8bd6515bc6660813db235ccc1f1&X-Amz-SignedHeaders=host&x-id=GetObject
-    linkedin: www.linkedin.com/in/michael-bernasinski
+    linkedin: https://www.linkedin.com/in/michael-bernasinski
     x: 
   - id: 45c76823-ab7d-4c1f-84b3-0bad16ab91e1
     name: Paul-Alexandre Chrétien

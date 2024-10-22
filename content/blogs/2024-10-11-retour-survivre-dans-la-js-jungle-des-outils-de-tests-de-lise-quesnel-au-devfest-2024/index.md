@@ -29,14 +29,14 @@ reviewers:
 <!-- markdownlint-disable-file -->
 
 
-### Introduction
+## Introduction
 
 Cet article fait suite au [retour de HoppR sur le DevFest 2024](https://blog.hoppr.tech/blogs/2024-08-27-retour-sur-le-devfest) et se concentre sur la conférence de Lise QUESNEL qui aborde les outils de tests JavaScript.
 
 Pour être concis, je vous résume les points qui m'ont le plus intéressés et ne reprendrai pas toutes les métaphores utilisées dans sa conférence.
 Bref ! Re-déroulons le chemin de JS-Jungle ensemble !
 
-### Tester, c'est douter ?
+## Tester, c'est douter ?
 
 Avant de rentrer véritablement dans la JS-Jungle, répondons au pourquoi ? Et oui, pourquoi tester ?
 Tester manuellement est une activité chronophage avec des résultats non répétables. Les forces des tests automatisés sont leur rapidité et leur répétabilité.
@@ -47,17 +47,17 @@ Plus l'erreur est détectée tard dans la chaîne de valeur, plus elle sera coû
 Associé à de petites incrémentations, tester permet de délivrer de la valeur plus rapidement toute en augmentant la qualité.
 De mon point de vue, il est aussi l'occasion d'augmenter la confiance entre les différentes parties prenantes (développeurs, PO, QA, etc) pour, à terme, diminuer la pression au quotidien.
 
-### Les typologies d'outils de test
+## Les typologies d'outils de test
 
 Il est nécessaire de comprendre les différentes typologies car elles ne doivent pas être utilisées toutes en même temps. Chaque contexte a son besoin.
 
-### Les lanceurs (Test runner)
+## Les lanceurs (Test runner)
 
 Leur but est d'exécuter les tests et d'exporter leurs résultats.
 
 Exemple: [Karma](https://karma-runner.github.io/latest/index.html)
 
-### Les structurateurs
+## Les structurateurs
 
 Leur but est de structurer l'écriture des tests pour facilité leur lisibilité, écriture et maintenance.
 
@@ -67,19 +67,19 @@ Cela permet notamment d'obtenir un nommage/langage commun compréhensible par le
 
 Exemple: [Cucumber](https://github.com/cucumber/cucumber-js)
 
-### Les utilitaires
+## Les utilitaires
 
 Leur but est de vérifier les attendus et de lever des exceptions claires. Cette notion est appelé "Assertion".
 
 Exemple: [Chai](https://www.chaijs.com/)
 
-### Les spies, stubs et mocks
+## Les spies, stubs et mocks
 
 Leur but est d'isoler la partie du code testée par la simulation du fonctionnement de ces dépendances ou encore l'analyse à l'appel de ces dépendances.
 
 Exemple: [Sinon](https://sinonjs.org/)
 
-### Les multi-typologies
+## Les multi-typologies
 
 Si vous ne vous sentez pas d'avoir trop de dépendances dans votre projet, il existe aussi des outils couvrants toutes ces typologies :
 
@@ -88,7 +88,7 @@ Exemples:
 - [Jest](https://jestjs.io/fr/)
 - [Vite](https://vitejs.dev/)
 - [Jasmine](https://jasmine.github.io/)
-### Les contrôleurs de navigateurs
+## Les contrôleurs de navigateurs
 
 La typologie des contrôleurs de navigateurs est à part dans le sens où leur but est de simuler un comportement utilisateur au plus proche du navigateur.
 Il y a 3 manières de contrôler un navigateur :
@@ -96,7 +96,7 @@ Il y a 3 manières de contrôler un navigateur :
 - Via ces drivers : [Selenium](https://www.selenium.dev/selenium/docs/api/javascript/index.html)
 - Via script JS : [Cypress](https://www.cypress.io/)
 - Via API Native : [Playwright](https://playwright.dev/) ou [Puppeteer](https://pptr.dev/)
-### Les tests bancals
+## Les tests bancals
 
 Si vous avez déjà commencé vos premiers tests, vous tomberez sur des tests bancals (Flaky en anglais) dont le résultat n'est pas répétable de manière certaine. Un jour il passe, l'autre non...
 
@@ -117,7 +117,7 @@ Il existe des questions ouvertes que sont l'unité d'un test unitaire, la sociab
 Si vous êtes totalement perdu, les langages front étant orientés composant, il est plus simple de prendre comme unité par défaut le composant (attention, [simple n'est pas facile](https://www.entropywins.wtf/blog/2017/01/02/simple-is-not-easy/)).
 Pour explorer ces notions, vous pouvez essayer [le test-first ou encore le test driven developement](https://medium.com/@imenezzine/tdd-vs-test-first-development-quelle-est-la-diff%C3%A9rence-ccbea4771484).
 
-### Les stratégies de tests
+## Les stratégies de tests
 
 Vous trouverez dans la JS-Jungle de nombreux noms de tests (unitaire, intégration, bout en bout, acceptance, composants, contracts, etc).
 Leurs significations varient en fonction des équipes, ce sont vos collègues qui vous expliquerons, au mieux, leur vision.
@@ -129,7 +129,7 @@ La question finale sera donc lesquels utiliser et en quelle proportion ?
 Vous trouverez de nombreuses distributions de tests : [la pyramide, l'alvéole, le trophée](https://thetestingarchitect.substack.com/p/test-pyramid-test-honeycomb-test).
 L'orientation des langages front modernes pousse vers l'utilisation de la distribution en trophée (Plus de tests de bout en bout que de tests unitaires et moins de tests de bout en bout que de tests d'intégration).
 
-### Ouverture
+## Ouverture
 
 J'aimerais insister sur l'analyse statique de votre langage. Même si ce n'est pas un test en soit, le fait de typer, de créer des interfaces pour vos échanges, cela vous aidera à donner de la confiance en votre code et même à visualiser les sujets métiers.
 

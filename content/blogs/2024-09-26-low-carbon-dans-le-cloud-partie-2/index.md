@@ -1,9 +1,9 @@
 ---
-title: Low Carbon dans le Cloud - Partie 2
+title: "Low Carbon dans le Cloud - Partie 2"
 date: 2024-09-26T19:14:17.111Z
-description: Dans notre première partie de l'article, nous avons établi la relation entre CO2, énergie et finance. Aujourd'hui, je vous propose, dans une version simplifiée, de mesurer votre impact carbone dans le
+description: "Dans notre première partie de l'article, nous avons établi la relation entre CO2, énergie et finance. Aujourd'hui, je vous propose, dans une version simplifiée, de mesurer votre impact carbone dans le"
 image: ./assets/cover-image.webp
-alt: Error 404. This is not green enough
+alt: "Error 404. This is not green enough"
 ogImage: ./assets/cover-image.webp
 tags: ['green', 'cloud', 'cloud-platform']
 published: true
@@ -62,7 +62,7 @@ Pour les autres services CaaS, FaaS, PaaS ou encore SaaS, cela est beaucoup plus
 
 ## Pourquoi une méthode simplifiée
 
-Une méthode simple permet de rester compréhensible et adoptable par tous, mais elle a aussi l'avantage d'éviter le [paradoxe des littoraux](https://fr.wikipedia.org/wiki/Paradoxe_du_littoral#:~:text=Le%20paradoxe%20du%20littoral%20est,a%20pas%20de%20longueur%20d%C3%A9finie.) : plus nous essayons d'être précis plus nous nous éloignons d'une vue d'ensemble cohérente.
+Une méthode simple permet de rester compréhensible et adoptable par tous, mais elle a aussi l'avantage d'éviter le [paradoxe des littoraux](https://fr.wikipedia.org/wiki/Paradoxe_du_littoral# : ~ : text=Le%20paradoxe%20du%20littoral%20est,a%20pas%20de%20longueur%20d%C3%A9finie.) : plus nous essayons d'être précis plus nous nous éloignons d'une vue d'ensemble cohérente.
 
 Maintenant, prenons du recul et demandons-nous si avoir une vision extrêmement précise de sa production de gaz à effet de serre est nécessaire ? Dans la très grande majorité des cas, la réponse est non. Il est beaucoup plus intéressant d'avoir une notion d'échelle dans une fourchette réaliste et de pouvoir définir une tendance dans le temps. Une démarche GreenOps consiste à diminuer sa production de polluants, pas à en faire sa comptabilité.
 
@@ -78,18 +78,16 @@ La constante veut que nous puissions toujours récupérer certaines métriques c
 
 Maintenant que nous avons une vision globale de notre utilisation du Cloud, comment passons-nous à la vision CO2 ? La méthodologie [Cloud Carbon Footprint](https://www.cloudcarbonfootprint.org/docs/methodology/) sera votre meilleur allié. Vous allez pouvoir récupérer le PUE moyen des Cloud Providers américains ainsi que les valeurs de consommation minimum et maximum sur l'ensemble du scope.
 
-Par exemple voici les données pour AWS:
+Par exemple voici les données pour AWS : AWS
 
-AWS
-
-- Moyenne Minimum Watts (0% CPU ): 0.74
-- Moyenne Maximum Watts (100% CPU Utilization): 3.5
-- Moyenne d'utilisation CPU par centre de données: 50%
-- Stockage HDD Watt Heure / Terabyte: 0.65
-- Stockage SSD Storage Watt Heure / Terabyte: 1.2
-- Réseau Kilowatt Heure/ Gigabyte: 0.001
-- Mémoire Kilowatt Heure / Gigabyte: 0.000392
-- Moyenne du PUE: 1.135
+- Moyenne Minimum Watts (0% CPU ) : 0.74
+- Moyenne Maximum Watts (100% CPU Utilization) : 3.5
+- Moyenne d'utilisation CPU par centre de données : 50%
+- Stockage HDD Watt Heure / Terabyte : 0.65
+- Stockage SSD Storage Watt Heure / Terabyte : 1.2
+- Réseau Kilowatt Heure/ Gigabyte : 0.001
+- Mémoire Kilowatt Heure / Gigabyte : 0.000392
+- Moyenne du PUE : 1.135
 Je ne peux que vous conseiller de lire attentivement la page [méthodologie du CCF](https://www.cloudcarbonfootprint.org/docs/methodology). Je ne rentrerais pas plus en détail dans les formules que vous trouverez aisément sur le site de l'organisation Cloud Carbon Footprint. Cependant, j'aimerais vous proposer un conseil pour le suivi de cette consommation de manière industrialisée.
 
 ### Votre Dashboard Green

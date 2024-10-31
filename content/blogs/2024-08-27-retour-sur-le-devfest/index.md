@@ -1,9 +1,9 @@
 ---
-title: Retour sur le DevFest
+title: "Retour sur le DevFest"
 date: 2024-08-27T10:22:46.143Z
-description:  Les 6 et 7 Juin dernier s'est déroulée la 7ᵉ édition du DevFest Lille au Grand Palais. Pour la première fois sur un format de 2 jours avec une soirée organisée à Grand Scène (on y reviendra plus tard
+description:  "Les 6 et 7 Juin dernier s'est déroulée la 7ᵉ édition du DevFest Lille au Grand Palais. Pour la première fois sur un format de 2 jours avec une soirée organisée à Grand Scène (on y reviendra plus tard"
 image: ./assets/cover-image.webp
-alt: Les 6 et 7 Juin dernier s'est déroulée la 7ᵉ édition du DevFest Lille. Toute l'équipe HoppR était présente à l'événement. Retour sur cette journée riche en découvertes techniques et humaines
+alt: "Les 6 et 7 Juin dernier s'est déroulée la 7ᵉ édition du DevFest Lille. Toute l'équipe HoppR était présente à l'événement. Retour sur cette journée riche en découvertes techniques et humaines"
 ogImage: ./assets/cover-image.webp
 tags: ['veille tech', 'événement', 'devfest', 'others']
 published: true
@@ -58,9 +58,7 @@ Alors si vous n’avez pas pu y participer ou tout voir, la suite devrait vous i
 
 ## Petit détour sur l'engagement du DevFest Lille
 
-Depuis quelques années, l'équipe du DevFest a fait un gros effort pour réduire l'impact de la conférence, notamment sur les déchets. Avec pour mot d'ordre, supprimer, réutiliser ou recycler et plusieurs initiatives déjà en place :
-
-- Fin des goodies (souvent inutiles) et thématique pour réutiliser les kakemonos et stand des années précédentes (organisation et sponsors).
+Depuis quelques années, l'équipe du DevFest a fait un gros effort pour réduire l'impact de la conférence, notamment sur les déchets. Avec pour mot d'ordre, supprimer, réutiliser ou recycler et plusieurs initiatives déjà en place : - Fin des goodies (souvent inutiles) et thématique pour réutiliser les kakemonos et stand des années précédentes (organisation et sponsors).
 - Partenariat avec la Consignerie pour proposer aux participants des boissons dans des bouteilles en verre et des gobelets consignés.
 - Repas zéro déchet.
 
@@ -96,7 +94,7 @@ De nombreuses typologies d'outils existent (lanceurs, structurateurs, utilitaire
 Le choix des outils varie en fonction de votre besoin et contexte.
 Dans de nombreux cas, ils vous donneront des modèles de test sur lesquels poser vos premiers tests. Il est important de votre côté d'avoir un nommage de test explicite qui pourra déboucher vers un langage commun compréhensible par les développeurs et le métier.
 
-Classifier les tests : Equilibre entre coût, rapidité et confiance
+Classifier les tests : Equilibre entre coût, rapidité et confiance
 
 Vous trouverez dans la JS-Jungle de nombreux noms de tests (unitaire, intégration, bout en bout, acceptance, composants, contracts, etc). Je ne peux que vous conseiller d'en discuter avec vos collègues pour vous approprier ces notions au sein de votre équipe.
 
@@ -113,17 +111,15 @@ Au-delà de l'enjeu moral de l'inclusion, ne pas rendre son site accessible, c'e
 
 L'accessibilité nous profite à tous
 
-On peut penser que les problèmes d'accessibilité ne nous touchent pas mais tout le monde bénéficie au quotidien d'inventions pensées pour des personnes atteintes de handicap: les SMS, la télécommande ou encore les livres audio en sont des exemples.
+On peut penser que les problèmes d'accessibilité ne nous touchent pas mais tout le monde bénéficie au quotidien d'inventions pensées pour des personnes atteintes de handicap : les SMS, la télécommande ou encore les livres audio en sont des exemples.
 
 S'il s'agit d'une problématique permanente pour de nombreuses personnes, nous subissons tous à un moment de notre vie ce manque d’accessibilité, que ce soit de manière permanente, temporaire ou situationnelle.
 
-En effet un rhume peut affecter notre capacité à parler, un bras cassé à utiliser nos mains (handicaps temporaires) ou des situations peuvent altérer nos capacités: lorsque nous sommes dans des endroits bruyants notre ouïe est impactée, lorsque l'on doit garder un bébé à bras tout en naviguant sur l'ordinateur notre motricité est impactée, etc.
+En effet un rhume peut affecter notre capacité à parler, un bras cassé à utiliser nos mains (handicaps temporaires) ou des situations peuvent altérer nos capacités : lorsque nous sommes dans des endroits bruyants notre ouïe est impactée, lorsque l'on doit garder un bébé à bras tout en naviguant sur l'ordinateur notre motricité est impactée, etc.
 
 Les erreurs que l'on fait tous et toutes…
 
-La majorité des erreurs relèvent d'un usage imparfait du langage HTML :
-
-- textes alternatifs manquants (alt dans les images et les boutons contenant qu'une image),
+La majorité des erreurs relèvent d'un usage imparfait du langage HTML : - textes alternatifs manquants (alt dans les images et les boutons contenant qu'une image),
 - étiquettes manquantes dans les formulaires (un label doit avoir l'attribut for défini avec le même nom que l'attribut id de l'input correspondant),
 - liens vides (les urls ne suffisent pas toujours à savoir quel lien correspond à quoi, utilisez l'attribut title)
 - langue manquante du site (l'attribut lang dans la balise html définit la langue du site).
@@ -143,7 +139,7 @@ Comme l'a conclu E. Aboaf, l'important est d'inclure des personnes handicapées 
 
 Je vous encourage vivement à aller voir le replay de son talk 🎤 pour en savoir plus et d'explorer [son site](https://bento.me/eaboaf) pour consulter ses articles sur le sujet.
 
-### Maîtrisez la Hype : Passion versus Raison (William Leemans) par Sébastien Jaupart
+### Maîtrisez la Hype : Passion versus Raison (William Leemans) par Sébastien Jaupart
 
 La passion nous pousse parfois à tester les nouveautés de notre secteur. Parfois un peu trop...
 

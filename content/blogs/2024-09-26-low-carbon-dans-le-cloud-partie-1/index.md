@@ -1,9 +1,9 @@
 ---
-title: Low Carbon dans le Cloud - Partie 1
+title: "Low Carbon dans le Cloud - Partie 1"
 date: 2024-09-26T19:13:02.656Z
-description: Le Green Code aurait permis d'économiser des centaines de millions de tonnes de CO2 rien que ces 3 dernières années. Et si nous faisions un effort supplémentaire côté infrastructure ?  Auprès des part
+description: "Le Green Code aurait permis d'économiser des centaines de millions de tonnes de CO2 rien que ces 3 dernières années. Et si nous faisions un effort supplémentaire côté infrastructure ?  Auprès des part"
 image: ./assets/cover-image.webp
-alt: Error 404. This is not green enough
+alt: "Error 404. This is not green enough"
 ogImage: ./assets/cover-image.webp
 tags: ['green', 'cloud', 'cloud-platform']
 published: true
@@ -37,7 +37,7 @@ Heureusement, nous pouvons limiter la casse et revenir dans les bonnes grâces d
 
 ## Notions
 
-Reprenons les basiques: comment notre application génère du CO2 ? Le stockage, la charge CPU, le refroidissement consomment de l'énergie. Pour produire cette énergie exprimée en kWh, nous brûlons des matières premières, nous extrayons de l'uranium, nous produisons des panneaux solaires, etc. Toutes ces solutions produisent plus ou moins de polluants comme: le CO2, des métaux lourds, des gaz acidifiants, etc. Et bien sûr, tout ça a aussi un coût financier variable : par exemple l'énergie dite verte est plus chère.
+Reprenons les basiques : comment notre application génère du CO2 ? Le stockage, la charge CPU, le refroidissement consomment de l'énergie. Pour produire cette énergie exprimée en kWh, nous brûlons des matières premières, nous extrayons de l'uranium, nous produisons des panneaux solaires, etc. Toutes ces solutions produisent plus ou moins de polluants comme : le CO2, des métaux lourds, des gaz acidifiants, etc. Et bien sûr, tout ça a aussi un coût financier variable : par exemple l'énergie dite verte est plus chère.
 
 Il est important de souligner que la source d'énergie du centre de données est le facteur numéro 1 pour ajuster sa production de CO2.
 
@@ -77,7 +77,7 @@ Pour le respect des lois à caractère RSE, une démarche GreenOps est un grand 
 
 ## En introduction de la partie 2
 
-Il est important de pouvoir suivre ces deux métriques: coût et production de carbone. Ce qui ne peut pas être mesuré est difficilement améliorable. Le Cloud amène avec lui de belles pratiques et de belles améliorations notamment en terme de vision. Dans la seconde partie, nous parlerons d'observabilité avec un focus particulier sur l'impact carbone.
+Il est important de pouvoir suivre ces deux métriques : coût et production de carbone. Ce qui ne peut pas être mesuré est difficilement améliorable. Le Cloud amène avec lui de belles pratiques et de belles améliorations notamment en terme de vision. Dans la seconde partie, nous parlerons d'observabilité avec un focus particulier sur l'impact carbone.
 
 
 

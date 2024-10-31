@@ -1,9 +1,9 @@
 ---
-title: DORA Metrics : Évaluer la performance de livraison logicielle
+title: "DORA Metrics : Évaluer la performance de livraison logicielle"
 date: 2024-10-31T09:00:49.551Z
-description: Cet article explore les DORA Metrics, également connues sous le nom de « Four Keys », un standard émergent pour évaluer la performance de la livraison logicielle. Ayant eu l'opportunité de mettre en p
+description: "Cet article explore les DORA Metrics, également connues sous le nom de « Four Keys », un standard émergent pour évaluer la performance de la livraison logicielle. Ayant eu l'opportunité de mettre en p"
 image: ./assets/cover-image.webp
-alt: Image illustrant les DORA Metrics avec une fusée qui décolle vers la lune dans un style pop
+alt: "Image illustrant les DORA Metrics avec une fusée qui décolle vers la lune dans un style pop"
 ogImage: ./assets/cover-image.webp
 tags: ['dora metrics', 'devops', 'cloud', 'performance', 'observabilité', 'cloud-platform']
 published: true
@@ -47,9 +47,7 @@ Dans cet article, nous nous concentrerons sur les aspects théoriques et fondame
 
 Les métriques DORA, issues du rapport  "[Accelerate State of DevOps](https://cloud.google.com/devops/state-of-devops)" de DORA (DevOps Research and Assessment), sont un ensemble de quatre indicateurs clés de performance (KPI) qui permettent d'évaluer de manière objective l'efficacité et la stabilité des processus de développement et de déploiement logiciel d'une organisation.
 
-Examinons chacune de ces métriques en détail :
-
-1. Lead Time for Changes (Délai de livraison des changements)
+Examinons chacune de ces métriques en détail : 1. Lead Time for Changes (Délai de livraison des changements)
 Cette métrique mesure le temps écoulé entre le moment où un changement est codé et le moment où il est déployé en production. Un délai plus court indique une capacité à répondre rapidement aux besoins des utilisateurs, améliorant ainsi l'expérience utilisateur.
 
 1. Deployment Frequency (Fréquence de déploiement)
@@ -68,42 +66,30 @@ Vous y trouverez les [requêtes SQL nécessaires au calcul des métriques](https
 
 ## Les niveaux de performance
 
-Les métriques DORA définissent trois niveaux de performance principaux :
-
-- Low
+Les métriques DORA définissent trois niveaux de performance principaux : - Low
 - Medium
 - High
-Selon les années, un quatrième niveau peut être ajouté : Elite, mais la logique reste la même.
+Selon les années, un quatrième niveau peut être ajouté : Elite, mais la logique reste la même.
 
 Ces niveaux de performance permettent aux équipes de se positionner par rapport aux meilleures pratiques de l'industrie et d'identifier les domaines d'amélioration potentiels dans leurs processus de développement et de livraison logicielle.
 
-![L'image présente un tableau intitulé "Software delivery performance metric" (Métrique de performance de livraison logicielle) avec quatre colonnes : "Software delivery performance metric", "Low", "Medium", et "High".
+![L'image présente un tableau intitulé "Software delivery performance metric" (Métrique de performance de livraison logicielle) avec quatre colonnes : "Software delivery performance metric", "Low", "Medium", et "High".
 
-Le tableau contient quatre lignes de métriques :
+Le tableau contient quatre lignes de métriques : Deployment frequency (Fréquence de déploiement) : Low : Entre une fois par mois et une fois tous les 6 mois
+Medium : Entre une fois par semaine et une fois par mois
+High : À la demande (plusieurs déploiements par jour)
 
-Deployment frequency (Fréquence de déploiement) :
+Lead time for changes (Délai de livraison des changements) : Low : Entre un mois et six mois
+Medium : Entre une semaine et un mois
+High : Entre un jour et une semaine
 
-Low : Entre une fois par mois et une fois tous les 6 mois
-Medium : Entre une fois par semaine et une fois par mois
-High : À la demande (plusieurs déploiements par jour)
+Time to restore service (Temps de restauration du service) : Low : Entre une semaine et un mois
+Medium : Entre un jour et une semaine
+High : Moins d'un jour
 
-Lead time for changes (Délai de livraison des changements) :
-
-Low : Entre un mois et six mois
-Medium : Entre une semaine et un mois
-High : Entre un jour et une semaine
-
-Time to restore service (Temps de restauration du service) :
-
-Low : Entre une semaine et un mois
-Medium : Entre un jour et une semaine
-High : Moins d'un jour
-
-Change failure rate (Taux d'échec des changements) :
-
-Low : 46%-60%
-Medium : 16%-30%
-High : 0%-15%](https://prod-files-secure.s3.us-west-2.amazonaws.com/5863e833-64f2-4f13-9f7a-2c92c72b5bbf/5d7fbdeb-1ce8-458c-b86b-c015b6a86e78/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45GO43JXI4%2F20241031%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20241031T090048Z&X-Amz-Expires=3600&X-Amz-Signature=5357b57e30213dcd09a03c1f31edf59d1bd4a3b18f4e44951391eb4a2236b130&X-Amz-SignedHeaders=host&x-id=GetObject)
+Change failure rate (Taux d'échec des changements) : Low : 46%-60%
+Medium : 16%-30%
+High : 0%-15%](https://prod-files-secure.s3.us-west-2.amazonaws.com/5863e833-64f2-4f13-9f7a-2c92c72b5bbf/5d7fbdeb-1ce8-458c-b86b-c015b6a86e78/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45GO43JXI4%2F20241031%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20241031T090048Z&X-Amz-Expires=3600&X-Amz-Signature=5357b57e30213dcd09a03c1f31edf59d1bd4a3b18f4e44951391eb4a2236b130&X-Amz-SignedHeaders=host&x-id=GetObject)
 
 
 

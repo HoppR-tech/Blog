@@ -1,9 +1,9 @@
 ---
-title: Sauvegarder l’état final d’un agrégat par ses événements
+title: "Sauvegarder l’état final d’un agrégat par ses événements"
 date: 2024-09-27T09:33:34.264Z
-description: Pré-requis pour ne pas être trop perdu  - quelques bases en Domain Driven Design (DDD) - quelques bases en JPA / Hibernate   La notion d’agrégat du Domain Driven Design désigne un ensemble cohérent d’
+description: "Pré-requis pour ne pas être trop perdu  - quelques bases en Domain Driven Design (DDD) - quelques bases en JPA / Hibernate   La notion d’agrégat du Domain Driven Design désigne un ensemble cohérent d’"
 image: ./assets/cover-image.webp
-alt: Des aggregats imaginés sous la forme de cellules organiques
+alt: "Des aggregats imaginés sous la forme de cellules organiques"
 ogImage: ./assets/cover-image.webp
 tags: ['craft', 'ddd', 'jpa']
 published: true
@@ -45,15 +45,13 @@ Pré-requis pour ne pas être trop perdu
 - quelques bases en JPA / Hibernate
 
 
-La notion d’agrégat du Domain Driven Design désigne un ensemble cohérent d’objets du domaine qui doit être manipulé comme une seule unité métier. Dans cette logique, les décisions métiers sont prises par l'agrégat et prennent la forme d'événements (Domain Event). L'événement est donc la représentation d'une mutation: l'agrégat a changé d'état.
+La notion d’agrégat du Domain Driven Design désigne un ensemble cohérent d’objets du domaine qui doit être manipulé comme une seule unité métier. Dans cette logique, les décisions métiers sont prises par l'agrégat et prennent la forme d'événements (Domain Event). L'événement est donc la représentation d'une mutation : l'agrégat a changé d'état.
 
 Je vous propose ainsi de voir comme l'on peut persister l'état final d'un agrégat en ne se basant que sur les décisions qu'il a prises.
 
 ## L'agrégat
 
-L'exemple que nous allons prendre parle de l'accès d'un utilisateur dont les règles de gestion sont les suivantes:
-
-- l'accès peut être suspendu
+L'exemple que nous allons prendre parle de l'accès d'un utilisateur dont les règles de gestion sont les suivantes : - l'accès peut être suspendu
 - si l'accès est suspendu, il ne peut pas être suspendu à nouveau (erreur)
 - l'accès peut être réactivé
 ```java
@@ -95,17 +93,13 @@ class UserAccess {
 }
 ```
 
-La décision métier est représentée ici de deux manières:
-
-- l'exception UserAccessIsAlreadySuspended
+La décision métier est représentée ici de deux manières : - l'exception UserAccessIsAlreadySuspended
 - l'événement UserAccessSuspended
 > Bon à savoir, un événement s'étant déjà produit, une bonne manière de le nommer est de l'écrire au passé. L'exception quant à elle est écrite avec la convention IsXX pour décrire un fait.
 
 ## Persister l'agrégat
 
-L'agrégat sera manipulé dans la couche application par un service qui couvrira la totalité du geste métier:
-
-- Récupération de l'agrégat
+L'agrégat sera manipulé dans la couche application par un service qui couvrira la totalité du geste métier : - Récupération de l'agrégat
 - Prise de décision
 - Gestion des erreurs
 - Persistance de l'agrégat
@@ -127,7 +121,7 @@ interface UserAccessPort {
 
 ### Implémentation
 
-Nous pourrions exposer un getter pour la propriété suspendedAt. Le problème s'il en est de cette méthode réside dans le fait que l'agrégat se mettrait à exposer tout ou partie de son état interne. D'une certaine manière, la modélisation de notre agrégat serait dépendante de la manière de la consommer. C'est là où les événements jouent un rôle important: ils sont faits pour être consommés.
+Nous pourrions exposer un getter pour la propriété suspendedAt. Le problème s'il en est de cette méthode réside dans le fait que l'agrégat se mettrait à exposer tout ou partie de son état interne. D'une certaine manière, la modélisation de notre agrégat serait dépendante de la manière de la consommer. C'est là où les événements jouent un rôle important : ils sont faits pour être consommés.
 
 Pour sauvegarder l'agrégat, nous allons parcourir chaque événement qu'il aura pu créer. Pour chaque événement, nous allons effectuer une opération JPA. A contrario, récupérer l'agrégat depuis la persistance se fera par un mapping direct des propriétés.
 
@@ -139,7 +133,7 @@ class UserAccessAdapter implements UserAccessPort {
     @Override
     public UserAccess getById(UserId userId) {
         return jpaUserAccesses.findById(userId)
-                .map(UserAccessAdapter::toUserAccess)
+                .map(UserAccessAdapter :  : toUserAccess)
                 .orElseThrow(() -> new UserAccessNotFound(userId));
     }
 
@@ -183,8 +177,8 @@ interface JpaUserAccesses extends JpaRepository<UserAccessEntity, String> {
     @Modifying
     @Query("""
         UPDATE UserAccess u
-        SET u.suspendedAt = :#{#event.suspendedAt()}
-        WHERE u.id = :#{#event.userId().value()}
+        SET u.suspendedAt = : #{#event.suspendedAt()}
+        WHERE u.id = : #{#event.userId().value()}
     """)
     void apply(UserAccessSuspended event);
 
@@ -192,7 +186,7 @@ interface JpaUserAccesses extends JpaRepository<UserAccessEntity, String> {
     @Query("""
         UPDATE UserAccess u
         SET u.suspendedAt = null
-        WHERE u.id = :#{#event.userId().value()}
+        WHERE u.id = : #{#event.userId().value()}
         """)
     void apply(UserAccessUnlocked event);
 

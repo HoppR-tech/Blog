@@ -1,9 +1,9 @@
 ---
-title: Retour "Survivre dans la JS-jungle des outils de tests" de Lise QUESNEL au Devfest 2024
+title: "Retour \"Survivre dans la JS-jungle des outils de tests\" de Lise QUESNEL au Devfest 2024"
 date: 2024-10-11T12:52:42.324Z
-description:  Cet article fait suite au [retour de HoppR sur le DevFest 2024](https://blog.hoppr.tech/blogs/2024-08-27-retour-sur-le-devfest) et se concentre sur la conférence de Lise QUESNEL qui aborde les outils
+description:  "Cet article fait suite au [retour de HoppR sur le DevFest 2024](https://blog.hoppr.tech/blogs/2024-08-27-retour-sur-le-devfest) et se concentre sur la conférence de Lise QUESNEL qui aborde les outils"
 image: ./assets/cover-image.webp
-alt: Conférence de Lise QUESNEL au DevFest 2024
+alt: "Conférence de Lise QUESNEL au DevFest 2024"
 ogImage: ./assets/cover-image.webp
 tags: ['devfest', '2024', 'veille tech', 'js', 'testing', 'others']
 published: true
@@ -55,7 +55,7 @@ Il est nécessaire de comprendre les différentes typologies car elles ne doiven
 
 Leur but est d'exécuter les tests et d'exporter leurs résultats.
 
-Exemple: [Karma](https://karma-runner.github.io/latest/index.html)
+Exemple : [Karma](https://karma-runner.github.io/latest/index.html)
 
 ## Les structurateurs
 
@@ -65,52 +65,42 @@ Les deux syntaxes, aussi appelées modèles de tests ou patterns, les plus connu
 Toutes les deux expriment un contexte, une action puis des conséquences. Gerkhin se distingue par son approche [comportementale](https://fr.wikipedia.org/wiki/Programmation_pilot%C3%A9e_par_le_comportement) des sujets métiers.
 Cela permet notamment d'obtenir un nommage/langage commun compréhensible par les développeurs et le métier.
 
-Exemple: [Cucumber](https://github.com/cucumber/cucumber-js)
+Exemple : [Cucumber](https://github.com/cucumber/cucumber-js)
 
 ## Les utilitaires
 
 Leur but est de vérifier les attendus et de lever des exceptions claires. Cette notion est appelé "Assertion".
 
-Exemple: [Chai](https://www.chaijs.com/)
+Exemple : [Chai](https://www.chaijs.com/)
 
 ## Les spies, stubs et mocks
 
 Leur but est d'isoler la partie du code testée par la simulation du fonctionnement de ces dépendances ou encore l'analyse à l'appel de ces dépendances.
 
-Exemple: [Sinon](https://sinonjs.org/)
+Exemple : [Sinon](https://sinonjs.org/)
 
 ## Les multi-typologies
 
-Si vous ne vous sentez pas d'avoir trop de dépendances dans votre projet, il existe aussi des outils couvrants toutes ces typologies :
-
-Exemples:
-
-- [Jest](https://jestjs.io/fr/)
+Si vous ne vous sentez pas d'avoir trop de dépendances dans votre projet, il existe aussi des outils couvrants toutes ces typologies : Exemples : - [Jest](https://jestjs.io/fr/)
 - [Vite](https://vitejs.dev/)
 - [Jasmine](https://jasmine.github.io/)
 ## Les contrôleurs de navigateurs
 
 La typologie des contrôleurs de navigateurs est à part dans le sens où leur but est de simuler un comportement utilisateur au plus proche du navigateur.
-Il y a 3 manières de contrôler un navigateur :
-
-- Via ces drivers : [Selenium](https://www.selenium.dev/selenium/docs/api/javascript/index.html)
-- Via script JS : [Cypress](https://www.cypress.io/)
-- Via API Native : [Playwright](https://playwright.dev/) ou [Puppeteer](https://pptr.dev/)
+Il y a 3 manières de contrôler un navigateur : - Via ces drivers : [Selenium](https://www.selenium.dev/selenium/docs/api/javascript/index.html)
+- Via script JS : [Cypress](https://www.cypress.io/)
+- Via API Native : [Playwright](https://playwright.dev/) ou [Puppeteer](https://pptr.dev/)
 ## Les tests bancals
 
 Si vous avez déjà commencé vos premiers tests, vous tomberez sur des tests bancals (Flaky en anglais) dont le résultat n'est pas répétable de manière certaine. Un jour il passe, l'autre non...
 
 Un élément de réponse pour comprendre pourquoi il ne passe pas tout le temps est que le test est basé sur “quelque chose” de variable. Dans certains cas, pour contourner cette variabilité, nous pouvons simuler (mocker) ou remplacer l’élément variant.
 
-Exemple:
-
-- Lecture d'un tableau de données dans un ordre non déterministe
+Exemple : - Lecture d'un tableau de données dans un ordre non déterministe
 - Modification des données par un test précédent
 - Appel à une date relative (Aujourd'hui, demain, hier)
-- Sélecteur CSS non sûr (Vous pouvez utiliser les rôles: [Testing-library](https://testing-library.com/))
-Des conseils pour garder une base de tests saine et, en conséquence, une confiance envers vos tests:
-
-- "N'hésitez pas à mettre vos tests bancals en quarantaine"
+- Sélecteur CSS non sûr (Vous pouvez utiliser les rôles : [Testing-library](https://testing-library.com/))
+Des conseils pour garder une base de tests saine et, en conséquence, une confiance envers vos tests : - "N'hésitez pas à mettre vos tests bancals en quarantaine"
 - "Mettez des règles sur vos quarantaines (Nombre de jours maximums en quarantaine, nombre de tests maximum, etc)"
 - “De manière générale, respectez les principes [FIRST](https://dzone.com/articles/first-principles-solid-rules-for-tests)”
 Il existe des questions ouvertes que sont l'unité d'un test unitaire, la sociabilité des tests ou l'utilité d'un test qui sont en fait des sujets exploratoires.
@@ -126,7 +116,7 @@ De manière simplifiée, nous dirons que nous avons des tests unitaires pour les
 Plus vous vous rapprochez des tests unitaires, plus vos unités de test sont fines et rapides mais moins vous pouvez avoir confiance en ceux-ci seules.
 
 La question finale sera donc lesquels utiliser et en quelle proportion ?
-Vous trouverez de nombreuses distributions de tests : [la pyramide, l'alvéole, le trophée](https://thetestingarchitect.substack.com/p/test-pyramid-test-honeycomb-test).
+Vous trouverez de nombreuses distributions de tests : [la pyramide, l'alvéole, le trophée](https://thetestingarchitect.substack.com/p/test-pyramid-test-honeycomb-test).
 L'orientation des langages front modernes pousse vers l'utilisation de la distribution en trophée (Plus de tests de bout en bout que de tests unitaires et moins de tests de bout en bout que de tests d'intégration).
 
 ## Ouverture

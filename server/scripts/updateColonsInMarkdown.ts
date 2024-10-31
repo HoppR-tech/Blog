@@ -19,7 +19,7 @@ function updateMarkdownFile(filePath: string) {
   const finalContent = updatedContent.replace(
     /^(---\n[\s\S]*?---\n\n)([\s\S]*?)$/,
     (match, frontmatter, mainContent) => {
-      const updatedMainContent = mainContent.replace(/\s*:\s*/g, '\u00A0: ')
+      const updatedMainContent = mainContent.replace(/(?<!https?)\s*:\s*/g, '\u00A0: ')
       return `${frontmatter}${updatedMainContent}`
     }
   )

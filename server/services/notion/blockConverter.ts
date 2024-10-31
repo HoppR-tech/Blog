@@ -54,8 +54,14 @@ export function convertBlocksToMarkdown(blocks: NotionBlock[]): { markdownConten
       isFirstBlock = false
       return `### ${extractText(block.heading_3)}\n\n`
     },
-    bulleted_list_item: (block: any) => `- ${extractText(block.bulleted_list_item)}\n`,
-    numbered_list_item: (block: any) => `1. ${extractText(block.numbered_list_item)}\n`,
+    bulleted_list_item: (block: any) => {
+      isFirstBlock = false
+      return `- ${extractText(block.bulleted_list_item)}\n`
+    },
+    numbered_list_item: (block: any, index: number) => {
+      isFirstBlock = false
+      return `${index + 1}. ${extractText(block.numbered_list_item)}\n`
+    },
     code: (block: any) => codeToMarkdown(block),
     image: (block: any) => {
       const imageUrl = block.image?.file?.url || block.image?.external?.url || ''

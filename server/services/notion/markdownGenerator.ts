@@ -15,9 +15,9 @@ function createFrontmatter(post: BlogPost, assetsFolder: string = './assets'): s
   return `---
 title: "${post.title.replace(/\s*:\s*/g, '\u00A0 : ').replace(/"/g, '\\"')}"
 date: ${post.date}
-description: "${post.description.replace(/"/g, '\\"')}"
+description: "${post.description.replace(/(?<!http)(?<!https)\s*:\s*/g, '\u00A0 : ').replace(/"/g, '\\"')}"
 image: ${assetsFolder}/cover-image.webp
-alt: "${post.alt.replace(/"/g, '\\"')}"
+alt: "${post.alt.replace(/(?<!http)(?<!https)\s*:\s*/g, '\u00A0 : ').replace(/"/g, '\\"')}"
 ogImage: ${assetsFolder}/cover-image.webp
 tags: [${post.tags.map(tag => `'${tag.toLowerCase()}'`).join(', ')}]
 published: ${post.published}

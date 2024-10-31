@@ -13,11 +13,11 @@ function createFrontmatter(post: BlogPost, assetsFolder: string = './assets'): s
   const formattedAuthors = formatPersons(post.authors)
   const formattedReviewers = formatPersons(post.reviewers)
   return `---
-title: "${post.title.replace(/\s*:\s*/g, '\u00A0 : ')}"
+title: "${post.title.replace(/\s*:\s*/g, '\u00A0 : ').replace(/"/g, '\\"')}"
 date: ${post.date}
-description: "${post.description}"
+description: "${post.description.replace(/"/g, '\\"')}"
 image: ${assetsFolder}/cover-image.webp
-alt: "${post.alt}"
+alt: "${post.alt.replace(/"/g, '\\"')}"
 ogImage: ${assetsFolder}/cover-image.webp
 tags: [${post.tags.map(tag => `'${tag.toLowerCase()}'`).join(', ')}]
 published: ${post.published}

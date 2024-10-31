@@ -17,7 +17,10 @@ function updateMarkdownFile(filePath: string) {
     updatedContent = updatedContent.replace(
       new RegExp(`(${field}:\\s*)(["']?)(.*?)(["']?)\\s*$`, 'gm'),
       (match, prefix, openQuote, value, closeQuote) => {
-        const updatedValue = value.replace(/\s*:\s*/g, '\u00A0: ')
+        const updatedValue = value
+          .replace(/\s*:\s*/g, '\u00A0: ')
+          .replace(/\\"/g, '"')  // D'abord on "dé-escape" les guillemets déjà échappés
+          .replace(/"/g, '\\"')  // Puis on escape tous les guillemets
         return `${prefix}"${updatedValue}"`
       }
     )

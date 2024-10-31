@@ -16,11 +16,11 @@ function processMarkdownFile(filePath: string) {
     const [_, frontmatter, ...contentParts] = parts
     const mainContent = contentParts.join('---\n')
 
-    // Ajouter des guillemets aux champs spécifiés
+    // Ajouter des guillemets aux champs spécifiés et échapper les guillemets existants
     const updatedFrontmatter = frontmatter
-        .replace(/^(title:\s*)([^"\n]+)$/m, '$1"$2"')
-        .replace(/^(description:\s*)([^"\n]+)$/m, '$1"$2"')
-        .replace(/^(alt:\s*)([^"\n]+)$/m, '$1"$2"')
+        .replace(/^(title:\s*)(.+)$/m, (_, prefix, content) => `${prefix}"${content.replace(/"/g, '\\"')}"`)
+        .replace(/^(description:\s*)(.+)$/m, (_, prefix, content) => `${prefix}"${content.replace(/"/g, '\\"')}"`)
+        .replace(/^(alt:\s*)(.+)$/m, (_, prefix, content) => `${prefix}"${content.replace(/"/g, '\\"')}"`)
 
     // Reconstruire le fichier
     const newContent = `---\n${updatedFrontmatter}---\n${mainContent}`

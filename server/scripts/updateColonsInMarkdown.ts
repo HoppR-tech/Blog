@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync, readdirSync } from 'fs'
 import { join } from 'path'
 
-const CONTENT_DIR = 'content/blogs'
+const CONTENT_DIR = '../content/blogs'
 
 function updateMarkdownFile(filePath: string) {
   const content = readFileSync(filePath, 'utf-8')

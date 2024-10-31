@@ -6,12 +6,25 @@ const blogsDir = join(process.cwd(), 'content/blogs')
 function processMarkdownFile(filePath: string) {
     const content = readFileSync(filePath, 'utf-8')
     
-    // Remplacer les guillemets simples par des guillemets français
-    const updatedContent = content
+    // Séparer le frontmatter du contenu
+    const parts = content.split(/---\n/)
+    if (parts.length < 3) {
+        console.warn(`Skipping ${filePath}: No valid frontmatter found`)
+        return
+    }
+
+    const [_, frontmatter, ...contentParts] = parts
+    const mainContent = contentParts.join('---\n')
+
+    // Préserver le frontmatter et convertir uniquement le contenu
+    const updatedContent = mainContent
         .replace(/'([^']+)'/g, '« $1 »')
         .replace(/"([^"]+)"/g, '« $1 »')
 
-    writeFileSync(filePath, updatedContent)
+    // Reconstruire le fichier
+    const newContent = `---\n${frontmatter}---\n${updatedContent}`
+    
+    writeFileSync(filePath, newContent)
     console.log(`Processed: ${filePath}`)
 }
 

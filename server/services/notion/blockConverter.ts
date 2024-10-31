@@ -2,10 +2,17 @@ import type { NotionBlock } from '@/types/notion'
 
 function extractText(blockContent: any): string {
   return blockContent?.rich_text.map((text: any) => {
-    if (text.href)
-      return `[${text.plain_text}](${text.href})`
+    let content = text.plain_text
 
-    return text.plain_text
+    // Appliquer le style gras si nécessaire
+    if (text.annotations?.bold)
+      content = `**${content}**`
+    
+    // Appliquer le lien si présent
+    if (text.href)
+      return `[${content}](${text.href})`
+
+    return content
   }).join('')
 }
 

@@ -1,9 +1,9 @@
 ---
-title: Sauvegarder l’état final d’un agrégat par ses événements
+title: "Sauvegarder l’état final d’un agrégat par ses événements"
 date: 2024-09-27T09:33:34.264Z
-description: Pré-requis pour ne pas être trop perdu  - quelques bases en Domain Driven Design (DDD) - quelques bases en JPA / Hibernate   La notion d’agrégat du Domain Driven Design désigne un ensemble cohérent d’
+description: "Pré-requis pour ne pas être trop perdu  - quelques bases en Domain Driven Design (DDD) - quelques bases en JPA / Hibernate   La notion d’agrégat du Domain Driven Design désigne un ensemble cohérent d’"
 image: ./assets/cover-image.webp
-alt: Des aggregats imaginés sous la forme de cellules organiques
+alt: "Des aggregats imaginés sous la forme de cellules organiques"
 ogImage: ./assets/cover-image.webp
 tags: ['craft', 'ddd', 'jpa']
 published: true

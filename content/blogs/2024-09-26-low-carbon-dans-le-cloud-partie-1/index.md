@@ -1,9 +1,9 @@
 ---
-title: Low Carbon dans le Cloud - Partie 1
+title: "Low Carbon dans le Cloud - Partie 1"
 date: 2024-09-26T19:13:02.656Z
-description: Le Green Code aurait permis d'économiser des centaines de millions de tonnes de CO2 rien que ces 3 dernières années. Et si nous faisions un effort supplémentaire côté infrastructure ?  Auprès des part
+description: "Le Green Code aurait permis d'économiser des centaines de millions de tonnes de CO2 rien que ces 3 dernières années. Et si nous faisions un effort supplémentaire côté infrastructure ?  Auprès des part"
 image: ./assets/cover-image.webp
-alt: Error 404. This is not green enough
+alt: "Error 404. This is not green enough"
 ogImage: ./assets/cover-image.webp
 tags: ['green', 'cloud', 'cloud-platform']
 published: true

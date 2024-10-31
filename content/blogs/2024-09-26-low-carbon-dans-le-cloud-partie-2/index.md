@@ -1,9 +1,9 @@
 ---
-title: Low Carbon dans le Cloud - Partie 2
+title: "Low Carbon dans le Cloud - Partie 2"
 date: 2024-09-26T19:14:17.111Z
-description: Dans notre première partie de l'article, nous avons établi la relation entre CO2, énergie et finance. Aujourd'hui, je vous propose, dans une version simplifiée, de mesurer votre impact carbone dans le
+description: "Dans notre première partie de l'article, nous avons établi la relation entre CO2, énergie et finance. Aujourd'hui, je vous propose, dans une version simplifiée, de mesurer votre impact carbone dans le"
 image: ./assets/cover-image.webp
-alt: Error 404. This is not green enough
+alt: "Error 404. This is not green enough"
 ogImage: ./assets/cover-image.webp
 tags: ['green', 'cloud', 'cloud-platform']
 published: true

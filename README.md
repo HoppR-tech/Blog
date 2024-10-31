@@ -39,3 +39,42 @@ Bienvenue dans la documentation du Blog HoppR. Ce projet est une plateforme de b
 - [API Slack](docs/api/03_slack_api.md)
 
 Pour plus d'informations sur l'utilisation du blog, veuillez consulter notre [documentation utilisateur sur Notion](https://www.notion.so/hoppr-tech/Blog-HoppR-2cb814dde33e4356b0034a4457d6d3c4?p=95fafd7733564616b75bc8947216a4da&pm=s).
+# Scripts de formatage pour le blog
+
+Ce dépôt contient des scripts utilitaires pour formater le contenu du blog.
+
+## Scripts disponibles
+
+### Formatage des guillemets dans le frontmatter (`addFrontmatterQuotes.ts`)
+
+Ce script ajoute des guillemets doubles autour des valeurs des champs spécifiques dans le frontmatter des fichiers Markdown.
+
+**Champs concernés :**
+- `title`
+- `description`
+- `alt`
+
+Les guillemets doubles existantes dans ces champs sont automatiquement échappées avec un backslash.
+
+**Utilisation :**
+```bash
+npx tsx scripts/addFrontmatterQuotes.ts
+```
+
+**Exemple de transformation :**
+```yaml
+# Avant
+title: Mon titre avec "guillemets"
+```
+
+```yaml
+# Après
+title: "Mon titre avec \"guillemets\""
+```
+
+## Contribution
+
+Pour contribuer, assurez-vous de :
+1. Tester vos modifications sur des fichiers de test avant de les appliquer sur le contenu réel
+2. Maintenir la compatibilité avec le format YAML existant
+3. Documenter tout nouveau script ou modification majeure

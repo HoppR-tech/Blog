@@ -51,16 +51,20 @@ Les métriques DORA, issues du rapport  "[Accelerate State of DevOps](https://
 
 Examinons chacune de ces métriques en détail :
 
-1. Lead Time for Changes (Délai de livraison des changements)
+1. **Lead Time for Changes (Délai de livraison des changements)**
+
 Cette métrique mesure le temps écoulé entre le moment où un changement est codé et le moment où il est déployé en production. Un délai plus court indique une capacité à répondre rapidement aux besoins des utilisateurs, améliorant ainsi l'expérience utilisateur.
 
-1. Deployment Frequency (Fréquence de déploiement)
+2. **Deployment Frequency (Fréquence de déploiement)**
+
 Elle mesure la fréquence à laquelle les changements sont déployés en production. Une fréquence élevée suggère que le déploiement est devenu une opération de routine, ce qui permet une réponse rapide aux besoins des utilisateurs et améliore la boucle de feedback.
 
-1. Mean Time to Restore (MTTR) (Temps moyen de restauration)
+3. **Mean Time to Restore (MTTR) (Temps moyen de restauration)**
+
 Le MTTR mesure le temps nécessaire pour restaurer le service après un incident en production. Un MTTR court indique une réactivité élevée et une boucle de feedback courte, ce qui devrait améliorer l'expérience utilisateur.
 
-1. Change Failure Rate (Taux d'échec des changements)
+4. **Change Failure Rate (Taux d'échec des changements)**
+
 Cette métrique mesure le taux de changements qui entraînent un échec ou un incident. Un taux faible implique une bonne compréhension des besoins des utilisateurs et une réponse appropriée, ce qui devrait améliorer l'expérience utilisateur.
 
 

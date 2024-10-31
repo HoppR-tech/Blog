@@ -1,6 +1,6 @@
 ---
 title: "DORA Metrics : Évaluer la performance de livraison logicielle"
-date: 2024-10-31T16:02:59.930Z
+date: 2024-10-31T16:21:19.696Z
 description: "Cet article explore les DORA Metrics, également connues sous le nom de « Four Keys », un standard émergent pour évaluer la performance de la livraison logicielle. Ayant eu l'opportunité de mettre en p"
 image: ./assets/cover-image.webp
 alt: "Image illustrant les DORA Metrics avec une fusée qui décolle vers la lune dans un style pop"
@@ -16,22 +16,22 @@ authors:
 reviewers:
   - id: 45c76823-ab7d-4c1f-84b3-0bad16ab91e1
     name: Paul-Alexandre Chrétien
-    image: https://prod-files-secure.s3.us-west-2.amazonaws.com/5863e833-64f2-4f13-9f7a-2c92c72b5bbf/c4f79dcc-a6ed-4a79-9947-416b33e5b90a/Photo_Profil_CV_1200px_%2813%29.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45GO43JXI4%2F20241031%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20241031T160259Z&X-Amz-Expires=3600&X-Amz-Signature=ee0ac486e3a9b81560341bbdc184d5d85b9bf3106e5ed6ec58fdf126d7a72742&X-Amz-SignedHeaders=host&x-id=GetObject
+    image: https://prod-files-secure.s3.us-west-2.amazonaws.com/5863e833-64f2-4f13-9f7a-2c92c72b5bbf/c4f79dcc-a6ed-4a79-9947-416b33e5b90a/Photo_Profil_CV_1200px_%2813%29.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45GO43JXI4%2F20241031%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20241031T162119Z&X-Amz-Expires=3600&X-Amz-Signature=862820692550c5921e16a6131e9a356f5d7b2b6ae9597cee86b1e949473bb743&X-Amz-SignedHeaders=host&x-id=GetObject
     linkedin: https://www.linkedin.com/in/paulalexandrechretien/
     x: 
   - id: 0bb914a6-f882-4951-bee6-53e8e8abb807
     name: Emmanuelle Gouvart
-    image: https://prod-files-secure.s3.us-west-2.amazonaws.com/5863e833-64f2-4f13-9f7a-2c92c72b5bbf/c88f5dfa-16db-4e6f-acf1-34dd80ee8766/emma_hoppr.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45GO43JXI4%2F20241031%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20241031T160259Z&X-Amz-Expires=3600&X-Amz-Signature=8d218c2e21d50e5266ab34a16558acd1a6afdb55199bb38239c354fcb1c6dd98&X-Amz-SignedHeaders=host&x-id=GetObject
+    image: https://prod-files-secure.s3.us-west-2.amazonaws.com/5863e833-64f2-4f13-9f7a-2c92c72b5bbf/c88f5dfa-16db-4e6f-acf1-34dd80ee8766/emma_hoppr.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45GO43JXI4%2F20241031%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20241031T162119Z&X-Amz-Expires=3600&X-Amz-Signature=e7fa40bc1e5a2d9bb97b881297fde94cb9bc5a820a0f746a8b89d64aad347df5&X-Amz-SignedHeaders=host&x-id=GetObject
     linkedin: https://www.linkedin.com/in/emmanuellegouvart-182b6ab2/
     x: 
   - id: e8163b24-7e01-41c5-adbf-0dc655f929d0
     name: Nicolas Zago
-    image: https://prod-files-secure.s3.us-west-2.amazonaws.com/5863e833-64f2-4f13-9f7a-2c92c72b5bbf/f8f82a79-9d41-4302-b1a5-37882985167f/nicoz_hoppr.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45GO43JXI4%2F20241031%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20241031T160259Z&X-Amz-Expires=3600&X-Amz-Signature=624ebcc1a5ac198c3e9d1a1f210b4f8d9599d760c24bb9b055c906f28c6884bb&X-Amz-SignedHeaders=host&x-id=GetObject
+    image: https://prod-files-secure.s3.us-west-2.amazonaws.com/5863e833-64f2-4f13-9f7a-2c92c72b5bbf/f8f82a79-9d41-4302-b1a5-37882985167f/nicoz_hoppr.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45GO43JXI4%2F20241031%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20241031T162119Z&X-Amz-Expires=3600&X-Amz-Signature=d4ed6d5f51e83bf901b31a90043dbc46d336d3f0bd8521c9de7cb10dc0357ef0&X-Amz-SignedHeaders=host&x-id=GetObject
     linkedin: https://www.linkedin.com/in/nicolaszago/
     x: 
   - id: 02c620f8-3576-4943-b5cf-6117f99220a2
     name: Edouard Cattez
-    image: https://prod-files-secure.s3.us-west-2.amazonaws.com/5863e833-64f2-4f13-9f7a-2c92c72b5bbf/02dd23b5-238a-4713-ad54-432f3fa5119b/ecattez_profile.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45GO43JXI4%2F20241031%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20241031T160259Z&X-Amz-Expires=3600&X-Amz-Signature=85c73c9573dc3d20237a3e4b75379924834aa9dc0406e64182858e8214fcef81&X-Amz-SignedHeaders=host&x-id=GetObject
+    image: https://prod-files-secure.s3.us-west-2.amazonaws.com/5863e833-64f2-4f13-9f7a-2c92c72b5bbf/02dd23b5-238a-4713-ad54-432f3fa5119b/ecattez_profile.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45GO43JXI4%2F20241031%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20241031T162119Z&X-Amz-Expires=3600&X-Amz-Signature=353d8be03f5b9ceac7fc071478f5d6be5b86eb633fdc15cc6affa50a9de61ffa&X-Amz-SignedHeaders=host&x-id=GetObject
     linkedin: https://www.linkedin.com/in/edouard-cattez-865794133/
     x: https://x.com/ecattez
 ---
@@ -79,6 +79,8 @@ Selon les années, un quatrième niveau peut être ajouté : Elite, mais la logi
 
 Ces niveaux de performance permettent aux équipes de se positionner par rapport aux meilleures pratiques de l'industrie et d'identifier les domaines d'amélioration potentiels dans leurs processus de développement et de livraison logicielle.
 
+
+
 ![L'image présente un tableau intitulé "Software delivery performance metric" (Métrique de performance de livraison logicielle) avec quatre colonnes : "Software delivery performance metric", "Low", "Medium", et "High".
 
 Le tableau contient quatre lignes de métriques :
@@ -105,7 +107,7 @@ Change failure rate (Taux d'échec des changements) :
 
 Low : 46%-60%
 Medium : 16%-30%
-High : 0%-15%](https://prod-files-secure.s3.us-west-2.amazonaws.com/5863e833-64f2-4f13-9f7a-2c92c72b5bbf/5d7fbdeb-1ce8-458c-b86b-c015b6a86e78/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45GO43JXI4%2F20241031%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20241031T160259Z&X-Amz-Expires=3600&X-Amz-Signature=e856c90765e2c9a4d0bf0ad3d45305f925f3301aa7cc924d85aeb791b8c24291&X-Amz-SignedHeaders=host&x-id=GetObject)
+High : 0%-15%](https://prod-files-secure.s3.us-west-2.amazonaws.com/5863e833-64f2-4f13-9f7a-2c92c72b5bbf/5d7fbdeb-1ce8-458c-b86b-c015b6a86e78/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45GO43JXI4%2F20241031%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20241031T162118Z&X-Amz-Expires=3600&X-Amz-Signature=eff26cc5f8866a2878abc11556deff91df48689eb5104090fdee4774eec7cb42&X-Amz-SignedHeaders=host&x-id=GetObject)
 
 
 

@@ -5,7 +5,8 @@ export function generateMarkdownContent(post: BlogPost, content: string): string
     throw new Error('Invalid date provided')
 
   const frontmatter = createFrontmatter(post)
-  return `${frontmatter}\n\n${content}`
+  const contentWithNbsp = content.replace(/\s*:\s*/g, '\u00A0: ')
+  return `${frontmatter}\n\n${contentWithNbsp}`
 }
 
 function createFrontmatter(post: BlogPost, assetsFolder: string = './assets'): string {

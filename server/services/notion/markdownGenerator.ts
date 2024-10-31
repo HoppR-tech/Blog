@@ -12,7 +12,7 @@ function createFrontmatter(post: BlogPost, assetsFolder: string = './assets'): s
   const formattedAuthors = formatPersons(post.authors)
   const formattedReviewers = formatPersons(post.reviewers)
   return `---
-title: ${post.title}
+title: ${post.title.replace(/\s*:\s*/g, '\u00A0: ')}
 date: ${post.date}
 description: ${post.description}
 image: ${assetsFolder}/cover-image.webp

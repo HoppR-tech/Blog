@@ -20,7 +20,7 @@ Script qui met à jour le formatage des deux-points dans les fichiers markdown d
 npm install
 
 # Exécution du script
-npx ts-node scripts/updateColonsInMarkdown.ts
+npx ts-node server/scripts/updateColonsInMarkdown.ts
 ```
 
 Le script parcourt automatiquement tous les fichiers markdown dans `content/blogs/*/index.md` et les met à jour.

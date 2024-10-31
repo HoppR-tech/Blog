@@ -39,3 +39,9 @@ Bienvenue dans la documentation du Blog HoppR. Ce projet est une plateforme de b
 - [API Slack](docs/api/03_slack_api.md)
 
 Pour plus d'informations sur l'utilisation du blog, veuillez consulter notre [documentation utilisateur sur Notion](https://www.notion.so/hoppr-tech/Blog-HoppR-2cb814dde33e4356b0034a4457d6d3c4?p=95fafd7733564616b75bc8947216a4da&pm=s).
+
+## Scripts utilitaires
+
+Des scripts utilitaires sont disponibles dans le dossier `/server/scripts` pour faciliter la maintenance du blog :  
+    
+- [Script de formatage des deux-points](server/scripts/README.md) - Utilitaire pour normaliser le formatage des deux-points dans les fichiers markdown

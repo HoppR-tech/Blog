@@ -79,37 +79,7 @@ Selon les années, un quatrième niveau peut être ajouté : Elite, mais la logi
 
 Ces niveaux de performance permettent aux équipes de se positionner par rapport aux meilleures pratiques de l'industrie et d'identifier les domaines d'amélioration potentiels dans leurs processus de développement et de livraison logicielle.
 
-
-
-![L'image présente un tableau intitulé "Software delivery performance metric" (Métrique de performance de livraison logicielle) avec quatre colonnes : "Software delivery performance metric", "Low", "Medium", et "High".
-
-Le tableau contient quatre lignes de métriques :
-
-Deployment frequency (Fréquence de déploiement) :
-
-Low : Entre une fois par mois et une fois tous les 6 mois
-Medium : Entre une fois par semaine et une fois par mois
-High : À la demande (plusieurs déploiements par jour)
-
-Lead time for changes (Délai de livraison des changements) :
-
-Low : Entre un mois et six mois
-Medium : Entre une semaine et un mois
-High : Entre un jour et une semaine
-
-Time to restore service (Temps de restauration du service) :
-
-Low : Entre une semaine et un mois
-Medium : Entre un jour et une semaine
-High : Moins d'un jour
-
-Change failure rate (Taux d'échec des changements) :
-
-Low : 46%-60%
-Medium : 16%-30%
-High : 0%-15%](https://prod-files-secure.s3.us-west-2.amazonaws.com/5863e833-64f2-4f13-9f7a-2c92c72b5bbf/d7999459-7954-45c5-ac60-7b63276d64d0/dora.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45GO43JXI4%2F20241031%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20241031T163407Z&X-Amz-Expires=3600&X-Amz-Signature=67f2436828fae593a95f2bc52a29d35c53f454b165042cecc5fb756873e0e662&X-Amz-SignedHeaders=host&x-id=GetObject)
-
-
+![Tableau "Software delivery performance metric" avec 4 colonnes (Software delivery performance metric, Low, Medium, High) et 4 lignes de métriques : Deployment frequency, Lead time for changes, Time to restore service, Change failure rate, montrant les valeurs pour chaque niveau de performance (Low, Medium, High).](./assets/img1.webp)
 
 Pour plus de détails sur ces seuils de performance, vous pouvez [consulter la documentation DORA officielle](https://cloud.google.com/blog/products/devops-sre/dora-2022-accelerate-state-of-devops-report-now-out?hl=en).
 

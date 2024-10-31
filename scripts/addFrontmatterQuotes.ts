@@ -1,6 +1,5 @@
 import { readFileSync, writeFileSync, readdirSync } from 'fs'
 import { join } from 'path'
-import yaml from 'yaml'
 
 const blogsDir = join(process.cwd(), 'content/blogs')
 
@@ -14,32 +13,20 @@ function processMarkdownFile(filePath: string) {
         return
     }
 
-    const [_, frontmatterYaml, ...contentParts] = parts
+    const [_, frontmatter, ...contentParts] = parts
     const mainContent = contentParts.join('---\n')
 
-    try {
-        // Parser le frontmatter YAML
-        const frontmatterObj = yaml.parse(frontmatterYaml)
+    // Ajouter des guillemets aux champs spécifiés
+    const updatedFrontmatter = frontmatter
+        .replace(/^(title:\s*)([^"\n]+)$/m, '$1"$2"')
+        .replace(/^(description:\s*)([^"\n]+)$/m, '$1"$2"')
+        .replace(/^(alt:\s*)([^"\n]+)$/m, '$1"$2"')
 
-        // Ajouter des guillemets aux champs spécifiés s'ils existent
-        const fieldsToQuote = ['title', 'description', 'alt']
-        fieldsToQuote.forEach(field => {
-            if (frontmatterObj[field]) {
-                frontmatterObj[field] = `"${frontmatterObj[field]}"`
-            }
-        })
-
-        // Reconvertir en YAML
-        const updatedFrontmatter = yaml.stringify(frontmatterObj)
-
-        // Reconstruire le fichier
-        const newContent = `---\n${updatedFrontmatter}---\n${mainContent}`
-        
-        writeFileSync(filePath, newContent)
-        console.log(`Processed: ${filePath}`)
-    } catch (error) {
-        console.error(`Error processing ${filePath}:`, error)
-    }
+    // Reconstruire le fichier
+    const newContent = `---\n${updatedFrontmatter}---\n${mainContent}`
+    
+    writeFileSync(filePath, newContent)
+    console.log(`Processed: ${filePath}`)
 }
 
 function processAllMarkdownFiles() {

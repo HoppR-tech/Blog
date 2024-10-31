@@ -2,10 +2,25 @@ import type { NotionBlock } from '@/types/notion'
 
 function extractText(blockContent: any): string {
   return blockContent?.rich_text.map((text: any) => {
-    if (text.href)
-      return `[${text.plain_text}](${text.href})`
+    let content = text.plain_text
 
-    return text.plain_text
+    // Appliquer les styles dans un ordre spécifique pour éviter les conflits
+    if (text.annotations?.bold)
+      content = `**${content}**`
+    if (text.annotations?.italic)
+      content = `*${content}*`
+    if (text.annotations?.strikethrough)
+      content = `~~${content}~~`
+    if (text.annotations?.code)
+      content = '`' + content + '`'
+    if (text.annotations?.underline)
+      content = `<u>${content}</u>`
+    
+    // Appliquer le lien si présent
+    if (text.href)
+      return `[${content}](${text.href})`
+
+    return content
   }).join('')
 }
 
@@ -39,8 +54,14 @@ export function convertBlocksToMarkdown(blocks: NotionBlock[]): { markdownConten
       isFirstBlock = false
       return `### ${extractText(block.heading_3)}\n\n`
     },
-    bulleted_list_item: (block: any) => `- ${extractText(block.bulleted_list_item)}\n`,
-    numbered_list_item: (block: any) => `1. ${extractText(block.numbered_list_item)}\n`,
+    bulleted_list_item: (block: any) => {
+      isFirstBlock = false
+      return `- ${extractText(block.bulleted_list_item)}\n`
+    },
+    numbered_list_item: (block: any, index: number) => {
+      isFirstBlock = false
+      return `${index + 1}. ${extractText(block.numbered_list_item)}\n`
+    },
     code: (block: any) => codeToMarkdown(block),
     image: (block: any) => {
       const imageUrl = block.image?.file?.url || block.image?.external?.url || ''

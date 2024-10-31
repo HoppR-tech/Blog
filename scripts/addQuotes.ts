@@ -14,15 +14,24 @@ function processMarkdownFile(filePath: string) {
     }
 
     const [_, frontmatter, ...contentParts] = parts
+    let updatedFrontmatter = frontmatter
+
+    // Traiter les champs spécifiques du frontmatter
+    const fieldsToProcess = ['title', 'description', 'alt']
+    fieldsToProcess.forEach(field => {
+        const regex = new RegExp(`(${field}:\\s*)"([^"]+)"`, 'g')
+        updatedFrontmatter = updatedFrontmatter.replace(regex, `$1"« $2 »"`)
+    })
+
     const mainContent = contentParts.join('---\n')
 
-    // Préserver le frontmatter et convertir uniquement le contenu
+    // Convertir les guillemets dans le contenu principal
     const updatedContent = mainContent
         .replace(/'([^']+)'/g, '« $1 »')
         .replace(/"([^"]+)"/g, '« $1 »')
 
     // Reconstruire le fichier
-    const newContent = `---\n${frontmatter}---\n${updatedContent}`
+    const newContent = `---\n${updatedFrontmatter}---\n${updatedContent}`
     
     writeFileSync(filePath, newContent)
     console.log(`Processed: ${filePath}`)

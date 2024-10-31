@@ -79,6 +79,7 @@ Les métriques DORA définissent trois niveaux de performance principaux :
 - Low
 - Medium
 - High
+
 Selon les années, un quatrième niveau peut être ajouté : Elite, mais la logique reste la même.
 
 Ces niveaux de performance permettent aux équipes de se positionner par rapport aux meilleures pratiques de l'industrie et d'identifier les domaines d'amélioration potentiels dans leurs processus de développement et de livraison logicielle.

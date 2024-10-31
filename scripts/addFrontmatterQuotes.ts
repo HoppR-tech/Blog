@@ -1,3 +1,29 @@
+/**
+ * Script pour ajouter des guillemets doubles aux champs du frontmatter des fichiers Markdown
+ * 
+ * Ce script parcourt tous les fichiers Markdown dans le dossier content/blogs/ et ses sous-dossiers.
+ * Il ajoute des guillemets doubles autour des valeurs des champs suivants dans le frontmatter :
+ * - title
+ * - description
+ * - alt
+ * 
+ * Si ces champs contiennent déjà des guillemets doubles, elles seront échappées avec un backslash.
+ * 
+ * Usage:
+ * ```bash
+ * npx tsx scripts/addFrontmatterQuotes.ts
+ * ```
+ * 
+ * Exemple de transformation :
+ * ```yaml
+ * title: Mon titre avec "guillemets"
+ * ```
+ * devient :
+ * ```yaml
+ * title: "Mon titre avec \"guillemets\""
+ * ```
+ */
+
 import { readFileSync, writeFileSync, readdirSync } from 'fs'
 import { join } from 'path'
 

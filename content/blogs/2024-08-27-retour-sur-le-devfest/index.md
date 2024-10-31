@@ -1,9 +1,9 @@
 ---
-title: Retour sur le DevFest
+title: "Retour sur le DevFest"
 date: 2024-08-27T10:22:46.143Z
-description:  Les 6 et 7 Juin dernier s'est déroulée la 7ᵉ édition du DevFest Lille au Grand Palais. Pour la première fois sur un format de 2 jours avec une soirée organisée à Grand Scène (on y reviendra plus tard
+description:  "Les 6 et 7 Juin dernier s'est déroulée la 7ᵉ édition du DevFest Lille au Grand Palais. Pour la première fois sur un format de 2 jours avec une soirée organisée à Grand Scène (on y reviendra plus tard"
 image: ./assets/cover-image.webp
-alt: Les 6 et 7 Juin dernier s'est déroulée la 7ᵉ édition du DevFest Lille. Toute l'équipe HoppR était présente à l'événement. Retour sur cette journée riche en découvertes techniques et humaines
+alt: "Les 6 et 7 Juin dernier s'est déroulée la 7ᵉ édition du DevFest Lille. Toute l'équipe HoppR était présente à l'événement. Retour sur cette journée riche en découvertes techniques et humaines"
 ogImage: ./assets/cover-image.webp
 tags: ['veille tech', 'événement', 'devfest', 'others']
 published: true

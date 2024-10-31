@@ -1,9 +1,9 @@
 ---
-title: Retour "Survivre dans la JS-jungle des outils de tests" de Lise QUESNEL au Devfest 2024
+title: "Retour \"Survivre dans la JS-jungle des outils de tests\" de Lise QUESNEL au Devfest 2024"
 date: 2024-10-11T12:52:42.324Z
-description:  Cet article fait suite au [retour de HoppR sur le DevFest 2024](https://blog.hoppr.tech/blogs/2024-08-27-retour-sur-le-devfest) et se concentre sur la conférence de Lise QUESNEL qui aborde les outils
+description:  "Cet article fait suite au [retour de HoppR sur le DevFest 2024](https://blog.hoppr.tech/blogs/2024-08-27-retour-sur-le-devfest) et se concentre sur la conférence de Lise QUESNEL qui aborde les outils"
 image: ./assets/cover-image.webp
-alt: Conférence de Lise QUESNEL au DevFest 2024
+alt: "Conférence de Lise QUESNEL au DevFest 2024"
 ogImage: ./assets/cover-image.webp
 tags: ['devfest', '2024', 'veille tech', 'js', 'testing', 'others']
 published: true

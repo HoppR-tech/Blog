@@ -1,9 +1,9 @@
 ---
-title: DORA Metrics : Évaluer la performance de livraison logicielle
+title: "DORA Metrics : Évaluer la performance de livraison logicielle"
 date: 2024-10-31T09:00:49.551Z
-description: Cet article explore les DORA Metrics, également connues sous le nom de « Four Keys », un standard émergent pour évaluer la performance de la livraison logicielle. Ayant eu l'opportunité de mettre en p
+description: "Cet article explore les DORA Metrics, également connues sous le nom de « Four Keys », un standard émergent pour évaluer la performance de la livraison logicielle. Ayant eu l'opportunité de mettre en p"
 image: ./assets/cover-image.webp
-alt: Image illustrant les DORA Metrics avec une fusée qui décolle vers la lune dans un style pop
+alt: "Image illustrant les DORA Metrics avec une fusée qui décolle vers la lune dans un style pop"
 ogImage: ./assets/cover-image.webp
 tags: ['dora metrics', 'devops', 'cloud', 'performance', 'observabilité', 'cloud-platform']
 published: true

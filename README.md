@@ -65,16 +65,12 @@ npx tsx scripts/addFrontmatterQuotes.ts
 ```yaml
 # Avant
 title: Mon titre avec "guillemets"
+```
 
+```yaml
 # Après
 title: "Mon titre avec \"guillemets\""
 ```
-
-## Développement
-
-Les scripts sont écrits en TypeScript et utilisent les modules natifs de Node.js (`fs` et `path`) pour manipuler les fichiers.
-
-Le formatage du frontmatter suit les conventions établies dans `server/services/notion/markdownGenerator.ts` pour maintenir la cohérence avec la génération automatique des articles depuis Notion.
 
 ## Contribution
 

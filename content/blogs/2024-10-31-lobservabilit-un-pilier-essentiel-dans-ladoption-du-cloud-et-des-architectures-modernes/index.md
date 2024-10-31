@@ -73,11 +73,12 @@ En raison de la nature distribuée des architectures Cloud modernes, il devient 
 
 Lors de l’adoption ou la migration vers le Cloud Public, plusieurs éléments doivent être surveillés de près :
 
-1. Performance des Applications :  Plus votre application sera performante, plus vous serez en capacité d’optimiser votre utilisation du Cloud, donc votre facture. De plus, la latence, le temps de réponse des applications peuvent fluctuer au cours de la migration. Il est important d’avoir une vue très détaillée (à la ligne de code) des performances pendant la phase d’adoption ou de migration.
-1. Disponibilité des Services : La transition vers le Cloud implique souvent le découpage des applications en microservices. Cette réorganisation entraîne une multiplication des points de défaillance potentiels. Une vue d’ensemble permet de suivre la santé de chaque service et d’éviter de se perdre dans des applications, notamment avec le FaaS (Function-as-a-Service).
-1. Coût  : Le Cloud Public offre une flexibilité exceptionnelle, mais peut aussi générer des coûts imprévus. L'Observabilité peut mettre en évidence les ressources sous-utilisées ou sur-provisionnées, aidant ainsi à optimiser les coûts.
-1. Sécurité : Il est important de ne pas délaisser la sécurité qui doit faire partie intégrante de l’observation de vos applications.
-1. Ressenti utilisateur : Une migration peut, même dans le cas de meilleures performances backend, avoir un impact significatif sur vos utilisateurs. S’il est positif, cette donnée justifiera votre décision de migrer. 
+1. **Performance des Applications :**  Plus votre application sera performante, plus vous serez en capacité d’optimiser votre utilisation du Cloud, donc votre facture. De plus, la latence, le temps de réponse des applications peuvent fluctuer au cours de la migration. Il est important d’avoir une vue très détaillée (à la ligne de code) des performances pendant la phase d’adoption ou de migration.
+1. **Disponibilité des Services :** La transition vers le Cloud implique souvent le découpage des applications en microservices. Cette réorganisation entraîne une multiplication des points de défaillance potentiels. Une vue d’ensemble permet de suivre la santé de chaque service et d’éviter de se perdre dans des applications, notamment avec le FaaS (Function-as-a-Service).
+1. **Coût :** Le Cloud Public offre une flexibilité exceptionnelle, mais peut aussi générer des coûts imprévus. L'Observabilité peut mettre en évidence les ressources sous-utilisées ou sur-provisionnées, aidant ainsi à optimiser les coûts.
+1. **Sécurité :** Il est important de ne pas délaisser la sécurité qui doit faire partie intégrante de l’observation de vos applications.
+1. **Ressenti utilisateur :** Une migration peut, même dans le cas de meilleures performances backend, avoir un impact significatif sur vos utilisateurs. S’il est positif, cette donnée justifiera votre décision de migrer. 
+
 ## Comment aborder l’Observabilité 
 
 L’Observabilité ne doit pas être considérée comme solution à un problème technique. Son succès repose dans des fondations basées sur vos besoins métiers et son acceptation par tous.

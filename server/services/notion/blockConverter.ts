@@ -12,10 +12,10 @@ function extractText(blockContent: any): string {
     if (text.annotations?.strikethrough)
       content = `~~${content}~~`
     if (text.annotations?.code)
-      content = '`' + content + '`'
+      content = `\`${content}\``
     if (text.annotations?.underline)
       content = `<u>${content}</u>`
-    
+
     // Appliquer le lien si présent
     if (text.href)
       return `[${content}](${text.href})`

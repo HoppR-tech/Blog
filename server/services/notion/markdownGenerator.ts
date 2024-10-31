@@ -5,7 +5,8 @@ export function generateMarkdownContent(post: BlogPost, content: string): string
     throw new Error('Invalid date provided')
 
   const frontmatter = createFrontmatter(post)
-  return `${frontmatter}\n\n${content}`
+  // Add markdownlint disable comment after frontmatter
+  return `${frontmatter}\n\n<!-- markdownlint-disable-file -->\n\n${content}`
 }
 
 function createFrontmatter(post: BlogPost, assetsFolder: string = './assets'): string {

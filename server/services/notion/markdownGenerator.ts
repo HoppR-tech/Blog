@@ -5,7 +5,7 @@ export function generateMarkdownContent(post: BlogPost, content: string): string
     throw new Error('Invalid date provided')
 
   const frontmatter = createFrontmatter(post)
-  const contentWithNbsp = content.replace(/\s*:\s*/g, '\u00A0: ')
+  const contentWithNbsp = content.replace(/\s*:\s*/g, '\u00A0 : ')
   return `${frontmatter}\n\n${contentWithNbsp}`
 }
 
@@ -13,7 +13,7 @@ function createFrontmatter(post: BlogPost, assetsFolder: string = './assets'): s
   const formattedAuthors = formatPersons(post.authors)
   const formattedReviewers = formatPersons(post.reviewers)
   return `---
-title: "${post.title.replace(/\s*:\s*/g, '\u00A0: ')}"
+title: "${post.title.replace(/\s*:\s*/g, '\u00A0 : ')}"
 date: ${post.date}
 description: ${post.description}
 image: ${assetsFolder}/cover-image.webp

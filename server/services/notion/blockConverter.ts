@@ -4,9 +4,17 @@ function extractText(blockContent: any): string {
   return blockContent?.rich_text.map((text: any) => {
     let content = text.plain_text
 
-    // Appliquer le style gras si nécessaire
+    // Appliquer les styles dans un ordre spécifique pour éviter les conflits
     if (text.annotations?.bold)
       content = `**${content}**`
+    if (text.annotations?.italic)
+      content = `*${content}*`
+    if (text.annotations?.strikethrough)
+      content = `~~${content}~~`
+    if (text.annotations?.code)
+      content = '`' + content + '`'
+    if (text.annotations?.underline)
+      content = `<u>${content}</u>`
     
     // Appliquer le lien si présent
     if (text.href)

@@ -5,7 +5,7 @@ export function generateMarkdownContent(post: BlogPost, content: string): string
     throw new Error('Invalid date provided')
 
   const frontmatter = createFrontmatter(post)
-  const contentWithNbsp = content.replace(/(?<!https?)\s*:\s*/g, '\u00A0 : ')
+  const contentWithNbsp = content.replace(/(?<!http)(?<!https)\s*:\s*/g, '\u00A0 : ')
   return `${frontmatter}\n\n${contentWithNbsp}`
 }
 

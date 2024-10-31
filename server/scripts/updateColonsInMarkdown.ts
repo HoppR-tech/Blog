@@ -7,13 +7,21 @@ function updateMarkdownFile(filePath: string) {
   const content = readFileSync(filePath, 'utf-8')
   
   // Mise à jour du frontmatter
-  const updatedContent = content.replace(
-    /(title:\s*["'])(.*?)(["'])/g,
-    (match, prefix, title, suffix) => {
-      const updatedTitle = title.replace(/\s*:\s*/g, '\u00A0: ')
-      return `${prefix}${updatedTitle}${suffix}`
-    }
-  )
+  let updatedContent = content
+
+  // Liste des champs à traiter
+  const fields = ['title', 'description', 'alt']
+  
+  for (const field of fields) {
+    // Ajoute des guillemets si absents et met à jour les deux-points
+    updatedContent = updatedContent.replace(
+      new RegExp(`(${field}:\\s*)(["']?)(.*?)(["']?)\\s*$`, 'gm'),
+      (match, prefix, openQuote, value, closeQuote) => {
+        const updatedValue = value.replace(/\s*:\s*/g, '\u00A0: ')
+        return `${prefix}"${updatedValue}"`
+      }
+    )
+  }
 
   // Mise à jour du contenu principal (après le frontmatter)
   const finalContent = updatedContent.replace(

@@ -15,9 +15,9 @@ function createFrontmatter(post: BlogPost, assetsFolder: string = './assets'): s
   return `---
 title: "${post.title.replace(/\s*:\s*/g, '\u00A0 : ')}"
 date: ${post.date}
-description: ${post.description}
+description: "${post.description}"
 image: ${assetsFolder}/cover-image.webp
-alt: ${post.alt}
+alt: "${post.alt}"
 ogImage: ${assetsFolder}/cover-image.webp
 tags: [${post.tags.map(tag => `'${tag.toLowerCase()}'`).join(', ')}]
 published: ${post.published}

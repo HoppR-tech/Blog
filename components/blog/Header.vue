@@ -10,6 +10,7 @@ interface Props {
   tags: Array<string>
   authors: Person[]
   reviewers: Person[]
+  viewCount: number
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -25,6 +26,7 @@ const props = withDefaults(defineProps<Props>(), {
     image: '/default-author-image.webp',
   }],
   reviewers: () => [],
+  viewCount: 0
 })
 
 function formatDate(dateString: string) {

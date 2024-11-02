@@ -144,7 +144,7 @@ defineOgImageComponent('About', {
         <BlogHeader
           :title="blogPostProps.title" :image="blogPostProps.image" :alt="blogPostProps.alt"
           :date="blogPostProps.date" :description="blogPostProps.description" :tags="blogPostProps.tags"
-          :authors="authors" :reviewers="reviewers"
+          :authors="authors" :reviewers="reviewers" :view-count="viewCount"
         />
         <div
           class="prose prose-pre:max-w-xs sm:prose-pre:max-w-full prose-base sm:prose-base lg:prose-lg

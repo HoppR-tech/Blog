@@ -2,14 +2,17 @@
 import type { Person } from '@/types/blog'
 import ContactCTA from '@/components/blog/ContactCTA.vue'
 import { useRuntimeConfig } from '#app'
-import { incrementViewCount } from '@/server/services/kv/viewCounter'
+import { incrementViewCount, getViewCount } from '@/server/services/kv/viewCounter'
 
 const { path } = useRoute()
 const viewCount = ref(0)
 
-// Increment view count when page loads
+// Get and increment view count when page loads
 onMounted(async () => {
   if (path) {
+    const currentViews = await getViewCount(path)
+    viewCount.value = currentViews
+    // Increment after showing initial count
     viewCount.value = await incrementViewCount(path)
   }
 })

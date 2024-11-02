@@ -51,7 +51,7 @@ function formatDate(dateString: string) {
       <div class="flex flex-wrap justify-start text-black dark:text-zinc-300 content-center gap-4 text-sm sm:text-base">
         <div class="flex items-start w-full mb-2">
           <Icon name="mdi:eye" class="flex-shrink-0 mt-0.5 mr-2" />
-          <p>{{ viewCount }} vues</p>
+          <p>{{ viewCount }} {{ viewCount <= 1 ? 'vue' : 'vues' }}</p>
         </div>
         <div class="flex items-start w-full mb-2">
           <LogoAuthor class="flex-shrink-0 mt-0.5 mr-2" />

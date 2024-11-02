@@ -2,8 +2,17 @@
 import type { Person } from '@/types/blog'
 import ContactCTA from '@/components/blog/ContactCTA.vue'
 import { useRuntimeConfig } from '#app'
+import { incrementViewCount } from '@/server/services/kv/viewCounter'
 
 const { path } = useRoute()
+const viewCount = ref(0)
+
+// Increment view count when page loads
+onMounted(async () => {
+  if (path) {
+    viewCount.value = await incrementViewCount(path)
+  }
+})
 
 const { data: article, error } = await useAsyncData(`blog-post-${path}`, () => {
   return queryContent(path).findOne()

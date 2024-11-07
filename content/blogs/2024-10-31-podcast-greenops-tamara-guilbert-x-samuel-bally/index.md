@@ -51,7 +51,7 @@ Samuel propose un approche raisonnée, afin de garder la main sur votre feuille 
 💚 S’engager dans une démarche GreenOps, c’est aussi une manière de se démarquer dans un secteur concurrentiel en constante évolution, notamment avec l’IA si consommatrice d’énergie.
 
 
-Retrouvez dès maintenant l’intégralité du podcast : [https://open.spotify.com/episode/2zihL4JMegzJML40oPyda1?si=uOM3YnVvQ4uX12qe5OG62w](https://open.spotify.com/episode/2zihL4JMegzJML40oPyda1?si=uOM3YnVvQ4uX12qe5OG62w)
+Retrouvez dès maintenant l’intégralité du podcast : [accéder au podcast](https://open.spotify.com/episode/2zihL4JMegzJML40oPyda1?si=uOM3YnVvQ4uX12qe5OG62w)
 
 Bonne écoute 😄
 

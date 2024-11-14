@@ -48,13 +48,13 @@ Nous avons pour cela choisi le projet [Commander.js](https://github.com/tj/comma
 
 Cela nous permet de concevoir [Dragee.io](https://github.com/dragee-io) avec une stack où nos développeurs, principalement issus du monde du web, seront à l’aise, plutôt que d’investir dans une solution non maîtrisée (par exemple Go) ou pas encore assez mature.
 
-Un [package npm](https://www.npmjs.com/package/commander) étant disponible, nous allons ici pouvoir installer **Commander.js **en dépendance de nos projets :
+Un [package npm](https://www.npmjs.com/package/commander) étant disponible, nous allons ici pouvoir installer **Commander.js** en dépendance de nos projets :
 
 ```shell
 bun add commander
 ```
 
-**Commander.js **va nous permettre de gérer le parsing des arguments, de traiter les cas d’erreurs et d’afficher une documentation (description, aide, etc.) pour chaque commande. Cet outil contient beaucoup d’options de configuration, nous resterons ici sur une utilisation simple.
+**Commander.js** va nous permettre de gérer le parsing des arguments, de traiter les cas d’erreurs et d’afficher une documentation (description, aide, etc.) pour chaque commande. Cet outil contient beaucoup d’options de configuration, nous resterons ici sur une utilisation simple.
 
 ## Création d’une commande
 
@@ -99,8 +99,8 @@ new Command()
 L’exécutable de [Dragee.io](https://github.com/dragee-io) est ensuite construit à l’aide d’une [commande native de Bun](https://bun.sh/docs/bundler/executables).
 
 ```shell
-**> bun run build
-**$ bun build index.ts --target bun --compile --outfile dist/dragee-cli
+> bun run build
+$ bun build index.ts --target bun --compile --outfile dist/dragee-cli
  [237ms]  bundle  151 modules
   [51ms] compile  dist/dragee-cli.exe
 ```
@@ -108,7 +108,7 @@ L’exécutable de [Dragee.io](https://github.com/dragee-io) est ensuite constru
 Et voici ce que tout cela donne, avec les options de documentation (help) sur la commande parent, puis sur la commande *draw* :
 
 ```shell
-**> ./dragee-cli --help**
+> ./dragee-cli --help
 Usage: index [options] [command]
 
 Options:
@@ -121,8 +121,8 @@ Commands:
 ```
 
 ```shell
-**> ./dragee-cli report --help
-**Usage: index report|r [options]
+> ./dragee-cli report --help
+Usage: index report|r [options]
 
 Builds asserters rules report.
 - Lookups dragees in [--from-dir] directory
@@ -139,7 +139,7 @@ Options:
 Ce qui donne à l’usage :
 
 ```shell
-**> ./dragee-cli report --from-dir ./test/approval/sample/ --to-dir ./output**
+> ./dragee-cli report --from-dir ./test/approval/sample/ --to-dir ./output
 Looking up for dragees in directory: ./test/approval/sample/
 Looking up for namespaces
 Looking up for projects
@@ -166,22 +166,22 @@ export const generateAsserter = new Command('generate-asserter')
     .action(generatorHandler);
 ```
 
-Notez ici que l’on **exporte **la commande *generate-asserter*. Cela va nous permettre de la rendre accessible pour *dragee-cli*, et c’est justement ce que nous allons faire à présent.
+Notez ici que l’on **exporte** la commande *generate-asserter*. Cela va nous permettre de la rendre accessible pour *dragee-cli*, et c’est justement ce que nous allons faire à présent.
 
 ## Module parent
 
-Nous allons ajouter la dépendance à *dragee-asserter-generator *dans *dragee-cli*. Nous ferons ainsi pour chaque autre module à rattacher à notre CLI, comme *dragee-grapher-generator *par exemple.
+Nous allons ajouter la dépendance à *dragee-asserter-generator* dans *dragee-cli*. Nous ferons ainsi pour chaque autre module à rattacher à notre CLI, comme *dragee-grapher-generator* par exemple.
 
 Une fois cela fait, nous ajoutons tout simplement ces commandes au CLI central, après import :
 
 ```typescript
-**import { generateAsserter } from '@dragee-io/asserter-generator';
-import { generateGrapher } from '@dragee-io/grapher-generator';**
+import { generateAsserter } from '@dragee-io/asserter-generator';
+import { generateGrapher } from '@dragee-io/grapher-generator';
 
 ...
 new Command()
-**    .addCommand(generateAsserter)
-    .addCommand(generateGrapher)**
+    .addCommand(generateAsserter)
+    .addCommand(generateGrapher)
     .addCommand(report)
     .addCommand(draw)
     .showHelpAfterError()
@@ -192,15 +192,15 @@ new Command()
 Et voilà !
 
 ```shell
-**> ./dragee-cli --help**
+> ./dragee-cli --help
 Usage: index [options] [command]
 
 Options:
   -h, --help                      display help for command
 
 Commands:
-**  generate-asserter|ga [options]  generates a new asserter project
-  generate-grapher|gg [options]   generates a new grapher project**
+  generate-asserter|ga [options]  generates a new asserter project
+  generate-grapher|gg [options]   generates a new grapher project
   report|r [options]              builds asserters rules report
   draw|d [options]                builds graphers graphs models
   help [command]                  display help for command

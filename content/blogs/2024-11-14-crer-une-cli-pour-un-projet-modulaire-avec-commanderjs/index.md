@@ -148,7 +148,7 @@ Looking up for projects
 
 ## Architecture modulaire
 
-## Module enfant
+### Module enfant
 
 Maintenant que notre projet CLI est créé et fonctionnel, nous allons nous attaquer à un nouveau module, [dragee-asserter-generator](https://github.com/dragee-io/dragee-asserter-generator). Celui-ci a pour mission de générer un squelette d’*asserter* pour le projet **Dragee.io**, comme [ddd-asserter ](https://github.com/dragee-io/ddd-asserter)par exemple.
 
@@ -168,7 +168,7 @@ export const generateAsserter = new Command('generate-asserter')
 
 Notez ici que l’on **exporte** la commande *generate-asserter*. Cela va nous permettre de la rendre accessible pour *dragee-cli*, et c’est justement ce que nous allons faire à présent.
 
-## Module parent
+### Module parent
 
 Nous allons ajouter la dépendance à *dragee-asserter-generator* dans *dragee-cli*. Nous ferons ainsi pour chaque autre module à rattacher à notre CLI, comme *dragee-grapher-generator* par exemple.
 

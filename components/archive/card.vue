@@ -81,7 +81,7 @@ const buttonLabel = computed(() =>
       <div class="sm:col-span-7 p-5 relative">
         <div class="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-white dark:from-zinc-800 to-transparent opacity-90" />
         <h2
-          class="text-xl font-bold text-black dark:text-zinc-300 pb-1 relative group-hover:text-hoppr-green dark:group-hover:text-hoppr-green"
+          class="text-lg font-bold text-black dark:text-zinc-300 pb-1 relative group-hover:text-hoppr-green dark:group-hover:text-hoppr-green text-ellipsis line-clamp-1"
         >
           {{ title }}
         </h2>

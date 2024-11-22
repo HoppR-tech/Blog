@@ -68,7 +68,9 @@ function formatDate(dateString: string) {
         <div class="flex items-start gap-2 flex-wrap w-full">
           <LogoTag class="flex-shrink-0 mt-0.5" />
           <template v-for="tag in props.tags" :key="tag">
-            <span class="bg-gray-200 dark:bg-slate-900 rounded-md px-2 py-1 tracking-wide">{{ tag }}</span>
+            <NuxtLink :to="`/tags/${tag}`" class="text-lg font-extrabold tracking-wider">
+              <span class="bg-gray-200 dark:bg-slate-900 rounded-md px-2 py-1 tracking-wide">{{ tag }}</span>
+            </NuxtLink>
           </template>
         </div>
       </div>

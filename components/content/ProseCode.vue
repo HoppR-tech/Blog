@@ -44,7 +44,7 @@ async function copyCode() {
 </script>
 
 <template>
-  <div class="relative bg-gray-900 rounded-lg overflow-hidden">
+  <div class="relative bg-gray-900 rounded-lg overflow-hidden my-2">
     <div class="absolute top-0 left-0 m-2 text-xs font-semibold text-gray-300">
       {{ language }}
     </div>
@@ -58,7 +58,7 @@ async function copyCode() {
         <Icon :name="copyIcon" size="16" />
       </button>
     </div>
-    <div class="p-4 pt-8 bg-gray-900">
+    <div class="p-4 bg-gray-900">
       <slot />
     </div>
   </div>

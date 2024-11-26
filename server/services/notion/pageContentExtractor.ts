@@ -8,7 +8,7 @@ export async function getPageContent(notionClient: NotionClientInterface, page: 
   try {
     // console.error('Page reçue de Notion:', JSON.stringify(page, null, 2))
     const blocks = await notionClient.blocks.children.list({ block_id: page.id })
-    const { markdownContent, images } = convertBlocksToMarkdown(blocks.results as NotionBlock[])
+    const { markdownContent, images } = await convertBlocksToMarkdown(notionClient, blocks.results as NotionBlock[])
 
     const authorsProperty = page.properties.Auteurs as { relation?: { id: string }[] }
     const authorIds = authorsProperty?.relation?.map(author => author.id) || []

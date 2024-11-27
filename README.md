@@ -31,6 +31,7 @@ Bienvenue dans la documentation du Blog HoppR. Ce projet est une plateforme de b
 - [Génération de Markdown](docs/technical/04_markdown_generation.md)
 - [Configuration Nuxt](docs/technical/05_nuxt_configuration.md)
 - [Déploiement](docs/technical/06_deployment.md)
+- [Tests sur branche/preview](docs/technical/07_tests_on_branch_preview.md)
 
 ## API
 

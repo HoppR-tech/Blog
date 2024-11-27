@@ -23,13 +23,6 @@ export async function convertBlocksToMarkdown(notionClient: NotionClientInterfac
     return `![${altText}](${imageUrl})`
   });
 
-  // Custom transformer - Heading_1 (no Heading 1 in our articles)
-  n2m.setCustomTransformer("heading_1", async (block: any) => {
-    block.type = 'heading_2'
-    block.heading_2 = block.heading_1
-    return await n2m.blockToMarkdown(block);
-  });
-
   const markdownContent = await Promise.all(blocks.map((block) => {
     return n2m.blockToMarkdown(block as any);
   })).then(md => md.join('\n\n'))

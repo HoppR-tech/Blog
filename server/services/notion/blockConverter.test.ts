@@ -76,7 +76,7 @@ describe('blockConverter', () => {
     ]
     const { markdownContent, images } = await convertBlocksToMarkdown(mockClient, blocks);
 
-    expect(markdownContent).toBe('\n\n## ')
+    expect(markdownContent).toBe('\n\n# ')
     expect(images).toEqual([])
   })
 

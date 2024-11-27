@@ -2,13 +2,13 @@ import { convertBlocksToMarkdown } from './blockConverter'
 import { getPersonsInfo } from './personInfoFetcher'
 import { safeGetProperty } from './notionUtils'
 import type { PageContent } from '@/types/blog'
-import type { NotionBlock, NotionClientInterface, NotionPage } from '@/types/notion'
+import type { NotionClientInterface, NotionPage } from '@/types/notion'
 
 export async function getPageContent(notionClient: NotionClientInterface, page: NotionPage): Promise<PageContent> {
   try {
     // console.error('Page reçue de Notion:', JSON.stringify(page, null, 2))
     const blocks = await notionClient.blocks.children.list({ block_id: page.id })
-    const { markdownContent, images } = await convertBlocksToMarkdown(notionClient, blocks.results as NotionBlock[])
+    const { markdownContent, images } = await convertBlocksToMarkdown(notionClient, blocks.results)
 
     const authorsProperty = page.properties.Auteurs as { relation?: { id: string }[] }
     const authorIds = authorsProperty?.relation?.map(author => author.id) || []

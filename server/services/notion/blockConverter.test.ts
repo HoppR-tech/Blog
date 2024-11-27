@@ -1,25 +1,26 @@
 import { describe, expect, it } from 'vitest'
 import { convertBlocksToMarkdown } from './blockConverter'
 import { Client } from '@notionhq/client'
+import type { BlockObjectResponse } from '@notionhq/client/build/src/api-endpoints'
 
 const mockClient = new Client({ auth: 'test-token' })
 
 describe('blockConverter', () => {
   it('should convert various block types to markdown', async () => {
     const blocks = [
-      { type: 'paragraph', paragraph: { rich_text: [{ plain_text: 'Hello', annotations: {} }] } },
-      { type: 'heading_1', heading_1: { rich_text: [{ plain_text: 'Title', annotations: {} }] } },
-      { type: 'heading_2', heading_2: { rich_text: [{ plain_text: 'Subtitle', annotations: {} }] } },
-      { type: 'heading_3', heading_3: { rich_text: [{ plain_text: 'Section', annotations: {} }] } },
-      { type: 'bulleted_list_item', bulleted_list_item: { rich_text: [{ plain_text: 'Item 1', annotations: {} }] } },
-      { type: 'numbered_list_item', numbered_list_item: { rich_text: [{ plain_text: 'Item 2', annotations: {} }], number: 1 } },
-      { type: 'code', code: { language: 'javascript', rich_text: [{ plain_text: 'console.log("Hello")', annotations: {} }] } },
-      { type: 'image', image: { file: { url: 'http://example.com/image.png' }, caption: [{ plain_text: 'An image' }] } },
-      { type: 'callout', callout: { rich_text: [{ plain_text: 'Note', annotations: {} }] } },
-      { type: 'quote', quote: { rich_text: [{ plain_text: 'Famous quote', annotations: {} }] } },
-      { type: 'divider' },
-      { type: 'table_of_contents', table_of_contents: { color: "default" } },
-      { type: 'toggle', toggle: { rich_text: [{ plain_text: 'Toggle', annotations: {} }] } },
+      buildBlock({ type: 'paragraph', paragraph: { rich_text: [{ plain_text: 'Hello', annotations: {} }] } }),
+      buildBlock({ type: 'heading_1', heading_1: { rich_text: [{ plain_text: 'Title', annotations: {} }] } }),
+      buildBlock({ type: 'heading_2', heading_2: { rich_text: [{ plain_text: 'Subtitle', annotations: {} }] } }),
+      buildBlock({ type: 'heading_3', heading_3: { rich_text: [{ plain_text: 'Section', annotations: {} }] } }),
+      buildBlock({ type: 'bulleted_list_item', bulleted_list_item: { rich_text: [{ plain_text: 'Item 1', annotations: {} }] } }),
+      buildBlock({ type: 'numbered_list_item', numbered_list_item: { rich_text: [{ plain_text: 'Item 2', annotations: {} }], number: 1 } }),
+      buildBlock({ type: 'code', code: { language: 'javascript', rich_text: [{ plain_text: 'console.log("Hello")', annotations: {} }] } }),
+      buildBlock({ type: 'image', image: { file: { url: 'http://example.com/image.png' }, caption: [{ plain_text: 'An image' }] } }),
+      buildBlock({ type: 'callout', callout: { rich_text: [{ plain_text: 'Note', annotations: {} }] } }),
+      buildBlock({ type: 'quote', quote: { rich_text: [{ plain_text: 'Famous quote', annotations: {} }] } }),
+      buildBlock({ type: 'divider' }),
+      buildBlock({ type: 'table_of_contents', table_of_contents: { color: "default" } }),
+      buildBlock({ type: 'toggle', toggle: { rich_text: [{ plain_text: 'Toggle', annotations: {} }] } }),
     ]
     const { markdownContent, images } = await convertBlocksToMarkdown(mockClient, blocks);
 
@@ -40,13 +41,13 @@ describe('blockConverter', () => {
 
   it('should convert image blocks with alt text to markdown', async () => {
     const blocks = [
-      {
+      buildBlock({
         type: 'image',
         image: {
           file: { url: 'http://example.com/image.png' },
           caption: [{ plain_text: 'Une image avec un texte alternatif' }],
         },
-      },
+      }),
     ]
     const { markdownContent, images } = await convertBlocksToMarkdown(mockClient, blocks);
 
@@ -56,13 +57,13 @@ describe('blockConverter', () => {
 
   it('should throw an error for images without alt text', async () => {
     const blocks = [
-      {
+      buildBlock({
         type: 'image',
         image: {
           file: { url: 'http://example.com/image-without-alt.png' },
           caption: [],
         },
-      },
+      }),
     ]
 
     await expect(async() => await convertBlocksToMarkdown(mockClient, blocks))
@@ -71,8 +72,8 @@ describe('blockConverter', () => {
 
   it('should handle empty blocks gracefully', async () => {
     const blocks = [
-      { type: 'paragraph', paragraph: { rich_text: [{ plain_text: '', annotations: {} }] } },
-      { type: 'heading_1', heading_1: { rich_text: [{ plain_text: '', annotations: {} }] } },
+      buildBlock({ type: 'paragraph', paragraph: { rich_text: [{ plain_text: '', annotations: {} }] } }),
+      buildBlock({ type: 'heading_1', heading_1: { rich_text: [{ plain_text: '', annotations: {} }] } }),
     ]
     const { markdownContent, images } = await convertBlocksToMarkdown(mockClient, blocks);
 
@@ -82,7 +83,7 @@ describe('blockConverter', () => {
 
   it('should convert paragraphs with links to markdown', async () => {
     const blocks = [
-      {
+      buildBlock({
         type: 'paragraph',
         paragraph: {
           rich_text: [
@@ -91,11 +92,17 @@ describe('blockConverter', () => {
             { plain_text: ' dans un paragraphe.', href: null, annotations: {} },
           ],
         },
-      },
+      }),
     ]
     const { markdownContent } = await convertBlocksToMarkdown(mockClient, blocks);
 
     expect(markdownContent).toBe('Ceci est un [lien](https://example.com) dans un paragraphe.')
   })
-
 })
+
+function buildBlock(block: any): BlockObjectResponse {
+  return {
+    ...block,
+    id: block.type
+  }
+}

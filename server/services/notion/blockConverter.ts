@@ -1,4 +1,5 @@
-import type { NotionBlock, NotionClientInterface } from '@/types/notion'
+import type { NotionClientInterface } from '@/types/notion'
+import type { BlockObjectResponse, PartialBlockObjectResponse } from '@notionhq/client/build/src/api-endpoints'
 import { NotionToMarkdown } from 'notion-to-md'
 
 type image = {
@@ -6,7 +7,7 @@ type image = {
   alt: string
 }
 
-export async function convertBlocksToMarkdown(notionClient: NotionClientInterface, blocks: NotionBlock[]): Promise<{ markdownContent: string; images: image[]} > {
+export async function convertBlocksToMarkdown(notionClient: NotionClientInterface, blocks: (PartialBlockObjectResponse | BlockObjectResponse)[]): Promise<{ markdownContent: string; images: image[]} > {
   const n2m = new NotionToMarkdown({ notionClient });
 
   const images: { url: string; alt: string }[] = []

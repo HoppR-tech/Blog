@@ -79,14 +79,7 @@ describe('postChecker', () => {
         it('should throw Error is starts with other than heading 1 or paragraph block', () => {
             expect(() => checkBlocks([heading2Block, paragraphBlock])).toThrowError('An article must start with a title or an introduction');
         });
-        
-        // it('should throw Error for heading 1 not at start', () => {
-        //     const post = buildDefaultPost();
-        //     post.content = '\n<!-- markdownlint-disable-file -->\n\nThis is content\n\n# heading1';
-        //     expect(() => checkPost(post)).toThrowError('heading 1 is only permitted at the start of the article content');
-        // });
     });
-
   })
 
 function buildDefaultPost(): BlogPost {

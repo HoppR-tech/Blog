@@ -3,12 +3,18 @@ import { getPersonsInfo } from './personInfoFetcher'
 import { safeGetProperty } from './notionUtils'
 import type { PageContent } from '@/types/blog'
 import type { NotionClientInterface, NotionPage } from '@/types/notion'
+import { checkBlocks } from '../github/postChecker'
+import type { BlockObjectResponse, PartialBlockObjectResponse } from '@notionhq/client/build/src/api-endpoints'
 
 export async function getPageContent(notionClient: NotionClientInterface, page: NotionPage): Promise<PageContent> {
   try {
     // console.error('Page reçue de Notion:', JSON.stringify(page, null, 2))
-    const blocks = await notionClient.blocks.children.list({ block_id: page.id })
-    const { markdownContent, images } = await convertBlocksToMarkdown(notionClient, blocks.results)
+    const blocks = (await notionClient.blocks.children.list({ block_id: page.id })).results.filter(isBlockObjectResponse)
+
+    // Check if blocks are valid
+    checkBlocks(blocks);
+
+    const { markdownContent, images } = await convertBlocksToMarkdown(notionClient, blocks);
 
     const authorsProperty = page.properties.Auteurs as { relation?: { id: string }[] }
     const authorIds = authorsProperty?.relation?.map(author => author.id) || []
@@ -52,4 +58,8 @@ export function extractTitleFromPage(page: NotionPage): string {
     throw new Error('Title is missing or empty')
 
   return title
+}
+
+function isBlockObjectResponse(item: PartialBlockObjectResponse | BlockObjectResponse): item is BlockObjectResponse {
+  return "type" in item;
 }

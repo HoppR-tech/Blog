@@ -1,11 +1,7 @@
 import type { BlogPost, Person } from '@/types/blog'
 
 export function generateMarkdownContent(post: BlogPost, content: string): string {
-  if (Number.isNaN(new Date(post.date).getTime()))
-    throw new Error('Invalid date provided')
-
-  const frontmatter = createFrontmatter(post)
-  return `${frontmatter}\n\n${content}`
+  return `${createFrontmatter(post)}\n\n${content}`
 }
 
 function createFrontmatter(post: BlogPost, assetsFolder: string = './assets'): string {

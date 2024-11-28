@@ -100,24 +100,4 @@ describe('Markdown Utils', () => {
     expect(markdown).toContain('---')
     expect(markdown).toContain(content)
   })
-
-  it('should throw an error for invalid date format', () => {
-    const post: BlogPost = {
-      notionId: '5',
-      title: 'Invalid Date Test',
-      date: 'invalid-date',
-      description: 'This post has an invalid date.',
-      image: 'http://example.com/image.jpg',
-      alt: 'Test Image',
-      ogImage: 'http://example.com/og-image.jpg',
-      tags: ['test'],
-      published: true,
-      authors: [],
-      reviewers: [],
-      content: 'Content with an invalid date.',
-    }
-    const content = 'Content with an invalid date.'
-
-    expect(() => generateMarkdownContent(post, content)).toThrow('Invalid date provided')
-  })
 })

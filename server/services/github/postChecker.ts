@@ -30,7 +30,7 @@ export function checkBlocks(blocks: BlockObjectResponse[]) {
     if(firstBlock.type != 'heading_1' && firstBlock.type != 'paragraph')
         throw new Error('An article must start with a title or an introduction');
 
-    if(blocks.some(b => b.type === 'heading_1'))
+    if(blocks.slice(1).some(b => b.type === 'heading_1'))
         throw new Error('Heading 1 is only permitted at the start of the article content');
 }
 

@@ -1,5 +1,5 @@
 import type { NotionClientInterface } from '@/types/notion'
-import type { BlockObjectResponse, PartialBlockObjectResponse } from '@notionhq/client/build/src/api-endpoints'
+import type { BlockObjectResponse } from '@notionhq/client/build/src/api-endpoints'
 import { NotionToMarkdown } from 'notion-to-md'
 
 type image = {

@@ -7,7 +7,7 @@ type image = {
   alt: string
 }
 
-export async function convertBlocksToMarkdown(notionClient: NotionClientInterface, blocks: (PartialBlockObjectResponse | BlockObjectResponse)[]): Promise<{ markdownContent: string; images: image[]} > {
+export async function convertBlocksToMarkdown(notionClient: NotionClientInterface, blocks: BlockObjectResponse[]): Promise<{ markdownContent: string; images: image[]} > {
   const n2m = new NotionToMarkdown({ notionClient });
 
   const images: { url: string; alt: string }[] = []

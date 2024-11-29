@@ -54,7 +54,7 @@
     "@vueuse/core": "^11.3.0",
     "@vueuse/nuxt": "^11.3.0",
     "autoprefixer": "^10.4.20",
-    "eslint": "^8.57.1",
+    "eslint": "^9.15.0",
     "h3": "^1.13.0",
     "happy-dom": "^15.11.7",
     "nock": "^13.5.6",

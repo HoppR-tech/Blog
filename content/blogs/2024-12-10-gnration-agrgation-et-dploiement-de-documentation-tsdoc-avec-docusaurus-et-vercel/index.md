@@ -54,7 +54,7 @@ Creusons alors le sujet.
 
 Quel est le meilleur endroit pour poser de la documentation sur une règle donnée ? Dans le code, en commentaire de la dite règle.
 
-Nous allons nous appuyer sur le standard de documentation [TSDoc](https://tsdoc.org/) pour TypeScript. Voici exemple, sur [une des règles de notre asserter DDD](https://github.com/dragee-io/ddd-asserter/blob/main/src/rules/aggregates-allowed-dependencies.rule.ts) :
+Nous allons nous appuyer sur le standard de documentation [TSDoc](https://tsdoc.org/) pour TypeScript. Voici un exemple, sur [une des règles de notre asserter DDD](https://github.com/dragee-io/ddd-asserter/blob/main/src/rules/aggregates-allowed-dependencies.rule.ts) :
 
 ```typescript
 /**

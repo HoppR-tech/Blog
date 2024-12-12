@@ -27,7 +27,7 @@ const isExpanded = (id: string) => expandedSections.value.has(id)
 </script>
 
 <template>
-  <div class="lg:col-span-3 sticky top-28 mt-5 h-96 hidden lg:block justify-self-end w-full">
+  <div class="lg:col-span-3 sticky top-28 mt-5 h-auto hidden lg:block justify-self-end w-full">
     <div class="border dark:border-zinc-500 p-4 rounded-md w-[250px] max-w-[350px] dark:bg-slate-900 shadow-md">
       <h2 class="text-lg font-bold mb-4 border-b dark:border-zinc-500 pb-2 text-hoppr-green">
         Table des matières

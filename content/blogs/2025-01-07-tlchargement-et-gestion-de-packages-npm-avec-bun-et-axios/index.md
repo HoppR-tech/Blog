@@ -41,7 +41,7 @@ Ces _asserters_ ne sont pas directement importés dans la CLI de Dragee, ils son
 
 Pour rappel, un **asserter** est un module comprenant des règles d’architecture. Il est basé sur un **namespace** correspondant à une typologie d’architecture (DDD, clean, etc.). A chaque _namespace_ correspond un _asserter_ différent.
 
-Dans cet article, nous prendrons pour exemple notre tout premier asserter, [https://github.com/dragee-io/ddd-asserter](https://github.com/dragee-io/ddd-asserter), qui comme son nom l’indique comprend un set de règles concernant le [Domain-Driven Design](https://blog.hoppr.tech/tags/ddd).
+Dans cet article, nous prendrons pour exemple notre tout premier asserter, [ddd-asserter](https://github.com/dragee-io/ddd-asserter), qui comme son nom l’indique comprend un set de règles concernant le [Domain-Driven Design](https://blog.hoppr.tech/tags/ddd).
 
 A la construction d’un rapport d’architecture, notre CLI va détecter le _namespace_ des dragées, et va automatiquement télécharger l’asserter correspondant auprès de npm. Cet asserter va ensuite être installé en local, et leurs règles jouées sur les dragées à analyser.
 
@@ -49,7 +49,7 @@ A la construction d’un rapport d’architecture, notre CLI va détecter le _na
 
 > 📄 Les règles d’architecture de l’asserter DDD sont disponibles [sur le site de Dragee](https://dragee-vercel-doc.vercel.app/docs/asserters/ddd-asserter/).
 
-> 📌 Nous avons également des _graphers_ (modélisateurs d’architecture) qui sont traités de la même manière, par exemple [https://github.com/dragee-io/ddd-grapher](https://github.com/dragee-io/ddd-grapher).
+> 📌 Nous avons également des _graphers_ (modélisateurs d’architecture) qui sont traités de la même manière, par exemple [ddd-grapher](https://github.com/dragee-io/ddd-grapher).
 
 ## Téléchargement de l’asserter
 
@@ -85,7 +85,7 @@ Les deux appels effectués ici sont :
 
 
 
-> 📄 Pour plus d’informations sur l’API registry de npm : [https://github.com/npm/registry/blob/main/docs/REGISTRY-API.md](https://github.com/npm/registry/blob/main/docs/REGISTRY-API.md)
+> 📄 Pour plus d’informations sur l’API registry de npm : [docs/REGISTRY-API.md](https://github.com/npm/registry/blob/main/docs/REGISTRY-API.md)
 
 ## Vérification de l’intégrité du package
 
@@ -141,7 +141,7 @@ Notre package étant maintenant téléchargé et sûr, nous allons pouvoir en ex
 
 - Lecture du tarball en Buffer grâce à [Node:fs](https://nodejs.org/api/fs.html#fsreadfilesyncpath-options)
 
-- Extraction du package avec  [https://github.com/isaacs/node-tar](https://github.com/isaacs/node-tar).
+- Extraction du package avec  [node-tar](https://github.com/isaacs/node-tar).
 
 - Écriture des fichiers grâce à l’[API Bun](https://bun.sh/guides/write-file/basic) dans un dossier _registry_ en local
 
@@ -149,17 +149,17 @@ Notre package étant maintenant téléchargé et sûr, nous allons pouvoir en ex
 
 - Suppression du tarball via [Node:fs](https://nodejs.org/api/fs.html#fsunlinkpath-callback)
 
-Il n’y a maintenant plus qu’à importer l’asserter installé. C’est ici que le travail de notre projet [https://github.com/dragee-io/dragee-package-installer](https://github.com/dragee-io/dragee-package-installer) se termine, en renvoyant l’asserter importé à la CLI.
+Il n’y a maintenant plus qu’à importer l’asserter installé. C’est ici que le travail de notre projet [dragee-package-installer](https://github.com/dragee-io/dragee-package-installer) se termine, en renvoyant l’asserter importé à la CLI.
 
 ![Process des asserters dans Dragee.io, composé des différentes étapes : détection namespace, téléchargement, validation de l’intégrité, extraction, installation, import et utilisation](./assets/img1.webp)
 
 ## Utilisation des asserters/graphers
 
-Les _asserters_ téléchargés et installés, ils sont donc importés dynamiquement dans notre CLI. Ces modules reposent tous sur la même structure, grâce au package [https://github.com/dragee-io/dragee-model](https://github.com/dragee-io/dragee-model). Celui-ci contient toutes les définitions de type des _asserters_, règles, dragées, etc.
+Les _asserters_ téléchargés et installés, ils sont donc importés dynamiquement dans notre CLI. Ces modules reposent tous sur la même structure, grâce au package [dragee-model](https://github.com/dragee-io/dragee-model). Celui-ci contient toutes les définitions de type des _asserters_, règles, dragées, etc.
 
 Une fonction, elle aussi importée de ce package, va nous permettre de traiter les asserters de manière générique : la bien nommée [asserterHandler](https://github.com/dragee-io/dragee-model/blob/main/asserter/index.ts#L117).
 
-C’est l’avantage de ce fonctionnement se basant sur des types et fonctions mises en commun par [https://github.com/dragee-io/dragee-model](https://github.com/dragee-io/dragee-model). La CLI peut ainsi utiliser n’importe quel asserter validé, demandé par les dragées et répondant aux pré-requis du type _Asserter_.
+C’est l’avantage de ce fonctionnement se basant sur des types et fonctions mises en commun par [dragee-model](https://github.com/dragee-io/dragee-model). La CLI peut ainsi utiliser n’importe quel asserter validé, demandé par les dragées et répondant aux pré-requis du type _Asserter_.
 
 ## Conclusion
 

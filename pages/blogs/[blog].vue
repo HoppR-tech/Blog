@@ -146,7 +146,7 @@ defineOgImageComponent('About', {
             prose-h2:border-l-4 prose-h2:border-hoppr-green prose-h2:pl-2
             prose-h3:italic"
         >
-          <ContentRenderer v-if="article" :value="article">
+          <ContentRenderer v-if="article" :value="article" class="article-section">
             <template #empty>
               <p>No content found.</p>
             </template>

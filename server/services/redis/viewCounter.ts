@@ -1,55 +1,65 @@
-import { Redis } from '@upstash/redis'
-import { REDIS_REST_API_TOKEN, REDIS_REST_API_URL } from '~/server/config/vercelRedisConfig'
+import { getRedisClient } from '~/server/lib/redis'
 
-// Vérifier si nous sommes en mode développement
-const isDev = process.env.NODE_ENV === 'development'
+const VIEW_COUNT_PREFIX = 'views:'
 
-// Créer une instance Redis uniquement en production
-let redis: Redis | null = null
-
-if (!isDev) {
+export async function incrementViewCount(slug: string): Promise<number> {
   try {
-    redis = new Redis({
-      url: REDIS_REST_API_URL,
-      token: REDIS_REST_API_TOKEN,
-    })
+    const redis = await getRedisClient()
+    const key = `${VIEW_COUNT_PREFIX}${slug}`
+    const views = await redis.incr(key)
+    return views
   }
   catch (error) {
-    console.warn('Failed to initialize Redis connection:', error)
-    redis = null
+    console.error('Error incrementing view count:', error)
+    throw error
   }
 }
 
 export async function getViewCount(slug: string): Promise<number> {
   try {
-    // En mode développement, simplement retourner une valeur aléatoire
-    if (isDev || !redis) {
-      console.log(`[DEV] Simulant getViewCount pour ${slug}`)
-      return Math.floor(Math.random() * 100)
-    }
-
-    const views = await redis.get<number>(`pageviews:${slug}`)
-    return views ?? 0
+    const redis = await getRedisClient()
+    const key = `${VIEW_COUNT_PREFIX}${slug}`
+    const views = await redis.get(key)
+    return Number.parseInt(views ?? '0', 10)
   }
   catch (error) {
-    console.error(`Error getting view count for ${slug}:`, error)
-    return isDev ? Math.floor(Math.random() * 100) : 0
+    console.error('Error getting view count:', error)
+    throw error
   }
 }
 
-export async function incrementViewCount(slug: string): Promise<number> {
+export async function getAllViewCounts(): Promise<Record<string, number>> {
   try {
-    // En mode développement, simplement retourner une valeur aléatoire
-    if (isDev || !redis) {
-      console.log(`[DEV] Simulant incrementViewCount pour ${slug}`)
-      return Math.floor(Math.random() * 100) + 1
-    }
+    const redis = await getRedisClient()
+    const keys = await redis.keys(`${VIEW_COUNT_PREFIX}*`)
 
-    const views = await redis.incr(`pageviews:${slug}`)
-    return views
+    const pipeline = redis.multi()
+    keys.forEach((key) => {
+      pipeline.get(key)
+    })
+
+    const results = await pipeline.exec()
+
+    return keys.reduce((acc, key, index) => {
+      const slug = key.replace(VIEW_COUNT_PREFIX, '')
+      acc[slug] = Number.parseInt(results?.[index] as string ?? '0', 10)
+      return acc
+    }, {} as Record<string, number>)
   }
   catch (error) {
-    console.error(`Error incrementing view count for ${slug}:`, error)
-    return isDev ? Math.floor(Math.random() * 100) : 0
+    console.error('Error getting all view counts:', error)
+    throw error
+  }
+}
+
+export async function resetViewCount(slug: string): Promise<void> {
+  try {
+    const redis = await getRedisClient()
+    const key = `${VIEW_COUNT_PREFIX}${slug}`
+    await redis.del(key)
+  }
+  catch (error) {
+    console.error('Error resetting view count:', error)
+    throw error
   }
 }

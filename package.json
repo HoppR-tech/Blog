@@ -30,6 +30,7 @@
     "eslint-plugin-import": "latest",
     "nuxt-content-assets": "^1.4.4",
     "octokit": "^4.0.2",
+    "redis": "^4.7.0",
     "rss": "^1.2.2",
     "shiki": "^1.12.1",
     "sitemap": "^8.0.0"

@@ -1,7 +1,28 @@
-import { Redis } from '@upstash/redis'
-import { REDIS_REST_API_TOKEN, REDIS_REST_API_URL } from '../config/vercelRedisConfig'
+import { createClient } from 'redis'
+import { REDIS_URL } from '../config/vercelRedisConfig'
 
-export const redis = new Redis({
-  url: REDIS_REST_API_URL,
-  token: REDIS_REST_API_TOKEN,
-})
+let redis: ReturnType<typeof createClient> | null = null
+
+export async function getRedisClient() {
+  if (!redis) {
+    redis = createClient({
+      url: REDIS_URL,
+    })
+
+    redis.on('error', (err) => {
+      console.error('Redis Client Error:', err)
+    })
+
+    await redis.connect()
+  }
+
+  return redis
+}
+
+// Fonction de nettoyage pour fermer la connexion Redis
+export async function closeRedisConnection() {
+  if (redis) {
+    await redis.quit()
+    redis = null
+  }
+}

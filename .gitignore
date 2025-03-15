@@ -18,3 +18,8 @@ node_modules
 .netlify
 dist/
 .aider*
+# Environment variables
+.env
+.env.development
+.env.local
+.env.*.local

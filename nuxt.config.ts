@@ -78,6 +78,9 @@ export default defineNuxtConfig({
         cache: { maxAge: 60 * 60 * 24 * 30 }, // 30 jours pour les images
       },
     },
+    storage: {
+      data: { driver: 'vercelKV' },
+    },
   },
 
   colorMode: {
@@ -106,6 +109,12 @@ export default defineNuxtConfig({
     slack: {
       botToken: '',
       channelId: '',
+    },
+    redis: {
+      url: '',
+      rest_api_url: '',
+      rest_api_token: '',
+      rest_api_read_only_token: '',
     },
   },
 

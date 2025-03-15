@@ -56,10 +56,19 @@ async function submitForm() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ message: slackMessage }),
+    }).catch((error) => {
+      console.error('Network error:', error)
+      messageStatus.value = 'error'
+      return null
     })
 
-    if (!response.ok)
-      throw new Error('Erreur lors de l\'envoi du message à Slack')
+    if (!response)
+      return
+
+    if (!response.ok) {
+      messageStatus.value = 'error'
+      return
+    }
 
     messageStatus.value = 'success'
 

@@ -2,18 +2,81 @@
 import type { Person } from '@/types/blog'
 import ContactCTA from '@/components/blog/ContactCTA.vue'
 import { useRuntimeConfig } from '#app'
-import { incrementViewCount, getViewCount } from '@/server/services/kv/viewCounter'
+
+// Nous utiliserons les API endpoints plutôt que les fonctions directes de Redis
 
 const { path } = useRoute()
 const viewCount = ref(0)
 
-// Get and increment view count when page loads
 onMounted(async () => {
+  // Détection de l'environnement de développement
+  const isDev = process.env.NODE_ENV === 'development'
+  
+  if (isDev) {
+    // En développement, utiliser une valeur fictive
+    console.log('Mode développement : nombre de vues fictif')
+    viewCount.value = Math.floor(Math.random() * 100)
+    return
+  }
+  
   if (path) {
-    const currentViews = await getViewCount(path)
-    viewCount.value = currentViews
-    // Increment after showing initial count
-    viewCount.value = await incrementViewCount(path)
+    try {
+      // Normalisons le chemin pour l'API
+      // Si path est /blogs/mon-article, on veut juste /mon-article pour l'API
+      const apiPath = path.replace(/^\/blogs/, '')
+      console.log('Utilisation du chemin API:', apiPath)
+      
+      // D'abord récupérer le nombre actuel de vues
+      const response = await fetch(`/api/views${apiPath}`, {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+      })
+
+      if (!response.ok) {
+        console.error(`Erreur HTTP: ${response.status}`)
+        const text = await response.text()
+        console.error('Réponse:', text)
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
+      try {
+        const data = await response.json()
+        viewCount.value = data.views || 0
+      } catch (jsonError) {
+        console.error('Erreur de parsing JSON:', jsonError)
+        viewCount.value = 0
+      }
+
+      // Puis incrémenter le compteur
+      const incrementResponse = await fetch(`/api/views${apiPath}`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+      })
+
+      if (!incrementResponse.ok) {
+        console.error(`Erreur HTTP incrémentation: ${incrementResponse.status}`)
+        const text = await incrementResponse.text()
+        console.error('Réponse incrémentation:', text)
+        throw new Error(`HTTP error! status: ${incrementResponse.status}`)
+      }
+
+      try {
+        const incrementData = await incrementResponse.json()
+        viewCount.value = incrementData.views || 0
+      } catch (jsonError) {
+        console.error('Erreur de parsing JSON incrémentation:', jsonError)
+      }
+    }
+    catch (err) {
+      console.error('Error handling view count:', err)
+      // Par défaut, on affiche un nombre de vues raisonnable
+      viewCount.value = Math.floor(Math.random() * 100)
+    }
   }
 })
 

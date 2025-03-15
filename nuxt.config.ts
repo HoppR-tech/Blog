@@ -131,6 +131,7 @@ export default defineNuxtConfig({
     'nuxt-purgecss',
     '@nuxt/devtools',
     '@nuxtjs/sitemap',
+    '@formkit/auto-animate/nuxt',
     ...(import.meta.env.NODE_ENV === 'test' ? ['@nuxt/test-utils/module'] : []),
   ],
 

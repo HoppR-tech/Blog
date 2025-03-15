@@ -50,10 +50,6 @@ function formatDate(dateString: string) {
     <div class="flex flex-col w-full justify-start text-sm md:text-base my-8">
       <div class="flex flex-wrap justify-start text-black dark:text-zinc-300 content-center gap-4 text-sm sm:text-base">
         <div class="flex items-start w-full mb-2">
-          <Icon name="mdi:eye" class="flex-shrink-0 mt-0.5 mr-2" />
-          <p>{{ viewCount }} {{ viewCount <= 1 ? 'vue' : 'vues' }}</p>
-        </div>
-        <div class="flex items-start w-full mb-2">
           <LogoAuthor class="flex-shrink-0 mt-0.5 mr-2" />
           <p>
             Écrit par :
@@ -78,7 +74,7 @@ function formatDate(dateString: string) {
           </template>
         </div>
       </div>
-      <div v-if="props.reviewers.length > 0" class="flex justify-start mt-4 text-black dark:text-zinc-300 text-sm sm:text-base">
+      <div v-if="props.reviewers.length > 0" class="flex justify-start mt-4 mb-4 text-black dark:text-zinc-300 text-sm sm:text-base">
         <div class="flex items-start">
           <LogoAuthor class="flex-shrink-0 mt-0.5 mr-2" />
           <p>
@@ -93,6 +89,10 @@ function formatDate(dateString: string) {
             </template>
           </p>
         </div>
+      </div>
+      <div class="flex items-start w-full mb-4">
+        <Icon name="mdi:eye-outline" class="flex-shrink-0 mt-0.5 mr-2" />
+        <p>{{ viewCount }} {{ viewCount <= 1 ? 'vue' : 'vues' }}</p>
       </div>
     </div>
   </header>

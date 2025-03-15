@@ -3,6 +3,7 @@ import { createBranch, deleteBranch } from './branchManager'
 import { createPullRequest, mergePullRequest } from './pullRequestManager'
 import { uploadAllImages, uploadCoverImage } from './imageUploader'
 import { uploadToGitHub } from './contentUploader'
+import { checkPost } from './postChecker'
 import { createFolderName } from '@/utils/stringUtils'
 import type { BlogPost } from '@/types/blog'
 import type { NotionService } from '@/server/services/notion/notionService'
@@ -47,8 +48,8 @@ export class GitHubService {
 
       const { updatedContent, imageFiles } = await this.notionService.extractImagesAndUpdateContent(post.content)
 
-      if (!post.image)
-        throw new Error('Cover image is missing.')
+      // Check if post is valid
+      checkPost(post);
 
       let updatedPost: BlogPost = { ...post, ...await uploadCoverImage(this.octokit, post, assetsFolderPath, branchName) }
 

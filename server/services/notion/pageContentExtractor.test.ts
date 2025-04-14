@@ -1,8 +1,9 @@
 import { afterAll, afterEach, describe, expect, it } from 'vitest'
 import { Client } from '@notionhq/client'
 import nock from 'nock'
-import { extractTitleFromPage, getPageContent } from './pageContentExtractor'
+import { extractTitleFromPage, fetchAllBlocks, getPageContent } from './pageContentExtractor'
 import type { NotionPage } from '@/types/notion'
+import type { ListBlockChildrenResponse } from '@notionhq/client/build/src/api-endpoints'
 
 describe('pageContentExtractor', () => {
   it('should get page content', async () => {
@@ -114,6 +115,102 @@ describe('pageContentExtractor', () => {
       },
     }
     expect(extractTitleFromPage(page)).toBe('Test Title')
+  })
+
+  it("should fetch all blocks", async () => {
+    const mockClient = {
+      blocks: {
+        children: {
+          list: ({ block_id, start_cursor }): Promise<ListBlockChildrenResponse> => {
+            if (!start_cursor) {
+              return new Promise(resolve => resolve({
+                object: "list",
+                next_cursor: 'next-cursor',
+                has_more: true,
+                results: [
+                  {
+                    type: 'paragraph', paragraph: {
+                      // @ts-expect-error for test purpose
+                      rich_text: [{ plain_text: 'Hello' }]
+                    }
+                  },
+                ],
+              }))
+            }
+
+            return new Promise(resolve => resolve({
+              object: "list",
+              next_cursor: null,
+              has_more: false,
+              results: [
+                {
+                  type: 'paragraph', paragraph: {
+                    // @ts-expect-error for test purpose
+                    rich_text: [{ plain_text: 'world' }]
+                  }
+                },
+              ],
+            }))
+
+          }
+
+        }
+
+      }
+    } as Client;
+
+    const mockPage: NotionPage = {
+      id: 'page-id',
+      properties: {
+        'Articles': {
+          title: [{ plain_text: 'Test Title' }],
+        },
+        'Auteurs': {
+          relation: [{ id: '838dec96-f9fc-404f-a302-07719225d785' }],
+        },
+        'Relecteurs': {
+          relation: [{ id: '12345678-1234-1234-1234-123456789abc' }],
+        },
+        'Tags': {
+          multi_select: [{ name: 'Tag1' }, { name: 'Tag2' }],
+        },
+        'Cover Image': {
+          files: [],
+        },
+        'Cover Image Alt': {
+          rich_text: [],
+        },
+      },
+    }
+
+    const result = await fetchAllBlocks({ notionClient: mockClient as Client, page: mockPage })
+
+    expect(result).toEqual(
+      [
+        {
+          "paragraph": {
+            "rich_text": [
+              {
+                "plain_text": "Hello",
+              },
+            ],
+          },
+          "type": "paragraph",
+        },
+        {
+          "paragraph": {
+            "rich_text": [
+              {
+                "plain_text": "world",
+              },
+            ],
+          },
+          "type": "paragraph",
+        },
+      ]
+    );
+
+
   })
 
   afterEach(() => {

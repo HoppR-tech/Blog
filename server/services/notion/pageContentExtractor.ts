@@ -8,8 +8,8 @@ import type { BlockObjectResponse, PartialBlockObjectResponse } from '@notionhq/
 
 export async function getPageContent(notionClient: NotionClientInterface, page: NotionPage): Promise<PageContent> {
   try {
-    // console.error('Page reçue de Notion:', JSON.stringify(page, null, 2))
-    const blocks = (await notionClient.blocks.children.list({ block_id: page.id })).results.filter(isBlockObjectResponse)
+    const blocks = await fetchAllBlocks({notionClient,
+      page})
 
     // Check if blocks are valid
     checkBlocks(blocks);
@@ -47,6 +47,27 @@ export async function getPageContent(notionClient: NotionClientInterface, page: 
     throw error
   }
 }
+
+
+export async function fetchAllBlocks({notionClient,page, nextPageCursor}:{notionClient: NotionClientInterface, page: NotionPage, nextPageCursor?:string}): Promise<BlockObjectResponse[]> {
+  let blocks: BlockObjectResponse[];
+  try {
+    const response = await notionClient.blocks.children.list({ block_id: page.id, start_cursor: nextPageCursor })
+    blocks = response.results.filter(isBlockObjectResponse)
+
+    if (response.has_more && response.next_cursor) {
+      const nextBlocks = await fetchAllBlocks({notionClient, page, nextPageCursor: response.next_cursor})
+      blocks = [...blocks, ...nextBlocks]
+    }
+  }
+  catch (error) {
+    console.error('❌ Error while fetching blocks:', error)
+    throw error
+  }
+  return blocks
+
+}
+
 
 export function extractTitleFromPage(page: NotionPage): string {
   const post = page.properties.Articles

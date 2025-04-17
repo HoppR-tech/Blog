@@ -22,11 +22,11 @@ describe('Markdown Utils', () => {
     const markdown = generateMarkdownContent(post, content)
 
     expect(markdown).toContain('---')
-    expect(markdown).toContain(`title: ${post.title}`)
+    expect(markdown).toContain(`title: "${post.title}"`)
     expect(markdown).toContain(`date: ${post.date}`)
-    expect(markdown).toContain(`description: ${post.description}`)
+    expect(markdown).toContain(`description: "${post.description}"`)
     expect(markdown).toContain('image: ./assets/cover-image.webp')
-    expect(markdown).toContain(`alt: ${post.alt}`)
+    expect(markdown).toContain(`alt: "${post.alt}"`)
     expect(markdown).toContain(`tags: [${post.tags.map(tag => `'${tag}'`).join(', ')}]`)
     expect(markdown).toContain('---')
     expect(markdown).toContain(content)
@@ -51,7 +51,7 @@ describe('Markdown Utils', () => {
     const markdown = generateMarkdownContent(post, content)
 
     expect(markdown).toContain('---')
-    expect(markdown).toContain(`title: ${post.title}`)
+    expect(markdown).toContain(`title: "${post.title}"`)
     expect(markdown).toContain('---')
     expect(markdown).toContain(content)
   })
@@ -96,7 +96,7 @@ describe('Markdown Utils', () => {
     const markdown = generateMarkdownContent(post, content)
 
     expect(markdown).toContain('---')
-    expect(markdown).toContain(`title: ${post.title}`)
+    expect(markdown).toContain(`title: "${post.title}"`)
     expect(markdown).toContain('---')
     expect(markdown).toContain(content)
   })

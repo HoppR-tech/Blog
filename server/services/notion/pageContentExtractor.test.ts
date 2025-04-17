@@ -1,9 +1,92 @@
-import { afterAll, afterEach, describe, expect, it } from 'vitest'
+import { afterAll, afterEach, describe, expect, it, vi } from 'vitest'
 import { Client } from '@notionhq/client'
 import nock from 'nock'
 import { extractTitleFromPage, fetchAllBlocks, getPageContent } from './pageContentExtractor'
 import type { NotionPage } from '@/types/notion'
 import type { ListBlockChildrenResponse } from '@notionhq/client/build/src/api-endpoints'
+import * as blockConverter from './blockConverter'
+import * as personInfoFetcher from './personInfoFetcher'
+
+// Create mock client
+const mockClient = {
+  blocks: {
+    children: {
+      list: vi.fn()
+    }
+  },
+  pages: {
+    retrieve: vi.fn()
+  }
+};
+
+// Setup mock implementations
+mockClient.blocks.children.list.mockResolvedValue({
+  results: [
+    { type: 'paragraph', paragraph: { rich_text: [{ plain_text: 'Hello' }] } },
+  ],
+  has_more: false,
+  next_cursor: null,
+});
+
+mockClient.pages.retrieve.mockImplementation(({ page_id }) => {
+  if (page_id === '838dec96-f9fc-404f-a302-07719225d785') {
+    return Promise.resolve({
+      id: '838dec96-f9fc-404f-a302-07719225d785',
+      properties: {
+        Name: {
+          title: [{ plain_text: 'Author Name' }],
+        },
+        Avatar: {
+          files: [{ file: { url: 'http://example.com/avatar.png' } }],
+        },
+        LinkedIn: { url: 'http://linkedin.com/in/authorname' },
+        X: { url: 'http://x.com/authorname' },
+      },
+    });
+  } else if (page_id === '12345678-1234-1234-1234-123456789abc') {
+    return Promise.resolve({
+      id: '12345678-1234-1234-1234-123456789abc',
+      properties: {
+        Name: {
+          title: [{ plain_text: 'Reviewer Name' }],
+        },
+        Avatar: {
+          files: [{ file: { url: 'http://example.com/reviewer-avatar.png' } }],
+        },
+        LinkedIn: { url: 'http://linkedin.com/in/reviewername' },
+        X: { url: 'http://x.com/reviewername' },
+      },
+    });
+  }
+  return Promise.reject(new Error('Unknown page ID'));
+});
+
+// Mock the blockConverter module
+vi.spyOn(blockConverter, 'convertBlocksToMarkdown').mockResolvedValue({
+  markdownContent: 'Hello\n\n',
+  images: [],
+});
+
+// Mock the personInfoFetcher module
+vi.spyOn(personInfoFetcher, 'getPersonsInfo').mockImplementation((client, ids, type) => {
+  if (type === 'Author') {
+    return Promise.resolve([{
+      notionId: '838dec96-f9fc-404f-a302-07719225d785',
+      name: 'Author Name',
+      image: 'http://example.com/avatar.png',
+      linkedin: 'http://linkedin.com/in/authorname',
+      x: 'http://x.com/authorname',
+    }]);
+  } else {
+    return Promise.resolve([{
+      notionId: '12345678-1234-1234-1234-123456789abc',
+      name: 'Reviewer Name',
+      image: 'http://example.com/reviewer-avatar.png',
+      linkedin: 'http://linkedin.com/in/reviewername',
+      x: 'http://x.com/reviewername',
+    }]);
+  }
+});
 
 describe('pageContentExtractor', () => {
   it('should get page content', async () => {
@@ -31,47 +114,9 @@ describe('pageContentExtractor', () => {
       },
     }
 
-    nock('https://api.notion.com')
-      .get('/v1/blocks/page-id/children')
-      .reply(200, {
-        results: [
-          { type: 'paragraph', paragraph: { rich_text: [{ plain_text: 'Hello' }] } },
-        ],
-      })
+    // No need for nock since we're using vi mocks
 
-    nock('https://api.notion.com')
-      .get('/v1/pages/838dec96-f9fc-404f-a302-07719225d785')
-      .reply(200, {
-        id: '838dec96-f9fc-404f-a302-07719225d785',
-        properties: {
-          Name: {
-            title: [{ plain_text: 'Author Name' }],
-          },
-          Avatar: {
-            files: [{ file: { url: 'http://example.com/avatar.png' } }],
-          },
-          LinkedIn: { url: 'http://linkedin.com/in/authorname' },
-          X: { url: 'http://x.com/authorname' },
-        },
-      })
-
-    nock('https://api.notion.com')
-      .get('/v1/pages/12345678-1234-1234-1234-123456789abc')
-      .reply(200, {
-        id: '12345678-1234-1234-1234-123456789abc',
-        properties: {
-          Name: {
-            title: [{ plain_text: 'Reviewer Name' }],
-          },
-          Avatar: {
-            files: [{ file: { url: 'http://example.com/reviewer-avatar.png' } }],
-          },
-          LinkedIn: { url: 'http://linkedin.com/in/reviewername' },
-          X: { url: 'http://x.com/reviewername' },
-        },
-      })
-
-    const mockClient = new Client({ auth: 'test-token' })
+    // Use our mock client
     const content = await getPageContent(mockClient, mockPage)
 
     expect(content.notionId).toBe('page-id')
@@ -87,7 +132,7 @@ describe('pageContentExtractor', () => {
     expect(content.reviewers?.[0].name).toEqual('Reviewer Name')
     expect(content.reviewers?.[0].image).toEqual('http://example.com/reviewer-avatar.png')
 
-    expect(nock.isDone()).toBe(true)
+    // No need to check nock since we're using vi mocks
   })
 
   it('should extract title from a page', () => {

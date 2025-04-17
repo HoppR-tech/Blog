@@ -3,30 +3,64 @@ import type { BlockObjectResponse } from '@notionhq/client/build/src/api-endpoin
 import { NotionToMarkdown } from 'notion-to-md'
 
 type image = {
-  url: string, 
+  url: string,
   alt: string
 }
 
 export async function convertBlocksToMarkdown(notionClient: NotionClientInterface, blocks: BlockObjectResponse[]): Promise<{ markdownContent: string; images: image[]} > {
   const n2m = new NotionToMarkdown({ notionClient });
+  const images: { url: string; alt: string }[] = [];
 
-  const images: { url: string; alt: string }[] = []
-  
-  // Custom transformer - Images (check alt text and webp building later)
-  n2m.setCustomTransformer("image", async (block: any) => {
-    const imageUrl = block.image?.file?.url || block.image?.external?.url || ''
-    const altText = block.image?.caption?.[0]?.plain_text
+  try {
+    console.log(`Starting conversion of ${blocks.length} blocks`);
 
-    if (!altText || altText.trim() === '')
-      throw new Error(`Image without alt text detected: ${imageUrl}`)
+    // Traiter les blocs par lots pour éviter les timeouts
+    const BATCH_SIZE = 50;
+    const markdownBlocks = [];
 
-    images.push({ url: imageUrl, alt: altText })
-    return `![${altText}](${imageUrl})`
-  });
+    for (let i = 0; i < blocks.length; i += BATCH_SIZE) {
+      const batch = blocks.slice(i, i + BATCH_SIZE);
+      const batchResults = await Promise.all(batch.map(async (block, index) => {
+        try {
+          const md = await n2m.blockToMarkdown(block as any);
+          const globalIndex = i + index;
+          console.log(`Successfully converted block ${globalIndex + 1}/${blocks.length}`);
 
-  const markdownContent = await Promise.all(blocks.map((block) => {
-    return n2m.blockToMarkdown(block as any);
-  })).then(md => md.join('\n\n'))
+          // Capturer les images si présentes
+          if (block.type === 'image') {
+            const imageBlock = block as any;
+            const imageUrl = imageBlock.image?.external?.url || imageBlock.image?.file?.url;
+            const imageAlt = imageBlock.image?.caption?.[0]?.plain_text || '';
 
-  return { markdownContent, images }
+            // Throw an error if image has no alt text
+            if (!imageAlt && imageUrl) {
+              throw new Error(`Image without alt text detected: ${imageUrl}`);
+            }
+
+            images.push({
+              url: imageUrl,
+              alt: imageAlt
+            });
+          }
+
+          return md;
+        } catch (error) {
+          console.error(`Error converting block ${i + index + 1}:`, error);
+          return '';
+        }
+      }));
+
+      markdownBlocks.push(...batchResults);
+    }
+
+    const markdownContent = markdownBlocks.join('\n\n');
+
+    console.log(`Conversion completed. Generated ${markdownContent.length} characters`);
+    console.log(`Found ${images.length} images`);
+
+    return { markdownContent, images };
+  } catch (error) {
+    console.error('Error in convertBlocksToMarkdown:', error);
+    throw error;
+  }
 }

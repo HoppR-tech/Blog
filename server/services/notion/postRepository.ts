@@ -10,20 +10,34 @@ type NotionQueryResult = QueryDatabaseResponse
 
 export async function fetchPostsToPublish(notionClient: NotionClientInterface): Promise<BlogPost[]> {
   try {
-    const response: NotionQueryResult = await notionClient.databases.query({
-      database_id: DATABASE_POSTS_ID,
-      filter: {
-        property: 'Status',
-        status: { equals: 'Bon pour Publication' },
-      },
-    })
+    let allResults: any[] = [];
+    let hasMore = true;
+    let nextCursor: string | undefined = undefined;
 
-    const blogPosts = await Promise.all(response.results.map(result => getPageContent(notionClient, convertToNotionPage(result))))
-    return blogPosts.map(convertToBlogPost)
+    while (hasMore) {
+      const response: NotionQueryResult = await notionClient.databases.query({
+        database_id: DATABASE_POSTS_ID,
+        filter: {
+          property: 'Status',
+          status: { equals: 'Bon pour Publication' },
+        },
+        start_cursor: nextCursor,
+        page_size: 100, // Maximum permis par l'API Notion
+      });
+
+      allResults = [...allResults, ...response.results];
+      hasMore = response.has_more;
+      nextCursor = response.next_cursor || undefined;
+    }
+
+    const blogPosts = await Promise.all(
+      allResults.map(result => getPageContent(notionClient, convertToNotionPage(result)))
+    );
+    return blogPosts.map(convertToBlogPost);
   }
   catch (error) {
-    console.error('Error while fetching articles:', error)
-    throw error
+    console.error('Error while fetching articles:', error);
+    throw error;
   }
 }
 

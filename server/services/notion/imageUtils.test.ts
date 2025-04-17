@@ -2,22 +2,16 @@ import { Buffer } from 'node:buffer'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import axios from 'axios'
 import { downloadAndConvertImage, extractImagesAndUpdateContent } from '~/server/services/notion/imageUtils'
+import * as sharp from 'sharp'
 
-vi.mock('axios')
+// Mock axios manually
+axios.get = vi.fn()
 
-beforeEach(() => {
-  vi.resetAllMocks()
-})
-
-vi.mock('sharp', () => {
-  return {
-    __esModule: true,
-    default: () => ({
-      webp: vi.fn().mockReturnThis(),
-      toBuffer: vi.fn().mockResolvedValue(Buffer.from('webp image data')),
-    }),
-  }
-})
+// Mock sharp manually
+vi.spyOn(sharp, 'default').mockImplementation(() => ({
+  webp: vi.fn().mockReturnThis(),
+  toBuffer: vi.fn().mockResolvedValue(Buffer.from('webp image data')),
+}) as any)
 
 describe('Image Utils', () => {
   it('should download and convert an image to webp format', async () => {
@@ -25,7 +19,7 @@ describe('Image Utils', () => {
     const imageName = 'test-image'
 
     // Mock axios to return a successful response
-    vi.mocked(axios.get).mockResolvedValueOnce({ data: Buffer.from('image data') })
+    axios.get.mockResolvedValueOnce({ data: Buffer.from('image data') })
 
     const { webpImageName, imageContent } = await downloadAndConvertImage(imageUrl, imageName)
     expect(webpImageName).toBe('test-image.webp')
@@ -37,19 +31,19 @@ describe('Image Utils', () => {
     const imageName = 'test-image'
 
     // Mock axios to throw an error
-    vi.mocked(axios.get).mockRejectedValueOnce(new Error('Download error'))
+    axios.get.mockRejectedValueOnce(new Error('Download error'))
 
-    await expect(downloadAndConvertImage(imageUrl, imageName)).rejects.toThrow('Error while downloading image: Download error')
+    await expect(downloadAndConvertImage(imageUrl, imageName)).rejects.toThrow(`Error while processing image ${imageUrl}: Download error`)
   })
 
   it('should extract images from markdown content', async () => {
     const content = '![Alt text](http://example.com/image1.png) Some text ![Another image](http://example.com/image2.png)'
 
     // Mock axios to return a successful response for the image download
-    vi.mocked(axios.get).mockResolvedValueOnce({ data: Buffer.from('image data 1') })
+    axios.get.mockResolvedValueOnce({ data: Buffer.from('image data 1') })
       .mockResolvedValueOnce({ data: Buffer.from('image data 2') })
 
-    const { updatedContent, imageFiles } = await extractImagesAndUpdateContent(content)
+    const { updatedContent, imageFiles, lastValidImageUrl } = await extractImagesAndUpdateContent(content)
 
     expect(updatedContent).toContain('![Alt text](./assets/img1.webp)')
     expect(updatedContent).toContain('![Another image](./assets/img2.webp)')

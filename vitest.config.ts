@@ -17,6 +17,7 @@ export default defineConfig({
       },
     },
     globals: true,
+    setupFiles: ['./vitest.setup.ts'],
   },
   // define: {
   //   'import.meta.env.DEV': 'true',

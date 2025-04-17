@@ -1,6 +1,6 @@
 ---
 title: "Bref, j’ai mis en place les DORA Metrics dans un grand groupe ! (REX 🦖)"
-date: 2025-04-17T15:27:24.638Z
+date: 2025-04-17T15:52:31.016Z
 description: "  Dans mon précédent article (voir [DORA Metrics : évaluer la performance de livraison logicielle](https://blog.hoppr.tech/blogs/2024-10-31-dora-metrics-valuer-la-performance-de-livraison-logicielle >"
 image: ./assets/cover-image.webp
 alt: "Image abstraite représentant les metrics avec un tyrannosaure pour illustrer le REX"
@@ -16,7 +16,7 @@ authors:
 reviewers:
   - id: 67adfd77-4b84-4496-b55d-3391541f59c5
     name: Michaël Bernasinski
-    image: https://prod-files-secure.s3.us-west-2.amazonaws.com/5863e833-64f2-4f13-9f7a-2c92c72b5bbf/82ebd0fe-de28-43f3-ab7b-0431af41baad/Photo_HoppR.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4665AFDF7DU%2F20250417%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250417T152724Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjENf%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJGMEQCIAb6Ckugl%2Bg5tGzXkCjWlVIHNYqwcEn7rKZUyesfXq33AiBrI828EgUD%2F4PaDkLFOI2FsMAjyVrZ%2F4DjhX3Sx1M%2BpSr%2FAwhgEAAaDDYzNzQyMzE4MzgwNSIMkzy7a56TRDQCMnV7KtwDF1z9dSdGzVrPdZJ9nPnpyz%2BJy9zcbYgLBaYuyPFpxsq%2FWb5mbuOuewkO2tMhdYSK6lnImh6enghKbrlyWE%2BfUZOemndb4PvvLpaW8D5dqy4K3rLRJO7LBb%2FTHUlLI2r5mGJnSTJEv2rj0xkllA4SkApybUw5FWPj%2FTrJjNbT6JXZoFScZSu8ED4KbOPMr9EDqcZo1YiU%2BIm8C501zcGAZIcCnjhG%2BbsCoekla42icvnFwf3xbYoWaBAPIXHZMo103zdXx9EvG3waWNGL5yMIf2yFys5%2BFCEa8%2BMdQ2nmcxKRdWsHVZaialCyk%2FT%2FZagGZMnQBU3SpW0grAVHWWK7ETcuEWimtF6lwQIogLctCZRMENA0jtPoLj6pi2tT%2BsUlLJnonph6ETZcJr4UIOqA53RRmv2fwSe5Po%2FI14XlsbESYqFmJtfbE98NiaPQR93hctqgrHZlcT5LGYgMGRCTCVXo2ByjWrF4GADrxjdCVkBF7wVwRBcNVMObeG6NKPPyHpUR51Ly4kS1OMFpl%2Bae9erIC1uyEQBQKG5v3o4KF5S8SCQiaSc25CQ0W1dO0s60xu6Kqmg%2FwX%2F7Um9G3Q1miMpV9%2FmiPTSWsvDsi7EAw06DgqsVQaHS%2FMG1pKww9K2EwAY6pgGaQ%2BtQtOVhuolauvI0HUP8atg9F5lrsahBbCXnzvLVxrruZi7%2FwWE9zTYHkaM1P8kZqneJSeSO97PKhCaTThQBPBwgd3zq6qk3LO3Ys%2FvKRqMgo78oxfbgAm62zsayqI0oVCAIbad3T4wsN4fwzqIo142UF4vSzYuI9YatAVXgC6DpTkpVote%2B5xpANSFdhRWZraNluzBrlv16DCAVuxB9S1XSutcs&X-Amz-Signature=6fceed4fb095646ad12eb5cf679dd27d047f750f01d092fa199e163d54dc6803&X-Amz-SignedHeaders=host&x-id=GetObject
+    image: https://prod-files-secure.s3.us-west-2.amazonaws.com/5863e833-64f2-4f13-9f7a-2c92c72b5bbf/82ebd0fe-de28-43f3-ab7b-0431af41baad/Photo_HoppR.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4663E5WMGH3%2F20250417%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250417T155230Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjENf%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIQCmS4sJn2a0pySgIG2cMwMJDMaJ%2FCBo0%2FyMYPP7Bw8fxgIgRtbkpduc6z4oQwkZW%2BqVm9LFrrOogxq7pG1p0%2FuuMucq%2FwMIYBAAGgw2Mzc0MjMxODM4MDUiDCVqthWV939hE9i0cSrcA21iZM7zc9TWqgLfzTBWJvEIJcPuj4nk5dfBAqfdKJe3CGTVsVWsq9ZzFsci%2FO%2Fj0gassHfC6DYCxiWzZoiQJ%2FAmZcupwKZgoTgC8SrtaG9oJU5ugmrtc3WJ32LVIBO9I7on%2Bx8BAVaVuZ8PyYt%2FIfGj2jK29R6O9lEgTvGfDPa1REjTWiNUCO2pTbH0ebFAQfifbYuAfpazAOkrDmdjVGvV%2BuKb9rGlmEGfVktS72FqBquXU3QS2EyDcvWOyjo7RcmRv2Rhefw9ESH0wI8zidXMNM7ecXmIbFJrMO8e5u9%2BAgZ0%2FM%2BfLB9dIEhX0lx%2ByidaP8e5UD5I5o6rtUEECzFq%2BfPUp7xEoNM8TYsUGlEn7Rp71keHZIO7H38cgtqvfuogxH%2FWVtJCYbRLMMh01TLdoK9gWWUkEBy7mh%2Ft%2B%2FngClCgKX%2Fn26QnYu6Osdas9WVQtZnu4gNTW3uqQdFSlDqco4OMBfLjKC8O%2FAa6GOlkeFvAdiRmouLE2d91JTOJzRn470K%2B3fXVLe%2FIAEAUiArfWxtjjSjKZ%2BSjk141Qu9LLgeZ0wr07uQ9K%2B1jY9xNQOIZYAdJh0VZs29YsxerucriRTBStf%2BLekaC0g3HGwSQozUENszW%2FHbB%2BSgKMP6thMAGOqUBuhn%2BuGmcAHclB8I2DX8c48ZI%2B1NhukGVw8NxyHdmh1gvjtYS8L0JE4tH2TeclrBNDVwFLH%2FMZkfmCXATMKSnYfY7qihqN82oxbLrmXkVGb3FHCW2M0c1KVAVqGD3MM%2FAL45KyGonegEa4aCk%2BdYTePU%2B8bnDao1tG18axDgKxp%2BQkV6yRXU16XLFhDpQmDbVEGybVBmY9HBT7WSFJzi2HpSkXN3B&X-Amz-Signature=61b1577de7beb8748561cb3ea93be38a9633f6941b07176637ca4a4f0a26f2bb&X-Amz-SignedHeaders=host&x-id=GetObject
     linkedin: https://www.linkedin.com/in/michael-bernasinski
     x: 
 ---
@@ -223,3 +223,704 @@ Voici les principales conventions que nous avons établies, organisées par doma
 - Un déploiement en production impacte potentiellement l'utilisateur final
 
 - Un produit peut être déployé sur plusieurs workspaces (namespace/cluster)
+
+- Une modification d'un composant ou de sa configuration implique une modification du produit
+
+### Lead Time For Changes ⏱️
+
+**Traçabilité du code**
+
+- Le code source mentionné dans l'annotation est responsable du déploiement du composant
+
+- La correspondance dans le repository Git est matérialisée par un tag
+
+- Le temps entre un commit et son tag est négligeable pour le calcul global
+
+**Limitations acceptées**
+
+- Seuls les tags respectant la norme SemVer sont pris en compte
+
+- Les configurations d'environnement sans code source associé créent des déploiements multiples pour une même version
+
+### Incidents et récupération 🚨
+
+**Temporalité des incidents**
+
+- Le temps entre l'apparition réelle d'un incident et son ouverture dans l'outil est considéré comme négligeable
+
+- Tous les incidents reportés (automatiquement ou manuellement) ont un impact utilisateur
+
+**Association déploiement-incident**
+
+- Le déploiement le plus récent d'un composant du produit avant la création de l'incident est considéré comme la cause
+
+- En l'absence d'information sur l'instance spécifique, l'incident est associé au produit dans son ensemble
+
+### Structure organisationnelle 🏢
+
+**Définition d'un produit**
+
+- Un produit est un périmètre fonctionnel perceptible par l'utilisateur final
+
+- Un produit peut être composé de plusieurs composants (microservices ou briques monolithiques)
+
+- Les changements au niveau produit sont communiqués aux utilisateurs
+
+**Multi-instance**
+
+- Un même produit peut être déployé dans différents environnements de production
+
+- Chaque instance est considérée comme une entité distincte pour les métriques de déploiement
+
+- Les incidents sont agrégés au niveau produit plutôt qu'au niveau instance
+
+### Limitations connues 🚧
+
+**Données manquantes**
+
+- Certains déploiements peuvent manquer d'annotations complètes
+
+- Les tags peuvent ne pas suivre strictement SemVer
+
+- La corrélation entre incidents et instances spécifiques n'est pas toujours possible
+
+**Pistes d'amélioration**
+
+- Implémenter "configuration as code" pour mieux tracer les changements de configuration
+
+- Étendre la prise en compte des tags au-delà de SemVer
+
+- Ajouter la notion d'instance produit dans l'outil de gestion des incidents
+
+Ces hypothèses sont régulièrement revues et ajustées en fonction des retours d'expérience et de l'évolution des pratiques DevOps dans l'organisation.
+
+## 4. La collecte des données : une approche par source 📊
+
+> **L'architecture de collecte : le cœur technique du projet**
+
+### Architecture de données centralisée
+
+**BigQuery comme référentiel central**
+
+Pour répondre aux besoins d'analyse et de corrélation des données, nous avons mis en place une architecture où toutes les données sont centralisées dans Google BigQuery. Cette approche présente plusieurs avantages :
+
+- Capacité à traiter de grands volumes de données (logs Kubernetes, événements GitHub, tickets ServiceNow)
+
+- Possibilité d'exécuter des requêtes SQL complexes pour calculer les métriques
+
+- Facilité d'intégration avec des outils de visualisation (pour ce projet, Power BI)
+
+- Mise à jour des données en quasi temps réel via des flux de données (streaming)
+
+Examinons maintenant notre approche pour chaque source de données :
+
+### Données de déploiement
+
+**Source principale : Kubernetes**
+
+- Collecte des événements de type "deployment" avec statut "success"
+
+- Identification des déploiements via la progression "Progressing → True" avec "NewReplicaSetAvailable"
+
+- Focus sur les déploiements en production via l'annotation `info/environment=prod`
+
+**Annotations requises**
+
+Annotations déjà existantes :
+
+- `info/product_id` : identifiant unique du produit
+
+- `info/bu_index` : identifiant de la Business Unit
+
+- `info/cluster_name` : nom du cluster
+
+Annotations à ajouter pour les DORA Metrics :
+
+- `release.mgmt/deploy.src` : URL du repository source
+
+- `release.mgmt/deploy.src-version` : version déployée
+
+- `release.mgmt/env` : environnement (prod/prep/uat/dev)
+
+**Points d'attention**
+
+- Distinction entre déploiements de configuration et vraies mises en production
+
+- Gestion des déploiements multi-instances pour différentes BU
+
+- Traçabilité complète via les annotations
+
+
+
+### Données de code source
+
+**Source de vérité : GitHub**
+
+Les informations sont extraites de deux sources principales :
+
+- Commits : pour tracer les changements de code
+
+- Tags : pour identifier les versions déployées
+
+**Corrélation version-déploiement**
+
+- Chaque version en production est matérialisée par un tag Git
+
+- Les annotations Kubernetes contiennent les références du code source et de la version
+
+- La correspondance tag-version permet de calculer précisément le Lead Time
+
+
+
+### Données d'incidents
+
+**Source : ServiceNow**
+
+Critères de sélection des incidents :
+
+- Incidents résolus uniquement
+
+- Statut différent de "Canceled"
+
+- Lien avec un produit identifié
+
+**Limitations actuelles**
+
+- Les incidents sont liés à un produit et non à une instance spécifique
+
+- Impossibilité de lier directement un incident à une instance particulière
+
+- Nécessité d'utiliser des heuristiques pour la corrélation
+
+## 5. Implémentation et calcul des métriques 📈
+
+> **De la théorie à la pratique : adapter et calculer les métriques à tous les niveaux**
+
+### Implémentation des métriques
+
+Voici comment nous avons adapté et implémenté chacune des quatre métriques :
+
+
+
+<u>**Lead Time for Changes (Délai de livraison des changements)**</u>
+
+Le Lead Time for Changes mesure le temps qui s'écoule entre la dernière modification de code (commit) et son déploiement effectif en production. Dans cette entreprise, nous avons dû sensibiliser les équipes sur l'importance de taguer chaque version déployée pour tracer correctement le code source.
+
+- **Extraction:** à partir des déploiements Kubernetes (annotation "version" et "repo"), nous retrouvons le commit Git.
+
+- **Calcul:**
+
+- **Agrégation:** comme chaque produit pouvait regrouper plusieurs composants, nous avons choisi de calculer d'abord un Lead Time moyen pour chaque composant, avant de prendre la moyenne de ces composants au niveau du produit.
+
+
+
+**Principale difficulté:** éviter les déploiements de "configuration" sans changement de code, qui fausseraient la métrique. Nous avons donc isolé ces cas dans un tableau de bord à part, pour ne pas influencer le Lead Time for Changes général.
+
+
+
+<u>**Deployment Frequency (Fréquence de déploiement)**</u>
+
+La Deployment Frequency indique la cadence à laquelle on pousse des mises à jour en production (exprimée en $jours^{-1}
+$, ou inverse de l'intervalle entre deux déploiements). 
+
+$$
+f_{comp} = \frac{1}{(t_{dep2} - t_{dep1})}
+$$
+
+Au niveau d'un produit, nous calculons la moyenne des fréquences de déploiement de tous ses composants. Nous avons aussi mis en évidence quelques "cas limites", par exemple lorsqu'un composant n'a qu'un seul déploiement. Dans ces situations, on ne peut pas déterminer d'intervalle et la fréquence reste "N/A".
+
+C'était essentiel de distinguer un déploiement réellement exposé à l'utilisateur dans l'environnement "prod" (annotation "info/environment=prod") de simples déploiements sur des environnements de test ou d'intégration.
+
+
+
+<u>**Mean Time to Restore (MTTR) ou Mean Time to Recover (Temps moyen de restauration)**</u>
+
+Le MTTR calcule le temps moyen nécessaire pour résoudre un incident ou le temps apparent de défaillance pour l'utilisateur. Au départ, nous avons constaté que l'outil de ticketing (ServiceNow) n'enregistrait pas toujours les champs d'ouverture et de clôture de manière cohérente. 
+
+Nous avons donc dû :
+
+- **Sensibiliser les équipes support** : un champ "date de début d'incident" doit être rempli le plus précisément possible dès ouverture (sinon nous utilisons la date de création du ticket).
+
+- **Vérifier la date de résolution ou de clôture** : c'est la référence pour la fin d'incident.
+
+- **Calculer la moyenne** de (date de fin − date de début) sur tous les incidents clôturés, pour chaque produit.
+
+$$
+\bar{t}_{recover} = \frac{1}{n} \sum_{k=1}^{n} (t_{end} - t_{start})
+$$
+
+Pour la plupart des cas, cela a fonctionné correctement. Mais, comme souvent, nous avons rencontré des écarts (tickets fermés très tardivement, incidents mal catégorisés, etc.). Il a fallu faire accepter les limites de la mesure (la durée de vie d'un ticket n'est pas toujours égale à la durée réelle de l'incident technique).
+
+
+
+<u>**Change Failure Rate (Taux d'échec des changements)**</u>
+
+Le Change Failure Rate (CFR) représente la proportion de déploiements qui entraînent au moins un incident en production. Ici, le plus gros challenge a été de lier les incidents ServiceNow au "dernier déploiement" d'un produit. Faute de pouvoir tracer précisément l'instance de composant à l'origine, nous avons adopté la convention suivante :
+
+- **Identifier le "dernier déploiement"** survenu avant la date de création de l'incident, tous composants du produit confondus.
+
+- **Incrémenter un déploiement "défaillant"** si au moins un incident lui est rattaché.
+
+- **Diviser le nombre de déploiements défaillants par le nombre total de déploiements** du produit, sur la période considérée.
+
+$$
+{ChangeFailure}_{product} = \frac{\sum{d_{fail}}}{\sum{d_{total}}}
+$$
+
+Bien sûr, cela reste une approximation: on ne sait pas distinguer un incident réellement lié à un composant particulier. D'où la nécessité d'améliorer la remontée d'informations dans ServiceNow (par exemple en demandant explicitement quelle version réelle est touchée).
+
+### Calcul des métriques par niveau de granularité 📊
+
+> **Vision multi-échelle : du composant à la plateforme**
+
+### Lead Time For Changes
+
+**Niveau Composant**
+
+```plain text
+Δt_ltfc_c = (1/d_tag) ∑(t_d_i - t_co_i)
+```
+
+où :
+
+- t_d_i = Date de déploiement en production
+
+- t_co_i = Date du dernier commit de la version
+
+- d_tag = Nombre de déploiements en production associés à un tag Git
+
+**Niveau Produit**
+
+```plain text
+Δt_ltfc_p = (1/n_c) ∑(Δt_ltfc_c_i)
+```
+
+où :
+
+- Δt_ltfc_c_i = Lead Time du composant i
+
+- n_c = Nombre de composants du produit
+
+**Niveau Domaine**
+
+```plain text
+Δt_ltfc_d = (1/n_p) ∑(Δt_ltfc_p_i)
+```
+
+où :
+
+- Δt_ltfc_p_i = Lead Time du produit i
+
+- n_p = Nombre de produits dans le domaine
+
+**Niveau Plateforme**
+
+```plain text
+Δt_ltfc_P = (1/n_d) ∑(Δt_ltfc_d_i)
+```
+
+où :
+
+- Δt_ltfc_d_i = Lead Time du domaine i
+
+- n_d = Nombre de domaines dans la plateforme
+
+
+
+### Deployment Frequency
+
+**Niveau Composant**
+
+```plain text
+f_comp = 1/(t_dep2 - t_dep1)
+```
+
+où :
+
+- t_dep2 = Date du déploiement actuel
+
+- t_dep1 = Date du déploiement précédent
+
+**Niveau Produit**
+
+```plain text
+f_prod = (1/n) ∑(f_comp)
+```
+
+où :
+
+- n = Nombre de déploiements composants
+
+- f_comp = Fréquence de déploiement du composant
+
+**Niveau Domaine**
+
+```plain text
+f_domain = (1/m) ∑(f_prod)
+```
+
+où :
+
+- m = Nombre de produits
+
+- f_prod = Fréquence de déploiement du produit
+
+**Niveau Plateforme**
+
+```plain text
+f_platform = (1/o) ∑(f_domain)
+```
+
+où :
+
+- o = Nombre de domaines
+
+- f_domain = Fréquence de déploiement du domaine
+
+
+
+### Change Failure Rate
+
+**Niveau Composant**
+
+- Non calculé à ce niveau en raison de la difficulté à associer précisément les incidents à des composants spécifiques
+
+**Niveau Produit**
+
+```plain text
+ChangeFailure_product = (∑d_fail)/(∑d_total)
+```
+
+où :
+
+- d_fail = Nombre de déploiements précédant au moins un incident
+
+- d_total = Nombre total de déploiements du produit
+
+**Niveau Domaine**
+
+```plain text
+ChangeFailure_domain = (1/n_p) ∑(ChangeFailure_product)
+```
+
+où :
+
+- n_p = Nombre de produits dans le domaine
+
+**Niveau Plateforme**
+
+```plain text
+ChangeFailure_platform = (1/n_d) ∑(ChangeFailure_domain)
+```
+
+où :
+
+- n_d = Nombre de domaines dans la plateforme
+
+
+
+### Mean Time To Recover
+
+**Niveau Composant**
+
+- Non calculé à ce niveau car les incidents sont tracés au niveau produit
+
+**Niveau Produit**
+
+```plain text
+MTTR_product = (1/n) ∑(t_end - t_start)
+```
+
+où :
+
+- n = Nombre d'incidents
+
+- t_end = Date de résolution de l'incident
+
+- t_start = Date de début de l'incident
+
+**Niveau Domaine**
+
+```plain text
+MTTR_domain = (1/m) ∑(MTTR_product)
+```
+
+où :
+
+- m = Nombre de produits dans le domaine
+
+**Niveau Plateforme**
+
+```plain text
+MTTR_platform = (1/o) ∑(MTTR_domain)
+```
+
+où :
+
+- o = Nombre de domaines dans la plateforme
+
+
+
+### Calcul des métriques avec BigQuery
+
+Toutes nos métriques sont calculées via des requêtes SQL exécutées sur BigQuery. Voici comment nous procédons pour chaque métrique :
+
+
+
+**Lead Time For Changes**
+
+- Mesure le temps entre une modification de code et son déploiement en production
+
+- Formule : `Δt_ltfc = t_d_prod - t_co`
+
+```sql
+-- Calcul du Lead Time For Changes par composant
+SELECT d.component_name,
+       d.product_id,
+       AVG(TIMESTAMP_DIFF(d.deployment_timestamp, c.commit_timestamp, HOUR)) as lead_time_hours
+FROM `dora_metrics.deployments` d
+         JOIN
+     `dora_metrics.git_commits` c
+     ON
+         d.git_tag = c.tag
+WHERE d.environment = 'prod'
+  AND d.deployment_timestamp BETWEEN '2024-01-01' AND '2024-12-31'
+GROUP BY d.component_name, d.product_id
+```
+
+
+
+**Deployment Frequency**
+
+- Fréquence des déploiements en production
+
+- Calculée par composant puis agrégée au niveau produit
+
+- Exclusion des déploiements de configuration
+
+```sql
+-- Calcul de la fréquence de déploiement par composant
+WITH deployments_ordered AS (SELECT component_name,
+                                    product_id,
+                                    deployment_timestamp,
+                                    LAG(deployment_timestamp) OVER (
+      PARTITION BY component_name
+      ORDER BY deployment_timestamp
+    ) as previous_deployment
+                             FROM `dora_metrics.deployments`
+                             WHERE environment = 'prod'
+                               AND 
+is_config_only 
+= FALSE
+                               AND deployment_timestamp BETWEEN '2024-01-01' AND '2024-12-31')
+SELECT component_name,
+       product_id,
+       COUNT(*)                                                            as deployment_count,
+       AVG(TIMESTAMP_DIFF(deployment_timestamp, previous_deployment, DAY)) as avg_days_between_deployments,
+       SAFE_DIVIDE(COUNT(*), 365)                                          as deployments_per_day
+FROM deployments_ordered
+WHERE previous_deployment IS NOT NULL
+GROUP BY component_name, product_id
+```
+
+
+
+**Change Failure Rate**
+
+- Taux de déploiements causant au moins un incident en production
+
+- Exprimé en pourcentage
+
+- Basé sur les déploiements Kubernetes réussis et les incidents ServiceNow résolus
+
+```sql
+-- Calcul du Change Failure Rate par produit
+WITH deployments_with_incidents AS (SELECT d.deployment_id,
+                                           d.product_id,
+                                           MAX(CASE WHEN i.incident_id IS NOT NULL THEN 1 ELSE 0 END) as has_incident
+                                    FROM `dora_metrics.deployments` d
+                                             LEFT JOIN
+                                         `dora_metrics.incidents` i
+                                         ON
+                                             d.product_id = i.product_id
+                                                 AND i.created_timestamp > d.deployment_timestamp
+                                                 AND i.created_timestamp <= (SELECT MIN(next_d.deployment_timestamp)
+                                                                             FROM `dora_metrics.deployments` next_d
+                                                                             WHERE next_d.product_id = d.product_id
+                                                                               AND next_d.deployment_timestamp > d.deployment_timestamp)
+                                    WHERE d.environment = 'prod'
+                                      AND d.deployment_timestamp BETWEEN '2024-01-01' AND '2024-12-31'
+                                    GROUP BY d.deployment_id, d.product_id)
+SELECT product_id,
+       COUNT(*)                                       as total_deployments,
+       SUM(has_incident)                              as failed_deployments,
+       SAFE_DIVIDE(SUM(has_incident), COUNT(*)) * 100 as change_failure_rate_percent
+FROM deployments_with_incidents
+GROUP BY product_id
+```
+
+
+
+**Mean Time To Recover**
+
+- Temps moyen de résolution des incidents
+
+- Calculé à partir des dates d'ouverture et de résolution dans ServiceNow
+
+- Agrégé au niveau produit
+
+```sql
+-- Calcul du Mean Time To Recover par produit
+SELECT product_id,
+       COUNT(*)                                                         as incident_count,
+       AVG(TIMESTAMP_DIFF(resolved_timestamp, created_timestamp, HOUR)) as mttr_hours
+FROM `dora_metrics.incidents`
+WHERE status = 'Resolved'
+  AND created_timestamp BETWEEN '2024-01-01' AND '2024-12-31'
+  AND resolved_timestamp IS NOT NULL
+GROUP BY product_id
+```
+
+### Fiabilisation et optimisation des données
+
+**Infrastructure as Code**
+
+- Utilisation de Terraform pour standardiser les déploiements
+
+- Configuration automatique des annotations requises
+
+- Validation des formats de données
+
+**Bonnes pratiques**
+
+- Tagging systématique des versions
+
+- Documentation des conventions
+
+- Formation des équipes
+
+**Monitoring**
+
+- Détection des annotations manquantes
+
+- Alertes sur les incohérences
+
+- Suivi de la qualité des données
+
+**Optimisation de BigQuery**
+
+La gestion d'un volume important de données dans BigQuery a nécessité plusieurs optimisations :
+
+```sql
+-- Création de tables partitionnées par date pour améliorer les performances
+CREATE TABLE `dora_metrics.deployments_partitioned`
+    PARTITION BY DATE
+(
+    deployment_timestamp
+)
+AS
+SELECT *
+FROM `dora_metrics.deployments`;
+
+-- Création de vues matérialisées pour les requêtes fréquentes
+CREATE
+MATERIALIZED VIEW `dora_metrics.lead_time_daily`
+AS
+SELECT product_id, DATE (deployment_timestamp) as deployment_date, AVG (TIMESTAMP_DIFF(deployment_timestamp, commit_timestamp, HOUR)) as avg_lead_time_hours
+FROM
+    `dora_metrics.deployments_with_commits`
+GROUP BY
+    product_id, deployment_date;
+```
+
+**Automatisation des flux de données**
+
+Nous avons mis en place plusieurs processus automatisés pour maintenir des données à jour :
+
+- Jobs Cloud Functions pour synchroniser les données ServiceNow toutes les 15 minutes
+
+- Webhooks GitHub pour capturer les événements de commit et de tag en temps réel
+
+- Export des logs Kubernetes via Cloud Logging avec un délai maximum de 5 minutes
+
+Cette approche nous permet d'obtenir des métriques fiables et exploitables pour l'amélioration continue de nos processus de livraison.
+
+### Points clés pour l'agrégation 🔑
+
+> **Garantir la cohérence et la pertinence des métriques agrégées**
+
+- **Pondération**
+
+- **Exclusions**
+
+- **Cas particuliers**
+
+Cette approche d'agrégation garantit :
+
+- Une représentation équitable à chaque niveau
+
+- Une cohérence dans le calcul des métriques
+
+- Une prise en compte appropriée des cas limites
+
+### Synthèse de notre approche d'implémentation
+
+> **Une implémentation progressive et adaptée au contexte**
+
+Notre approche d'implémentation des DORA Metrics a combiné rigueur méthodologique et pragmatisme. Nous avons défini des formules de calcul précises tout en les adaptant aux réalités opérationnelles de l'entreprise. L'agrégation multi-niveaux nous a permis de répondre aux besoins de tous les échelons de l'organisation, du développeur individuel jusqu'au comité de direction.
+
+Cette implémentation technique n'était cependant que la première étape. La véritable valeur des DORA Metrics réside dans leur capacité à transformer les pratiques et la culture de l'organisation.
+
+## 6. Bénéfices, enseignements et perspectives 🤔
+
+> **La mise en place des DORA Metrics est un voyage, pas une destination.**
+
+Ce retour d'expérience illustre une réalité fondamentale : implémenter les DORA Metrics dans un grand groupe nécessite bien plus qu'une simple application de formules mathématiques. C'est un projet de transformation qui touche à la fois aux aspects techniques, organisationnels et humains.
+
+### Bénéfices observés
+
+> **Impact transformationnel : au-delà des chiffres**
+
+L'implémentation des DORA Metrics a généré des bénéfices qui dépassent largement le cadre de la simple mesure de performance. Elle a catalysé une véritable transformation des pratiques et de la culture de livraison logicielle au sein de l'organisation.
+
+Voici les principaux impacts positifs observés :
+
+- **Une meilleure visibilité sur la performance de livraison** : Les équipes ont pu objectiver leurs points forts (par exemple, une fréquence de déploiement élevée) et leurs axes d'amélioration (par exemple, un très long "Lead Time for Changes").
+
+- **Un langage commun entre équipes** : Les DORA Metrics servent désormais de référence partagée. Lorsqu'il y a un incident, tout le monde comprend la corrélation possible entre le "dernier déploiement" et le Change Failure Rate.
+
+- **La mise en lumière de la dette de traçabilité** : Le besoin de taguer systématiquement les versions, d'indiquer l'instance concernée dans les tickets, etc. a été rendu évident grâce à la mesure du Lead Time for Changes et du Change Failure Rate.
+
+Ces métriques sont imparfaites (comme tout indicateur), mais elles offrent un "socle" suffisamment solide pour enclencher de vraies discussions et pour s'améliorer en continu.
+
+### Enseignements clés
+
+Cette expérience a impliqué de nombreuses adaptations et m'a permis de tirer plusieurs enseignements importants :
+
+- **Standardisation nécessaire** : Les DORA Metrics nécessitent une standardisation des pratiques DevOps pour être efficaces
+
+- **Adaptation au contexte** : Il est essentiel d'adapter les métriques au contexte spécifique de l'entreprise
+
+- **Qualité des données cruciale** : La fiabilité des métriques dépend directement de la qualité des données collectées
+
+- **Dimension humaine prépondérante** : L'accompagnement des équipes et la gestion du changement sont aussi importants que l'aspect technique
+
+- **Pragmatisme indispensable** : Accepter les imperfections initiales et itérer progressivement est la clé du succès
+
+### Perspectives d'évolution
+
+Cette première phase d'implémentation nous a permis d'identifier plusieurs axes d'amélioration pour l'avenir :
+
+- **Détection des changements de Configuration** : Déployer une solution pour tracer précisément les modifications de configuration, actuellement difficiles à distinguer des déploiements de code.
+
+- **Granularité des incidents** : Enrichir ServiceNow pour associer chaque incident au composant ou à l'instance spécifique concernée, permettant ainsi un calcul plus précis du Change Failure Rate.
+
+- **Automatisation accrue** : Réduire les interventions manuelles dans la collecte et le traitement des données pour améliorer la fiabilité et la fréquence de mise à jour des métriques.
+
+## Conclusion 🙌
+
+Ce retour d'expérience démontre que la mise en place des DORA Metrics dans un grand groupe est un projet de transformation à part entière. Au-delà des aspects techniques, c'est avant tout un projet humain qui nécessite pédagogie, pragmatisme et persévérance.
+
+Les bénéfices sont cependant à la hauteur de l'investissement : une meilleure visibilité sur la performance de livraison, un langage commun entre les équipes, et surtout, une culture d'amélioration continue qui s'installe progressivement dans l'organisation.
+
+> J'espère que ce partage d'expérience vous sera utile ! N'hésitez à me contacter (sur Linkedin de préférence) si vous souhaitez échanger sur le sujet 🙂

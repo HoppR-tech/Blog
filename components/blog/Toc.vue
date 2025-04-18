@@ -4,13 +4,17 @@ import { ref } from 'vue'
 const { path } = useRoute()
 const articles = await queryContent(path).findOne()
 
-const expandedSections = ref<Set<string>>(new Set(articles?.body?.toc?.links.map(link => link.id) || []))
+// Trouver le premier lien qui a des enfants et n'ouvrir que celui-là
+const firstLinkWithChildren = articles?.body?.toc?.links.find(link => link.children?.length > 0)
+const expandedSections = ref<Set<string>>(new Set(
+  firstLinkWithChildren ? [firstLinkWithChildren.id] : []
+))
 
 const links = computed(() => {
   const result: any[] = []
   articles?.body?.toc?.links.forEach((link) => {
     result.push(link)
-    if (link.children)
+    if (link.children && isExpanded(link.id))
       result.push(...link.children.map(child => ({ ...child, parent: link.id })))
   })
   return result
@@ -42,7 +46,7 @@ onMounted(() => {
         }
       }
     })
-  }, { threshold: 1.0 })
+  }, { threshold: 0.1, rootMargin: '-100px 0px -70% 0px' })
 
   // Observe the article sections
   document.querySelectorAll('.article-section h2, .article-section h3, .article-section h4').forEach((section) => {
@@ -59,27 +63,49 @@ function updateToc(sectionHref: string) {
   const currentLinkEndsWithSectionHref = ({ sectionHref, linkHref }: { sectionHref: string, linkHref: string }): boolean => {
     const regex = new RegExp(`^.*${sectionHref}$`);
     return regex.test(linkHref!)
-
   }
+
+  // Trouver le lien actif et sa section parente
+  let activeLink: Element | null = null;
+  let activeParentId: string | null = null;
+
   tocLinks.forEach((link) => {
     link.classList.remove('active')
     const linkHref = link.getAttribute('href')
 
     if (linkHref && currentLinkEndsWithSectionHref({ linkHref, sectionHref })) {
       link.classList.add('active')
+      activeLink = link
+
+      // Trouver l'ID de la section parente si c'est un lien de niveau 3
+      const parentId = link.getAttribute('data-parent')
+      if (parentId) {
+        activeParentId = parentId
+      } else {
+        // Si c'est un lien de niveau 2, son ID est l'ID parent
+        activeParentId = link.getAttribute('id') || null
+      }
     }
   })
+
+  // Mettre à jour les sections ouvertes
+  if (activeParentId) {
+    // Fermer toutes les sections
+    expandedSections.value.clear()
+    // Ouvrir la section parente du lien actif
+    expandedSections.value.add(activeParentId)
+  }
 }
 
 </script>
 
 <template>
   <div class="lg:col-span-3 sticky top-28 mt-5 h-96 hidden lg:block justify-self-end w-full" id="toc-container">
-    <div class="border dark:border-zinc-500 p-4 rounded-md w-[250px] max-w-[350px] dark:bg-slate-900 shadow-md">
+    <div class="border dark:border-zinc-500 p-4 rounded-md w-[250px] max-w-[350px] dark:bg-slate-900 shadow-md overflow-hidden">
       <h2 class="text-lg font-bold mb-4 border-b dark:border-zinc-500 pb-2 text-hoppr-green">
         Table des matières
       </h2>
-      <div class="relative" id="toc-content">
+      <div class="relative max-h-[calc(100vh-200px)] overflow-y-auto pr-2" id="toc-content">
         <div v-for="(link, index) in links" :key="link.id" class="flex items-start relative" :class="{
           'mb-4': link.depth === 2,
           'mb-2': link.depth === 3 && isExpanded(link.parent),
@@ -108,7 +134,10 @@ function updateToc(sectionHref: string) {
               'text-gray-600 dark:text-gray-400 hover:text-hoppr-green dark:hover:text-hoppr-green': link.depth === 3,
               'ml-0': link.depth === 2,
               'ml-4': link.depth === 3,
-            }">
+            }"
+            :id="link.depth === 2 ? link.id : undefined"
+            :data-parent="link.depth === 3 ? link.parent : undefined"
+          >
             {{ link.text }}
           </NuxtLink>
         </div>
@@ -118,6 +147,7 @@ function updateToc(sectionHref: string) {
 </template>
 <style>
 .active {
-  color: hotpink !important;
+  color: #00cca5 !important; /* hoppr-green */
+  font-weight: 600;
 }
 </style>

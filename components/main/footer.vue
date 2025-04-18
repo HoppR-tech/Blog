@@ -1,7 +1,4 @@
 <script setup lang="ts">
-const route = useRoute()
-
-const path = computed(() => route.fullPath.replace('/', ''))
 const currentYear = new Date().getFullYear()
 </script>
 
@@ -10,8 +7,7 @@ const currentYear = new Date().getFullYear()
     <div class="px-6 container max-w-6xl mx-auto">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div class="space-y-4">
-          <FooterSite v-if="path === 'about'" />
-          <FooterDevloper v-else />
+          <FooterDevloper />
         </div>
         <FooterLink class="space-y-4" />
         <FooterConnect class="space-y-4" />

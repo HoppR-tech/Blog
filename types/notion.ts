@@ -1,6 +1,32 @@
 import type { Client } from '@notionhq/client'
+import type { BlockObjectResponse } from '@notionhq/client/build/src/api-endpoints'
 
 export type NotionClientInterface = Client
+
+// Ajout des types pour les équations
+export type EquationBlockObjectResponse = {
+  type: 'equation'
+  equation: {
+    expression: string
+  }
+} & BlockObjectResponse
+
+export interface InlineEquationTextObject {
+  type: 'equation'
+  equation: {
+    expression: string
+  }
+  annotations: {
+    bold: boolean
+    italic: boolean
+    strikethrough: boolean
+    underline: boolean
+    code: boolean
+    color: string
+  }
+  plain_text: string
+  href: string | null
+}
 
 export interface NotionPage {
   id: string

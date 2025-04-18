@@ -2,6 +2,7 @@
 import type { Person } from '@/types/blog'
 import ContactCTA from '@/components/blog/ContactCTA.vue'
 import { useRuntimeConfig } from '#app'
+import 'katex/dist/katex.min.css'
 
 const { path } = useRoute()
 
@@ -127,12 +128,17 @@ defineOgImageComponent('About', {
 
 <template>
   <div>
-    <div class="px-6 container max-w-6xl mx-auto sm:grid grid-cols-12 gap-x-12 ">
+    <div class="px-6 container max-w-6xl mx-auto sm:grid grid-cols-12 gap-x-12">
       <div class="col-span-12 lg:col-span-9">
         <BlogHeader
-          :title="blogPostProps.title" :image="blogPostProps.image" :alt="blogPostProps.alt"
-          :date="blogPostProps.date" :description="blogPostProps.description" :tags="blogPostProps.tags"
-          :authors="authors" :reviewers="reviewers"
+          :title="blogPostProps.title"
+          :image="blogPostProps.image"
+          :alt="blogPostProps.alt"
+          :date="blogPostProps.date"
+          :description="blogPostProps.description"
+          :tags="blogPostProps.tags"
+          :authors="authors"
+          :reviewers="reviewers"
         />
         <div
           class="prose prose-pre:max-w-xs sm:prose-pre:max-w-full prose-base sm:prose-base lg:prose-lg
@@ -144,7 +150,8 @@ defineOgImageComponent('About', {
             prose-headings:font-bold
             prose-a:text-hoppr-green prose-a:no-underline prose-a:border-b prose-a:border-hoppr-green prose-a:border-opacity-30 hover:prose-a:border-opacity-100 hover:prose-a:bg-hoppr-green hover:prose-a:bg-opacity-10 transition-all duration-300 dark:prose-h1:border-zinc-700
             prose-h2:border-l-4 prose-h2:border-hoppr-green prose-h2:pl-2
-            prose-h3:italic"
+            prose-h3:italic
+            [&_.katex]:overflow-x-auto [&_.katex]:max-w-full"
         >
           <ContentRenderer v-if="article" :value="article" class="article-section">
             <template #empty>
@@ -157,7 +164,8 @@ defineOgImageComponent('About', {
       <BlogToc />
     </div>
     <ContactCTA
-      :article-title="blogPostProps.title" :article-link="path"
+      :article-title="blogPostProps.title"
+      :article-link="path"
       :authors="authors.map(author => ({ name: author.name, id: author.notionId }))"
       :published-date="blogPostProps.date"
     />

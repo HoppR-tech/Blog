@@ -90,6 +90,49 @@ describe('blockConverter', () => {
 
     expect(markdownContent).toBe('Ceci est un [lien](https://example.com) dans un paragraphe.')
   })
+
+  it('should convert equation blocks to markdown', async () => {
+    const blocks = [
+      buildBlock({
+        type: 'equation',
+        equation: {
+          expression: 'E = mc^2'
+        }
+      }),
+    ]
+    const { markdownContent } = await convertBlocksToMarkdown(mockClient, blocks);
+
+    expect(markdownContent).toContain('$$\nE = mc^2\n$$')
+  })
+
+  it('should convert inline equations to markdown', async () => {
+    const blocks = [
+      buildBlock({
+        type: 'paragraph',
+        paragraph: {
+          rich_text: [{
+            type: 'equation',
+            equation: {
+              expression: 'E = mc^2'
+            },
+            annotations: {
+              bold: false,
+              italic: false,
+              strikethrough: false,
+              underline: false,
+              code: false,
+              color: 'default'
+            },
+            plain_text: '$E = mc^2$',
+            href: null
+          }]
+        }
+      }),
+    ]
+    const { markdownContent } = await convertBlocksToMarkdown(mockClient, blocks);
+
+    expect(markdownContent).toContain('$E = mc^2$')
+  })
 })
 
 function buildBlock(block: any): BlockObjectResponse {

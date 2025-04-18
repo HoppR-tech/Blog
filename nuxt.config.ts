@@ -11,6 +11,12 @@ export default defineNuxtConfig({
       title: 'HoppR Blog',
       titleTemplate: '%s | HoppR Blog',
       meta: [{ name: 'description', content: 'Blog Tech de HoppR' }],
+      link: [
+        {
+          rel: 'stylesheet',
+          href: 'https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css'
+        }
+      ]
     },
     pageTransition: { name: 'page', mode: 'out-in' },
     layoutTransition: { name: 'layout', mode: 'out-in' },
@@ -158,6 +164,16 @@ export default defineNuxtConfig({
         'xml',
       ],
     },
+    markdown: {
+      remarkPlugins: ['remark-math'],
+      rehypePlugins: [
+        ['rehype-katex', {
+          // Configuration KaTeX
+          throwOnError: false,
+          output: 'html'
+        }]
+      ]
+    }
   },
 
   contentAssets: {

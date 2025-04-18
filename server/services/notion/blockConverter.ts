@@ -1,4 +1,4 @@
-import type { NotionClientInterface } from '@/types/notion'
+import type { NotionClientInterface, EquationBlockObjectResponse } from '@/types/notion'
 import type { BlockObjectResponse } from '@notionhq/client/build/src/api-endpoints'
 import { NotionToMarkdown } from 'notion-to-md'
 
@@ -10,6 +10,23 @@ type image = {
 export async function convertBlocksToMarkdown(notionClient: NotionClientInterface, blocks: BlockObjectResponse[]): Promise<{ markdownContent: string; images: image[]} > {
   const n2m = new NotionToMarkdown({ notionClient });
   const images: { url: string; alt: string }[] = [];
+
+  // Configurer notion-to-md pour gérer les équations
+  n2m.setCustomTransformer('equation', async (block) => {
+    const equationBlock = block as EquationBlockObjectResponse;
+    return `$$\n${equationBlock.equation.expression}\n$$`;
+  });
+
+  // Pour les équations en ligne
+  n2m.setCustomTransformer('text', async (block: any) => {
+    if (block.type === 'equation') {
+      return `$${block.equation.expression}$`;
+    }
+    if (block.annotations?.code && block.plain_text.match(/^\$.*\$$/)) {
+      return block.plain_text;
+    }
+    return block.plain_text;
+  });
 
   try {
     console.log(`Starting conversion of ${blocks.length} blocks`);

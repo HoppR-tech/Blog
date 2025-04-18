@@ -22,6 +22,7 @@ Bienvenue dans la documentation du Blog HoppR. Ce projet est une plateforme de b
 - [Rédiger un article de blog](docs/user-guide/01_writing_blog_post.md)
 - [Publier un article](docs/user-guide/02_publishing_article.md)
 - [Gérer les auteurs](docs/user-guide/03_managing_authors.md)
+- [Utilisation des équations mathématiques](docs/user-guide/04_math_equations.md)
 
 ## Documentation technique
 

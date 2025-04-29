@@ -36,7 +36,7 @@ reviewers:
 
 Retour sur la conférence Lyon Craft 2025 qui s’est déroulée le lundi 14 Avril 2025. Au programme, comme l’indique la conférence elle-même : “**Des passionné·e·s, des ateliers, des présentations et… c’est déjà pas mal !”**
 
-Une journée sur le thème du [Software Craftmanship](https://manifesto.softwarecraftsmanship.org/) donc, dans l’optique d’apprendre ou de se perfectionner dans ces thématiques avec des experts locaux. Après une séquence d’introduction et de remerciement des sponsors (dont [HoppR](https://www.hoppr.tech/) qui était VIP), une vingtaine de sessions, couvrant talks et workshops (et même une table ronde) étaient proposées.
+Une journée sur le thème du [Software Craftsmanship](https://manifesto.softwarecraftsmanship.org/) donc, dans l’optique d’apprendre ou de se perfectionner dans ces thématiques avec des experts locaux. Après une séquence d’introduction et de remerciement des sponsors (dont [HoppR](https://www.hoppr.tech/) qui était VIP), une vingtaine de sessions, couvrant talks et workshops (et même une table ronde) étaient proposées.
 
 Je vous propose de revenir avec moi sur les sessions auxquelles j’ai assisté, en commençant dans cet article par celles du matin.
 

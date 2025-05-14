@@ -151,6 +151,9 @@ defineOgImageComponent('About', {
             prose-a:text-hoppr-green prose-a:no-underline prose-a:border-b prose-a:border-hoppr-green prose-a:border-opacity-30 hover:prose-a:border-opacity-100 hover:prose-a:bg-hoppr-green hover:prose-a:bg-opacity-10 transition-all duration-300 dark:prose-h1:border-zinc-700
             prose-h2:border-l-4 prose-h2:border-hoppr-green prose-h2:pl-2
             prose-h3:italic
+            prose-table:border prose-table:border-collapse prose-table:w-full
+            prose-th:bg-gray-100 prose-th:dark:bg-slate-800 prose-th:p-2 prose-th:border prose-th:border-gray-300 prose-th:dark:border-zinc-600
+            prose-td:p-2 prose-td:border prose-td:border-gray-300 prose-td:dark:border-zinc-600
             [&_.katex]:overflow-x-auto [&_.katex]:max-w-full"
         >
           <ContentRenderer v-if="article" :value="article" class="article-section">

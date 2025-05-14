@@ -1,0 +1,105 @@
+/**
+ * Styles pour améliorer l'apparence des tableaux Markdown
+ */
+
+/* Style de base pour les tableaux */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+  display: block;
+}
+
+/* Style pour les cellules d'en-tête */
+table th {
+  background-color: #f5f5f5;
+  font-weight: 600;
+  text-align: left;
+  padding: 0.75rem;
+  border: 1px solid #e2e8f0;
+}
+
+/* Style pour les cellules de données */
+table td {
+  padding: 0.75rem;
+  border: 1px solid #e2e8f0;
+  vertical-align: top;
+}
+
+/* Style pour les lignes alternées */
+table tr:nth-child(even) {
+  background-color: #f9fafb;
+}
+
+/* Style pour le survol des lignes */
+table tr:hover {
+  background-color: #edf2f7;
+}
+
+/* Style pour les listes à puces dans les cellules */
+table td ul {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+table td li {
+  margin-bottom: 0.25rem;
+}
+
+table td li:last-child {
+  margin-bottom: 0;
+}
+
+/* Style pour le code inline dans les cellules */
+table td code {
+  background-color: #f1f1f1;
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+  font-family: monospace;
+  font-size: 0.875em;
+}
+
+/* Responsive pour petits écrans */
+@media (max-width: 640px) {
+  table {
+    font-size: 0.875rem;
+  }
+  
+  table th,
+  table td {
+    padding: 0.5rem;
+  }
+}
+
+/* Assurer que les tableaux avec beaucoup de contenu sont scrollables horizontalement */
+.table-container {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+/* Style pour les tableaux avec bordures complètes */
+.table-bordered {
+  border: 1px solid #e2e8f0;
+}
+
+/* Style pour les tableaux sans bordures */
+.table-borderless th,
+.table-borderless td {
+  border: none;
+}
+
+/* Style pour les tableaux compacts */
+.table-compact th,
+.table-compact td {
+  padding: 0.375rem;
+}
+
+/* Style pour les tableaux avec des lignes rayées */
+.table-striped tr:nth-child(odd) {
+  background-color: #f9fafb;
+}
+
+.table-striped tr:nth-child(even) {
+  background-color: #ffffff;
+}

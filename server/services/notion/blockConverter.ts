@@ -1,6 +1,7 @@
 import type { NotionClientInterface, EquationBlockObjectResponse } from '@/types/notion'
-import type { BlockObjectResponse } from '@notionhq/client/build/src/api-endpoints'
+import type { BlockObjectResponse, TableBlockObjectResponse } from '@notionhq/client/build/src/api-endpoints'
 import { NotionToMarkdown } from 'notion-to-md'
+import { convertTableToMarkdown, isTableBlock } from './tableConverter'
 
 type image = {
   url: string,
@@ -28,6 +29,12 @@ export async function convertBlocksToMarkdown(notionClient: NotionClientInterfac
     return block.plain_text;
   });
 
+  // Transformer personnalisé pour les tableaux
+  n2m.setCustomTransformer('table', async (block) => {
+    const tableBlock = block as TableBlockObjectResponse;
+    return await convertTableToMarkdown(tableBlock);
+  });
+
   try {
     console.log(`Starting conversion of ${blocks.length} blocks`);
 
@@ -39,7 +46,15 @@ export async function convertBlocksToMarkdown(notionClient: NotionClientInterfac
       const batch = blocks.slice(i, i + BATCH_SIZE);
       const batchResults = await Promise.all(batch.map(async (block, index) => {
         try {
-          const md = await n2m.blockToMarkdown(block as any);
+          // Utiliser notre convertisseur personnalisé pour les tableaux
+          let md;
+          if (isTableBlock(block)) {
+            md = await convertTableToMarkdown(block as TableBlockObjectResponse);
+            console.log(`Table block converted with custom converter`);
+          } else {
+            md = await n2m.blockToMarkdown(block as any);
+          }
+
           const globalIndex = i + index;
           console.log(`Successfully converted block ${globalIndex + 1}/${blocks.length}`);
 

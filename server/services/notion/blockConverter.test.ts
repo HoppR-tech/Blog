@@ -133,6 +133,29 @@ describe('blockConverter', () => {
 
     expect(markdownContent).toContain('$E = mc^2$')
   })
+
+  it('should convert table blocks to markdown with proper formatting', async () => {
+    const blocks = [
+      buildBlock({
+        type: 'table',
+        table: {
+          has_column_header: true,
+          has_row_header: false,
+          children: [
+            { cells: [['Header 1'], ['Header 2']] },
+            { cells: [['Cell 1'], ['• Item 1\n• Item 2']] },
+            { cells: [['info/product_id'], ['release.mgmt/deploy.src']] }
+          ]
+        }
+      }),
+    ]
+    const { markdownContent } = await convertBlocksToMarkdown(mockClient, blocks);
+
+    expect(markdownContent).toContain('| Header 1 | Header 2 |')
+    expect(markdownContent).toContain('| --- | --- |')
+    expect(markdownContent).toContain('| Cell 1 | <ul><li>Item 1</li><li>Item 2</li></ul> |')
+    expect(markdownContent).toContain('| `info/product_id` | `release.mgmt/deploy.src` |')
+  })
 })
 
 function buildBlock(block: any): BlockObjectResponse {

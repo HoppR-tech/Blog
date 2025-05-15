@@ -108,13 +108,44 @@ function createTableRows(rows: any[], hasColumnHeader: boolean): string {
  * @param cell - Le contenu de la cellule à formater
  * @returns Le contenu formaté
  */
-function formatCellContent(cell: string[]): string {
+function formatCellContent(cell: any[]): string {
   if (!cell || cell.length === 0) {
     return '';
   }
 
-  const content = cell.join(' ');
+  // Extract text content from cell, handling rich text objects
+  const content = extractTextFromCell(cell);
+
   return content.includes('• ') ? convertBulletListToHtml(content) : formatTechnicalReferences(content);
+}
+
+/**
+ * Extrait le texte d'une cellule, en gérant les objets rich text de Notion
+ *
+ * @param cell - Le contenu de la cellule (peut être un tableau de chaînes ou d'objets rich text)
+ * @returns Le texte extrait
+ */
+function extractTextFromCell(cell: any[]): string {
+  return cell.map(item => {
+    // Handle rich text objects from Notion API
+    if (item && typeof item === 'object') {
+      // If it's a rich text object with plain_text property
+      if (item.plain_text) {
+        return item.plain_text;
+      }
+
+      // If it's a rich text object with text.content property
+      if (item.text && item.text.content) {
+        return item.text.content;
+      }
+
+      // If it has a toString method, use it (fallback)
+      return String(item);
+    }
+
+    // If it's already a string, return it directly
+    return item;
+  }).join(' ');
 }
 
 /**

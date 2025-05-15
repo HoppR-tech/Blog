@@ -55,9 +55,34 @@ export async function fetchAllBlocks({notionClient,page, nextPageCursor}:{notion
     const response = await notionClient.blocks.children.list({ block_id: page.id, start_cursor: nextPageCursor })
     blocks = response.results.filter(isBlockObjectResponse)
 
+    // Traiter les blocs spéciaux comme les tableaux qui peuvent avoir des enfants
+    const processedBlocks: BlockObjectResponse[] = [];
+
+    for (const block of blocks) {
+      processedBlocks.push(block);
+
+      // Si c'est un tableau, récupérer ses enfants (lignes)
+      if (block.type === 'table') {
+        try {
+          console.log(`Fetching children for table block ${block.id}`);
+          const tableRows = await notionClient.blocks.children.list({ block_id: block.id });
+
+          // Ajouter les données des lignes au bloc tableau
+          if (tableRows && tableRows.results && tableRows.results.length > 0) {
+            (block.table as any).children = tableRows.results.filter(isBlockObjectResponse);
+            console.log(`Added ${(block.table as any).children.length} rows to table block`);
+          }
+        } catch (tableError) {
+          console.error(`Error fetching table rows for block ${block.id}:`, tableError);
+        }
+      }
+    }
+
     if (response.has_more && response.next_cursor) {
       const nextBlocks = await fetchAllBlocks({notionClient, page, nextPageCursor: response.next_cursor})
-      blocks = [...blocks, ...nextBlocks]
+      blocks = [...processedBlocks, ...nextBlocks]
+    } else {
+      blocks = processedBlocks;
     }
   }
   catch (error) {
@@ -65,7 +90,6 @@ export async function fetchAllBlocks({notionClient,page, nextPageCursor}:{notion
     throw error
   }
   return blocks
-
 }
 
 

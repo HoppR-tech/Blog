@@ -1,0 +1,4 @@
+.katex-display > .katex {
+  white-space: normal !important;
+  max-width: 100%;
+}

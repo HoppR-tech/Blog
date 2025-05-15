@@ -81,6 +81,7 @@ useHead({
 
 <style media="print" onload="this.media='all'">
 @import '@/assets/css/tailwind.css';
+@import '@/assets/css/katex.responsive.css';
 
 @layer base {
   ::selection {

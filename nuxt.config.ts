@@ -15,7 +15,7 @@ export default defineNuxtConfig({
         {
           rel: 'stylesheet',
           href: 'https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css'
-        }
+        },
       ]
     },
     pageTransition: { name: 'page', mode: 'out-in' },
@@ -26,7 +26,7 @@ export default defineNuxtConfig({
     transpile: ['vue-sonner', 'shiki'],
   },
 
-  css: ['~/assets/css/tailwind.css'],
+  css: ['~/assets/css/tailwind.css', '~/assets/css/katex.responsive.css'],
 
   postcss: {
     plugins: {
@@ -39,7 +39,7 @@ export default defineNuxtConfig({
 
   purgecss: {
     enabled: true,
-    safelist: [/nuxt-devtools-./],
+    safelist: [/nuxt-devtools-./, 'katex-display', 'katex'], // katex responsive fix classes
   },
 
   icon: {

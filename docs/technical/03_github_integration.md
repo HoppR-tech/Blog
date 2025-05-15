@@ -16,13 +16,19 @@ https://github.com/hoppr-tech/blog/blob/main/docs/getting-started/02_configurati
 
 3. **Conversion et téléchargement des images** : Les images sont converties au format WebP et téléchargées sur le repository.
 
-4. **Génération du contenu Markdown** : Le contenu final en Markdown est généré et poussé sur la branche configurée dans le fichier `.env`.
+4. **Génération du contenu Markdown** : Le contenu final en Markdown est généré et poussé sur la branche courante si elle est détectée, sinon sur la branche configurée dans le fichier `.env`.
 
 ## Processus d'intégration
 
 Le service GitHub gère l'intégration avec le repository :
 
 https://github.com/hoppr-tech/blog/blob/main/docs/technical/02_blog_post_publication_process.md#L15-L24
+
+## Détection automatique de la branche
+
+Le système détecte automatiquement la branche Git courante et l'utilise pour pousser les fichiers générés (markdown, images webp). Cela permet de travailler sur une branche de fonctionnalité et de voir les modifications sans affecter la branche principale.
+
+Si vous êtes sur une branche autre que `main`, les fichiers générés seront poussés sur cette branche. Si vous êtes sur `main` ou si la branche ne peut pas être détectée, le système utilisera la valeur de `GITHUB_BRANCH` définie dans le fichier `.env`.
 
 ## Gestion des erreurs
 

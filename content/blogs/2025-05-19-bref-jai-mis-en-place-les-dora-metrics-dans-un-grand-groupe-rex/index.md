@@ -18,17 +18,17 @@ reviewers:
     name: Michaël Bernasinski
     image: https://prod-files-secure.s3.us-west-2.amazonaws.com/5863e833-64f2-4f13-9f7a-2c92c72b5bbf/82ebd0fe-de28-43f3-ab7b-0431af41baad/Photo_HoppR.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4667VDCLJIY%2F20250519%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250519T070421Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEM%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJGMEQCIGBBCPT0nDceez3W3BGyZSAp9VTP1gbHP6Nqqr2pE%2BNgAiB3cE3k3RB7rNftOS9EmDVVS1Lsbh5Xb2Ia%2Bfnvn5SduyqIBAiI%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDYzNzQyMzE4MzgwNSIMSY9HRup%2BAXGteiXAKtwDmUodglDndRVo1LcYLlVY3v6%2F421tAgt5QE4Km%2BOvwbzlLywe3DWQISAF4AaLgkSap3wRLTVeGvRXDNzu%2Ba70B%2BIwIHRp2Qj4X9JW8eOOad2t2SNsDDQgRJlW51NaoWz2z0DEaA4gV4Wc8qy6DaISJPq7I4jc7F6zaWsenWGcae1Zaw2ItJWg3IuyTvVrGtGV%2Fw%2FJHY3Aib7k6JRoYC3YTqMqFxYPbWnso%2FS4eNS%2Fx5KD01lc9mRA8qEDmVgclhDRSRHNk43K7vJRqy8HMp7eqkHnKgvfwihDYVHBHSR%2BOzVXJw2eWt8JsEgOmDDE7gLX%2BCoE22Zrtw55jpruQp4HT00uNGfb7QB7RjdbVJ%2F%2FpKXmg8FJpigwMln9zroPDZAOggOc4uS6sbOgjtfw95DXwsjQA8CxFFbS7v4z6350%2F1bLmLZmoYmOPxrq0GRtvZMjLVVrYdJYQDyP6BGNHyfw1RHPhao0yvfEqbX5sSMVr0lzQ0PlCaSzO4GWe1uWJh1vEha02YjqPE%2BlgPbYXlm4udoAzLVfC5ksko%2Bh%2BSzeaX4Yjgd6pMttpFzRlx3O75bfCrJ1avfYCWjkiUfv6eBwMruqNbc6j2n6VNlk56IBqkYP6yYwIYWyMZIjmEIwq52rwQY6pgHwBah8BeUChWncYSWs7FXBSY%2BUcuYZhAuJxjoPBxcQ7Bi1%2FF0Bhyznp8a%2FSoz99DSPpob2f4QLRwNU4rlmd7d%2FEJ2enXylud5H3vwXowD%2FyGPio4oEZwwuApGkW0cZBDDYIDrc6RF8IZ6fPFENTBdE2p6nPDjKWS1eR%2FykijI92KZLbk6CgIMJcD6XBB41udml2qGBPkTjtVksXDI3Vd4eo5SaSMhE&X-Amz-Signature=e472e93c2d4eb268a89b6a352180d12f360b654a6fe89a2d143d0641c0670f7f&X-Amz-SignedHeaders=host&x-id=GetObject
     linkedin: https://www.linkedin.com/in/michael-bernasinski
-    x: 
+    x:
   - id: 0bb914a6-f882-4951-bee6-53e8e8abb807
     name: Emmanuelle Gouvart
     image: https://prod-files-secure.s3.us-west-2.amazonaws.com/5863e833-64f2-4f13-9f7a-2c92c72b5bbf/c88f5dfa-16db-4e6f-acf1-34dd80ee8766/emma_hoppr.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB46677NLYCVN%2F20250519%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250519T070420Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEM%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIQD0EF43nYpEKhTyWKOIGav%2FQ%2BTb25IfMI%2BQIOkFu%2FWCcwIgd5JtEmYcM7on0OKor%2FLc1e2yxxhM9AQPuYtMSuYufY8qiAQIiP%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw2Mzc0MjMxODM4MDUiDNbH6feQshRDWGQ2jCrcAyhRSDjT%2BUuGxz3eflkqBL8tuCQUltcfBs0WBNDQIK%2FFuZ0U9WcxktywjfXsC793QYKMsctb%2BSNtHAb2JZiLt%2Fr93O96JjbrzyTEfQWp45tT1DlJOhwLi%2B5AdQWfOGG8qmipV9iRLcIWiWxgjN4YtqSYjo6371UfdR6vpesWFNqWbFmthVReqLspbSlHB7eOxxbxLb%2FxsqXhpG2%2FRhUzidgP%2FkjcvfbtS2Kwb5ZLlU3xygLdhlH4%2BTVjppUEuPBck5%2B2I3Xi0LlTCACg35MnogNs9xMISuUB7dqnfT8gjHwLtDy1vADUYXHWNcGM4qmaPo%2FZYNle8VxCx6G4%2FJE%2BBhJyh9fVyKbmNzk5lP0%2Fa11GC111xaq12K%2FiSP%2BUv1yM%2FxB3uXVol7wue0%2BLt9Y7YgavH7%2BVeU43tfj6tYSEd4MkhEOMmwRdA9xLoLIV2khXRqTk%2BV853BZSVXTtJX%2FhZa1dX565FeaPPUfzj8z8OMh2VEpmoj07%2FhQBM1ZKpNZtiCK%2BmejI1qtAiu3UtyRQ6o4E3%2B27gg1PylN%2FhFSuF7Ler016B%2B%2FMJ3V1aeU2T2A5yaydPG6Of96Y8bR1qbss9JLvM204cHOXIma3SxFeDVmCaD3kGGAnZPSTwEt0MPSeq8EGOqUBCy1nD5O%2FS7qbc7Mg9i5LXGRQm%2F5x6TMMibiryt%2FuPh0tmEcjL52ro3xK1sVEUPPA9CHbL3TBuV3pxfvytRNMeC7s0i1HNur9ntxl1Dfg3zXBB8q%2B%2BjU%2B8%2F%2FpbFVYdzF3edQw8J8EiRIE%2BtTzlzjE6GuplfV2lVfXKzNEsbiWQrMTdzdLStWn3GSLvRjbclK2vCnUkrmEiWim2pdUdQ%2BsJFaALAv6&X-Amz-Signature=547b39163af6e011401dc41737ec0fe9665c995aa2b6a827ee8cbb2cd53d9408&X-Amz-SignedHeaders=host&x-id=GetObject
     linkedin: https://www.linkedin.com/in/emmanuellegouvart-182b6ab2/
-    x: 
+    x:
   - id: e8163b24-7e01-41c5-adbf-0dc655f929d0
     name: Nicolas Zago
     image: https://prod-files-secure.s3.us-west-2.amazonaws.com/5863e833-64f2-4f13-9f7a-2c92c72b5bbf/f8f82a79-9d41-4302-b1a5-37882985167f/nicoz_hoppr.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466XQTI4TQI%2F20250519%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250519T070420Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEM%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQDRDUDTAmYIqio%2FmaWQri1FF%2F6Z4KBY1PaxOyZbgHhQSgIhAOb9jlC7fm3qoH3eDFj%2BPxZ15AazzVgEBoJH5jIqcLiDKogECIj%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMNjM3NDIzMTgzODA1IgyjWT7Y4DuO7PvWlMIq3AMUwL5De4lYqqfwLM7fZGLxoh1DyMk6FbV3bBODlECw24G0WCNIt9aQVASmXQCRWv%2F5ohii%2F0FJGjDmIYPx3woYclNVyHLHkfNcX%2FydeEGXDHDzzL%2BAuREI270tWNvBOiinUU%2BBEpyjcMSsgfCybsLZKHpIr%2BPc%2FIzj%2Bt7VUMCQGHLKWWXXJ%2Fb7rtsh55oLR0oeDa3XjE1FepXx9SbdiUtD%2BraseErNeAvR%2BOzUgrMBS6lvdJA6K4TiaVyxTyQspDxP0Z0JgIjYu6s9Zuele8SZaa0mAos%2F7tE2FI3J8zI2%2B3oueeslNr3fpYjKSGv8SIVqSOejK6XkbGhwSpfpGXCmaT55MIgwTVbo0fvQmhIwvXXDKJctfROqrrAyTxJupW%2F4ueUf2GY3GoNWDoV9n8Rj2NDav2J8nDRVVElMAzsanXqzDC5Fs7%2BwmTpUoC8j4kOxRcYqvdTRcBXrnsJOLUx857PAptI3uTul%2Fo65In4d751kK%2FIhVw5A6xOHejESjKpimz1dEDgqUPu56z9ETCFahyat5SEKn1Ox8VEK8%2BZazw1FTlJwQVgeSLioZvXDuZetaa3HaMYJ5FDZrm4FZprisT58%2F5o6%2BS%2BwN%2BP1oqvB1xHr%2F6Elya4khKVmfTDDnavBBjqkAZMWTec8zswzxdFRb3PuwsLPiUxj%2FFvWNesvBoWpkSV5qEhcB13ffmkTz8DqZdMYP2P44zQCRFF5ZVP1zHpWJWQbUmOsIsJgC7DFQtl9u8Tm1eZmCjn%2FYmKSLBlH6cPzyLwgxB75oneLvDtO6d%2B9fuh2taZGzEvS5fuK1uunlQwQjmV%2B5ekg3X37gxFLJcCaWo6fO9xfJqmxL4ZqxNArAW3b7hbZ&X-Amz-Signature=2095f8495e05ff76739c85445fcee827c52e27c5e32bf6b2a08510539e5a1c40&X-Amz-SignedHeaders=host&x-id=GetObject
     linkedin: https://www.linkedin.com/in/nicolaszago/
-    x: 
+    x:
 ---
 
 <!-- markdownlint-disable-file -->
@@ -69,7 +69,7 @@ Après quelques ateliers avec le management et des projets pilotes, nous sommes 
 
 - **Produit** : Périmètre fonctionnel perceptible par l'utilisateur final, pour lequel les changements lui sont communiqués. Un produit peut être composé de plusieurs composants (microservices ou briques monolithiques) et peut être déployé sur différents environnements de production
 
-![Schéma d’organisation d’un site e-commerce : la plateforme Commerce regroupe les domaines E-Commerce (catalogue, panier, commande web) et Magasins (catalogue, caisse, commande magasin) ; la plateforme Gestion Clients regroupe les domaines Comptes Clients (gestion client web, magasin, data compliance) et Fidélité (programme de fidélité, newsletters).](https://prod-files-secure.s3.us-west-2.amazonaws.com/5863e833-64f2-4f13-9f7a-2c92c72b5bbf/a2ab348f-1b2b-4327-a0e6-556be2db6238/dora_metrics-exemple_orga.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466YPH7K3QA%2F20250519%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250519T070411Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEM%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIQDle0OThxh%2BfckLX9a8K9N4Lxfx1%2Ffm0wkVaUoPqbsnJQIgPV7HB5MQhOBXvFY%2B%2BdNANN%2BLaidi3Dlqswt3JfTCI4UqiAQIiP%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw2Mzc0MjMxODM4MDUiDFXeiveGBBLShyT3SSrcA%2B%2F8H8mlCRN2lo2gAV7vw7nTnDDwCU2EDmxN3010HPVMSp%2Ff%2FSSMTabG0Q0cqgzPJHYgFXz7OosmVnLS0h88%2BnPrAeOWDNgJSTR4rKKI9gNwaFhodsYJiDaU6AwWWnKlAAZm5JLYJlG7ViwkpHSMvoTNHxYy1SwtfpLoLe8dB1Hb7G86%2BfizRHaUN5EXuOY3UFQffqQ6aaZ569MeBdp%2FMYd%2FlDq2q5aSmvNOpG3wUn%2BK3NQ57AlL%2BsE4t8CDFzMhIWLKUXZ%2BgP7B7hjnIR4tEWefugvtM3XeZ4TuhN8gGJolPYC3gOQ5Bk5yJbbZoK3ajzQzOnTbXeGAf9ivEv4tQP69rE8op0tzoJBOl0DrPwlFTjqZiJ%2BcxU4EA6%2F%2FpxOo%2BoTlfeK5iHBM1DXqhEhnw2CqnjEJ50cbJcmqB5d9HV5us%2B7DqUYolQq6mVxO9n0b5m5SNdZPIquNRyi1mUMfD8upwhCgcduzR4DcnMoXlzXPfSaIGYNAjIT9t5o7c%2FEB2M3xeypJEWtMnTtTtVE7P5Tz7uOYz7v9XlFsMVwxzyCfCMWJZpzMjGCYIg%2F77hE7%2FRbBAk8QS4RHiqqDbpbF14Sad8kDGf2Wds7at0NyCgS6PJ4Rfm5lQdkiBiTbMPCdq8EGOqUBuUam9VnBfnMcVrYkGgHlUoLxMOfZXa%2BzD0TJdTbiI0b%2BH9JRctZwqUhlnjw70W4D3SfHfQS%2BufFrPrJ6JtG%2BE4RhosZHWsp1WqQnIeZ5%2FJEA9H9%2FaPE0zq7buZS9%2Frek2S2zfz5MVzgL2Pxg3rMXFfswgQvdnld4llIg1QONBu03%2Fy8mjBQzDCxYSdOrIZU%2FQDx1g6CBrRumBSiLSdQdthEEdEkj&X-Amz-Signature=2d0b875035eb9b06e2fcceb5d0ce179a873b47a86fca1969a60c31b2e915f3bf&X-Amz-SignedHeaders=host&x-id=GetObject)
+![Schéma d’organisation d’un site e-commerce : la plateforme Commerce regroupe les domaines E-Commerce (catalogue, panier, commande web) et Magasins (catalogue, caisse, commande magasin) ; la plateforme Gestion Clients regroupe les domaines Comptes Clients (gestion client web, magasin, data compliance) et Fidélité (programme de fidélité, newsletters).](./assets/dora_metrics-exemple_orga.webp)
 
 ### Les cas d'usage identifiés
 
@@ -77,7 +77,7 @@ Une fois l'organisation de la société comprise et les concepts définis, il a 
 
 
 
-![Tableau Example Mapping avec quatre catégories : User Stories (jaune), Rules (bleu), Examples (vert), Questions (rose), chacune contenant des post-its de la couleur correspondante.](https://prod-files-secure.s3.us-west-2.amazonaws.com/5863e833-64f2-4f13-9f7a-2c92c72b5bbf/54c8a0d9-4578-46d6-90aa-cbad2edda847/example_mapping.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466YPH7K3QA%2F20250519%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250519T070411Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEM%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIQDle0OThxh%2BfckLX9a8K9N4Lxfx1%2Ffm0wkVaUoPqbsnJQIgPV7HB5MQhOBXvFY%2B%2BdNANN%2BLaidi3Dlqswt3JfTCI4UqiAQIiP%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw2Mzc0MjMxODM4MDUiDFXeiveGBBLShyT3SSrcA%2B%2F8H8mlCRN2lo2gAV7vw7nTnDDwCU2EDmxN3010HPVMSp%2Ff%2FSSMTabG0Q0cqgzPJHYgFXz7OosmVnLS0h88%2BnPrAeOWDNgJSTR4rKKI9gNwaFhodsYJiDaU6AwWWnKlAAZm5JLYJlG7ViwkpHSMvoTNHxYy1SwtfpLoLe8dB1Hb7G86%2BfizRHaUN5EXuOY3UFQffqQ6aaZ569MeBdp%2FMYd%2FlDq2q5aSmvNOpG3wUn%2BK3NQ57AlL%2BsE4t8CDFzMhIWLKUXZ%2BgP7B7hjnIR4tEWefugvtM3XeZ4TuhN8gGJolPYC3gOQ5Bk5yJbbZoK3ajzQzOnTbXeGAf9ivEv4tQP69rE8op0tzoJBOl0DrPwlFTjqZiJ%2BcxU4EA6%2F%2FpxOo%2BoTlfeK5iHBM1DXqhEhnw2CqnjEJ50cbJcmqB5d9HV5us%2B7DqUYolQq6mVxO9n0b5m5SNdZPIquNRyi1mUMfD8upwhCgcduzR4DcnMoXlzXPfSaIGYNAjIT9t5o7c%2FEB2M3xeypJEWtMnTtTtVE7P5Tz7uOYz7v9XlFsMVwxzyCfCMWJZpzMjGCYIg%2F77hE7%2FRbBAk8QS4RHiqqDbpbF14Sad8kDGf2Wds7at0NyCgS6PJ4Rfm5lQdkiBiTbMPCdq8EGOqUBuUam9VnBfnMcVrYkGgHlUoLxMOfZXa%2BzD0TJdTbiI0b%2BH9JRctZwqUhlnjw70W4D3SfHfQS%2BufFrPrJ6JtG%2BE4RhosZHWsp1WqQnIeZ5%2FJEA9H9%2FaPE0zq7buZS9%2Frek2S2zfz5MVzgL2Pxg3rMXFfswgQvdnld4llIg1QONBu03%2Fy8mjBQzDCxYSdOrIZU%2FQDx1g6CBrRumBSiLSdQdthEEdEkj&X-Amz-Signature=131cae336594037fea5e3daf8530b039fa93e4597d2f6fc6782a5d273ff9e8d2&X-Amz-SignedHeaders=host&x-id=GetObject)
+![Tableau Example Mapping avec quatre catégories : User Stories (jaune), Rules (bleu), Examples (vert), Questions (rose), chacune contenant des post-its de la couleur correspondante.](./assets/example_mapping.webp)
 
 
 
@@ -223,7 +223,7 @@ Cette démarche participative a permis de transformer progressivement la percept
 
 ## 3. Hypothèses techniques retenues 🧐
 
-> **Fondations solides : établir des conventions claires et partagées**  
+> **Fondations solides : établir des conventions claires et partagées**
 > Pour bâtir un système de mesure fiable dans un environnement complexe, nous avons dû établir un ensemble d'hypothèses et de conventions. Elles ont été clairement documentées et validées collectivement et elles étaient nécessaires pour calculer les métriques avec des données imparfaites.
 
 Voici les principales conventions que nous avons établies, organisées par domaine :
@@ -316,7 +316,7 @@ Ces hypothèses sont régulièrement revues et ajustées en fonction des retours
 
 ## 4. La collecte des données : une approche par source 📊
 
-> **L'architecture de collecte : le cœur technique du projet**  
+> **L'architecture de collecte : le cœur technique du projet**
 > Le succès des DORA Metrics repose sur notre capacité à collecter, intégrer et corréler des données provenant de multiples systèmes. Cette architecture d'intégration constitue la colonne vertébrale technique de notre solution.
 
 ### Architecture de données centralisée
@@ -368,7 +368,7 @@ Examinons maintenant notre approche pour chaque source de données :
 
 ## 5. Implémentation et calcul des métriques 📈
 
-> **De la théorie à la pratique : adapter et calculer les métriques à tous les niveaux**  
+> **De la théorie à la pratique : adapter et calculer les métriques à tous les niveaux**
 > Les définitions théoriques des DORA Metrics sont un point de départ, mais leur implémentation concrète nécessite une adaptation fine au contexte spécifique de l'entreprise et une approche multi-échelle pour répondre aux besoins de tous les niveaux de l'organisation.
 
 ### Implémentation des métriques
@@ -396,7 +396,7 @@ Le Lead Time for Changes mesure le temps qui s'écoule entre la dernière modifi
 <u>**Deployment Frequency (Fréquence de déploiement)**</u>
 
 La Deployment Frequency indique la cadence à laquelle on pousse des mises à jour en production (exprimée en $jours^{-1}
-$, ou inverse de l'intervalle entre deux déploiements). 
+$, ou inverse de l'intervalle entre deux déploiements).
 
 $$
 f_{comp} = \frac{1}{(t_{dep2} - t_{dep1})}
@@ -410,7 +410,7 @@ C'était essentiel de distinguer un déploiement réellement exposé à l'utilis
 
 <u>**Mean Time to Restore (MTTR) ou Mean Time to Recover (Temps moyen de restauration)**</u>
 
-Le MTTR calcule le temps moyen nécessaire pour résoudre un incident ou le temps apparent de défaillance pour l'utilisateur. Au départ, nous avons constaté que l'outil de ticketing (ServiceNow) n'enregistrait pas toujours les champs d'ouverture et de clôture de manière cohérente. 
+Le MTTR calcule le temps moyen nécessaire pour résoudre un incident ou le temps apparent de défaillance pour l'utilisateur. Au départ, nous avons constaté que l'outil de ticketing (ServiceNow) n'enregistrait pas toujours les champs d'ouverture et de clôture de manière cohérente.
 
 Nous avons donc dû :
 
@@ -446,7 +446,7 @@ Bien sûr, cela reste une approximation: on ne sait pas distinguer un incident r
 
 ### Calcul des métriques par niveau de granularité 📊
 
-> **Vision multi-échelle : du composant à la plateforme**  
+> **Vision multi-échelle : du composant à la plateforme**
 > L'une des forces de notre implémentation réside dans sa capacité à fournir des métriques à différents niveaux de granularité. Cette approche multi-échelle permet à chaque niveau de management d'accéder aux indicateurs pertinents pour son périmètre de responsabilité, tout en garantissant la cohérence globale des mesures.
 
 
@@ -920,7 +920,7 @@ Cette première phase d'implémentation nous a permis d'identifier plusieurs axe
 
 ## Conclusion 🙌
 
-Ce retour d'expérience démontre que la mise en place des DORA Metrics dans un grand groupe est un projet de transformation à part entière. Au-delà des aspects techniques, c'est avant tout un projet humain qui nécessite pédagogie, pragmatisme et persévérance. 
+Ce retour d'expérience démontre que la mise en place des DORA Metrics dans un grand groupe est un projet de transformation à part entière. Au-delà des aspects techniques, c'est avant tout un projet humain qui nécessite pédagogie, pragmatisme et persévérance.
 
 Le parcours n’a pas été sans difficultés. Il y des inquiétudes, notamment parmi les personnes directement impliquées dans les projets. Grâce à des sponsors engagés et, surtout, à une approche basée sur la transparence et le temps accordé à chacun, nous avons pu atteindre nos objectifs.
 

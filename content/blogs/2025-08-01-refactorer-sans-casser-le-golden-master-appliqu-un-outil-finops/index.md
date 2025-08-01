@@ -104,8 +104,7 @@ _A noter que_ _ça ne remplace pas les tests unitaires ni le TDD. Ça vient en c
 
 _« On a pu faire évoluer le produit plus efficacement, avec moins de stress, parce qu’on savait qu’on ne casserait rien d’essentiel. L’équipe a gagné en sérénité, le client en fiabilité. Et au-delà de la technique, ça a changé notre_ _posture_ _en tant que consultant et celle de notre client en tant qu’utilisateur: on peut refactorer en toute confiance, innover sans risquer de mettre en péril la facturation. »_
 
-## Si tu devais résumer, pourquoi le Craft est indispensable dans
-ce genre de projet ?
+## Si tu devais résumer, pourquoi le Craft est indispensable dans ce genre de projet ?
 
 
 **Théo :**

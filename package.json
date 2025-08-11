@@ -14,6 +14,9 @@
     "lint": "bun run eslint .",
     "lint:fix": "bun run eslint . --fix"
   },
+  "engines": {
+    "node": "22.x"
+  },
   "dependencies": {
     "@img/sharp-darwin-arm64": "^0.33.5",
     "@img/sharp-libvips-darwin-arm64": "^1.0.6",

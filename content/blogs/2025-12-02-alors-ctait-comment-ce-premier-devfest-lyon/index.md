@@ -77,9 +77,9 @@ Mais revenons au travail de Joseph, qui nous parle de quatre niveaux de datas, t
 
 Cette notion de _digital twin_ revient souvent : il s’agit d’un avatar numérique de l’athlète, que l’on fait participer virtuellement des centaines de fois à la prochaine course, avec des paramètres différents, pour trouver la meilleure stratégie à adopter.
 
-Joseph nous parle également de son quotidien aux côtés des athlètes. Ceux-ci doivent être très impliqués pour obtenir de la data de la meilleure qualité possible, tout en maintenant une grande confiance au datascientiste, qui s’est mis lui aussi à la course de manière intensive pour gagner de la connaissance du terrain et de la légitimité.
+Joseph nous parle également de son quotidien aux côtés des athlètes. Ceux-ci doivent être très impliqués au quotidien pour obtenir de la data de la meilleure qualité possible. A l’inverse, une grande confiance avec lui doit être construite, il s’est donc lui aussi mis à la course à pied de manière intensive pour gagner de la connaissance du terrain et de la légitimité.
 
-Le speaker, visiblement passionné, égraine les anecdotes des ses championnes et champions, et montre à quel point ce travail de performance demande une communication et une proximité forte entre le scientifique et les sportifs.
+Le speaker, visiblement passionné, égraine les anecdotes de ses championnes et champions, et montre à quel point ce travail de performance demande une communication et une proximité forte entre le scientifique et les sportifs.
 
 
 

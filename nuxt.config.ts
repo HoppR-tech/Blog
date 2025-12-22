@@ -131,6 +131,12 @@ export default defineNuxtConfig({
     ...(import.meta.env.NODE_ENV === 'test' ? ['@nuxt/test-utils/module'] : []),
   ],
 
+  ogImage: {
+    // Disable prerendering of OG images to avoid ultrahtml/satori-html crash in CI
+    // Images will be generated at runtime instead
+    runtimeCacheStorage: true,
+  },
+
   content: {
     highlight: {
       theme: 'github-dark',

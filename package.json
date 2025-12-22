@@ -18,12 +18,6 @@
     "node": "22.x"
   },
   "dependencies": {
-    "@img/sharp-darwin-arm64": "^0.33.5",
-    "@img/sharp-libvips-darwin-arm64": "^1.0.6",
-    "@img/sharp-libvips-linux-x64": "^1.0.6",
-    "@img/sharp-libvips-linuxmusl-x64": "^1.0.6",
-    "@img/sharp-linux-x64": "^0.33.5",
-    "@img/sharp-linuxmusl-x64": "^0.33.5",
     "@notionhq/client": "^2.2.15",
     "@nuxt/devtools": "^1.3.14",
     "@slack/web-api": "^7.7.0",

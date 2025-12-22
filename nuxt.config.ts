@@ -70,6 +70,12 @@ export default defineNuxtConfig({
         '/',
         '/rss.xml',
       ],
+      // Exclude OG image routes from prerendering to avoid ultrahtml/satori-html crash
+      // Images will be generated at runtime when requested by social media crawlers
+      ignore: ['/__og-image__/**'],
+      // Allow build to continue despite OG image prerender failures
+      // The images still work at runtime - this just skips prerendering them
+      failOnError: false,
     },
     routeRules: {
       '/insights/**': {

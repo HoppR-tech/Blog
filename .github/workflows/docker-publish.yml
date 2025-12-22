@@ -58,7 +58,6 @@ jobs:
     strategy:
       matrix:
         webhook:
-          # Verify these URLs correspond to your actual Portainer webhooks for this service
           - https://cloud.hoppr.tech/api/stacks/webhooks/9a90a665-a0c8-4e07-8c58-82fdddcb0818
     steps:
       - name: Trigger Portainer webhook

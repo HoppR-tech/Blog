@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  blog:
+    image: ghcr.io/hoppr-tech/blog:latest
+    build: .
+    environment:
+      - NUXT_PUBLIC_BASE_URL=https://blog.hoppr.tech
+      - NITRO_PRESET=node-server
+    networks:
+      - traefik-network
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=traefik-network"
+        - "traefik.http.routers.blog.rule=Host(`blog.hoppr.tech`)"
+        - "traefik.http.routers.blog.entrypoints=websecure"
+        - "traefik.http.routers.blog.tls.certresolver=letsencrypt"
+        - "traefik.http.services.blog.loadbalancer.server.port=3000"
+
+networks:
+  traefik-network:
+    external: true

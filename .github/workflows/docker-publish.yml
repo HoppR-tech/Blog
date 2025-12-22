@@ -39,8 +39,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
-            type=ref,event=tag
-            type=raw,value=latest-dev,enable=${{ startsWith(github.ref, 'refs/tags/') }}
+            type=ref,event=push
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5

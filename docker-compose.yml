@@ -6,7 +6,7 @@ services:
     build: .
     environment:
       - NUXT_PUBLIC_BASE_URL=https://blog.hoppr.tech
-      - NITRO_PRESET=node-server
+      - NITRO_PRESET=bun
     networks:
       - traefik-network
     deploy:

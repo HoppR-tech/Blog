@@ -19,3 +19,4 @@ node_modules
 dist/
 .aider*
 .qodo
+.env.development

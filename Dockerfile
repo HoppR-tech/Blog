@@ -22,7 +22,7 @@ COPY . .
 
 # [optional] tests & build
 ENV NODE_ENV=production
-ENV NITRO_PRESET=node-server
+ENV NITRO_PRESET=bun
 RUN bun run build
 
 # copy production dependencies and source code into final image

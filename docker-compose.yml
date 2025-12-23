@@ -7,6 +7,18 @@ services:
     environment:
       - NUXT_PUBLIC_BASE_URL=https://blog.hoppr.tech
       - NITRO_PRESET=bun
+      # Notion
+      - NUXT_NOTION_API_KEY=${NUXT_NOTION_API_KEY}
+      - NUXT_NOTION_DATABASE_POSTS_ID=${NUXT_NOTION_DATABASE_POSTS_ID}
+      # GitHub
+      - NUXT_GITHUB_OWNER=${NUXT_GITHUB_OWNER}
+      - NUXT_GITHUB_REPO=${NUXT_GITHUB_REPO}
+      - NUXT_GITHUB_BRANCH=${NUXT_GITHUB_BRANCH}
+      - NUXT_GITHUB_APP_ID=${NUXT_GITHUB_APP_ID}
+      - NUXT_GITHUB_PRIVATE_KEY=${NUXT_GITHUB_PRIVATE_KEY}
+      # Slack
+      - NUXT_SLACK_BOT_TOKEN=${NUXT_SLACK_BOT_TOKEN}
+      - NUXT_SLACK_CHANNEL_ID=${NUXT_SLACK_CHANNEL_ID}
     networks:
       - traefik-network
     deploy:

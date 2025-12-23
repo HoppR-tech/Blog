@@ -40,7 +40,7 @@ function formatDate(dateString: string) {
     </h1>
     <img
       :src="image || ''" :alt="alt || `Image illustrant l'article : ${title}`" width="600"
-      class="m-auto rounded-2xl shadow-lg h-32 md:h-72 w-4/6 md:w-4/5 content-center object-cover"
+      class="m-auto rounded-2xl shadow-lg w-4/6 md:w-4/5 content-center h-auto"
     >
     <!-- <p class="text-xs sm:text-sm my-3 max-w-xl mx-auto text-center text-zinc-600 dark:text-zinc-400">
       {{ description }}

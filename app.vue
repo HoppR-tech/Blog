@@ -114,10 +114,7 @@ useHead({
   }
 }
 
-.off-screen-content {
-  content-visibility: auto;
-  contain-intrinsic-size: 0 500px;
-}
+
 
 html.dark {
   color-scheme: dark;

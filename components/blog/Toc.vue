@@ -128,14 +128,40 @@ function observeArticleSections(): void {
 onMounted(() => {
   // Attendre que le DOM soit complètement chargé
   setTimeout(() => {
-    initIntersectionObserver()
-    observeArticleSections()
+    // Initialiser seulement sur desktop (>= 1024px) car le TOC est caché sur mobile
+    // Tailwind lg breakpoint = 1024px
+    const mediaQuery = window.matchMedia('(min-width: 1024px)')
+    
+    const handleScreenChange = (e: MediaQueryListEvent | MediaQueryList) => {
+      if (e.matches) {
+        if (!observer) {
+          initIntersectionObserver()
+          observeArticleSections()
+        }
+      } else {
+        if (observer) {
+          observer.disconnect()
+          // @ts-ignore
+          observer = undefined
+        }
+      }
+    }
+    
+    // Vérification initiale
+    handleScreenChange(mediaQuery)
+    
+    // Écouter les changements
+    mediaQuery.addEventListener('change', handleScreenChange)
+    
+    // Nettoyage de l'écouteur au démontage
+    onUnmounted(() => {
+      mediaQuery.removeEventListener('change', handleScreenChange)
+      if (observer) observer.disconnect()
+    })
   }, 500)
 })
 
-onUnmounted(() => {
-  observer.disconnect()
-})
+
 
 /**
  * Extrait l'ancre d'une URL (la partie après #)

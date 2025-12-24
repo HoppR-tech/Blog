@@ -52,11 +52,12 @@ onMounted(() => {
 const visibleTags = computed(() => {
   if (showAllTags.value)
     return props.tags
-  return props.tags.slice(0, 3)
+  return isMobile.value ? props.tags.slice(0, 2) : props.tags.slice(0, 3)
 })
 
 const remainingTagsCount = computed(() => {
-  return Math.max(0, props.tags.length - 3)
+  const visibleCount = isMobile.value ? 2 : 3
+  return Math.max(0, props.tags.length - visibleCount)
 })
 
 function toggleTags(event: Event) {
@@ -109,7 +110,7 @@ const buttonLabel = computed(() =>
               <span class="bg-hoppr-purple text-white px-2 py-1 rounded-full tracking-wider" role="listitem">{{ tag }}</span>
             </template>
             <button
-              v-if="props.tags.length > 3"
+              v-if="props.tags.length > (isMobile ? 2 : 3)"
               class="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-sm hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-hoppr-purple"
               :aria-expanded="showAllTags"
               :aria-label="buttonLabel"

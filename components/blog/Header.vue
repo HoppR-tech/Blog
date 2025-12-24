@@ -27,10 +27,7 @@ const props = withDefaults(defineProps<Props>(), {
   reviewers: () => [],
 })
 
-function formatDate(dateString: string) {
-  const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' }
-  return new Date(dateString).toLocaleDateString('fr-FR', options)
-}
+import { formatDate } from '@/utils/helper'
 </script>
 
 <template>

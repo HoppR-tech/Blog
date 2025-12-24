@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { computed, onMounted, onUnmounted, ref } from 'vue'
+import MarkdownIt from 'markdown-it'
 
 interface Props {
   path?: string
@@ -26,6 +27,9 @@ const props = withDefaults(defineProps<Props>(), {
   published: false,
   imageSize: 'h-48',
 })
+
+const md = new MarkdownIt()
+const renderedDescription = computed(() => md.renderInline(props.description))
 
 const showAllTags = ref(false)
 
@@ -91,9 +95,7 @@ const buttonLabel = computed(() =>
         >
           {{ title }}
         </h2>
-        <p class="font-luciole text-ellipsis line-clamp-2">
-          {{ description }}
-        </p>
+        <div class="font-luciole text-ellipsis line-clamp-2" v-html="renderedDescription" />
         <div class="text-black dark:text-zinc-300 text-xs mt-2 mb-1 flex flex-col gap-3 md:flex-row md:items-center md:space-x-6 font-luciole">
           <div class="flex items-center">
             <LogoDate />

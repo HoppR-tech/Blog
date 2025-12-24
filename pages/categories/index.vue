@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
-import { defineOgImage, queryContent, useAsyncData, useHead, useSiteConfig } from '#imports'
 import { categories } from '@/utils/categories'
 
 const { data } = await useAsyncData('all-blog-post-for-tag', () => queryContent('/blogs').sort({ _id: -1 }).find())

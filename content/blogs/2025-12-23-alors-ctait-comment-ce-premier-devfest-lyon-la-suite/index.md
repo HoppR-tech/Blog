@@ -1,7 +1,7 @@
 ---
 title: "Alors ? C’était comment ce premier DevFest Lyon ? (la suite)"
 date: 2025-12-23T16:39:49.164Z
-description: "Pour faire suite à [l’article de Michaël](https://blog.hoppr.tech/blogs/2025-12-02-alors-ctait-comment-ce-premier-devfest-lyon) sur la très bonne première édition du [DevFest Lyon](https://devfest.gdg"
+description: "Pour faire suite à [l’article de Michaël](https://blog.hoppr.tech/blogs/2025-12-02-alors-ctait-comment-ce-premier-devfest-lyon) sur la très bonne première édition du [DevFest Lyon](https://devfest.gdglyon.com/)"
 image: ./assets/cover-image.webp
 alt: "L’équipe HoppR au Devfest lyon"
 ogImage: ./assets/cover-image.webp

@@ -66,7 +66,29 @@ function convertToBlogPost(post: any): BlogPost {
 }
 
 function generateDescription(content: string): string {
-  return content.replace(/#.*\n/g, '').replace(/\n/g, ' ').substring(0, 200)
+  const cleaned = content.replace(/#.*\n/g, '').replace(/\n/g, ' ')
+  const limit = 200
+  
+  if (cleaned.length <= limit) return cleaned
+
+  // Regex to find markdown links: [label](url)
+  const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g
+  let match
+  let cutIndex = limit
+
+  // Find if the limit falls inside a link
+  while ((match = linkRegex.exec(cleaned)) !== null) {
+    const start = match.index
+    const end = start + match[0].length
+
+    // If the link starts before the limit and ends after it
+    if (start < limit && end > limit) {
+      cutIndex = end
+      break
+    }
+  }
+
+  return cleaned.substring(0, cutIndex)
 }
 
 export async function updatePostStatus(notionClient: NotionClientInterface, pageId: string, newStatus: string): Promise<void> {

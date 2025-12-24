@@ -147,7 +147,7 @@ defineOgImage({
       <div v-else-if="error" class="space-y-5 my-5 px-4">
         <p>{{ error }}</p>
       </div>
-      <div v-else v-auto-animate class="space-y-5 my-5 px-4">
+      <div v-else class="space-y-5 my-5 px-4">
         <template v-for="post in paginatedData" :key="post.title">
           <ArchiveCard
             :path="post.path" :title="post.title" :date="post.date" :description="post.description"

@@ -1,5 +1,4 @@
-// @ts-ignore
-import '#internal/nitro/virtual/polyfill'
+
 // @ts-ignore
 import { useNitroApp } from '#internal/nitro/app'
 

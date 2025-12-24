@@ -64,7 +64,6 @@ export default defineNuxtConfig({
 
   nitro: {
     preset: process.env.NITRO_PRESET || 'vercel',
-    entry: process.env.NITRO_PRESET === 'bun' ? '~/server/entry.ts' : undefined,
     prerender: {
       crawlLinks: true,
       routes: [

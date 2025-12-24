@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
+import MarkdownIt from 'markdown-it'
 
 interface Props {
   path: string
@@ -25,13 +26,22 @@ const props = withDefaults(defineProps<Props>(), {
   published: false,
 })
 
+const md = new MarkdownIt()
+const renderedDescription = computed(() => md.renderInline(props.description))
+
 const showAllTags = ref(false)
 const isMobile = ref(false)
 
 onMounted(() => {
-  isMobile.value = window.innerWidth < 640
-  window.addEventListener('resize', () => {
+  const handleResize = () => {
     isMobile.value = window.innerWidth < 640
+  }
+  
+  handleResize()
+  window.addEventListener('resize', handleResize)
+  
+  onUnmounted(() => {
+    window.removeEventListener('resize', handleResize)
   })
 })
 
@@ -109,9 +119,7 @@ const buttonLabel = computed(() =>
         >
           {{ title }}
         </h2>
-        <p class="text-ellipsis line-clamp-2 text-base">
-          {{ description }}
-        </p>
+        <div class="text-ellipsis line-clamp-2 text-base" v-html="renderedDescription" />
         <div class="flex group-hover:underline text-hoppr-green items-center py-2">
           <p>Lire la suite</p>
           <LogoArrow />

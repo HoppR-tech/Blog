@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { categories } from '@/utils/categories'
-import BlogCard from '@/components/blog/card.vue'
+import BlogCard from '@/components/blog/Card.vue'
 import BlogEmpty from '@/components/blog/empty.vue'
 
 const route = useRoute()

@@ -111,12 +111,13 @@ const buttonLabel = computed(() =>
             </template>
             <button
               v-if="props.tags.length > 2"
-              class="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-sm hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-hoppr-purple"
+              class="inline-flex items-center justify-center bg-hoppr-purple/10 text-hoppr-purple rounded-md px-2 pb-0 text-[0.65rem] font-bold uppercase tracking-widest shadow-sm leading-normal hover:bg-hoppr-purple/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-hoppr-purple transition-colors duration-300 dark:bg-purple-500/20 dark:text-purple-200 dark:hover:bg-purple-500/30"
+              style="padding-top: 0.25em"
               :aria-expanded="showAllTags"
               :aria-label="buttonLabel"
               @click="toggleTags"
             >
-              <span>{{ showAllTags ? 'Moins' : `+${remainingTagsCount}` }}</span>
+              {{ showAllTags ? 'MOINS' : `+${remainingTagsCount}` }}
             </button>
           </div>
         </div>

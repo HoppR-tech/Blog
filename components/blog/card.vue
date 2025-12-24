@@ -101,7 +101,7 @@ const buttonLabel = computed(() =>
           <div class="flex items-center gap-2 flex-wrap mt-2" role="list" aria-label="Tags de l'article">
             <LogoTag />
             <template v-for="tag in visibleTags" :key="tag">
-              <span class="bg-hoppr-purple text-white px-2 py-1 rounded-full tracking-wider" role="listitem">{{ tag }}</span>
+              <span class="inline-flex items-center justify-center bg-hoppr-purple text-white rounded-md px-2 pb-0 text-[0.65rem] font-bold uppercase tracking-widest shadow-sm leading-normal" role="listitem" style="padding-top: 0.25em">{{ tag }}</span>
             </template>
             <button
               v-if="props.tags.length > 2"

@@ -65,8 +65,8 @@ import { formatDate } from '@/utils/helper'
         <div class="flex items-start gap-2 flex-wrap w-full">
           <LogoTag class="flex-shrink-0 mt-0.5" />
           <template v-for="tag in props.tags" :key="tag">
-            <NuxtLink :to="`/tags/${tag}`" class="text-lg font-extrabold tracking-wider hover:scale-110">
-              <span class="bg-gray-200 dark:bg-slate-900 rounded-md px-2 py-1 tracking-wide">{{ tag }}</span>
+            <NuxtLink :to="`/tags/${tag}`" class="group">
+              <span class="inline-flex items-center justify-center bg-hoppr-purple text-white rounded-md px-2 pb-0 text-[0.65rem] font-bold uppercase tracking-widest shadow-sm transition-all duration-300 ease-out group-hover:scale-105 group-hover:bg-opacity-90 leading-normal" style="padding-top: 0.25em">{{ tag }}</span>
             </NuxtLink>
           </template>
         </div>

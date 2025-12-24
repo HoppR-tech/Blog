@@ -8,7 +8,7 @@ services:
       - NUXT_PUBLIC_BASE_URL=https://blog.hoppr.tech
       - NITRO_PRESET=bun
       # Notion
-      - NUXT_NOTION_DATABASE_POSTS_ID=
+      - NUXT_NOTION_DATABASE_POSTS_ID=cc3d5da28fc54ad982362d663b51e129
       # GitHub
       - NUXT_GITHUB_OWNER=HoppR-tech
       - NUXT_GITHUB_REPO=Blog

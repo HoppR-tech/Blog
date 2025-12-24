@@ -8,21 +8,33 @@ services:
       - NUXT_PUBLIC_BASE_URL=https://blog.hoppr.tech
       - NITRO_PRESET=bun
       # Notion
-      - NUXT_NOTION_API_KEY=${NUXT_NOTION_API_KEY}
-      - NUXT_NOTION_DATABASE_POSTS_ID=${NUXT_NOTION_DATABASE_POSTS_ID}
+      - NUXT_NOTION_DATABASE_POSTS_ID=
       # GitHub
-      - NUXT_GITHUB_OWNER=${NUXT_GITHUB_OWNER}
-      - NUXT_GITHUB_REPO=${NUXT_GITHUB_REPO}
-      - NUXT_GITHUB_BRANCH=${NUXT_GITHUB_BRANCH}
-      - NUXT_GITHUB_APP_ID=${NUXT_GITHUB_APP_ID}
-      - NUXT_GITHUB_PRIVATE_KEY=${NUXT_GITHUB_PRIVATE_KEY}
+      - NUXT_GITHUB_OWNER=HoppR-tech
+      - NUXT_GITHUB_REPO=Blog
+      - NUXT_GITHUB_BRANCH=main
+      - NUXT_GITHUB_APP_ID=949437
       # Slack
-      - NUXT_SLACK_BOT_TOKEN=${NUXT_SLACK_BOT_TOKEN}
-      - NUXT_SLACK_CHANNEL_ID=${NUXT_SLACK_CHANNEL_ID}
+      - NUXT_SLACK_CHANNEL_ID=C050VTWNVLK
+    secrets:
+      - source: blog-hoppr-prod-notion-api-key
+        target: notion_api_key
+      - source: blog-hoppr-prod-github-private-key
+        target: github_private_key
+      - source: blog-hoppr-prod-slack-bot-token
+        target: slack_bot_token
     networks:
       - traefik-network
     deploy:
-      replicas: 1
+      mode: replicated
+      replicas: 3
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+        reservations:
+          cpus: '0.10'
+          memory: 128M
       restart_policy:
         condition: any
       labels:
@@ -35,4 +47,12 @@ services:
 
 networks:
   traefik-network:
+    external: true
+
+secrets:
+  blog-hoppr-prod-notion-api-key:
+    external: true
+  blog-hoppr-prod-github-private-key:
+    external: true
+  blog-hoppr-prod-slack-bot-token:
     external: true

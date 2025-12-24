@@ -1,3 +1,17 @@
+import { existsSync, readFileSync } from 'node:fs'
+
+function getSecret(name: string, fallback: string = ''): string {
+  try {
+    const secretPath = `/run/secrets/${name}`
+    if (existsSync(secretPath)) {
+      return readFileSync(secretPath, 'utf-8').trim()
+    }
+  } catch (e) {
+    // Ignore error
+  }
+  return process.env[name.toUpperCase()] || fallback
+}
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2024-07-31',
@@ -105,7 +119,7 @@ export default defineNuxtConfig({
       contactName: 'HoppR',
     },
     notion: {
-      apiKey: '',
+      apiKey: getSecret('notion_api_key', process.env.NUXT_NOTION_API_KEY),
       databasePostsId: '',
     },
     github: {
@@ -113,10 +127,10 @@ export default defineNuxtConfig({
       repo: '',
       branch: '',
       appId: '',
-      privateKey: '',
+      privateKey: getSecret('github_private_key', process.env.NUXT_GITHUB_PRIVATE_KEY),
     },
     slack: {
-      botToken: '',
+      botToken: getSecret('slack_bot_token', process.env.NUXT_SLACK_BOT_TOKEN),
       channelId: '',
     },
   },
@@ -162,6 +176,18 @@ export default defineNuxtConfig({
         'rust',
         'sql',
         'yaml',
+        'json',
+        'docker',
+        'terraform',
+        'tf',
+        'html',
+        'css',
+        'groovy',
+        'scala',
+        'kotlin',
+        'swift',
+        'dart',
+        'xml',
         'json',
         'docker',
         'terraform',

@@ -18,7 +18,7 @@ const { data } = await useAsyncData(`category-${categoryValue.value}`, () =>
 const formattedData = computed(() => {
   return data.value?.map((article) => {
     return {
-      path: article._path,
+      path: article._path || '/',
       title: article.title || 'no-title available',
       description: article.description || 'no-description available',
       image: article.image || '/not-found.jpg',

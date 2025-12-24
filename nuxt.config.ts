@@ -1,16 +1,4 @@
-import { existsSync, readFileSync } from 'node:fs'
 
-function getSecret(name: string, fallback: string = ''): string {
-  try {
-    const secretPath = `/run/secrets/${name}`
-    if (existsSync(secretPath)) {
-      return readFileSync(secretPath, 'utf-8').trim()
-    }
-  } catch (e) {
-    // Ignore error
-  }
-  return process.env[name.toUpperCase()] || fallback
-}
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -119,7 +107,7 @@ export default defineNuxtConfig({
       contactName: 'HoppR',
     },
     notion: {
-      apiKey: getSecret('notion_api_key', process.env.NUXT_NOTION_API_KEY),
+      apiKey: '',
       databasePostsId: '',
     },
     github: {
@@ -127,10 +115,10 @@ export default defineNuxtConfig({
       repo: '',
       branch: '',
       appId: '',
-      privateKey: getSecret('github_private_key', process.env.NUXT_GITHUB_PRIVATE_KEY),
+      privateKey: '',
     },
     slack: {
-      botToken: getSecret('slack_bot_token', process.env.NUXT_SLACK_BOT_TOKEN),
+      botToken: '',
       channelId: '',
     },
   },

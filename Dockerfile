@@ -33,6 +33,11 @@ COPY --from=prerelease /usr/src/app/.output .output
 COPY --from=prerelease /usr/src/app/package.json .
 
 # run the app
+COPY entrypoint.sh .
+USER root
+RUN chmod +x entrypoint.sh
 USER bun
+
 EXPOSE 3000/tcp
-ENTRYPOINT [ "bun", "run", ".output/server/index.mjs" ]
+ENTRYPOINT [ "./entrypoint.sh" ]
+CMD [ "bun", "run", ".output/server/index.mjs" ]

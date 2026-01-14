@@ -50,7 +50,7 @@ L'onboarding ne devrait pas être une cérémonie mystique. En 2026 ça devrait 
 
 Et si le fichier de configuration de votre projet suffisait à installer tous les outils, sans la lourdeur de Docker ?
 
-C'est la promesse de [**DevBox**](https://www.jetify.com/devbox) **: une boîte à outils en ligne de commande qui transforme un simple fichier de configuration en un environnement de développement complet, isolé et nat****if.**  Lancé en 2022 par l'entreprise Jetify, le projet open-source connaît une adoption rapide et cumule déjà plus de 11K étoiles sur GitHub.
+C'est la promesse de [**DevBox**](https://www.jetify.com/devbox) **: une boîte à outils en ligne de commande qui transforme un simple fichier de configuration en un environnement de développement complet, isolé et natif.**  Lancé en 2022 par l'entreprise Jetify, le projet open-source connaît une adoption rapide et cumule déjà plus de 11K étoiles sur GitHub.
 
 ## DevBox : La puissance de Nix, sans la douleur
 

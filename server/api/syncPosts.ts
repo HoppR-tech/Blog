@@ -27,9 +27,18 @@ export default defineEventHandler(async (event) => {
       throw new Error('GitHub access not authorized or incorrect configuration')
 
     // console.log('Publishing posts to GitHub...')
-    const publishResults = await Promise.allSettled(
-      postsToPublish.map(post => githubService.publishPostToGitHub(post)),
-    )
+    const publishResults: PromiseSettledResult<void>[] = []
+
+    for (const post of postsToPublish) {
+      try {
+        await githubService.publishPostToGitHub(post)
+        publishResults.push({ status: 'fulfilled', value: undefined })
+      }
+      catch (error) {
+        console.error(`Failed to publish post "${post.title}":`, error)
+        publishResults.push({ status: 'rejected', reason: error })
+      }
+    }
 
     const successfulPublishes = publishResults.filter(result => result.status === 'fulfilled')
     const failedPublishes = publishResults.filter(result => result.status === 'rejected')

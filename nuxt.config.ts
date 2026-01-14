@@ -35,7 +35,7 @@ export default defineNuxtConfig({
       'postcss-import': {},
       'tailwindcss': {},
       'autoprefixer': {},
-      ...(import.meta.env.NODE_ENV === 'production' ? { cssnano: {} } : {}),
+    ...(process.env.NODE_ENV === 'production' ? { cssnano: {} } : {}),
     },
   },
 
@@ -53,7 +53,7 @@ export default defineNuxtConfig({
     strictNuxtContentPaths: true,
   },
   site: {
-    url: import.meta.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://blog.hoppr.tech',
+    url: process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://blog.hoppr.tech',
     identity: {
       type: 'Company',
     },
@@ -102,7 +102,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      baseUrl: import.meta.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://blog.hoppr.tech',
+      baseUrl: process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://blog.hoppr.tech',
       contactEmail: 'hello@hoppr.tech',
       contactName: 'HoppR',
     },
@@ -136,7 +136,7 @@ export default defineNuxtConfig({
     'nuxt-purgecss',
     '@nuxt/devtools',
     '@nuxtjs/sitemap',
-    ...(import.meta.env.NODE_ENV === 'test' ? ['@nuxt/test-utils/module'] : []),
+    ...(process.env.NODE_ENV === 'test' ? ['@nuxt/test-utils/module'] : []),
   ],
 
   ogImage: {

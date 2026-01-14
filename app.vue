@@ -7,7 +7,8 @@ const twitterDescription
   = 'Partage, veille et ressources de la communauté sur les thématiques du Software Craftsmanship, du Cloud, de l\'architecture et de la Tech en générale.'
 const image
   = '/hoppr-white.png'
-const mySite = 'https://blog.hoppr.tech/'
+const config = useRuntimeConfig()
+const mySite = config.public.baseUrl
 useHead({
   htmlAttrs: {
     lang: 'fr',
@@ -85,7 +86,8 @@ useHead({
 
 @layer base {
   ::selection {
-    @apply bg-hoppr-green text-white;
+    background-color: #00cca5; /* hoppr-green */
+    color: white;
   }
 
   body {

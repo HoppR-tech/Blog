@@ -8,10 +8,13 @@ const articles = await queryContent(path).findOne()
 // État du TOC
 const currentSection = ref<null | string>(null)
 const visibleSections = ref<Map<string, number>>(new Map())
-let observer: IntersectionObserver
+let observer: IntersectionObserver | undefined
+let mediaQuery: MediaQueryList | undefined
+let handleScreenChange: ((e: MediaQueryListEvent | MediaQueryList) => void) | undefined
+let initTimeout: NodeJS.Timeout | undefined
 
 // Gestion des sections ouvertes/fermées
-const firstLinkWithChildren = articles?.body?.toc?.links.find(link => link.children?.length > 0)
+const firstLinkWithChildren = articles?.body?.toc?.links.find(link => link.children && link.children.length > 0)
 const expandedSections = ref<Set<string>>(new Set(
   firstLinkWithChildren ? [firstLinkWithChildren.id] : []
 ))
@@ -113,26 +116,26 @@ function observeArticleSections(): void {
   console.log('Sections trouvées:', sections.length)
 
   sections.forEach((section) => {
-    observer.observe(section)
+    if (observer) observer.observe(section)
   })
 
   // Si aucune section n'a été trouvée avec des IDs, essayer sans le sélecteur d'ID
   if (sections.length === 0) {
     document.querySelectorAll('.article-section h2, .article-section h3, .article-section h4').forEach((section) => {
       console.log('Section sans ID:', section.textContent)
-      observer.observe(section)
+      if (observer) observer.observe(section)
     })
   }
 }
 
 onMounted(() => {
   // Attendre que le DOM soit complètement chargé
-  setTimeout(() => {
+  initTimeout = setTimeout(() => {
     // Initialiser seulement sur desktop (>= 1024px) car le TOC est caché sur mobile
     // Tailwind lg breakpoint = 1024px
-    const mediaQuery = window.matchMedia('(min-width: 1024px)')
+    mediaQuery = window.matchMedia('(min-width: 1024px)')
     
-    const handleScreenChange = (e: MediaQueryListEvent | MediaQueryList) => {
+    handleScreenChange = (e: MediaQueryListEvent | MediaQueryList) => {
       if (e.matches) {
         if (!observer) {
           initIntersectionObserver()
@@ -141,7 +144,6 @@ onMounted(() => {
       } else {
         if (observer) {
           observer.disconnect()
-          // @ts-ignore
           observer = undefined
         }
       }
@@ -152,13 +154,15 @@ onMounted(() => {
     
     // Écouter les changements
     mediaQuery.addEventListener('change', handleScreenChange)
-    
-    // Nettoyage de l'écouteur au démontage
-    onUnmounted(() => {
-      mediaQuery.removeEventListener('change', handleScreenChange)
-      if (observer) observer.disconnect()
-    })
   }, 500)
+})
+
+onUnmounted(() => {
+  clearTimeout(initTimeout)
+  if (mediaQuery && handleScreenChange) {
+    mediaQuery.removeEventListener('change', handleScreenChange)
+  }
+  if (observer) observer.disconnect()
 })
 
 

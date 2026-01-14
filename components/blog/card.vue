@@ -27,7 +27,11 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const md = new MarkdownIt()
-const renderedDescription = computed(() => md.renderInline(props.description))
+const renderedDescription = computed(() => {
+  const rendered = md.renderInline(props.description)
+  // Strip HTML tags to avoid nested links inside NuxtLink
+  return rendered.replace(/<[^>]*>/g, '')
+})
 
 const showAllTags = ref(false)
 const isMobile = ref(false)
@@ -103,16 +107,20 @@ const buttonLabel = computed(() =>
             <template v-for="tag in visibleTags" :key="tag">
               <span class="inline-flex items-center justify-center bg-hoppr-purple text-white rounded-md px-2 pb-0 text-[0.65rem] font-bold uppercase tracking-widest shadow-sm leading-normal" role="listitem" style="padding-top: 0.25em">{{ tag }}</span>
             </template>
-            <button
+            <span
               v-if="props.tags.length > 2"
-              class="inline-flex items-center justify-center bg-hoppr-purple/10 text-hoppr-purple rounded-md px-2 pb-0 text-[0.65rem] font-bold uppercase tracking-widest shadow-sm leading-normal hover:bg-hoppr-purple/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-hoppr-purple transition-colors duration-300 dark:bg-purple-500/20 dark:text-purple-200 dark:hover:bg-purple-500/30"
+              role="button"
+              tabindex="0"
+              class="inline-flex items-center justify-center bg-hoppr-purple/10 text-hoppr-purple rounded-md px-2 pb-0 text-[0.65rem] font-bold uppercase tracking-widest shadow-sm leading-normal hover:bg-hoppr-purple/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-hoppr-purple transition-colors duration-300 dark:bg-purple-500/20 dark:text-purple-200 dark:hover:bg-purple-500/30 cursor-pointer"
               style="padding-top: 0.25em"
               :aria-expanded="showAllTags"
               :aria-label="buttonLabel"
-              @click="toggleTags"
+              @click.prevent="toggleTags"
+              @keydown.enter.prevent="toggleTags"
+              @keydown.space.prevent="toggleTags"
             >
               {{ showAllTags ? 'MOINS' : `+${remainingTagsCount}` }}
-            </button>
+            </span>
           </div>
         </div>
         <h2

@@ -47,13 +47,13 @@ function generateStructuredData() {
       'name': 'HoppR',
       'logo': {
         '@type': 'ImageObject',
-        'url': 'https://blog.hoppr.tech/hoppr.png',
+        'url': `${config.public.baseUrl}/hoppr.png`,
       },
     },
     'description': blogPostProps.value.description,
     'mainEntityOfPage': {
       '@type': 'WebPage',
-      '@id': `https://blog.hoppr.tech/${path}`,
+      '@id': `${config.public.baseUrl}/${path}`,
     },
   }
 }
@@ -65,10 +65,10 @@ useHead({
   meta: [
     { name: 'description', content: blogPostProps.value.description },
     { property: 'og:site_name', content: 'Blog HoppR' },
-    { hid: 'og:type', property: 'og:type', content: 'website' },
+    { property: 'og:type', content: 'website' },
     {
       property: 'og:url',
-      content: `https://blog.hoppr.tech/${path}`,
+      content: `${config.public.baseUrl}${path}`,
     },
     {
       property: 'og:title',
@@ -86,7 +86,7 @@ useHead({
     { name: 'twitter:card', content: 'summary_large_image' },
     {
       name: 'twitter:url',
-      content: `https://blog.hoppr.tech/${path}`,
+      content: `${config.public.baseUrl}${path}`,
     },
     {
       name: 'twitter:title',
@@ -104,13 +104,13 @@ useHead({
   link: [
     {
       rel: 'canonical',
-      href: `https://blog.hoppr.tech/${path}`,
+      href: `${config.public.baseUrl}${path}`,
     },
   ],
   script: [
     {
       type: 'application/ld+json',
-      children: JSON.stringify(generateStructuredData()),
+      innerHTML: JSON.stringify(generateStructuredData()),
     },
   ],
 })

@@ -18,6 +18,16 @@ export default defineNuxtConfig({
           rel: 'stylesheet',
           href: 'https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css'
         },
+      ],
+      script: [
+        {
+          defer: true,
+          'data-domain': 'blog.hoppr.tech',
+          src: 'https://analytics.hoppr.tech/js/script.file-downloads.hash.outbound-links.pageview-props.revenue.tagged-events.js'
+        },
+        {
+          innerHTML: 'window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }'
+        }
       ]
     },
     pageTransition: { name: 'page', mode: 'out-in' },

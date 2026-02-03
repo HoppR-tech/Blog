@@ -2,6 +2,7 @@
 import type { Person } from '@/types/blog'
 import ContactCTA from '@/components/blog/ContactCTA.vue'
 import { useRuntimeConfig } from '#app'
+import { stripMarkdown } from '@/utils/stringUtils'
 import 'katex/dist/katex.min.css'
 
 const { path } = useRoute()
@@ -30,6 +31,7 @@ const blogPostProps = computed(() => {
 
 const authors: Person[] = article.value?.authors || []
 const reviewers: Person[] = article.value?.reviewers || []
+const ogDescription = computed(() => stripMarkdown(blogPostProps.value.description))
 
 function generateStructuredData() {
   return {
@@ -50,7 +52,7 @@ function generateStructuredData() {
         'url': `${config.public.baseUrl}/hoppr.png`,
       },
     },
-    'description': blogPostProps.value.description,
+    'description': ogDescription.value,
     'mainEntityOfPage': {
       '@type': 'WebPage',
       '@id': `${config.public.baseUrl}/${path}`,
@@ -63,7 +65,7 @@ const config = useRuntimeConfig()
 useHead({
   title: blogPostProps.value.title || '',
   meta: [
-    { name: 'description', content: blogPostProps.value.description },
+    { name: 'description', content: ogDescription.value },
     { property: 'og:site_name', content: 'Blog HoppR' },
     { property: 'og:type', content: 'website' },
     {
@@ -76,7 +78,7 @@ useHead({
     },
     {
       property: 'og:description',
-      content: blogPostProps.value.description,
+      content: ogDescription.value,
     },
     {
       property: 'og:image',
@@ -94,7 +96,7 @@ useHead({
     },
     {
       name: 'twitter:description',
-      content: blogPostProps.value.description,
+      content: ogDescription.value,
     },
     {
       name: 'twitter:image',
@@ -119,7 +121,7 @@ useHead({
 defineOgImageComponent('About', {
   headline: 'Bienvenue 👋',
   title: blogPostProps.value.title || '',
-  description: blogPostProps.value.description || '',
+  description: ogDescription.value || '',
   link: blogPostProps.value.ogImage ? new URL(blogPostProps.value.ogImage, config.public.baseUrl).href : '',
   imageTop: '/images/og-post.png',
   imageBottom: '/images/og-home.png',

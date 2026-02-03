@@ -8,6 +8,13 @@ export function createFolderName(date: string, title: string): string {
   return `${formattedDate}-${slugifiedTitle}`
 }
 
+export function stripMarkdown(text: string): string {
+  return text
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')  // [label](url) -> label
+    .replace(/\*{1,3}([^*]+)\*{1,3}/g, '$1')  // ***bold italic***, **bold**, *italic*
+    .replace(/_([^_]+)_/g, '$1')               // _italic_
+}
+
 export function slugify(text: string): string {
   return text
     .toString()

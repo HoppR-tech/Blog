@@ -20,3 +20,5 @@ dist/
 .aider*
 .qodo
 .env.development
+.claude/
+CLAUDE.md

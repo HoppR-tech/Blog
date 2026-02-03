@@ -32,5 +32,15 @@ export function checkBlocks(blocks: BlockObjectResponse[]) {
 
     if(blocks.slice(1).some(b => b.type === 'heading_1'))
         throw new Error('Heading 1 is only permitted at the start of the article content');
+
+    checkHeadingHierarchy(blocks);
+}
+
+function checkHeadingHierarchy(blocks: BlockObjectResponse[]): void {
+    const hasHeading2 = blocks.some(b => b.type === 'heading_2')
+    const hasHeading3 = blocks.some(b => b.type === 'heading_3')
+
+    if (hasHeading3 && !hasHeading2)
+        throw new Error('Article contains heading 3 without any heading 2. Use heading 2 for main sections to enable Table of Contents.')
 }
 

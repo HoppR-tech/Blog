@@ -30,7 +30,7 @@ Le **Platform Engineering** ne doit pas être une usine à gaz technique, mais u
 
 Voici les quatre piliers de notre manifeste.
 
-### 1. L’expérience au-delà de la technique
+## 1. L'expérience au-delà de la technique
 
 > Pas seulement des logiciels bien conçus, mais aussi des plateformes au service des développeurs.
 
@@ -38,7 +38,7 @@ Une infrastructure peut être techniquement parfaite mais inutilisable. L'ingén
 
 - **La vision HoppR :** Si un développeur doit ouvrir un ticket pour obtenir une base de données, la plateforme a échoué. Le Craftsmanship, c'est offrir le "Self-Service" sans sacrifier la sécurité.
 
-### 2. La vision au-delà de la livraison
+## 2. La vision au-delà de la livraison
 
 > Pas seulement l’ajout constant de valeur, mais aussi une vision continue.
 
@@ -46,7 +46,7 @@ Livrer des fonctionnalités infra ne suffit pas si on avance à l'aveugle. Le Cr
 
 - **La vision HoppR :** Nous intégrons l’**observabilité** nativement. Une plateforme "Crafted" est un système transparent et mesurable, où chaque décision est guidée par la donnée et alignée sur la stratégie long terme de l'entreprise.
 
-### 3. La responsabilité au-delà de la performance
+## 3. La responsabilité au-delà de la performance
 
 > Pas seulement une communauté de professionnels, mais aussi des personnes responsables.
 
@@ -54,7 +54,7 @@ L'ingénieur plateforme moderne ne peut plus ignorer l'impact de son travail. Il
 
 - **La vision HoppR :** Nous intégrons le **FinOps** (contrôle des coûts) et le **GreenOps** (durabilité) dès la conception. Être un professionnel responsable, c'est garantir que la plateforme est aussi efficiente pour le budget de l'entreprise que pour la planète.
 
-### 4. Le sens au-delà de la tendance
+## 4. Le sens au-delà de la tendance
 
 > Pas seulement des partenariats productifs, mais aussi une innovation porteuse de sens.
 
@@ -64,12 +64,9 @@ L'IA et les technologies émergentes sont partout, mais le Craftsmanship refuse 
 
 ---
 
-### Pourquoi ce manifeste change la donne pour nos clients ?
+## Pourquoi ce manifeste change la donne pour nos clients ?
 
 En recherchant les éléments de gauche: la qualité, la valeur, le professionnalisme et le partenariat, nous avons réalisé que les éléments de droite: DevEx, Observabilité, FinOps, Innovation choisie, sont les véritables piliers de la réussite moderne.
-
 Le **Platform Craftsmanship** n'est pas qu'une philosophie ; c'est notre méthode de travail chez HoppR pour transformer votre infrastructure en un avantage compétitif durable.
 
----
 
-### 

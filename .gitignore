@@ -22,3 +22,4 @@ dist/
 .env.development
 .claude/
 CLAUDE.md
+memory/

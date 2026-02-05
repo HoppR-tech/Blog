@@ -26,17 +26,17 @@ reviewers:
 
 Dans le monde du développement, le _Software Craftsmanship_ a rappelé que le code n'est pas une simple commodité, mais un artisanat. Chez **HoppR**, nous pensons qu'il est temps d'appliquer cette même exigence à l'infrastructure.
 
-Le **Platform Engineering** ne doit pas être une usine à gaz technique, mais un ouvrage d'art au service de ceux qui créent la valeur : les développeurs.
+Le **Platform Engineering** ne doit pas être une usine à gaz technique, mais un ouvrage d'art au service de ceux qui créent la valeur : les équipes de développement.
 
 Voici les quatre piliers de notre manifeste.
 
 ## 1. L'expérience au-delà de la technique
 
-> Pas seulement des logiciels bien conçus, mais aussi des plateformes au service des développeurs.
+> Pas seulement des logiciels bien conçus, mais aussi des plateformes au service des équipes de développement.
 
-Une infrastructure peut être techniquement parfaite mais inutilisable. L'ingénieur plateforme ne se contente pas de "monter un cluster K8s". Il conçoit une **Internal Developer Platform (IDP)** pensée pour la fluidité et l'autonomie.
+Une infrastructure peut être techniquement parfaite mais inutilisable. L'équipe plateforme ne se contente pas de "monter un cluster K8s". Elle conçoit une **Internal Developer Platform (IDP)** pensée pour la fluidité et l'autonomie.
 
-- **La vision HoppR :** Si un développeur doit ouvrir un ticket pour obtenir une base de données, la plateforme a échoué. Le Craftsmanship, c'est offrir le "Self-Service" sans sacrifier la sécurité.
+- **La vision HoppR :** Si une personne de l'équipe de développement doit ouvrir un ticket pour obtenir une base de données, la plateforme a échoué. Le Craftsmanship, c'est offrir le "Self-Service" sans sacrifier la sécurité.
 
 ## 2. La vision au-delà de la livraison
 
@@ -50,9 +50,9 @@ Livrer des fonctionnalités infra ne suffit pas si on avance à l'aveugle. Le Cr
 
 > Pas seulement une communauté de professionnels, mais aussi des personnes responsables.
 
-L'ingénieur plateforme moderne ne peut plus ignorer l'impact de son travail. Il est responsable de son empreinte.
+L'ingénierie plateforme moderne ne peut plus ignorer l'impact de son travail. L'équipe plateforme est responsable de son empreinte.
 
-- **La vision HoppR :** Nous intégrons le **FinOps** (contrôle des coûts) et le **GreenOps** (durabilité) dès la conception. Être un professionnel responsable, c'est garantir que la plateforme est aussi efficiente pour le budget de l'entreprise que pour la planète.
+- **La vision HoppR :** Nous intégrons le **FinOps** (contrôle des coûts) et le **GreenOps** (durabilité) dès la conception. Agir de manière responsable, c'est garantir que la plateforme est aussi efficiente pour le budget de l'entreprise que pour la planète.
 
 ## 4. Le sens au-delà de la tendance
 

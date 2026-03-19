@@ -1,6 +1,6 @@
 import type { Octokit } from 'octokit'
-import { createBranch, deleteBranch } from './branchManager'
-import { createPullRequest, mergePullRequest } from './pullRequestManager'
+import { createBranch, deleteBranch, safeDeleteBranch } from './branchManager'
+import { closePullRequestsForBranch, createPullRequest, mergePullRequest } from './pullRequestManager'
 import { uploadAllImages, uploadCoverImage } from './imageUploader'
 import { uploadToGitHub } from './contentUploader'
 import { checkPost } from './postChecker'
@@ -36,20 +36,20 @@ export class GitHubService {
   }
 
   async publishPostToGitHub(post: BlogPost) {
+    const currentDate = new Date().toISOString().split('T')[0]
+    const folderName = createFolderName(currentDate, post.title)
+    const folderPath = `content/blogs/${folderName}`
+    const assetsFolderPath = `${folderPath}/assets`
+    const filePath = `${folderPath}/index.md`
+    const branchName = `article/${folderName}`
+
+    await createBranch(this.octokit, branchName)
+
+    let branchMerged = false
     try {
-      const currentDate = new Date().toISOString().split('T')[0]
-      const folderName = createFolderName(currentDate, post.title)
-      const folderPath = `content/blogs/${folderName}`
-      const assetsFolderPath = `${folderPath}/assets`
-      const filePath = `${folderPath}/index.md`
-      const branchName = `article/${folderName}`
-
-      await createBranch(this.octokit, branchName)
-
       const { updatedContent, imageFiles } = await this.notionService.extractImagesAndUpdateContent(post.content)
 
-      // Check if post is valid
-      checkPost(post);
+      checkPost(post)
 
       let updatedPost: BlogPost = { ...post, ...await uploadCoverImage(this.octokit, post, assetsFolderPath, branchName) }
 
@@ -68,6 +68,7 @@ export class GitHubService {
 
       const pullRequest = await createPullRequest(this.octokit, branchName, `Publish article: ${post.title}`)
       await mergePullRequest(this.octokit, pullRequest.number)
+      branchMerged = true
       await deleteBranch(this.octokit, branchName)
 
       await this.notionService.updatePostStatusInNotion(post.notionId, 'Publié')
@@ -82,6 +83,12 @@ export class GitHubService {
       }
       else {
         throw new TypeError(`Unknown error while publishing article "${post.title}"`)
+      }
+    }
+    finally {
+      if (!branchMerged) {
+        await safeDeleteBranch(this.octokit, branchName)
+        await closePullRequestsForBranch(this.octokit, branchName)
       }
     }
   }

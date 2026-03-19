@@ -26,3 +26,31 @@ export async function mergePullRequest(octokit: any, pullNumber: number) {
     merge_method: 'squash',
   })
 }
+
+export async function closePullRequestsForBranch(octokit: any, branchName: string): Promise<void> {
+  try {
+    const { data: pullRequests } = await octokit.rest.pulls.list({
+      owner: GITHUB_OWNER,
+      repo: GITHUB_REPO,
+      head: `${GITHUB_OWNER}:${branchName}`,
+      state: 'open',
+    })
+
+    for (const pr of pullRequests) {
+      try {
+        await octokit.rest.pulls.update({
+          owner: GITHUB_OWNER,
+          repo: GITHUB_REPO,
+          pull_number: pr.number,
+          state: 'closed',
+        })
+      }
+      catch (error) {
+        console.error(`Failed to close PR #${pr.number} for branch ${branchName}:`, error)
+      }
+    }
+  }
+  catch (error) {
+    console.error(`Failed to list/close PRs for branch ${branchName}:`, error)
+  }
+}

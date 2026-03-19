@@ -87,8 +87,8 @@ export class GitHubService {
     }
     finally {
       if (!branchMerged) {
-        await safeDeleteBranch(this.octokit, branchName)
         await closePullRequestsForBranch(this.octokit, branchName)
+        await safeDeleteBranch(this.octokit, branchName)
       }
     }
   }

@@ -73,6 +73,7 @@ describe('GitHubService', () => {
 
   beforeEach(() => {
     vi.clearAllMocks()
+    vi.spyOn(console, 'error').mockImplementation(() => {})
   })
 
   describe('publishPostToGitHub', () => {

@@ -6,8 +6,8 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "NODE_ENV=development nuxt dev",
-    "test": "NODE_ENV=test bun test",
-    "coverage": "bun test --coverage",
+    "test": "npx vitest run",
+    "coverage": "npx vitest run --coverage",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",

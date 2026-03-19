@@ -2,16 +2,16 @@ import { Buffer } from 'node:buffer'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import axios from 'axios'
 import { downloadAndConvertImage, extractImagesAndUpdateContent } from '~/server/services/notion/imageUtils'
-import * as sharp from 'sharp'
-
 // Mock axios manually
 axios.get = vi.fn()
 
-// Mock sharp manually
-vi.spyOn(sharp, 'default').mockImplementation(() => ({
-  webp: vi.fn().mockReturnThis(),
-  toBuffer: vi.fn().mockResolvedValue(Buffer.from('webp image data')),
-}) as any)
+// Mock sharp
+vi.mock('sharp', () => ({
+  default: vi.fn(() => ({
+    webp: vi.fn().mockReturnThis(),
+    toBuffer: vi.fn().mockResolvedValue(Buffer.from('webp image data')),
+  })),
+}))
 
 describe('Image Utils', () => {
   it('should download and convert an image to webp format', async () => {

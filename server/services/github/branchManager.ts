@@ -20,20 +20,18 @@ export async function createBranch(octokit: any, branchName: string) {
         throw error
     }
 
-    const { data: branches } = await octokit.rest.repos.listBranches({
+    const { data: ref } = await octokit.rest.git.getRef({
       owner: GITHUB_OWNER,
       repo: GITHUB_REPO,
+      ref: `heads/${GITHUB_BRANCH}`,
     })
-
-    const mainBranch = branches.find((branch: { name: string }) => branch.name === GITHUB_BRANCH)
-    if (!mainBranch || !mainBranch.commit || !mainBranch.commit.sha)
-      throw new Error(`Main branch ${GITHUB_BRANCH} does not exist or is missing commit information`)
+    const mainSha = ref.object.sha
 
     await octokit.rest.git.createRef({
       owner: GITHUB_OWNER,
       repo: GITHUB_REPO,
       ref: `refs/heads/${branchName}`,
-      sha: mainBranch.commit.sha,
+      sha: mainSha,
     })
 
     // console.log(`Branch ${branchName} created successfully.`)
@@ -55,5 +53,15 @@ export async function deleteBranch(octokit: any, branchName: string) {
   catch (error) {
     console.error(`Error deleting branch ${branchName}:`, error)
     throw new Error(`Unable to delete branch ${branchName}: ${error instanceof Error ? error.message : 'An unknown error occurred'}`)
+  }
+}
+
+export async function safeDeleteBranch(octokit: any, branchName: string): Promise<boolean> {
+  try {
+    await deleteBranch(octokit, branchName)
+    return true
+  }
+  catch {
+    return false
   }
 }

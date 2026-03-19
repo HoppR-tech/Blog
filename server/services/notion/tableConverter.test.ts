@@ -68,7 +68,7 @@ describe('tableConverter', () => {
   it('should correctly identify table blocks', () => {
     expect(isTableBlock({ type: 'table' })).toBe(true)
     expect(isTableBlock({ type: 'paragraph' })).toBe(false)
-    expect(isTableBlock(null)).toBe(false)
+    expect(isTableBlock(null)).toBeFalsy()
   })
 
   it('should handle rich text objects in table cells', async () => {

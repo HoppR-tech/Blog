@@ -5,7 +5,7 @@ description: "Nouvelle étape pour notre projet [Dragee.io](https://github.com/d
 image: ./assets/cover-image.webp
 alt: "Image d’illustration représentant un ordinateur téléchargeant et installant, entouré des logos de Bun, npm et Axios"
 ogImage: ./assets/cover-image.webp
-tags: ['dragee.io', 'typescript', 'craft']
+tags: ['typescript', 'craft', 'fixentropy.io', 'dragee.io']
 published: true
 authors:
   - id: 67adfd77-4b84-4496-b55d-3391541f59c5
@@ -28,6 +28,8 @@ reviewers:
 
 <!-- markdownlint-disable-file -->
 
+
+> ℹ️ **Note :** Dragee.io a grandi depuis cet article, et est devenu **[Fixentropy.io](https://app.fixentropy.io)**. <br/>Vous souhaitez combattre votre entropie logicielle ? N'hésitez pas à [prendre rendez-vous pour une démonstration.](https://cal.com/schedule-your-call/schedule-your-call)
 
 Nouvelle étape pour notre projet [Dragee.io](https://github.com/dragee-io). Nous avons déjà vu [comment créer ](https://blog.hoppr.tech/blogs/2024-11-14-crer-une-cli-pour-un-projet-modulaire-avec-commanderjs)[la ](https://blog.hoppr.tech/blogs/2024-11-14-crer-une-cli-pour-un-projet-modulaire-avec-commanderjs)[CLI qui est au cœur du projet](https://blog.hoppr.tech/blogs/2024-11-14-crer-une-cli-pour-un-projet-modulaire-avec-commanderjs), et également comment [documenter de manière dynamique nos asserters](https://blog.hoppr.tech/blogs/2024-12-10-gnration-agrgation-et-dploiement-de-documentation-tsdoc-avec-docusaurus-et-vercel), porteurs des règles d’architecture.
 

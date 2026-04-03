@@ -5,7 +5,7 @@ description: "[Dragee.io](https://github.com/dragee-io) est un nouveau projet li
 image: ./assets/cover-image.webp
 alt: "Lignes de code utilisant Commander.js pour créer une CLI, tirées du projet Dragee.io. "
 ogImage: ./assets/cover-image.webp
-tags: ['dragee.io', 'typescript', 'craft']
+tags: ['typescript', 'craft', 'fixentropy.io', 'dragee.io']
 published: true
 authors:
   - id: 67adfd77-4b84-4496-b55d-3391541f59c5
@@ -33,6 +33,8 @@ reviewers:
 
 <!-- markdownlint-disable-file -->
 
+
+> ℹ️ **Note :** Dragee.io a grandi depuis cet article, et est devenu **[Fixentropy.io](https://app.fixentropy.io)**. <br/>Vous souhaitez combattre votre entropie logicielle ? N'hésitez pas à [prendre rendez-vous pour une démonstration.](https://cal.com/schedule-your-call/schedule-your-call)
 
 [Dragee.io](https://github.com/dragee-io) est un nouveau projet lié à l'architecture logicielle, permettant entre autres l'analyse d'une architecture dans la vision [Craft](https://blog.hoppr.tech/tags/craft) portée par [HoppR](https://www.hoppr.tech/). Nos ambitions pour ce projet sont fortes, celui-ci se voulant une solution complète et constituée de nombreuses fonctionnalités. Nous aurons d’ailleurs d’autres occasions de vous partager son avancée.
 

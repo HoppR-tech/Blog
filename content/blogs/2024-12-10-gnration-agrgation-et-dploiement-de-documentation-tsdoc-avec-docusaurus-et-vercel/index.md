@@ -5,7 +5,7 @@ description: "Suite à l’article [Créer une CLI pour un projet modulaire avec
 image: ./assets/cover-image.webp
 alt: "Page de documentation Dragee.io en fond, avec les logos de Docusaurus, Bun et Vercel"
 ogImage: ./assets/cover-image.webp
-tags: ['dragee.io', 'typescript', 'documentation', 'craft']
+tags: ['typescript', 'documentation', 'craft', 'fixentropy.io', 'dragee.io']
 published: true
 authors:
   - id: 67adfd77-4b84-4496-b55d-3391541f59c5
@@ -33,6 +33,8 @@ reviewers:
 
 <!-- markdownlint-disable-file -->
 
+
+> ℹ️ **Note :** Dragee.io a grandi depuis cet article, et est devenu **[Fixentropy.io](https://app.fixentropy.io)**. <br/>Vous souhaitez combattre votre entropie logicielle ? N'hésitez pas à [prendre rendez-vous pour une démonstration.](https://cal.com/schedule-your-call/schedule-your-call)
 
 Suite à l’article [Créer une CLI pour un projet modulaire avec Commander.js](https://blog.hoppr.tech/blogs/2024-11-14-crer-une-cli-pour-un-projet-modulaire-avec-commanderjs), nous avons maintenant une CLI efficace et fiable pour notre projet [Dragee.io](https://github.com/dragee-io). 
 

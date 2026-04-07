@@ -24,7 +24,7 @@ export default defineConfig({
   // },
   resolve: {
     alias: {
-      '@/': path.resolve(__dirname, '/'),
+      '@/': `${path.resolve(__dirname)}/`,
       '~': fileURLToPath(new URL('./', import.meta.url)),
       '#imports': fileURLToPath(new URL('./node_modules/nuxt/dist/imports/runtime', import.meta.url)),
     },

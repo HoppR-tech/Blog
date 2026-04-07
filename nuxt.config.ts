@@ -106,8 +106,8 @@ export default defineNuxtConfig({
 
   colorMode: {
     classSuffix: '',
-    preference: 'dark',
-    fallback: 'light',
+    preference: 'system',
+    fallback: 'dark',
   },
 
   runtimeConfig: {

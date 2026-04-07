@@ -39,6 +39,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
+            type=sha,prefix=sha-,format=short
             type=ref,event=branch
             type=ref,event=tag
 
@@ -52,14 +53,11 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-  trigger-webhooks:
+  deploy:
     runs-on: ubuntu-latest
     needs: build-and-push
-    strategy:
-      matrix:
-        webhook:
-          - https://cloud.hoppr.tech/api/stacks/webhooks/9a90a665-a0c8-4e07-8c58-82fdddcb0818
     steps:
-      - name: Trigger Portainer webhook
+      - name: Deploy to Docker Swarm via Portainer webhook
         run: |
-          curl -X POST ${{ matrix.webhook }}
+          SHORT_SHA=$(echo "${{ github.sha }}" | cut -c1-7)
+          curl -X POST "https://cloud.hoppr.tech/api/stacks/webhooks/9a90a665-a0c8-4e07-8c58-82fdddcb0818?tag=sha-${SHORT_SHA}"

@@ -28,6 +28,14 @@ services:
     deploy:
       mode: replicated
       replicas: 3
+      update_config:
+        parallelism: 1
+        delay: 10s
+        order: start-first
+        failure_action: rollback
+      rollback_config:
+        parallelism: 1
+        order: start-first
       resources:
         limits:
           cpus: '0.50'

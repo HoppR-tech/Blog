@@ -1,25 +1,25 @@
-import { convertBlocksToMarkdown } from './blockConverter'
-import { getPersonsInfo } from './personInfoFetcher'
-import { safeGetProperty } from './notionUtils'
+import type { BlockObjectResponse, PartialBlockObjectResponse } from '@notionhq/client/build/src/api-endpoints'
 import type { PageContent } from '@/types/blog'
 import type { NotionClientInterface, NotionPage } from '@/types/notion'
 import { checkBlocks } from '../github/postChecker'
-import type { BlockObjectResponse, PartialBlockObjectResponse } from '@notionhq/client/build/src/api-endpoints'
+import { convertBlocksToMarkdown } from './blockConverter'
+import { safeGetProperty } from './notionUtils'
+import { getPersonsInfo } from './personInfoFetcher'
 
 export async function getPageContent(notionClient: NotionClientInterface, page: NotionPage): Promise<PageContent> {
   try {
-    const blocks = await fetchAllBlocks({notionClient, page})
-    
+    const blocks = await fetchAllBlocks({ notionClient, page })
+
     // Check if blocks are valid
-    checkBlocks(blocks);
-    
-    const { markdownContent, images } = await convertBlocksToMarkdown(notionClient, blocks);
-    
-    const authors = await extractAuthors(notionClient, page);
-    const reviewers = await extractReviewers(notionClient, page);
-    const tagsNames = extractTags(page);
-    const coverImage = extractCoverImage(page);
-    const coverImageAlt = extractCoverImageAlt(page);
+    checkBlocks(blocks)
+
+    const { markdownContent, images } = await convertBlocksToMarkdown(notionClient, blocks)
+
+    const authors = await extractAuthors(notionClient, page)
+    const reviewers = await extractReviewers(notionClient, page)
+    const tagsNames = extractTags(page)
+    const coverImage = extractCoverImage(page)
+    const coverImageAlt = extractCoverImageAlt(page)
 
     return {
       notionId: page.id,
@@ -64,30 +64,29 @@ function extractCoverImageAlt(page: NotionPage) {
   return safeGetProperty(page, ['properties', 'Cover Image Alt', 'rich_text', '0', 'plain_text'], '')
 }
 
-
-export async function fetchAllBlocks({notionClient, page, nextPageCursor}:{
-  notionClient: NotionClientInterface, 
-  page: NotionPage, 
-  nextPageCursor?:string
+export async function fetchAllBlocks({ notionClient, page, nextPageCursor }: {
+  notionClient: NotionClientInterface
+  page: NotionPage
+  nextPageCursor?: string
 }): Promise<BlockObjectResponse[]> {
   try {
-    const response = await notionClient.blocks.children.list({ 
-      block_id: page.id, 
-      start_cursor: nextPageCursor 
+    const response = await notionClient.blocks.children.list({
+      block_id: page.id,
+      start_cursor: nextPageCursor,
     })
-    
+
     const blocks = response.results.filter(isBlockObjectResponse)
     const processedBlocks = await processBlocks(notionClient, blocks)
-    
+
     if (response.has_more && response.next_cursor) {
       const nextBlocks = await fetchAllBlocks({
-        notionClient, 
-        page, 
-        nextPageCursor: response.next_cursor
+        notionClient,
+        page,
+        nextPageCursor: response.next_cursor,
       })
       return [...processedBlocks, ...nextBlocks]
     }
-    
+
     return processedBlocks
   }
   catch (error) {
@@ -97,73 +96,74 @@ export async function fetchAllBlocks({notionClient, page, nextPageCursor}:{
 }
 
 async function processBlocks(
-  notionClient: NotionClientInterface, 
-  blocks: BlockObjectResponse[]
+  notionClient: NotionClientInterface,
+  blocks: BlockObjectResponse[],
 ): Promise<BlockObjectResponse[]> {
-  const processedBlocks: BlockObjectResponse[] = [];
+  const processedBlocks: BlockObjectResponse[] = []
 
   for (const block of blocks) {
-    processedBlocks.push(block);
+    processedBlocks.push(block)
 
     if (block.type === 'table') {
-      await processTableBlock(notionClient, block);
+      await processTableBlock(notionClient, block)
     }
   }
-  
-  return processedBlocks;
+
+  return processedBlocks
 }
 
 async function processTableBlock(notionClient: NotionClientInterface, block: BlockObjectResponse): Promise<void> {
   try {
-    console.log(`Fetching children for table block ${block.id}`);
-    const tableRows = await notionClient.blocks.children.list({ block_id: block.id });
+    console.log(`Fetching children for table block ${block.id}`)
+    const tableRows = await notionClient.blocks.children.list({ block_id: block.id })
 
     if (!hasTableRows(tableRows)) {
-      console.warn(`No rows found for table block ${block.id}`);
-      return;
+      console.warn(`No rows found for table block ${block.id}`)
+      return
     }
 
-    const firstRow = tableRows.results[0];
-    console.log('Structure de la première ligne:', JSON.stringify(firstRow, null, 2));
+    const firstRow = tableRows.results[0]
+    console.log('Structure de la première ligne:', JSON.stringify(firstRow, null, 2))
 
     if (isValidTableRow(firstRow)) {
-      addFormattedRowsToTable(block, tableRows);
-    } else {
-      addOriginalRowsToTable(block, tableRows);
+      addFormattedRowsToTable(block, tableRows)
     }
-  } catch (tableError) {
-    console.error(`Error fetching table rows for block ${block.id}:`, tableError);
+    else {
+      addOriginalRowsToTable(block, tableRows)
+    }
+  }
+  catch (tableError) {
+    console.error(`Error fetching table rows for block ${block.id}:`, tableError)
   }
 }
 
 function hasTableRows(tableRows: any): boolean {
-  return tableRows && tableRows.results && tableRows.results.length > 0;
+  return tableRows && tableRows.results && tableRows.results.length > 0
 }
 
 function isValidTableRow(row: any): boolean {
-  return isBlockObjectResponse(row) && 
-        row.type === 'table_row' && 
-        row.table_row && 
-        Array.isArray(row.table_row.cells);
+  return isBlockObjectResponse(row)
+    && row.type === 'table_row'
+    && row.table_row
+    && Array.isArray(row.table_row.cells)
 }
 
 function addFormattedRowsToTable(block: BlockObjectResponse, tableRows: any): void {
-  console.log('Adapting table rows from table_row format');
+  console.log('Adapting table rows from table_row format')
   const formattedRows = tableRows.results
     .filter((row: any) => row.type === 'table_row')
     .map((row: any) => ({
-      cells: row.table_row?.cells || []
+      cells: row.table_row?.cells || [],
     }));
 
-  ((block as any).table as any).children = formattedRows;
-  console.log(`Added ${formattedRows.length} formatted rows to table block`);
+  ((block as any).table as any).children = formattedRows
+  console.log(`Added ${formattedRows.length} formatted rows to table block`)
 }
 
 function addOriginalRowsToTable(block: BlockObjectResponse, tableRows: any): void {
-  ((block as any).table as any).children = tableRows.results.filter(isBlockObjectResponse);
-  console.log(`Added ${((block as any).table as any).children.length} original rows to table block`);
+  ((block as any).table as any).children = tableRows.results.filter(isBlockObjectResponse)
+  console.log(`Added ${((block as any).table as any).children.length} original rows to table block`)
 }
-
 
 export function extractTitleFromPage(page: NotionPage): string {
   const post = page.properties.Articles
@@ -178,5 +178,5 @@ export function extractTitleFromPage(page: NotionPage): string {
 }
 
 function isBlockObjectResponse(item: PartialBlockObjectResponse | BlockObjectResponse): item is BlockObjectResponse {
-  return "type" in item;
+  return 'type' in item
 }

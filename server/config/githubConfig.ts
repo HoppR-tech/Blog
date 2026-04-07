@@ -1,7 +1,7 @@
-import process from 'node:process'
 import { execSync } from 'node:child_process'
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
+import process from 'node:process'
 
 const config = useRuntimeConfig()
 
@@ -26,7 +26,8 @@ function getCurrentGitBranch(): string | null {
     const branch = execSync('git rev-parse --abbrev-ref HEAD', { encoding: 'utf8' }).trim()
     console.log(`Detected current Git branch: ${branch}`)
     return branch
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Error detecting Git branch:', error)
     return null
   }
@@ -34,9 +35,9 @@ function getCurrentGitBranch(): string | null {
 
 // Utilise la branche courante si elle est détectée, sinon utilise la valeur de configuration
 const currentBranch = getCurrentGitBranch()
-export const GITHUB_BRANCH = process.env.GITHUB_BRANCH ||
-                             config.github.branch ||
-                             (currentBranch && currentBranch !== 'HEAD' ? currentBranch : 'main')
+export const GITHUB_BRANCH = process.env.GITHUB_BRANCH
+  || config.github.branch
+  || (currentBranch && currentBranch !== 'HEAD' ? currentBranch : 'main')
 
 // Log la branche utilisée pour le débogage
 console.log(`Using GitHub branch: ${GITHUB_BRANCH} ${currentBranch ? '(detected from Git)' : '(from config)'}`)

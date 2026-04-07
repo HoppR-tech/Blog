@@ -21,7 +21,7 @@ module.exports = {
         'hoppr-red': '#F85352',
         'hoppr-purple': '#2F2D85',
       },
-      typography: (theme) => ({
+      typography: theme => ({
         DEFAULT: {
           css: {
             'code::before': {
@@ -30,7 +30,7 @@ module.exports = {
             'code::after': {
               content: '""',
             },
-            code: {
+            'code': {
               backgroundColor: theme('colors.gray.100'),
               color: theme('colors.hoppr-purple'),
               fontWeight: '500',
@@ -48,7 +48,7 @@ module.exports = {
         },
         invert: {
           css: {
-            code: {
+            'code': {
               backgroundColor: theme('colors.gray.800'),
               color: theme('colors.hoppr-green'),
             },

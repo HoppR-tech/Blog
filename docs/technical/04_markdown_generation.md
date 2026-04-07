@@ -41,13 +41,13 @@ authors:
     name: Auteur Exemple 2
     image: ./assets/auteur-exemple-2.webp
     linkedin: https://www.linkedin.com/in/auteur-exemple-2/
-    x: 
+    x:
 reviewers:
   - id: exemple-id-3
     name: Relecteur Exemple
     image: ./assets/relecteur-exemple.webp
     linkedin: https://www.linkedin.com/in/relecteur-exemple/
-    x: 
+    x:
 ---
 
 <!-- Contenu de l'article -->

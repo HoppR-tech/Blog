@@ -12,8 +12,7 @@ const { data } = await useAsyncData(`category-${categoryValue.value}`, () =>
   queryContent('/blogs')
     .where({ tags: { $containsAny: [categoryValue.value] } })
     .sort({ date: -1 })
-    .find(),
-)
+    .find())
 
 const formattedData = computed(() => {
   return data.value?.map((article) => {

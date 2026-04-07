@@ -1,7 +1,7 @@
-import { uploadToGitHub } from './contentUploader'
 import type { BlogPost } from '@/types/blog'
 import type { ImageFile } from '@/types/files'
 import { downloadAndConvertImage } from '~/server/services/notion/imageUtils'
+import { uploadToGitHub } from './contentUploader'
 
 export async function uploadCoverImage(octokit: any, post: BlogPost, assetsFolderPath: string, branchName: string): Promise<BlogPost> {
   if (!post.image)

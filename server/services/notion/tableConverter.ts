@@ -17,89 +17,92 @@ import type { TableBlockObjectResponse } from '@notionhq/client/build/src/api-en
  */
 export async function convertTableToMarkdown(tableBlock: TableBlockObjectResponse): Promise<string> {
   if (!isValidTableBlock(tableBlock)) {
-    return createEmptyTable();
+    return createEmptyTable()
   }
 
-  const rows = extractTableRows(tableBlock);
+  const rows = extractTableRows(tableBlock)
   if (!rows || rows.length === 0) {
-    return createEmptyTable();
+    return createEmptyTable()
   }
 
-  const { has_column_header } = tableBlock.table;
-  return createMarkdownTable(rows, has_column_header);
+  const { has_column_header } = tableBlock.table
+  return createMarkdownTable(rows, has_column_header)
 }
 
 function isValidTableBlock(tableBlock: TableBlockObjectResponse): boolean {
   if (!tableBlock || !tableBlock.table) {
-    console.error('Invalid table block:', tableBlock);
-    return false;
+    console.error('Invalid table block:', tableBlock)
+    return false
   }
-  return true;
+  return true
 }
 
 function createEmptyTable(): string {
-  return '| | |\n| --- | --- |';
+  return '| | |\n| --- | --- |'
 }
 
 function extractTableRows(tableBlock: TableBlockObjectResponse): any[] {
-  let rows: any[] = [];
+  let rows: any[] = []
 
   if ((tableBlock.table as any).children && (tableBlock.table as any).children.length > 0) {
-    rows = (tableBlock.table as any).children;
-    console.log(`Utilisation des données de table.children avec ${rows.length} lignes`);
-  } else if ((tableBlock as any).children && (tableBlock as any).children.length > 0) {
-    rows = (tableBlock as any).children;
-    console.log(`Utilisation des données de block.children avec ${rows.length} lignes`);
-  } else {
-    console.log('Aucune donnée de tableau trouvée');
-    return [];
+    rows = (tableBlock.table as any).children
+    console.log(`Utilisation des données de table.children avec ${rows.length} lignes`)
+  }
+  else if ((tableBlock as any).children && (tableBlock as any).children.length > 0) {
+    rows = (tableBlock as any).children
+    console.log(`Utilisation des données de block.children avec ${rows.length} lignes`)
+  }
+  else {
+    console.log('Aucune donnée de tableau trouvée')
+    return []
   }
 
-  return adaptRowStructure(rows);
+  return adaptRowStructure(rows)
 }
 
 function adaptRowStructure(rows: any[]): any[] {
   if (!rows[0].cells) {
-    console.warn('No cells property found in rows. Trying to adapt structure...');
+    console.warn('No cells property found in rows. Trying to adapt structure...')
     if (rows[0].table_row && Array.isArray(rows[0].table_row.cells)) {
-      console.log('Adapting structure from table_row format');
+      console.log('Adapting structure from table_row format')
       return rows.map((row: any) => ({
-        cells: row.table_row?.cells || []
-      }));
-    } else {
-      console.warn('Unable to adapt row structure:', rows[0]);
-      return [];
+        cells: row.table_row?.cells || [],
+      }))
+    }
+    else {
+      console.warn('Unable to adapt row structure:', rows[0])
+      return []
     }
   }
-  return rows;
+  return rows
 }
 
 function createMarkdownTable(rows: any[], hasColumnHeader: boolean): string {
-  const headerRow = rows[0];
-  const columnCount = headerRow.cells.length;
+  const headerRow = rows[0]
+  const columnCount = headerRow.cells.length
 
-  let markdownTable = createTableHeader(headerRow, columnCount);
-  markdownTable += createTableRows(rows, hasColumnHeader);
+  let markdownTable = createTableHeader(headerRow, columnCount)
+  markdownTable += createTableRows(rows, hasColumnHeader)
 
-  return markdownTable;
+  return markdownTable
 }
 
 function createTableHeader(headerRow: any, columnCount: number): string {
-  let header = '| ' + headerRow.cells.map((cell: string[]) => formatCellContent(cell)).join(' | ') + ' |\n';
-  header += '| ' + Array(columnCount).fill('---').join(' | ') + ' |\n';
-  return header;
+  let header = `| ${headerRow.cells.map((cell: string[]) => formatCellContent(cell)).join(' | ')} |\n`
+  header += `| ${new Array(columnCount).fill('---').join(' | ')} |\n`
+  return header
 }
 
 function createTableRows(rows: any[], hasColumnHeader: boolean): string {
-  const startIndex = hasColumnHeader ? 1 : 0;
-  let tableRows = '';
+  const startIndex = hasColumnHeader ? 1 : 0
+  let tableRows = ''
   for (let i = startIndex; i < rows.length; i++) {
-    const row = rows[i];
+    const row = rows[i]
     if (row && row.cells) {
-      tableRows += '| ' + row.cells.map((cell: string[]) => formatCellContent(cell)).join(' | ') + ' |\n';
+      tableRows += `| ${row.cells.map((cell: string[]) => formatCellContent(cell)).join(' | ')} |\n`
     }
   }
-  return tableRows;
+  return tableRows
 }
 
 /**
@@ -110,13 +113,13 @@ function createTableRows(rows: any[], hasColumnHeader: boolean): string {
  */
 function formatCellContent(cell: any[]): string {
   if (!cell || cell.length === 0) {
-    return '';
+    return ''
   }
 
   // Extract text content from cell, handling rich text objects
-  const content = extractTextFromCell(cell);
+  const content = extractTextFromCell(cell)
 
-  return content.includes('• ') ? convertBulletListToHtml(content) : formatTechnicalReferences(content);
+  return content.includes('• ') ? convertBulletListToHtml(content) : formatTechnicalReferences(content)
 }
 
 /**
@@ -126,26 +129,26 @@ function formatCellContent(cell: any[]): string {
  * @returns Le texte extrait
  */
 function extractTextFromCell(cell: any[]): string {
-  return cell.map(item => {
+  return cell.map((item) => {
     // Handle rich text objects from Notion API
     if (item && typeof item === 'object') {
       // If it's a rich text object with plain_text property
       if (item.plain_text) {
-        return item.plain_text;
+        return item.plain_text
       }
 
       // If it's a rich text object with text.content property
       if (item.text && item.text.content) {
-        return item.text.content;
+        return item.text.content
       }
 
       // If it has a toString method, use it (fallback)
-      return String(item);
+      return String(item)
     }
 
     // If it's already a string, return it directly
-    return item;
-  }).join(' ');
+    return item
+  }).join(' ')
 }
 
 /**
@@ -155,26 +158,26 @@ function extractTextFromCell(cell: any[]): string {
  * @returns La liste formatée en HTML
  */
 function convertBulletListToHtml(content: string): string {
-  const lines = content.split('\n');
-  const { prefix, bulletLines } = extractPrefixAndBulletLines(lines);
-  const listItems = createListItems(bulletLines);
-  const htmlList = `<ul><li>${listItems.join('</li><li>')}</li></ul>`;
-  return prefix ? `${prefix} ${htmlList}` : htmlList;
+  const lines = content.split('\n')
+  const { prefix, bulletLines } = extractPrefixAndBulletLines(lines)
+  const listItems = createListItems(bulletLines)
+  const htmlList = `<ul><li>${listItems.join('</li><li>')}</li></ul>`
+  return prefix ? `${prefix} ${htmlList}` : htmlList
 }
 
 function extractPrefixAndBulletLines(lines: string[]): { prefix: string, bulletLines: string[] } {
-  const startsWithBullet = lines[0].trim().startsWith('• ');
+  const startsWithBullet = lines[0].trim().startsWith('• ')
   if (!startsWithBullet && lines.length > 1) {
-    return { prefix: lines[0], bulletLines: lines.slice(1) };
+    return { prefix: lines[0], bulletLines: lines.slice(1) }
   }
-  return { prefix: '', bulletLines: lines };
+  return { prefix: '', bulletLines: lines }
 }
 
 function createListItems(bulletLines: string[]): string[] {
   return bulletLines
     .filter(line => line.trim().startsWith('• '))
     .map(line => line.trim().substring(2).trim())
-    .map(item => formatTechnicalReferences(item));
+    .map(item => formatTechnicalReferences(item))
 }
 
 /**
@@ -190,14 +193,14 @@ function formatTechnicalReferences(text: string): string {
     /\b(dora_metrics\.[a-zA-Z_]+)\b/g,
     /\b(environment\s*=\s*[a-zA-Z_]+)\b/g,
     /\b(status\s*=\s*[a-zA-Z_"]+)\b/g,
-    /\b(is_config_only\s*=\s*[A-Z]+)\b/g
-  ];
+    /\b(is_config_only\s*=\s*[A-Z]+)\b/g,
+  ]
 
   return patterns.reduce((formattedText, pattern) => {
     return formattedText.replace(pattern, (match) => {
-      return match.startsWith('`') && match.endsWith('`') ? match : `\`${match}\``;
-    });
-  }, text);
+      return match.startsWith('`') && match.endsWith('`') ? match : `\`${match}\``
+    })
+  }, text)
 }
 
 /**
@@ -207,5 +210,5 @@ function formatTechnicalReferences(text: string): string {
  * @returns true si le bloc est un tableau, false sinon
  */
 export function isTableBlock(block: any): boolean {
-  return block && block.type === 'table';
+  return block && block.type === 'table'
 }

@@ -1,23 +1,23 @@
-import { afterAll, afterEach, describe, expect, it, vi } from 'vitest'
-import { Client } from '@notionhq/client'
-import nock from 'nock'
-import { extractTitleFromPage, fetchAllBlocks, getPageContent } from './pageContentExtractor'
-import type { NotionPage } from '@/types/notion'
+import type { Client } from '@notionhq/client'
 import type { ListBlockChildrenResponse } from '@notionhq/client/build/src/api-endpoints'
+import type { NotionPage } from '@/types/notion'
+import nock from 'nock'
+import { afterAll, afterEach, describe, expect, it, vi } from 'vitest'
 import * as blockConverter from './blockConverter'
+import { extractTitleFromPage, fetchAllBlocks, getPageContent } from './pageContentExtractor'
 import * as personInfoFetcher from './personInfoFetcher'
 
 // Create mock client
 const mockClient = {
   blocks: {
     children: {
-      list: vi.fn()
-    }
+      list: vi.fn(),
+    },
   },
   pages: {
-    retrieve: vi.fn()
-  }
-};
+    retrieve: vi.fn(),
+  },
+}
 
 // Setup mock implementations
 mockClient.blocks.children.list.mockResolvedValue({
@@ -26,7 +26,7 @@ mockClient.blocks.children.list.mockResolvedValue({
   ],
   has_more: false,
   next_cursor: null,
-});
+})
 
 mockClient.pages.retrieve.mockImplementation(({ page_id }) => {
   if (page_id === '838dec96-f9fc-404f-a302-07719225d785') {
@@ -42,8 +42,9 @@ mockClient.pages.retrieve.mockImplementation(({ page_id }) => {
         LinkedIn: { url: 'http://linkedin.com/in/authorname' },
         X: { url: 'http://x.com/authorname' },
       },
-    });
-  } else if (page_id === '12345678-1234-1234-1234-123456789abc') {
+    })
+  }
+  else if (page_id === '12345678-1234-1234-1234-123456789abc') {
     return Promise.resolve({
       id: '12345678-1234-1234-1234-123456789abc',
       properties: {
@@ -56,16 +57,16 @@ mockClient.pages.retrieve.mockImplementation(({ page_id }) => {
         LinkedIn: { url: 'http://linkedin.com/in/reviewername' },
         X: { url: 'http://x.com/reviewername' },
       },
-    });
+    })
   }
-  return Promise.reject(new Error('Unknown page ID'));
-});
+  return Promise.reject(new Error('Unknown page ID'))
+})
 
 // Mock the blockConverter module
 vi.spyOn(blockConverter, 'convertBlocksToMarkdown').mockResolvedValue({
   markdownContent: 'Hello\n\n',
   images: [],
-});
+})
 
 // Mock the personInfoFetcher module
 vi.spyOn(personInfoFetcher, 'getPersonsInfo').mockImplementation((client, ids, type) => {
@@ -76,17 +77,18 @@ vi.spyOn(personInfoFetcher, 'getPersonsInfo').mockImplementation((client, ids, t
       image: 'http://example.com/avatar.png',
       linkedin: 'http://linkedin.com/in/authorname',
       x: 'http://x.com/authorname',
-    }]);
-  } else {
+    }])
+  }
+  else {
     return Promise.resolve([{
       notionId: '12345678-1234-1234-1234-123456789abc',
       name: 'Reviewer Name',
       image: 'http://example.com/reviewer-avatar.png',
       linkedin: 'http://linkedin.com/in/reviewername',
       x: 'http://x.com/reviewername',
-    }]);
+    }])
   }
-});
+})
 
 describe('pageContentExtractor', () => {
   it('should get page content', async () => {
@@ -162,47 +164,48 @@ describe('pageContentExtractor', () => {
     expect(extractTitleFromPage(page)).toBe('Test Title')
   })
 
-  it("should fetch all blocks", async () => {
+  it('should fetch all blocks', async () => {
     const mockClient = {
       blocks: {
         children: {
           list: ({ block_id, start_cursor }): Promise<ListBlockChildrenResponse> => {
             if (!start_cursor) {
               return new Promise(resolve => resolve({
-                object: "list",
+                object: 'list',
                 next_cursor: 'next-cursor',
                 has_more: true,
                 results: [
                   {
-                    type: 'paragraph', paragraph: {
+                    type: 'paragraph',
+                    paragraph: {
                       // @ts-expect-error for test purpose
-                      rich_text: [{ plain_text: 'Hello' }]
-                    }
+                      rich_text: [{ plain_text: 'Hello' }],
+                    },
                   },
                 ],
               }))
             }
 
             return new Promise(resolve => resolve({
-              object: "list",
+              object: 'list',
               next_cursor: null,
               has_more: false,
               results: [
                 {
-                  type: 'paragraph', paragraph: {
+                  type: 'paragraph',
+                  paragraph: {
                     // @ts-expect-error for test purpose
-                    rich_text: [{ plain_text: 'world' }]
-                  }
+                    rich_text: [{ plain_text: 'world' }],
+                  },
                 },
               ],
             }))
+          },
 
-          }
+        },
 
-        }
-
-      }
-    } as Client;
+      },
+    } as Client
 
     const mockPage: NotionPage = {
       id: 'page-id',
@@ -233,29 +236,27 @@ describe('pageContentExtractor', () => {
     expect(result).toEqual(
       [
         {
-          "paragraph": {
-            "rich_text": [
+          paragraph: {
+            rich_text: [
               {
-                "plain_text": "Hello",
+                plain_text: 'Hello',
               },
             ],
           },
-          "type": "paragraph",
+          type: 'paragraph',
         },
         {
-          "paragraph": {
-            "rich_text": [
+          paragraph: {
+            rich_text: [
               {
-                "plain_text": "world",
+                plain_text: 'world',
               },
             ],
           },
-          "type": "paragraph",
+          type: 'paragraph',
         },
-      ]
-    );
-
-
+      ],
+    )
   })
 
   afterEach(() => {

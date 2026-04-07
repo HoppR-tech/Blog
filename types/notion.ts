@@ -31,16 +31,16 @@ export interface InlineEquationTextObject {
 export interface NotionPage {
   id: string
   properties: {
-    Articles: {
+    'Articles': {
       title: Array<{ plain_text: string }>
     }
-    Auteurs: {
+    'Auteurs': {
       relation: Array<{ id: string }>
     }
-    Relecteurs?: {
+    'Relecteurs'?: {
       relation: Array<{ id: string }>
     }
-    Tags: {
+    'Tags': {
       multi_select: Array<{ name: string }>
     }
     'Cover Image': {

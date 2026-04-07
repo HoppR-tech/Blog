@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Person } from '@/types/blog'
-import ContactCTA from '@/components/blog/ContactCTA.vue'
 import { useRuntimeConfig } from '#app'
+import ContactCTA from '@/components/blog/ContactCTA.vue'
 import { stripMarkdown } from '@/utils/stringUtils'
 import 'katex/dist/katex.min.css'
 

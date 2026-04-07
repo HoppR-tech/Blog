@@ -1,4 +1,4 @@
-version: "3.8"
+version: '3.8'
 
 services:
   blog:
@@ -46,12 +46,12 @@ services:
       restart_policy:
         condition: any
       labels:
-        - "traefik.enable=true"
-        - "traefik.docker.network=traefik-network"
-        - "traefik.http.routers.blog.rule=Host(`blog.hoppr.tech`)"
-        - "traefik.http.routers.blog.entrypoints=websecure"
-        - "traefik.http.routers.blog.tls.certresolver=letsencrypt"
-        - "traefik.http.services.blog.loadbalancer.server.port=3000"
+        - traefik.enable=true
+        - traefik.docker.network=traefik-network
+        - traefik.http.routers.blog.rule=Host(`blog.hoppr.tech`)
+        - traefik.http.routers.blog.entrypoints=websecure
+        - traefik.http.routers.blog.tls.certresolver=letsencrypt
+        - traefik.http.services.blog.loadbalancer.server.port=3000
 
 networks:
   traefik-network:

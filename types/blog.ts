@@ -22,7 +22,7 @@ export interface PageContent {
   tags: string[]
   title: string
   content: string
-  images: { url: string; alt: string }[]
+  images: { url: string, alt: string }[]
 }
 
 export interface Person {

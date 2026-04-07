@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { useRuntimeConfig } from '#app'
+import { ref } from 'vue'
 
 const props = defineProps<{
   articleTitle: string
   articleLink: string
-  authors: Array<{ name: string; id: string }>
+  authors: Array<{ name: string, id: string }>
   publishedDate: string
 }>()
 
@@ -42,13 +42,13 @@ async function submitForm() {
 
   try {
     const slackMessage = '📥🔥 Nous avons reçu un nouveau message du Blog HoppR !\n'
-    + `\`pour l\'article\`: "${formData.articleTitle}"\n`
-    + `\`Ecrit par\`: ${formData.authors}\n`
-    + `\`Publié le\`: ${new Date(formData.publishedDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}\n`
-    + `\`Lien vers l\'article\`: ${formData.articleLink}\n`
-    + '\n---\n\n'
-    + `\`De\`: 👤 ${formData.name} | ✉️ *<mailto:${formData.email}|${formData.email}>*\n`
-    + `\`Message\`: ${formData.message}\n`
+      + `\`pour l\'article\`: "${formData.articleTitle}"\n`
+      + `\`Ecrit par\`: ${formData.authors}\n`
+      + `\`Publié le\`: ${new Date(formData.publishedDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}\n`
+      + `\`Lien vers l\'article\`: ${formData.articleLink}\n`
+      + '\n---\n\n'
+      + `\`De\`: 👤 ${formData.name} | ✉️ *<mailto:${formData.email}|${formData.email}>*\n`
+      + `\`Message\`: ${formData.message}\n`
 
     const response = await fetch('/api/sendSlackMessage', {
       method: 'POST',

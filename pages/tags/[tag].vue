@@ -17,8 +17,7 @@ const tag = computed(() => {
 const { data } = await useAsyncData(`tag-data-${tag.value}`, () =>
   queryContent('/blogs')
     .where({ tags: { $containsAny: [tag.value] } })
-    .find(),
-)
+    .find())
 
 // console.error('Tag:', tag.value)
 // console.error('Articles trouvés:', data.value)

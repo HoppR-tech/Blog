@@ -52,9 +52,9 @@ Le fichier `server/services/notion/blockConverter.ts` a été modifié pour util
 ```typescript
 // Transformer personnalisé pour les tableaux
 n2m.setCustomTransformer('table', async (block) => {
-  const tableBlock = block as TableBlockObjectResponse;
-  return await convertTableToMarkdown(tableBlock);
-});
+  const tableBlock = block as TableBlockObjectResponse
+  return await convertTableToMarkdown(tableBlock)
+})
 ```
 
 ### 3. Styles CSS pour les tableaux

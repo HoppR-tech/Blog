@@ -1,4 +1,3 @@
-
 // @ts-ignore
 import { useNitroApp } from '#internal/nitro/app'
 
@@ -13,7 +12,7 @@ const server = Bun.serve({
   websocket: {
     ...nitroApp.hooks.callHookWith((hooks: any) => hooks['bun:websocket:init']),
     ...nitroApp.h3App.websocket,
-  }
+  },
 })
 
 console.log(`Listening on http://localhost:${server.port}...`)

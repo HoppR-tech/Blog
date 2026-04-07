@@ -1,13 +1,13 @@
+import type { TableBlockObjectResponse } from '@notionhq/client/build/src/api-endpoints'
 import { describe, expect, it } from 'vitest'
 import { convertTableToMarkdown, isTableBlock } from './tableConverter'
-import type { TableBlockObjectResponse } from '@notionhq/client/build/src/api-endpoints'
 
 describe('tableConverter', () => {
   it('should convert a simple table to markdown', async () => {
     const tableBlock = buildTableBlock([
       [['Header 1'], ['Header 2']],
       [['Cell 1'], ['Cell 2']],
-      [['Cell 3'], ['Cell 4']]
+      [['Cell 3'], ['Cell 4']],
     ])
 
     const markdown = await convertTableToMarkdown(tableBlock)
@@ -22,7 +22,7 @@ describe('tableConverter', () => {
     const tableBlock = buildTableBlock([
       [['Header 1'], ['Header 2']],
       [['Cell 1'], ['• Item 1\n• Item 2\n• Item 3']],
-      [['Cell 3'], ['Regular text']]
+      [['Cell 3'], ['Regular text']],
     ])
 
     const markdown = await convertTableToMarkdown(tableBlock)
@@ -37,7 +37,7 @@ describe('tableConverter', () => {
     const tableBlock = buildTableBlock([
       [['Header 1'], ['Header 2']],
       [['info/product_id'], ['release.mgmt/deploy.src']],
-      [['dora_metrics.deployments'], ['environment=prod']]
+      [['dora_metrics.deployments'], ['environment=prod']],
     ])
 
     const markdown = await convertTableToMarkdown(tableBlock)
@@ -49,7 +49,7 @@ describe('tableConverter', () => {
   it('should format technical references in bullet lists', async () => {
     const tableBlock = buildTableBlock([
       [['Header 1'], ['Header 2']],
-      [['Cell 1'], ['• info/product_id : identifiant\n• release.mgmt/deploy.src : URL\n• environment=prod : environnement']]
+      [['Cell 1'], ['• info/product_id : identifiant\n• release.mgmt/deploy.src : URL\n• environment=prod : environnement']],
     ])
 
     const markdown = await convertTableToMarkdown(tableBlock)
@@ -75,7 +75,7 @@ describe('tableConverter', () => {
     const tableBlock = buildTableBlock([
       [[{ type: 'text', text: { content: 'Header 1' }, plain_text: 'Header 1' }], [{ type: 'text', text: { content: 'Header 2' }, plain_text: 'Header 2' }]],
       [[{ type: 'text', text: { content: 'Cell 1' }, plain_text: 'Cell 1' }], [{ type: 'text', text: { content: 'Cell 2' }, plain_text: 'Cell 2' }]] as any,
-      [[{ type: 'text', text: { content: 'info/product_id' }, plain_text: 'info/product_id' }], [{ type: 'text', text: { content: 'environment=prod' }, plain_text: 'environment=prod' }]]
+      [[{ type: 'text', text: { content: 'info/product_id' }, plain_text: 'info/product_id' }], [{ type: 'text', text: { content: 'environment=prod' }, plain_text: 'environment=prod' }]],
     ])
 
     const markdown = await convertTableToMarkdown(tableBlock)
@@ -96,8 +96,8 @@ function buildTableBlock(rows: string[][][]): TableBlockObjectResponse {
       has_row_header: false,
       table_width: 2, // Add the required table_width property
       children: rows.map(row => ({
-        cells: row
-      }))
+        cells: row,
+      })),
     },
     // Add required properties to match TableBlockObjectResponse
     parent: { type: 'page_id', page_id: 'test-page' },
@@ -108,6 +108,6 @@ function buildTableBlock(rows: string[][][]): TableBlockObjectResponse {
     last_edited_by: { object: 'user', id: 'test-user' },
     has_children: false,
     archived: false,
-    in_trash: false
+    in_trash: false,
   } as TableBlockObjectResponse
 }

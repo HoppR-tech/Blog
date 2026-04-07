@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { computed, onMounted, onUnmounted, ref } from 'vue'
 import MarkdownIt from 'markdown-it'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 
 interface Props {
   path?: string

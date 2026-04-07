@@ -71,7 +71,7 @@ title: Mon titre avec "guillemets"
 
 ```yaml
 # Après
-title: "Mon titre avec \"guillemets\""
+title: 'Mon titre avec "guillemets"'
 ```
 
 ## Contribution

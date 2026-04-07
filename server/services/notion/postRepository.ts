@@ -1,19 +1,19 @@
 import type { QueryDatabaseResponse } from '@notionhq/client/build/src/api-endpoints'
-import { getPageContent } from './pageContentExtractor'
-import { convertToNotionPage } from './notionUtils'
-import { generateDescription } from './descriptionGenerator'
-import { DATABASE_POSTS_ID } from '@/server/config/notionConfig'
-import type { NotionClientInterface } from '@/types/notion'
 import type { BlogPost } from '@/types/blog'
+import type { NotionClientInterface } from '@/types/notion'
+import { DATABASE_POSTS_ID } from '@/server/config/notionConfig'
 import { categories } from '@/utils/categories'
+import { generateDescription } from './descriptionGenerator'
+import { convertToNotionPage } from './notionUtils'
+import { getPageContent } from './pageContentExtractor'
 
 type NotionQueryResult = QueryDatabaseResponse
 
 export async function fetchPostsToPublish(notionClient: NotionClientInterface): Promise<BlogPost[]> {
   try {
-    let allResults: any[] = [];
-    let hasMore = true;
-    let nextCursor: string | undefined = undefined;
+    let allResults: any[] = []
+    let hasMore = true
+    let nextCursor: string | undefined
 
     while (hasMore) {
       const response: NotionQueryResult = await notionClient.databases.query({
@@ -24,21 +24,21 @@ export async function fetchPostsToPublish(notionClient: NotionClientInterface): 
         },
         start_cursor: nextCursor,
         page_size: 100, // Maximum permis par l'API Notion
-      });
+      })
 
-      allResults = [...allResults, ...response.results];
-      hasMore = response.has_more;
-      nextCursor = response.next_cursor || undefined;
+      allResults = [...allResults, ...response.results]
+      hasMore = response.has_more
+      nextCursor = response.next_cursor || undefined
     }
 
     const blogPosts = await Promise.all(
-      allResults.map(result => getPageContent(notionClient, convertToNotionPage(result)))
-    );
-    return blogPosts.map(convertToBlogPost);
+      allResults.map(result => getPageContent(notionClient, convertToNotionPage(result))),
+    )
+    return blogPosts.map(convertToBlogPost)
   }
   catch (error) {
-    console.error('Error while fetching articles:', error);
-    throw error;
+    console.error('Error while fetching articles:', error)
+    throw error
   }
 }
 

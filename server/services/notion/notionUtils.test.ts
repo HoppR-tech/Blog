@@ -1,7 +1,7 @@
-import { describe, expect, it } from 'vitest'
-import { safeGetProperty } from './notionUtils'
-import { convertBlocksToMarkdown } from './blockConverter'
 import { Client } from '@notionhq/client'
+import { describe, expect, it } from 'vitest'
+import { convertBlocksToMarkdown } from './blockConverter'
+import { safeGetProperty } from './notionUtils'
 
 const mockClient = new Client({ auth: 'test-token' })
 

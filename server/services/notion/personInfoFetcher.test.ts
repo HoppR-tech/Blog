@@ -1,14 +1,13 @@
-import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { Client } from '@notionhq/client'
 import nock from 'nock'
+import { afterAll, afterEach, describe, expect, it, vi } from 'vitest'
 import { getPersonsInfo } from './personInfoFetcher.js'
 
 // Create a mock client instead of modifying the prototype
 const mockClient = {
   pages: {
-    retrieve: vi.fn()
-  }
-};
+    retrieve: vi.fn(),
+  },
+}
 
 // Setup the mock implementation
 mockClient.pages.retrieve.mockImplementation(({ page_id }) => {
@@ -25,8 +24,9 @@ mockClient.pages.retrieve.mockImplementation(({ page_id }) => {
         LinkedIn: { url: 'http://linkedin.com/in/authorname' },
         X: { url: 'http://x.com/authorname' },
       },
-    });
-  } else if (page_id === '12345678-1234-1234-1234-123456789abc') {
+    })
+  }
+  else if (page_id === '12345678-1234-1234-1234-123456789abc') {
     return Promise.resolve({
       id: '12345678-1234-1234-1234-123456789abc',
       properties: {
@@ -39,10 +39,10 @@ mockClient.pages.retrieve.mockImplementation(({ page_id }) => {
         LinkedIn: { url: 'http://linkedin.com/in/reviewername' },
         X: { url: 'http://x.com/reviewername' },
       },
-    });
+    })
   }
-  return Promise.reject(new Error('Unknown page ID'));
-});
+  return Promise.reject(new Error('Unknown page ID'))
+})
 
 describe('personInfoFetcher', () => {
   it('should retrieve author information correctly', async () => {

@@ -1,5 +1,5 @@
-import RSS from 'rss'
 import { serverQueryContent } from '#content/server'
+import RSS from 'rss'
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()

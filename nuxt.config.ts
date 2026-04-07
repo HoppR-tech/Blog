@@ -1,5 +1,3 @@
-
-
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2024-07-31',
@@ -16,19 +14,19 @@ export default defineNuxtConfig({
       link: [
         {
           rel: 'stylesheet',
-          href: 'https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css'
+          href: 'https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css',
         },
       ],
       script: [
         {
-          defer: true,
+          'defer': true,
           'data-domain': 'blog.hoppr.tech',
-          src: 'https://analytics.hoppr.tech/js/script.file-downloads.hash.outbound-links.pageview-props.revenue.tagged-events.js'
+          'src': 'https://analytics.hoppr.tech/js/script.file-downloads.hash.outbound-links.pageview-props.revenue.tagged-events.js',
         },
         {
-          innerHTML: 'window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }'
-        }
-      ]
+          innerHTML: 'window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }',
+        },
+      ],
     },
     pageTransition: { name: 'page', mode: 'out-in' },
     layoutTransition: { name: 'layout', mode: 'out-in' },
@@ -45,7 +43,7 @@ export default defineNuxtConfig({
       'postcss-import': {},
       'tailwindcss': {},
       'autoprefixer': {},
-    ...(process.env.NODE_ENV === 'production' ? { cssnano: {} } : {}),
+      ...(process.env.NODE_ENV === 'production' ? { cssnano: {} } : {}),
     },
   },
 
@@ -194,10 +192,10 @@ export default defineNuxtConfig({
         ['rehype-katex', {
           // Configuration KaTeX
           throwOnError: false,
-          output: 'html'
-        }]
-      ]
-    }
+          output: 'html',
+        }],
+      ],
+    },
   },
 
   contentAssets: {

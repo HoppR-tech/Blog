@@ -10,8 +10,7 @@ const { data } = await useAsyncData('trending-post', () =>
     })
     .sort({ date: 1 })
     .limit(6)
-    .find(), { server: true },
-)
+    .find(), { server: true })
 
 const formattedData = computed(() => {
   return data.value?.map((articles) => {

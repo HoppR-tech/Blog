@@ -1,6 +1,6 @@
-import { safeGetProperty } from './notionUtils'
-import type { NotionClientInterface } from '@/types/notion'
 import type { Person } from '@/types/blog'
+import type { NotionClientInterface } from '@/types/notion'
+import { safeGetProperty } from './notionUtils'
 
 export async function getPersonsInfo(notionClient: NotionClientInterface, personIds: string[], type: 'Author' | 'Reviewer'): Promise<Person[]> {
   if (personIds.length === 0)

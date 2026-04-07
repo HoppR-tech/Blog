@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { computed, onMounted, onUnmounted, ref } from 'vue'
 import MarkdownIt from 'markdown-it'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 
 interface Props {
   path: string
@@ -40,10 +40,10 @@ onMounted(() => {
   const handleResize = () => {
     isMobile.value = window.innerWidth < 640
   }
-  
+
   handleResize()
   window.addEventListener('resize', handleResize)
-  
+
   onUnmounted(() => {
     window.removeEventListener('resize', handleResize)
   })

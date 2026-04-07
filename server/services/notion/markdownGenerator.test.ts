@@ -1,8 +1,8 @@
+import type { BlogPost } from '@/types/blog'
 import { describe, expect, it } from 'vitest'
 import { generateMarkdownContent } from './markdownGenerator'
-import type { BlogPost } from '@/types/blog'
 
-describe('Markdown Utils', () => {
+describe('markdown Utils', () => {
   it('should generate markdown content with frontmatter', () => {
     const post: BlogPost = {
       notionId: '1',

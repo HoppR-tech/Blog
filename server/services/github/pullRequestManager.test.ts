@@ -1,12 +1,12 @@
 import { describe, expect, it, vi } from 'vitest'
 
+import { closePullRequestsForBranch } from './pullRequestManager'
+
 vi.mock('@/server/config/githubConfig', () => ({
   GITHUB_OWNER: 'test-owner',
   GITHUB_REPO: 'test-repo',
   GITHUB_BRANCH: 'main',
 }))
-
-import { closePullRequestsForBranch } from './pullRequestManager'
 
 function createMockOctokit(overrides: Record<string, any> = {}) {
   return {

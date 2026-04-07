@@ -1,6 +1,6 @@
 import { Buffer } from 'node:buffer'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
 import axios from 'axios'
+import { describe, expect, it, vi } from 'vitest'
 import { downloadAndConvertImage, extractImagesAndUpdateContent } from '~/server/services/notion/imageUtils'
 // Mock axios manually
 axios.get = vi.fn()
@@ -13,7 +13,7 @@ vi.mock('sharp', () => ({
   })),
 }))
 
-describe('Image Utils', () => {
+describe('image Utils', () => {
   it('should download and convert an image to webp format', async () => {
     const imageUrl = 'http://example.com/image.png'
     const imageName = 'test-image'

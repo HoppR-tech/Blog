@@ -10,9 +10,9 @@ export function createFolderName(date: string, title: string): string {
 
 export function stripMarkdown(text: string): string {
   return text
-    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')  // [label](url) -> label
-    .replace(/\*{1,3}([^*]+)\*{1,3}/g, '$1')  // ***bold italic***, **bold**, *italic*
-    .replace(/_([^_]+)_/g, '$1')               // _italic_
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // [label](url) -> label
+    .replace(/\*{1,3}([^*]+)\*{1,3}/g, '$1') // ***bold italic***, **bold**, *italic*
+    .replace(/_([^_]+)_/g, '$1') // _italic_
 }
 
 export function slugify(text: string): string {
@@ -21,7 +21,7 @@ export function slugify(text: string): string {
     .toLowerCase()
     .replace(/\s+/g, '-')
     .replace(/[^\w\-]+/g, '')
-    .replace(/\-\-+/g, '-')
+    .replace(/-{2,}/g, '-')
     .replace(/^-+/, '')
     .replace(/-+$/, '')
 }

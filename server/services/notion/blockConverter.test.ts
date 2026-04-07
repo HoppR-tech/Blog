@@ -1,7 +1,7 @@
+import type { BlockObjectResponse } from '@notionhq/client/build/src/api-endpoints'
+import { Client } from '@notionhq/client'
 import { describe, expect, it } from 'vitest'
 import { convertBlocksToMarkdown } from './blockConverter'
-import { Client } from '@notionhq/client'
-import type { BlockObjectResponse } from '@notionhq/client/build/src/api-endpoints'
 
 const mockClient = new Client({ auth: 'test-token' })
 
@@ -19,10 +19,10 @@ describe('blockConverter', () => {
       buildBlock({ type: 'callout', callout: { rich_text: [{ plain_text: 'Note', annotations: {} }] } }),
       buildBlock({ type: 'quote', quote: { rich_text: [{ plain_text: 'Famous quote', annotations: {} }] } }),
       buildBlock({ type: 'divider' }),
-      buildBlock({ type: 'table_of_contents', table_of_contents: { color: "default" } }),
+      buildBlock({ type: 'table_of_contents', table_of_contents: { color: 'default' } }),
       buildBlock({ type: 'toggle', toggle: { rich_text: [{ plain_text: 'Toggle', annotations: {} }] } }),
     ]
-    const { markdownContent, images } = await convertBlocksToMarkdown(mockClient, blocks);
+    const { markdownContent, images } = await convertBlocksToMarkdown(mockClient, blocks)
 
     expect(markdownContent).toContain('Hello')
     expect(markdownContent).toContain('# Title')
@@ -46,11 +46,11 @@ describe('blockConverter', () => {
         image: {
           file: { url: 'http://example.com/image.png' },
           caption: [{ plain_text: 'Une image avec un texte alternatif' }],
-          type: 'file'
+          type: 'file',
         },
       }),
     ]
-    const { markdownContent, images } = await convertBlocksToMarkdown(mockClient, blocks);
+    const { markdownContent, images } = await convertBlocksToMarkdown(mockClient, blocks)
 
     expect(markdownContent).toContain('![Une image avec un texte alternatif](http://example.com/image.png)')
     expect(images).toEqual([{ url: 'http://example.com/image.png', alt: 'Une image avec un texte alternatif' }])
@@ -59,7 +59,7 @@ describe('blockConverter', () => {
   it('should throw an error for images without alt text', () => {
     // Skip this test for now as it's causing issues
     // The functionality is working correctly in the actual code
-    expect(true).toBe(true);
+    expect(true).toBe(true)
   })
 
   it('should handle empty blocks gracefully', async () => {
@@ -67,7 +67,7 @@ describe('blockConverter', () => {
       buildBlock({ type: 'paragraph', paragraph: { rich_text: [{ plain_text: '', annotations: {} }] } }),
       buildBlock({ type: 'heading_1', heading_1: { rich_text: [{ plain_text: '', annotations: {} }] } }),
     ]
-    const { markdownContent, images } = await convertBlocksToMarkdown(mockClient, blocks);
+    const { markdownContent, images } = await convertBlocksToMarkdown(mockClient, blocks)
 
     expect(markdownContent).toBe('\n\n# ')
     expect(images).toEqual([])
@@ -86,7 +86,7 @@ describe('blockConverter', () => {
         },
       }),
     ]
-    const { markdownContent } = await convertBlocksToMarkdown(mockClient, blocks);
+    const { markdownContent } = await convertBlocksToMarkdown(mockClient, blocks)
 
     expect(markdownContent).toBe('Ceci est un [lien](https://example.com) dans un paragraphe.')
   })
@@ -96,11 +96,11 @@ describe('blockConverter', () => {
       buildBlock({
         type: 'equation',
         equation: {
-          expression: 'E = mc^2'
-        }
+          expression: 'E = mc^2',
+        },
       }),
     ]
-    const { markdownContent } = await convertBlocksToMarkdown(mockClient, blocks);
+    const { markdownContent } = await convertBlocksToMarkdown(mockClient, blocks)
 
     expect(markdownContent).toContain('$$\nE = mc^2\n$$')
   })
@@ -113,7 +113,7 @@ describe('blockConverter', () => {
           rich_text: [{
             type: 'equation',
             equation: {
-              expression: 'E = mc^2'
+              expression: 'E = mc^2',
             },
             annotations: {
               bold: false,
@@ -121,15 +121,15 @@ describe('blockConverter', () => {
               strikethrough: false,
               underline: false,
               code: false,
-              color: 'default'
+              color: 'default',
             },
             plain_text: '$E = mc^2$',
-            href: null
-          }]
-        }
+            href: null,
+          }],
+        },
       }),
     ]
-    const { markdownContent } = await convertBlocksToMarkdown(mockClient, blocks);
+    const { markdownContent } = await convertBlocksToMarkdown(mockClient, blocks)
 
     expect(markdownContent).toContain('$E = mc^2$')
   })
@@ -144,12 +144,12 @@ describe('blockConverter', () => {
           children: [
             { cells: [['Header 1'], ['Header 2']] },
             { cells: [['Cell 1'], ['• Item 1\n• Item 2']] },
-            { cells: [['info/product_id'], ['release.mgmt/deploy.src']] }
-          ]
-        }
+            { cells: [['info/product_id'], ['release.mgmt/deploy.src']] },
+          ],
+        },
       }),
     ]
-    const { markdownContent } = await convertBlocksToMarkdown(mockClient, blocks);
+    const { markdownContent } = await convertBlocksToMarkdown(mockClient, blocks)
 
     expect(markdownContent).toContain('| Header 1 | Header 2 |')
     expect(markdownContent).toContain('| --- | --- |')
@@ -161,6 +161,6 @@ describe('blockConverter', () => {
 function buildBlock(block: any): BlockObjectResponse {
   return {
     ...block,
-    id: block.type
+    id: block.type,
   }
 }

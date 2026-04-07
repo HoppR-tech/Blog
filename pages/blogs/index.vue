@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import type { NuxtError } from 'nuxt/app'
+import type { Person } from '~/types/blog'
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import type { Person } from '~/types/blog'
 
 const route = useRoute()
 const { data, error } = await useAsyncData('all-blog-post', () =>
@@ -13,8 +13,7 @@ const { data, error } = await useAsyncData('all-blog-post', () =>
       console.error('Erreur lors de la récupération des articles:', err)
       error.value = { statusCode: 500, message: 'Impossible de charger les articles. Veuillez réessayer plus tard.' } as NuxtError
       return []
-    }),
-)
+    }))
 
 const elementPerPage = ref(5)
 const pageNumber = ref(1)

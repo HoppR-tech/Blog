@@ -116,8 +116,6 @@ useHead({
   }
 }
 
-
-
 html.dark {
   color-scheme: dark;
 }

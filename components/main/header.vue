@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import type { SearchBarRef } from '@/components/blog/SearchBar.vue'
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import SearchBar from '@/components/blog/SearchBar.vue'
 import LogoSvg from '@/components/logo/headerLogo.vue'
-import type { SearchBarRef } from '@/components/blog/SearchBar.vue'
 
 const route = useRoute()
 const path = computed(() => route.fullPath.replace('/', ''))

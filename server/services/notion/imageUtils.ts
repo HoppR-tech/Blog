@@ -1,8 +1,8 @@
+import type { Person } from '@/types/blog'
+import type { ImageFile } from '@/types/files'
 import axios from 'axios'
 import sharp from 'sharp'
 import { slugify } from '@/utils/stringUtils'
-import type { ImageFile } from '@/types/files'
-import type { Person } from '@/types/blog'
 
 const DEFAULT_AUTHOR_IMAGE = '/default-author-image.webp'
 
@@ -35,7 +35,7 @@ export async function downloadAndConvertImage(imageUrl: string, imageName: strin
   }
 }
 
-export async function extractImagesAndUpdateContent(content: string): Promise<{ updatedContent: string; imageFiles: ImageFile[]; lastValidImageUrl: string | null }> {
+export async function extractImagesAndUpdateContent(content: string): Promise<{ updatedContent: string, imageFiles: ImageFile[], lastValidImageUrl: string | null }> {
   const imageRegex = /!\[.*?\]\((.*?)\)/g
   const imageUrls = content.match(imageRegex)?.map(match => match.match(/\((.*?)\)/)?.[1]) || []
   const imageFiles: ImageFile[] = []
@@ -61,7 +61,7 @@ export async function extractImagesAndUpdateContent(content: string): Promise<{ 
   return { updatedContent, imageFiles, lastValidImageUrl }
 }
 
-export async function processAuthorsImages(authors: Person[]): Promise<{ updatedAuthors: Person[]; authorImages: ImageFile[] }> {
+export async function processAuthorsImages(authors: Person[]): Promise<{ updatedAuthors: Person[], authorImages: ImageFile[] }> {
   const authorImages: ImageFile[] = []
   const updatedAuthors = await Promise.all(authors.map(async (author) => {
     if (!author.image || author.image === '')

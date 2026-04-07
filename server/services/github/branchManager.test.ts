@@ -1,12 +1,12 @@
 import { describe, expect, it, vi } from 'vitest'
 
+import { createBranch, safeDeleteBranch } from './branchManager'
+
 vi.mock('@/server/config/githubConfig', () => ({
   GITHUB_OWNER: 'test-owner',
   GITHUB_REPO: 'test-repo',
   GITHUB_BRANCH: 'main',
 }))
-
-import { createBranch, safeDeleteBranch } from './branchManager'
 
 function createMockOctokit(overrides: { repos?: Record<string, any>, git?: Record<string, any> } = {}) {
   const defaultRepos = {

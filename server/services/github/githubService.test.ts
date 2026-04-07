@@ -1,4 +1,4 @@
-import { describe, expect, it, vi, beforeEach } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 vi.mock('@/server/config/githubConfig', () => ({
   GITHUB_OWNER: 'test-owner',
@@ -68,7 +68,7 @@ function createMockPost() {
   }
 }
 
-describe('GitHubService', () => {
+describe('gitHubService', () => {
   const mockOctokit = {} as any
 
   beforeEach(() => {

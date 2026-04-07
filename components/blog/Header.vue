@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { Person } from '@/types/blog'
 
+import { formatDate } from '@/utils/helper'
+
 interface Props {
   title: string
   image: string
@@ -26,8 +28,6 @@ const props = withDefaults(defineProps<Props>(), {
   }],
   reviewers: () => [],
 })
-
-import { formatDate } from '@/utils/helper'
 </script>
 
 <template>

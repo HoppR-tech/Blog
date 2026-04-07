@@ -1,7 +1,7 @@
 import { defineEventHandler } from 'h3'
-import { NotionService } from '@/server/services/notion/notionService'
 import { GitHubService } from '@/server/services/github/githubService'
 import { getOctokit } from '@/server/services/github/octokitClient'
+import { NotionService } from '@/server/services/notion/notionService'
 
 export default defineEventHandler(async (event) => {
   // console.log('Starting syncPosts process...')

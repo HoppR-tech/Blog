@@ -8,21 +8,20 @@ const category = computed(() => {
   return categories.find(cat => cat.value === categoryValue.value) || { label: categoryValue.value, icon: 'mdi:tag', colors: { light: '#3b82f6', dark: '#60A5FA' } }
 })
 
-const { data } = await useAsyncData(`category-${categoryValue.value}`, () =>
-  queryContent('/blogs')
-    .where({ tags: { $containsAny: [categoryValue.value] } })
-    .sort({ date: -1 })
-    .find())
+const { data } = await useAsyncData(`category-${categoryValue.value}`, async () => {
+  const allPosts = await queryCollection('blogs').order('date', 'DESC').all()
+  return allPosts.filter(article => article.tags?.includes(categoryValue.value))
+})
 
 const formattedData = computed(() => {
   return data.value?.map((article) => {
     return {
-      path: article._path || '/',
+      path: article.path || '/',
       title: article.title || 'no-title available',
       description: article.description || 'no-description available',
-      image: article.image || '/not-found.jpg',
+      image: resolveContentAsset(article.image || '/not-found.jpg', article.path || '/'),
       alt: article.alt || 'no alter data available',
-      ogImage: article.ogImage || '/not-found.jpg',
+      ogImage: resolveContentAsset(article.ogImage || '/not-found.jpg', article.path || '/'),
       date: formatDate(article.date) || 'not-date-available',
       tags: article.tags || [],
       published: article.published || false,

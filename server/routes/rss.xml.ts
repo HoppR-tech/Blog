@@ -1,5 +1,5 @@
-import { serverQueryContent } from '#content/server'
 import RSS from 'rss'
+import { resolveContentAsset } from '@/utils/contentAssets'
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
@@ -22,11 +22,10 @@ export default defineEventHandler(async (event) => {
     ttl: 60,
   })
 
-  const docs = await serverQueryContent(event).sort({ date: -1 }).where({ _partial: false }).find()
-  const blogPosts = docs.filter(doc => doc?._path?.includes('/blog'))
+  const blogPosts = await queryCollection('blogs').order('date', 'DESC').all()
 
   for (const post of blogPosts) {
-    const url = `${siteURL}${post._path}`
+    const url = `${siteURL}${post.path}`
     feed.item({
       title: post.title as string,
       description: post.description,
@@ -36,7 +35,7 @@ export default defineEventHandler(async (event) => {
       author: post.authors.map((author: { name: string }) => author.name).join(', '),
       date: new Date(post.date),
       enclosure: {
-        url: post.image,
+        url: resolveContentAsset(post.image || '', post.path || ''),
         type: 'image/webp',
       },
     } as RSS.ItemOptions)

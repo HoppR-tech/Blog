@@ -14,10 +14,10 @@ const tag = computed(() => {
 })
 
 // Récupérer les articles correspondant à la catégorie
-const { data } = await useAsyncData(`tag-data-${tag.value}`, () =>
-  queryContent('/blogs')
-    .where({ tags: { $containsAny: [tag.value] } })
-    .find())
+const { data } = await useAsyncData(`tag-data-${tag.value}`, async () => {
+  const allPosts = await queryCollection('blogs').all()
+  return allPosts.filter(article => article.tags?.includes(tag.value))
+})
 
 // console.error('Tag:', tag.value)
 // console.error('Articles trouvés:', data.value)
@@ -25,12 +25,12 @@ const { data } = await useAsyncData(`tag-data-${tag.value}`, () =>
 const formattedData = computed(() => {
   return data.value?.map((articles) => {
     return {
-      path: articles._path,
+      path: articles.path,
       title: articles.title || 'no-title available',
       description: articles.description || 'no-description available',
-      image: articles.image || '/not-found.jpg',
+      image: resolveContentAsset(articles.image || '/not-found.jpg', articles.path),
       alt: articles.alt || 'no alter data available',
-      ogImage: articles.ogImage || '/not-found.jpg',
+      ogImage: resolveContentAsset(articles.ogImage || '/not-found.jpg', articles.path),
       date: formatDate(articles.date) || 'not-date-available',
       tags: articles.tags || [],
       published: articles.published || false,

@@ -2,7 +2,7 @@
 import { computed, ref } from 'vue'
 import { makeFirstCharUpper } from '../../utils/helper'
 
-const { data } = await useAsyncData('all-blog-post-for-tag', () => queryContent('/blogs').sort({ _id: -1 }).find())
+const { data } = await useAsyncData('all-blog-post-for-tag', () => queryCollection('blogs').order('date', 'DESC').all())
 
 const allTags = new Map()
 

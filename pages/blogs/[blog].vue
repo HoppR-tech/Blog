@@ -8,7 +8,7 @@ import 'katex/dist/katex.min.css'
 const { path } = useRoute()
 
 const { data: article, error } = await useAsyncData(`blog-post-${path}`, () => {
-  return queryContent(path).findOne()
+  return queryCollection('blogs').path(path).first()
 })
 
 if (error.value) {
@@ -17,20 +17,34 @@ if (error.value) {
 }
 
 const blogPostProps = computed(() => {
+  const articlePath = article.value?.path || path
   return {
     title: article.value?.title || 'no-title available',
     description: article.value?.description || 'no-description available',
-    image: article.value?.image || '/not-found.jpg',
+    image: resolveContentAsset(article.value?.image || '/not-found.jpg', articlePath),
     alt: article.value?.alt || 'no alter data available',
-    ogImage: article.value?.ogImage || '/not-found.jpg',
+    ogImage: resolveContentAsset(article.value?.ogImage || '/not-found.jpg', articlePath),
     date: article.value?.date || 'not-date-available',
     tags: article.value?.tags || [],
     published: article.value?.published || false,
   }
 })
 
-const authors: Person[] = article.value?.authors || []
-const reviewers: Person[] = article.value?.reviewers || []
+const articlePath = computed(() => article.value?.path || path)
+const authors: Person[] = (article.value?.authors || []).map(a => ({
+  notionId: a.id,
+  name: a.name,
+  image: resolveContentAsset(a.image || '', articlePath.value),
+  linkedin: a.linkedin,
+  x: a.x,
+}))
+const reviewers: Person[] = (article.value?.reviewers || []).map(r => ({
+  notionId: r.id,
+  name: r.name,
+  image: resolveContentAsset(r.image || '', articlePath.value),
+  linkedin: r.linkedin,
+  x: r.x,
+}))
 const ogDescription = computed(() => stripMarkdown(blogPostProps.value.description))
 
 function generateStructuredData() {

@@ -1,6 +1,13 @@
+import { dirname, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: '2024-07-31',
+  compatibilityDate: '2025-04-07',
+
+  srcDir: '.',
 
   ssr: true,
 
@@ -36,6 +43,12 @@ export default defineNuxtConfig({
     transpile: ['vue-sonner', 'shiki'],
   },
 
+  vite: {
+    optimizeDeps: {
+      include: [],
+    },
+  },
+
   css: ['~/assets/css/tailwind.css', '~/assets/css/katex.responsive.css'],
 
   postcss: {
@@ -57,9 +70,7 @@ export default defineNuxtConfig({
     class: 'icon',
   },
 
-  sitemap: {
-    strictNuxtContentPaths: true,
-  },
+  sitemap: {},
   site: {
     url: process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://blog.hoppr.tech',
     identity: {
@@ -73,7 +84,7 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    preset: process.env.NITRO_PRESET || 'vercel',
+    preset: process.env.NITRO_PRESET || 'bun',
     prerender: {
       crawlLinks: true,
       routes: [
@@ -132,74 +143,75 @@ export default defineNuxtConfig({
   },
 
   modules: [
-    'nuxt-icon',
+    '@nuxt/icon',
     '@vueuse/nuxt',
     'nuxt-og-image',
-    'nuxt-content-assets', // Assurez-vous d'ajouter cela avant '@nuxt/content' !
     '@nuxt/content',
     '@nuxtjs/robots',
     '@nuxtjs/fontaine',
     '@nuxtjs/color-mode',
     '@nuxtjs/tailwindcss',
-    'nuxt-purgecss',
-    '@nuxt/devtools',
     '@nuxtjs/sitemap',
     ...(process.env.NODE_ENV === 'test' ? ['@nuxt/test-utils/module'] : []),
   ],
 
   ogImage: {
-    // Disable prerendering of OG images to avoid ultrahtml/satori-html crash in CI
-    // Images will be generated at runtime instead
     runtimeCacheStorage: true,
+    zeroRuntime: true,
+  },
+
+  mdc: {
+    optimize: false,
   },
 
   content: {
-    highlight: {
-      theme: 'github-dark',
-      langs: [
-        'bash',
-        'shell',
-        'powershell',
-        'js',
-        'ts',
-        'python',
-        'java',
-        'c',
-        'csharp',
-        'go',
-        'ruby',
-        'php',
-        'rust',
-        'sql',
-        'yaml',
-        'json',
-        'docker',
-        'terraform',
-        'tf',
-        'html',
-        'css',
-        'groovy',
-        'scala',
-        'kotlin',
-        'swift',
-        'dart',
-        'xml',
-      ],
+    build: {
+      markdown: {
+        highlight: {
+          theme: 'github-dark',
+          langs: [
+            'bash',
+            'shell',
+            'powershell',
+            'js',
+            'ts',
+            'python',
+            'java',
+            'c',
+            'csharp',
+            'go',
+            'ruby',
+            'php',
+            'rust',
+            'sql',
+            'yaml',
+            'json',
+            'docker',
+            'terraform',
+            'tf',
+            'html',
+            'css',
+            'groovy',
+            'scala',
+            'kotlin',
+            'swift',
+            'dart',
+            'xml',
+          ],
+        },
+        remarkPlugins: {
+          'remark-math': {},
+        },
+        rehypePlugins: {
+          'rehype-katex': {
+            options: {
+              throwOnError: false,
+              output: 'html',
+            },
+          },
+          [resolve(__dirname, 'content-plugins/rehype-content-assets.mjs')]: {},
+        },
+      },
     },
-    markdown: {
-      remarkPlugins: ['remark-math'],
-      rehypePlugins: [
-        ['rehype-katex', {
-          // Configuration KaTeX
-          throwOnError: false,
-          output: 'html',
-        }],
-      ],
-    },
-  },
-
-  contentAssets: {
-    // contentExtensions: 'mdx? csv',
-    debug: false,
   },
 })

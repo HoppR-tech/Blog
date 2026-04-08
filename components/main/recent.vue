@@ -1,17 +1,17 @@
 <script lang="ts" setup>
 // Get Last 6 Publish Post from the content/blog directory
 const { data } = await useAsyncData('recent-post', () =>
-  queryContent('/blogs').limit(3).sort({ _id: -1 }).find(), { server: true })
+  queryCollection('blogs').order('date', 'DESC').limit(3).all(), { server: true })
 
 const formattedData = computed(() => {
   return data.value?.map((articles) => {
     return {
-      path: articles._path,
+      path: articles.path,
       title: articles.title || 'no-title available',
       description: articles.description || 'no-description available',
-      image: articles.image || '/not-found.jpg',
+      image: resolveContentAsset(articles.image || '/not-found.jpg', articles.path),
       alt: articles.alt || 'no alter data available',
-      ogImage: articles.ogImage || '/not-found.jpg',
+      ogImage: resolveContentAsset(articles.ogImage || '/not-found.jpg', articles.path),
       date: formatDate(articles.date) || 'not-date-available',
       tags: articles.tags || [],
       published: articles.published || false,

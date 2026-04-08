@@ -3,7 +3,7 @@ import { computed, onMounted, onUnmounted, ref } from 'vue'
 
 // Récupération des données de l'article
 const { path } = useRoute()
-const articles = await queryContent(path).findOne()
+const articles = await queryCollection('blogs').path(path).first()
 
 // État du TOC
 const currentSection = ref<null | string>(null)

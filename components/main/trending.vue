@@ -2,25 +2,24 @@
 // Get the 6 oldest posts published within the last 3 months
 const threeMonthsAgo = new Date()
 threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3)
-const { data } = await useAsyncData('trending-post', () =>
-  queryContent('/blogs')
-    .where({
-      published: true,
-      date: { $gte: threeMonthsAgo.toISOString().split('T')[0] } as any,
-    })
-    .sort({ date: 1 })
-    .limit(6)
-    .find(), { server: true })
+const { data } = await useAsyncData('trending-post', async () => {
+  const allPosts = await queryCollection('blogs')
+    .order('date', 'ASC')
+    .all()
+  return allPosts
+    .filter(post => post.published === true && post.date >= threeMonthsAgo.toISOString().split('T')[0])
+    .slice(0, 6)
+}, { server: true })
 
 const formattedData = computed(() => {
   return data.value?.map((articles) => {
     return {
-      path: articles._path,
+      path: articles.path,
       title: articles.title || 'no-title available',
       description: articles.description || 'no-description available',
-      image: articles.image || '/not-found.jpg',
+      image: resolveContentAsset(articles.image || '/not-found.jpg', articles.path),
       alt: articles.alt || 'no alter data available',
-      ogImage: articles.ogImage || '/not-found.jpg',
+      ogImage: resolveContentAsset(articles.ogImage || '/not-found.jpg', articles.path),
       date: formatDate(articles.date) || 'not-date-available',
       tags: articles.tags || [],
       published: articles.published || false,

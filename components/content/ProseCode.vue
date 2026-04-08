@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-
-const props = defineProps({
+defineProps({
   code: {
     type: String,
     default: '',
@@ -10,67 +8,27 @@ const props = defineProps({
     type: String,
     default: '',
   },
-  filename: {
-    type: String,
-    default: null,
-  },
-  highlights: {
-    type: Array as () => number[],
-    default: () => [],
-  },
-  meta: {
-    type: String,
-    default: null,
-  },
 })
-
-const copied = ref(false)
-const copyIcon = ref('mdi:content-copy')
-
-async function copyCode() {
-  try {
-    await navigator.clipboard.writeText(props.code)
-    copied.value = true
-    copyIcon.value = 'mdi:check'
-    setTimeout(() => {
-      copied.value = false
-      copyIcon.value = 'mdi:content-copy'
-    }, 2000)
-  }
-  catch (error) {
-    console.error('Failed to copy text: ', error)
-  }
-}
 </script>
 
 <template>
-  <div class="relative bg-gray-900 rounded-lg overflow-hidden my-2">
-    <div class="absolute top-0 left-0 m-2 text-xs font-semibold text-gray-300">
-      {{ language }}
-    </div>
-    <div class="absolute top-0 right-0 m-2">
-      <button
-        class="bg-hoppr-green hover:bg-opacity-80 text-hoppr-black rounded px-2 py-1 text-xs sm:text-sm flex items-center"
-        :aria-label="copied ? 'Code copié' : 'Copier le code'"
-        @click="copyCode"
-      >
-        <span class="mr-1">{{ copied ? 'Copié' : 'Copier' }}</span>
-        <Icon :name="copyIcon" size="16" />
-      </button>
-    </div>
-    <div class="p-4 bg-gray-900">
-      <slot />
-    </div>
-  </div>
+  <code class="prose-inline-code">
+    <slot />
+  </code>
 </template>
 
 <style>
-pre code .line {
-  display: block;
-  min-height: 1rem;
+.prose-inline-code {
+  background-color: #f3f4f6 !important; /* gray-100 — matches prod */
+  color: #2F2D85 !important; /* hoppr-purple — matches prod */
+  padding: 0.2em 0.4em !important;
+  border-radius: 4px;
+  font-size: 0.875em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
-.shiki {
-  background-color: transparent;
+html.dark .prose-inline-code {
+  background-color: #1f2937 !important; /* gray-800 — matches prod */
+  color: #00cca5 !important; /* hoppr-green — matches prod */
 }
 </style>

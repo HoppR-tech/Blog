@@ -1,14 +1,13 @@
 <script lang="ts" setup>
 import type { NuxtError } from 'nuxt/app'
-import type { Person } from '~/types/blog'
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
 const { data, error } = await useAsyncData('all-blog-post', () =>
-  queryContent('/blogs')
-    .sort({ date: -1 })
-    .find()
+  queryCollection('blogs')
+    .order('date', 'DESC')
+    .all()
     .catch((err: Error) => {
       console.error('Erreur lors de la récupération des articles:', err)
       error.value = { statusCode: 500, message: 'Impossible de charger les articles. Veuillez réessayer plus tard.' } as NuxtError
@@ -38,16 +37,16 @@ watch(data, (newData) => {
 const formattedData = computed(() => {
   return data.value?.map((articles) => {
     return {
-      path: articles._path,
+      path: articles.path,
       title: articles.title || 'no-title available',
       description: articles.description || 'no-description available',
-      image: articles.image || '/not-found.jpg',
+      image: resolveContentAsset(articles.image || '/not-found.jpg', articles.path),
       alt: articles.alt || 'no alter data available',
-      ogImage: articles.ogImage || '/not-found.jpg',
+      ogImage: resolveContentAsset(articles.ogImage || '/not-found.jpg', articles.path),
       date: formatDate(articles.date) || 'not-date-available',
       tags: articles.tags || [],
       published: articles.published || false,
-      content: articles.content || '',
+      content: (articles as any).rawbody || articles.description || '',
       authors: articles.authors || [],
     }
   })
@@ -61,7 +60,7 @@ const searchData = computed(() => {
     const lowerDescription = data.description.toLowerCase()
     const lowerContent = data.content.toLowerCase()
     const lowerTags = data.tags.map((tag: string) => tag.toLowerCase())
-    const lowerAuthors = data.authors.map((author: Person) => author.name.toLowerCase())
+    const lowerAuthors = data.authors.map((author: { name: string }) => author.name.toLowerCase())
     const lowerSearchTerm = searchTest.value.toLowerCase()
     return lowerTitle.includes(lowerSearchTerm)
       || lowerDescription.includes(lowerSearchTerm)

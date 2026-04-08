@@ -10,11 +10,11 @@ const category = computed(() => {
 })
 
 const { data } = await useAsyncData(`category-${categoryValue.value}`, async () => {
-  const allPosts = await queryCollection('blogs').order('date', 'DESC').all()
-  return allPosts.filter(article =>
-    article.tags?.map(t => t.toLowerCase()).includes(categoryValue.value.toLowerCase()),
-  )
-})
+  const allPosts = await queryCollection('blogs').all()
+  return allPosts
+    .filter(article => article.tags?.some(t => t.toLowerCase() === categoryValue.value.toLowerCase()))
+    .sort((a, b) => b.date.localeCompare(a.date))
+}, { server: true })
 
 const formattedData = computed(() => {
   return data.value?.map((article) => {

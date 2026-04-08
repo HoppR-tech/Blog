@@ -1,33 +1,31 @@
 <script lang="ts" setup>
-// Get the 6 oldest posts published within the last 3 months
-const threeMonthsAgo = new Date()
-threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3)
+import { selectFeaturedArticles } from '~/src/domain/select-featured-articles'
+import { categories } from '~/utils/categories'
+
+const categoryValues = categories.map(c => c.value)
+
 const { data } = await useAsyncData('trending-post', async () => {
   const allPosts = await queryCollection('blogs')
-    .order('date', 'ASC')
+    .order('date', 'DESC')
     .all()
-  return allPosts
-    .filter(post => post.published === true && post.date >= threeMonthsAgo.toISOString().split('T')[0])
-    .slice(0, 6)
+  return selectFeaturedArticles(allPosts, categoryValues)
 }, { server: true })
 
 const formattedData = computed(() => {
-  return data.value?.map((articles) => {
+  return data.value?.map((article) => {
     return {
-      path: articles.path,
-      title: articles.title || 'no-title available',
-      description: articles.description || 'no-description available',
-      image: resolveContentAsset(articles.image || '/not-found.jpg', articles.path),
-      alt: articles.alt || 'no alter data available',
-      ogImage: resolveContentAsset(articles.ogImage || '/not-found.jpg', articles.path),
-      date: formatDate(articles.date) || 'not-date-available',
-      tags: articles.tags || [],
-      published: articles.published || false,
+      path: article.path,
+      title: article.title || 'no-title available',
+      description: article.description || 'no-description available',
+      image: resolveContentAsset(article.image || '/not-found.jpg', article.path),
+      alt: article.alt || 'no alter data available',
+      ogImage: resolveContentAsset(article.ogImage || '/not-found.jpg', article.path),
+      date: formatDate(article.date) || 'not-date-available',
+      tags: article.tags || [],
+      published: article.published || false,
     }
   })
 })
-
-const imageSize = 'h-48'
 
 // SEO meta is handled by pages/index.vue via usePageSeo
 </script>
@@ -40,12 +38,18 @@ const imageSize = 'h-48'
         Articles à la Une
       </h2>
     </div>
-    <div class="grid grid-cols-1 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
       <template v-for="post in formattedData" :key="post.title">
-        <ArchiveCard
-          :path="post.path" :title="post.title" :date="post.date" :description="post.description"
-          :image="post.image" :alt="post.alt" :og-image="post.ogImage" :tags="post.tags" :published="post.published"
-          :image-size="imageSize"
+        <BlogCard
+          :path="post.path"
+          :title="post.title"
+          :date="post.date"
+          :description="post.description"
+          :image="post.image"
+          :alt="post.alt"
+          :og-image="post.ogImage"
+          :tags="post.tags"
+          :published="post.published"
         />
       </template>
       <template v-if="data?.length === 0">

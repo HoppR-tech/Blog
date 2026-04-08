@@ -13,8 +13,21 @@ let mediaQuery: MediaQueryList | undefined
 let handleScreenChange: ((e: MediaQueryListEvent | MediaQueryList) => void) | undefined
 let initTimeout: NodeJS.Timeout | undefined
 
+// Detect heading depth dynamically (supports rehype-heading-shift plugin)
+// Without shift: top-level = depth 2, children = depth 3
+// With shift (+1): top-level = depth 3, children = depth 4
+const tocLinks = articles?.body?.toc?.links || []
+const allDepths = tocLinks.flatMap((link: any) => {
+  const depths = [link.depth]
+  if (link.children)
+    depths.push(...link.children.map((c: any) => c.depth))
+  return depths
+})
+const parentDepth = allDepths.length > 0 ? Math.min(...allDepths) : 2
+const childDepth = parentDepth + 1
+
 // Gestion des sections ouvertes/fermées
-const firstLinkWithChildren = articles?.body?.toc?.links.find(link => link.children && link.children.length > 0)
+const firstLinkWithChildren = tocLinks.find((link: any) => link.children && link.children.length > 0)
 const expandedSections = ref<Set<string>>(new Set(
   firstLinkWithChildren ? [firstLinkWithChildren.id] : [],
 ))
@@ -114,7 +127,7 @@ function initIntersectionObserver(): void {
  * Observe les sections de l'article pour détecter lesquelles sont visibles
  */
 function observeArticleSections(): void {
-  const sections = document.querySelectorAll('.article-section h2[id], .article-section h3[id], .article-section h4[id]')
+  const sections = document.querySelectorAll('.article-section h2[id], .article-section h3[id], .article-section h4[id], .article-section h5[id]')
   console.log('Sections trouvées:', sections.length)
 
   sections.forEach((section) => {
@@ -124,7 +137,7 @@ function observeArticleSections(): void {
 
   // Si aucune section n'a été trouvée avec des IDs, essayer sans le sélecteur d'ID
   if (sections.length === 0) {
-    document.querySelectorAll('.article-section h2, .article-section h3, .article-section h4').forEach((section) => {
+    document.querySelectorAll('.article-section h2, .article-section h3, .article-section h4, .article-section h5').forEach((section) => {
       console.log('Section sans ID:', section.textContent)
       if (observer)
         observer.observe(section)
@@ -396,9 +409,11 @@ function findClosestHeading(sectionId: string): string | null {
     // Remonter au parent précédent
     currentElement = currentElement.previousElementSibling as HTMLElement
 
-    if (currentElement && (currentElement.tagName === 'H2' || currentElement.querySelector('h2'))) {
+    const parentTag = `H${parentDepth}`
+    const parentSelector = `h${parentDepth}`
+    if (currentElement && (currentElement.tagName === parentTag || currentElement.querySelector(parentSelector))) {
       // Trouver l'ID de ce titre
-      const parentId = currentElement.id || currentElement.querySelector('h2')?.id
+      const parentId = currentElement.id || currentElement.querySelector(parentSelector)?.id
 
       if (parentId) {
         console.log('Parent trouvé en remontant le DOM:', parentId)
@@ -502,7 +517,7 @@ function updateExpandedSections(activeParentId: string | null, sectionId: string
 </script>
 
 <template>
-  <div id="toc-container" class="lg:col-span-3 sticky top-28 mt-5 h-96 hidden lg:block justify-self-end w-full">
+  <div id="toc-container" class="lg:col-span-3 sticky top-28 mt-5 hidden lg:block justify-self-end w-full self-start">
     <div class="border dark:border-zinc-500 p-4 rounded-md w-[250px] max-w-[350px] dark:bg-slate-900 shadow-md overflow-hidden">
       <h2 class="text-lg font-bold mb-4 border-b dark:border-zinc-500 pb-2 text-hoppr-green">
         Table des matières
@@ -510,13 +525,13 @@ function updateExpandedSections(activeParentId: string | null, sectionId: string
       <div id="toc-content" class="relative max-h-[calc(100vh-200px)] overflow-y-auto pr-2">
         <div
           v-for="(link, index) in links" :key="link.id" class="flex items-start relative" :class="{
-            'mb-4': link.depth === 2,
-            'mb-2': link.depth === 3 && isExpanded(link.parent),
+            'mb-4': link.depth === parentDepth,
+            'mb-2': link.depth === childDepth && isExpanded(link.parent),
           }"
         >
           <div class="w-6 flex-shrink-0 flex items-center justify-center">
             <button
-              v-if="link.depth === 2"
+              v-if="link.depth === parentDepth"
               class="text-hoppr-green hover:text-opacity-80 transition-colors duration-200 w-full text-left"
               @click="toggleSection(link.id)"
             >
@@ -524,30 +539,30 @@ function updateExpandedSections(activeParentId: string | null, sectionId: string
             </button>
           </div>
           <div
-            v-if="link.depth === 3 && isExpanded(link.parent)"
+            v-if="link.depth === childDepth && isExpanded(link.parent)"
             class="absolute left-0 top-0 bottom-0 w-px bg-gray-300 dark:bg-zinc-600" :style="{
-              top: index > 0 && links[index - 1].depth === 2 ? '0' : '-4px',
+              top: index > 0 && links[index - 1].depth === parentDepth ? '0' : '-4px',
               height: 'calc(100% + 8px)',
               left: '0.75rem',
             }"
           />
           <div
-            v-if="link.depth === 3 && isExpanded(link.parent)" class="absolute w-2 h-px bg-gray-300 dark:bg-zinc-600"
+            v-if="link.depth === childDepth && isExpanded(link.parent)" class="absolute w-2 h-px bg-gray-300 dark:bg-zinc-600"
             :style="{
               top: '0.9rem',
               left: '0.75rem',
             }"
           />
           <NuxtLink
-            v-if="link.depth === 2 || (link.depth === 3 && isExpanded(link.parent))" :id="link.depth === 2 ? link.id : undefined"
+            v-if="link.depth === parentDepth || (link.depth === childDepth && isExpanded(link.parent))" :id="link.depth === parentDepth ? link.id : undefined"
             :to="`#${link.id}`" class="block text-sm transition-colors duration-200 flex-grow"
             :class="{
-              'font-semibold hover:text-hoppr-green': link.depth === 2,
-              'text-gray-600 dark:text-gray-400 hover:text-hoppr-green dark:hover:text-hoppr-green': link.depth === 3,
-              'ml-0': link.depth === 2,
-              'ml-4': link.depth === 3,
+              'font-semibold hover:text-hoppr-green': link.depth === parentDepth,
+              'text-gray-600 dark:text-gray-400 hover:text-hoppr-green dark:hover:text-hoppr-green': link.depth === childDepth,
+              'ml-0': link.depth === parentDepth,
+              'ml-4': link.depth === childDepth,
             }"
-            :data-parent="link.depth === 3 ? link.parent : undefined"
+            :data-parent="link.depth === childDepth ? link.parent : undefined"
           >
             {{ link.text }}
           </NuxtLink>

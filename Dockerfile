@@ -3,40 +3,35 @@
 FROM oven/bun:1 AS base
 WORKDIR /usr/src/app
 
-# install dependencies into temp directory
-# this will cache them and speed up future builds
+# --- Stage 1: Install dependencies ---
 FROM base AS install
-# better-sqlite3 requires native build tools
-RUN apt-get update && apt-get install -y python3 make g++ && rm -rf /var/lib/apt/lists/*
-RUN mkdir -p /temp/dev
-COPY package.json bun.lock /temp/dev/
-RUN cd /temp/dev && bun install --frozen-lockfile
 
-RUN mkdir -p /temp/prod
-COPY package.json bun.lock /temp/prod/
-RUN cd /temp/prod && bun install --frozen-lockfile --production
+# better-sqlite3 requires native build tools — cached as separate layer
+RUN apt-get update && apt-get install -y --no-install-recommends python3 make g++ && rm -rf /var/lib/apt/lists/*
 
-# copy node_modules from temp directory
-# then copy all (non-ignored) project files into the image
-FROM base AS prerelease
-COPY --from=install /temp/dev/node_modules node_modules
+# Install dev dependencies (for build)
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile
+
+# --- Stage 2: Build application ---
+FROM base AS build
+COPY --from=install /usr/src/app/node_modules node_modules
 COPY . .
 
-# [optional] tests & build
 ENV NODE_ENV=production
 ENV NITRO_PRESET=bun
 ENV NITRO_BUN_IDLE_TIMEOUT=300
 RUN bun run build
 
-# copy production dependencies and source code into final image
+# --- Stage 3: Production image (minimal) ---
 FROM base AS release
-COPY --from=install /temp/prod/node_modules node_modules
-COPY --from=prerelease /usr/src/app/.output .output
-COPY --from=prerelease /usr/src/app/content/blogs content/blogs
-COPY --from=prerelease /usr/src/app/package.json .
 
-# run the app
+# Only copy what's needed at runtime
+COPY --from=build /usr/src/app/.output .output
+COPY --from=build /usr/src/app/content/blogs content/blogs
+COPY --from=build /usr/src/app/package.json .
 COPY entrypoint.sh .
+
 USER root
 RUN chmod +x entrypoint.sh
 USER bun

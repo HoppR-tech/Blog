@@ -1,29 +1,27 @@
-import type { QueryDatabaseResponse } from '@notionhq/client/build/src/api-endpoints'
 import type { BlogPost } from '@/types/blog'
 import type { NotionClientInterface } from '@/types/notion'
-import { DATABASE_POSTS_ID } from '@/server/config/notionConfig'
+import { getDataSourceId } from '@/server/config/notionConfig'
 import { categories } from '@/utils/categories'
 import { generateDescription } from './descriptionGenerator'
 import { convertToNotionPage } from './notionUtils'
 import { getPageContent } from './pageContentExtractor'
 
-type NotionQueryResult = QueryDatabaseResponse
-
 export async function fetchPostsToPublish(notionClient: NotionClientInterface): Promise<BlogPost[]> {
   try {
+    const dataSourceId = await getDataSourceId(notionClient)
     let allResults: any[] = []
     let hasMore = true
     let nextCursor: string | undefined
 
     while (hasMore) {
-      const response: NotionQueryResult = await notionClient.databases.query({
-        database_id: DATABASE_POSTS_ID,
+      const response: any = await notionClient.dataSources.query({
+        data_source_id: dataSourceId,
         filter: {
           property: 'Status',
           status: { equals: 'Bon pour Publication' },
         },
         start_cursor: nextCursor,
-        page_size: 100, // Maximum permis par l'API Notion
+        page_size: 100,
       })
 
       allResults = [...allResults, ...response.results]

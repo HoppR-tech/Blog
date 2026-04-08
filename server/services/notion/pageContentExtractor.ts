@@ -57,7 +57,11 @@ function extractTags(page: NotionPage) {
 }
 
 function extractCoverImage(page: NotionPage) {
-  return safeGetProperty(page, ['properties', 'Cover Image', 'files', '0', 'file', 'url'], '')
+  // Handle both Notion-hosted (file.url) and external (external.url) images
+  const fileUrl = safeGetProperty(page, ['properties', 'Cover Image', 'files', '0', 'file', 'url'], '')
+  if (fileUrl)
+    return fileUrl
+  return safeGetProperty(page, ['properties', 'Cover Image', 'files', '0', 'external', 'url'], '')
 }
 
 function extractCoverImageAlt(page: NotionPage) {

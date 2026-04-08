@@ -1,8 +1,8 @@
 import { SitemapStream, streamToPromise } from 'sitemap'
 
-export default defineEventHandler(async () => {
+export default defineEventHandler(async (event) => {
   // Fetch all documents
-  const docs = await queryCollection('blogs').all()
+  const docs = await queryCollection(event, 'blogs').all()
   const sitemap = new SitemapStream({
     hostname: 'https://example.com',
   })

@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
     ttl: 60,
   })
 
-  const blogPosts = await queryCollection('blogs').order('date', 'DESC').all()
+  const blogPosts = await queryCollection(event, 'blogs').order('date', 'DESC').all()
 
   for (const post of blogPosts) {
     const url = `${siteURL}${post.path}`

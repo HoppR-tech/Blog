@@ -17,13 +17,13 @@ const socialLinks = [
       👉 Une Société de conseil et d'expertise avec un modèle novateur, une communauté Tech qui promeut le partage, la
       veille et fait grandir ses équipes.
     </p>
-    <div class="my-3 space-x-3 pb-3">
+    <div class="my-3 space-x-3">
       <NuxtLink
         v-for="(link, index) in socialLinks"
         :key="index"
         :to="link.url"
         target="_blank"
-        class="inline-block p-2 bg-hoppr-green text-hoppr-black font-semibold rounded-md transition-all duration-300 hover:bg-hoppr-black hover:text-hoppr-green transform hover:scale-110 dark:bg-hoppr-green dark:text-hoppr-black dark:hover:bg-zinc-200 dark:hover:text-hoppr-green"
+        class="inline-flex items-center justify-center p-2 bg-hoppr-green text-hoppr-black font-semibold rounded-md transition-all duration-300 hover:bg-hoppr-black hover:text-hoppr-green transform hover:scale-110 dark:bg-hoppr-green dark:text-hoppr-black dark:hover:bg-zinc-200 dark:hover:text-hoppr-green"
         :aria-label="link.label"
       >
         <Icon :name="link.icon" size="1.5em" aria-hidden="true" />

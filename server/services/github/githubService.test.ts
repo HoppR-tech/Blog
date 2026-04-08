@@ -1,53 +1,66 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, mock, spyOn } from 'bun:test'
 
-vi.mock('@/server/config/githubConfig', () => ({
+mock.module('@/server/config/githubConfig', () => ({
   GITHUB_OWNER: 'test-owner',
   GITHUB_REPO: 'test-repo',
   GITHUB_BRANCH: 'main',
+  GITHUB_APP_ID: 12345,
+  GITHUB_PRIVATE_KEY: 'fake-key',
 }))
 
-vi.mock('./branchManager', () => ({
-  createBranch: vi.fn().mockResolvedValue(undefined),
-  deleteBranch: vi.fn().mockResolvedValue(undefined),
-  safeDeleteBranch: vi.fn().mockResolvedValue(true),
+const mockCreateBranch = mock(() => Promise.resolve(undefined))
+const mockDeleteBranch = mock(() => Promise.resolve(undefined))
+const mockSafeDeleteBranch = mock(() => Promise.resolve(true))
+
+mock.module('./branchManager', () => ({
+  createBranch: mockCreateBranch,
+  deleteBranch: mockDeleteBranch,
+  safeDeleteBranch: mockSafeDeleteBranch,
 }))
 
-vi.mock('./pullRequestManager', () => ({
-  createPullRequest: vi.fn().mockResolvedValue({ number: 1 }),
-  mergePullRequest: vi.fn().mockResolvedValue(undefined),
-  closePullRequestsForBranch: vi.fn().mockResolvedValue(undefined),
+const mockCreatePullRequest = mock(() => Promise.resolve({ number: 1 }))
+const mockMergePullRequest = mock(() => Promise.resolve(undefined))
+const mockClosePullRequestsForBranch = mock(() => Promise.resolve(undefined))
+
+mock.module('./pullRequestManager', () => ({
+  createPullRequest: mockCreatePullRequest,
+  mergePullRequest: mockMergePullRequest,
+  closePullRequestsForBranch: mockClosePullRequestsForBranch,
 }))
 
-vi.mock('./imageUploader', () => ({
-  uploadCoverImage: vi.fn().mockResolvedValue({}),
-  uploadAllImages: vi.fn().mockResolvedValue(undefined),
+const mockUploadCoverImage = mock(() => Promise.resolve({}))
+const mockUploadAllImages = mock(() => Promise.resolve(undefined))
+
+mock.module('./imageUploader', () => ({
+  uploadCoverImage: mockUploadCoverImage,
+  uploadAllImages: mockUploadAllImages,
 }))
 
-vi.mock('./contentUploader', () => ({
-  uploadToGitHub: vi.fn().mockResolvedValue(undefined),
+const mockUploadToGitHub = mock(() => Promise.resolve(undefined))
+
+mock.module('./contentUploader', () => ({
+  uploadToGitHub: mockUploadToGitHub,
 }))
 
-vi.mock('./postChecker', () => ({
-  checkPost: vi.fn(),
+const mockCheckPost = mock(() => {})
+
+mock.module('./postChecker', () => ({
+  checkPost: mockCheckPost,
 }))
 
-vi.mock('@/utils/stringUtils', () => ({
-  createFolderName: vi.fn().mockReturnValue('2026-03-19-mon-article'),
+mock.module('@/utils/stringUtils', () => ({
+  createFolderName: () => '2026-03-19-mon-article',
 }))
 
 const { GitHubService } = await import('./githubService')
-const { createBranch, deleteBranch, safeDeleteBranch } = await import('./branchManager')
-const { createPullRequest, mergePullRequest, closePullRequestsForBranch } = await import('./pullRequestManager')
-const { uploadCoverImage } = await import('./imageUploader')
-const { checkPost } = await import('./postChecker')
 
 function createMockNotionService() {
   return {
-    extractImagesAndUpdateContent: vi.fn().mockResolvedValue({ updatedContent: 'content', imageFiles: [] }),
-    processAuthorsImages: vi.fn().mockResolvedValue({ updatedAuthors: [], authorImages: [] }),
-    generateMarkdownContent: vi.fn().mockReturnValue('# Markdown'),
-    updatePostStatusInNotion: vi.fn().mockResolvedValue(undefined),
-    updatePublishedDateInNotion: vi.fn().mockResolvedValue(undefined),
+    extractImagesAndUpdateContent: mock(() => Promise.resolve({ updatedContent: 'content', imageFiles: [] })),
+    processAuthorsImages: mock(() => Promise.resolve({ updatedAuthors: [], authorImages: [] })),
+    generateMarkdownContent: mock(() => '# Markdown'),
+    updatePostStatusInNotion: mock(() => Promise.resolve(undefined)),
+    updatePublishedDateInNotion: mock(() => Promise.resolve(undefined)),
   }
 }
 
@@ -72,8 +85,30 @@ describe('gitHubService', () => {
   const mockOctokit = {} as any
 
   beforeEach(() => {
-    vi.clearAllMocks()
-    vi.spyOn(console, 'error').mockImplementation(() => {})
+    mockCreateBranch.mockReset()
+    mockDeleteBranch.mockReset()
+    mockSafeDeleteBranch.mockReset()
+    mockCreatePullRequest.mockReset()
+    mockMergePullRequest.mockReset()
+    mockClosePullRequestsForBranch.mockReset()
+    mockUploadCoverImage.mockReset()
+    mockUploadAllImages.mockReset()
+    mockUploadToGitHub.mockReset()
+    mockCheckPost.mockReset()
+
+    // Restore defaults after reset
+    mockCreateBranch.mockImplementation(() => Promise.resolve(undefined))
+    mockDeleteBranch.mockImplementation(() => Promise.resolve(undefined))
+    mockSafeDeleteBranch.mockImplementation(() => Promise.resolve(true))
+    mockCreatePullRequest.mockImplementation(() => Promise.resolve({ number: 1 }))
+    mockMergePullRequest.mockImplementation(() => Promise.resolve(undefined))
+    mockClosePullRequestsForBranch.mockImplementation(() => Promise.resolve(undefined))
+    mockUploadCoverImage.mockImplementation(() => Promise.resolve({}))
+    mockUploadAllImages.mockImplementation(() => Promise.resolve(undefined))
+    mockUploadToGitHub.mockImplementation(() => Promise.resolve(undefined))
+    mockCheckPost.mockImplementation(() => {})
+
+    spyOn(console, 'error').mockImplementation(() => {})
   })
 
   describe('publishPostToGitHub', () => {
@@ -83,13 +118,13 @@ describe('gitHubService', () => {
         const service = new GitHubService(mockOctokit, notionService as any)
         const post = createMockPost()
 
-        ;(uploadCoverImage as ReturnType<typeof vi.fn>).mockRejectedValueOnce(new Error('Invalid image format'))
+        mockUploadCoverImage.mockImplementationOnce(() => Promise.reject(new Error('Invalid image format')))
 
         await expect(service.publishPostToGitHub(post)).rejects.toThrow('Invalid image format')
 
-        expect(createBranch).toHaveBeenCalled()
-        expect(safeDeleteBranch).toHaveBeenCalled()
-        expect(closePullRequestsForBranch).toHaveBeenCalled()
+        expect(mockCreateBranch).toHaveBeenCalled()
+        expect(mockSafeDeleteBranch).toHaveBeenCalled()
+        expect(mockClosePullRequestsForBranch).toHaveBeenCalled()
       })
     })
 
@@ -99,15 +134,15 @@ describe('gitHubService', () => {
         const service = new GitHubService(mockOctokit, notionService as any)
         const post = createMockPost()
 
-        ;(checkPost as ReturnType<typeof vi.fn>).mockImplementationOnce(() => {
+        mockCheckPost.mockImplementationOnce(() => {
           throw new Error('Tag is missing')
         })
 
         await expect(service.publishPostToGitHub(post)).rejects.toThrow('Tag is missing')
 
-        expect(createBranch).toHaveBeenCalled()
-        expect(safeDeleteBranch).toHaveBeenCalled()
-        expect(closePullRequestsForBranch).toHaveBeenCalled()
+        expect(mockCreateBranch).toHaveBeenCalled()
+        expect(mockSafeDeleteBranch).toHaveBeenCalled()
+        expect(mockClosePullRequestsForBranch).toHaveBeenCalled()
       })
     })
 
@@ -117,8 +152,8 @@ describe('gitHubService', () => {
         const service = new GitHubService(mockOctokit, notionService as any)
         const post = createMockPost()
 
-        ;(uploadCoverImage as ReturnType<typeof vi.fn>).mockRejectedValueOnce(new Error('Original pipeline error'))
-        ;(safeDeleteBranch as ReturnType<typeof vi.fn>).mockResolvedValueOnce(false)
+        mockUploadCoverImage.mockImplementationOnce(() => Promise.reject(new Error('Original pipeline error')))
+        mockSafeDeleteBranch.mockImplementationOnce(() => Promise.resolve(false))
 
         await expect(service.publishPostToGitHub(post)).rejects.toThrow('Original pipeline error')
       })
@@ -132,11 +167,11 @@ describe('gitHubService', () => {
 
         await service.publishPostToGitHub(post)
 
-        expect(createBranch).toHaveBeenCalledTimes(1)
-        expect(mergePullRequest).toHaveBeenCalledTimes(1)
-        expect(deleteBranch).toHaveBeenCalledTimes(1)
-        expect(safeDeleteBranch).not.toHaveBeenCalled()
-        expect(closePullRequestsForBranch).not.toHaveBeenCalled()
+        expect(mockCreateBranch).toHaveBeenCalledTimes(1)
+        expect(mockMergePullRequest).toHaveBeenCalledTimes(1)
+        expect(mockDeleteBranch).toHaveBeenCalledTimes(1)
+        expect(mockSafeDeleteBranch).not.toHaveBeenCalled()
+        expect(mockClosePullRequestsForBranch).not.toHaveBeenCalled()
       })
     })
   })

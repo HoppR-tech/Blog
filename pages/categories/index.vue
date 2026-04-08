@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
+import { usePageSeo } from '@/composables/usePageSeo'
 import { categories } from '@/utils/categories'
 
 const { data } = await useAsyncData('all-blog-post-for-tag', () => queryCollection('blogs').order('date', 'DESC').all())
@@ -29,15 +30,10 @@ const filteredTags = computed(() => {
   )
 })
 
-useHead({
+usePageSeo({
   title: 'Catégories',
-  meta: [
-    {
-      name: 'description',
-      content: 'Découvrez nos articles classés par catégories. Explorez nos contenus sur le Craft, le Cloud & Platform, l\'Architecture, et d\'autres sujets passionnants de la tech.',
-    },
-  ],
-  titleTemplate: 'Blog HoppR - %s',
+  description: 'Découvrez nos articles classés par catégories. Explorez nos contenus sur le Craft, le Cloud & Platform, l\'Architecture, et d\'autres sujets passionnants de la tech.',
+  url: '/categories',
 })
 
 // Generate OG Image

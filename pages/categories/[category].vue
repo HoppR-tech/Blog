@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { usePageSeo } from '@/composables/usePageSeo'
 import { categories } from '@/utils/categories'
 
 const route = useRoute()
@@ -10,7 +11,9 @@ const category = computed(() => {
 
 const { data } = await useAsyncData(`category-${categoryValue.value}`, async () => {
   const allPosts = await queryCollection('blogs').order('date', 'DESC').all()
-  return allPosts.filter(article => article.tags?.includes(categoryValue.value))
+  return allPosts.filter(article =>
+    article.tags?.map(t => t.toLowerCase()).includes(categoryValue.value.toLowerCase()),
+  )
 })
 
 const formattedData = computed(() => {
@@ -29,23 +32,18 @@ const formattedData = computed(() => {
   })
 })
 
-useHead({
-  title: `Articles de la catégorie ${categoryValue.value}`,
-  meta: [
-    {
-      name: 'description',
-      content: `Découvrez tous nos articles dans la catégorie ${categoryValue.value}.`,
-    },
-  ],
-  titleTemplate: 'Blog HoppR - %s',
+usePageSeo({
+  title: `Articles ${category.value.label}`,
+  description: `Découvrez nos articles dans la catégorie ${category.value.label}.`,
+  url: `/categories/${categoryValue.value}`,
 })
 
 // Generate OG Image
 const siteData = useSiteConfig()
 defineOgImage({
   props: {
-    title: `Catégorie: ${categoryValue.value}`,
-    description: `Découvrez tous nos articles dans la catégorie ${categoryValue.value}.`,
+    title: `Catégorie: ${category.value.label}`,
+    description: `Découvrez nos articles dans la catégorie ${category.value.label}.`,
     siteName: siteData.url,
   },
 })
@@ -53,6 +51,11 @@ defineOgImage({
 
 <template>
   <main class="container max-w-6xl mx-auto text-zinc-600 px-4">
+    <BlogBreadcrumb
+      :title="category.label"
+      :path="`/categories/${categoryValue}`"
+      :custom-items="[{ name: 'Catégories', url: '/categories' }, { name: category.label, url: `/categories/${categoryValue}` }]"
+    />
     <CategoryTopic :category="category.label" :icon="category.icon" />
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <BlogCard

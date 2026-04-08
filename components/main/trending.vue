@@ -29,17 +29,7 @@ const formattedData = computed(() => {
 
 const imageSize = 'h-48'
 
-useHead({
-  title: 'Home',
-  meta: [
-    {
-      name: 'description',
-      content:
-        'Bienvenue sur le Blog Tech d\'HoppR. Partage, veille et ressources de la communauté sur les thématiques du Software Craftsmanship, du Cloud, de l\'architecture et de la Tech en générale.',
-    },
-  ],
-  titleTemplate: 'Blog HoppR - %s',
-})
+// SEO meta is handled by pages/index.vue via usePageSeo
 </script>
 
 <template>

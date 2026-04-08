@@ -15,6 +15,12 @@ export function stripMarkdown(text: string): string {
     .replace(/_([^_]+)_/g, '$1') // _italic_
 }
 
+export function capitalize(str: string): string {
+  if (!str)
+    return ''
+  return str.charAt(0).toUpperCase() + str.slice(1)
+}
+
 export function slugify(text: string): string {
   return text
     .toString()

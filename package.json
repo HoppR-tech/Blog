@@ -15,7 +15,7 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "NODE_OPTIONS='--disable-warning=DEP0040' NODE_ENV=development nuxt dev",
-    "test": "npx vitest run",
+    "test": "bun test",
     "coverage": "npx vitest run --coverage",
     "generate": "nuxt generate",
     "preview": "nuxt preview",

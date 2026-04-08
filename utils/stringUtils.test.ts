@@ -1,5 +1,23 @@
 import { describe, expect, it } from 'vitest'
-import { createFolderName, stripMarkdown } from './stringUtils'
+import { capitalize, createFolderName, stripMarkdown } from './stringUtils'
+
+describe('capitalize', () => {
+  it('should capitalize the first letter', () => {
+    expect(capitalize('craft')).toBe('Craft')
+  })
+
+  it('should return empty string for empty input', () => {
+    expect(capitalize('')).toBe('')
+  })
+
+  it('should handle already capitalized string', () => {
+    expect(capitalize('Craft')).toBe('Craft')
+  })
+
+  it('should handle single character', () => {
+    expect(capitalize('a')).toBe('A')
+  })
+})
 
 describe('createFolderName', () => {
   it('should create a folder name with the correct format', () => {

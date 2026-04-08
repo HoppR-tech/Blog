@@ -16,13 +16,18 @@ export default defineNuxtConfig({
       charset: 'utf-8',
       viewport: 'width=device-width,initial-scale=1',
       title: 'HoppR Blog',
-      titleTemplate: '%s | HoppR Blog',
+      titleTemplate: '%s | HoppR',
       meta: [{ name: 'description', content: 'Blog Tech de HoppR' }],
       link: [
+        { rel: 'preconnect', href: 'https://cdn.jsdelivr.net', crossorigin: '' },
         {
           rel: 'stylesheet',
           href: 'https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css',
         },
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
+        { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
+        { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
       ],
       script: [
         {
@@ -70,7 +75,10 @@ export default defineNuxtConfig({
     class: 'icon',
   },
 
-  sitemap: {},
+  sitemap: {
+    sources: ['/api/__sitemap__/urls'],
+    exclude: ['/404'],
+  },
   site: {
     url: process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://blog.hoppr.tech',
     identity: {
@@ -210,6 +218,7 @@ export default defineNuxtConfig({
             },
           },
           [resolve(__dirname, 'content-plugins/rehype-content-assets.mjs')]: {},
+          [resolve(__dirname, 'content-plugins/rehype-heading-shift.mjs')]: {},
         },
       },
     },

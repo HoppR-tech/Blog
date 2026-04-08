@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import type { Person } from '@/types/blog'
-import { useRuntimeConfig } from '#app'
 import ContactCTA from '@/components/blog/ContactCTA.vue'
+import { useAbsoluteUrl } from '@/composables/useAbsoluteUrl'
+import { usePageSeo } from '@/composables/usePageSeo'
 import { stripMarkdown } from '@/utils/stringUtils'
 import 'katex/dist/katex.min.css'
 
 const { path } = useRoute()
+const config = useRuntimeConfig()
 
 const { data: article, error } = await useAsyncData(`blog-post-${path}`, () => {
   return queryCollection('blogs').path(path).first()
@@ -47,13 +49,17 @@ const reviewers: Person[] = (article.value?.reviewers || []).map(r => ({
 }))
 const ogDescription = computed(() => stripMarkdown(blogPostProps.value.description))
 
+const absoluteImage = computed(() => useAbsoluteUrl(blogPostProps.value.ogImage || blogPostProps.value.image))
+
 function generateStructuredData() {
   return {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
     'headline': blogPostProps.value.title,
-    'image': blogPostProps.value.ogImage || blogPostProps.value.image,
+    'image': absoluteImage.value,
     'datePublished': blogPostProps.value.date,
+    'dateModified': blogPostProps.value.date,
+    'inLanguage': 'fr',
     'author': authors.map(author => ({
       '@type': 'Person',
       'name': author.name,
@@ -69,66 +75,20 @@ function generateStructuredData() {
     'description': ogDescription.value,
     'mainEntityOfPage': {
       '@type': 'WebPage',
-      '@id': `${config.public.baseUrl}/${path}`,
+      '@id': `${config.public.baseUrl}${path}`,
     },
   }
 }
 
-const config = useRuntimeConfig()
-
-useHead({
+usePageSeo({
   title: blogPostProps.value.title || '',
-  meta: [
-    { name: 'description', content: ogDescription.value },
-    { property: 'og:site_name', content: 'Blog HoppR' },
-    { property: 'og:type', content: 'website' },
-    {
-      property: 'og:url',
-      content: `${config.public.baseUrl}${path}`,
-    },
-    {
-      property: 'og:title',
-      content: blogPostProps.value.title,
-    },
-    {
-      property: 'og:description',
-      content: ogDescription.value,
-    },
-    {
-      property: 'og:image',
-      content: blogPostProps.value.ogImage || blogPostProps.value.image,
-    },
-    { name: 'twitter:site', content: '@HoppR_Tech' },
-    { name: 'twitter:card', content: 'summary_large_image' },
-    {
-      name: 'twitter:url',
-      content: `${config.public.baseUrl}${path}`,
-    },
-    {
-      name: 'twitter:title',
-      content: blogPostProps.value.title,
-    },
-    {
-      name: 'twitter:description',
-      content: ogDescription.value,
-    },
-    {
-      name: 'twitter:image',
-      content: blogPostProps.value.ogImage || blogPostProps.value.image,
-    },
-  ],
-  link: [
-    {
-      rel: 'canonical',
-      href: `${config.public.baseUrl}${path}`,
-    },
-  ],
-  script: [
-    {
-      type: 'application/ld+json',
-      innerHTML: JSON.stringify(generateStructuredData()),
-    },
-  ],
+  description: ogDescription.value,
+  url: path,
+  image: blogPostProps.value.ogImage || blogPostProps.value.image,
+  type: 'article',
+  publishedTime: blogPostProps.value.date,
+  authors: authors.map(a => a.name),
+  jsonLd: generateStructuredData(),
 })
 
 // Generate OG Image
@@ -146,6 +106,11 @@ defineOgImageComponent('About', {
   <div>
     <div class="px-6 container max-w-6xl mx-auto sm:grid grid-cols-12 gap-x-12">
       <div class="col-span-12 lg:col-span-9">
+        <BlogBreadcrumb
+          :title="blogPostProps.title"
+          :path="path"
+          :tags="blogPostProps.tags"
+        />
         <BlogHeader
           :title="blogPostProps.title"
           :image="blogPostProps.image"
@@ -158,15 +123,13 @@ defineOgImageComponent('About', {
         />
         <div
           class="prose prose-pre:max-w-xs sm:prose-pre:max-w-full prose-base sm:prose-base lg:prose-lg
-            prose-h1:text-3xl sm:prose-h1:text-4xl lg:prose-h1:text-5xl prose-h1:font-bold prose-h1:text-hoppr-green prose-h1:mt-8 prose-h1:mb-6 prose-h1:border-b prose-h1:border-hoppr-green prose-h1:pb-2
-            prose-h2:text-xl sm:prose-h2:text-2xl lg:prose-h2:text-3xl
-            prose-h3:text-lg sm:prose-h3:text-xl lg:prose-h3:text-2xl
+            prose-h2:text-3xl sm:prose-h2:text-4xl lg:prose-h2:text-5xl prose-h2:font-bold prose-h2:text-hoppr-green prose-h2:mt-8 prose-h2:mb-6 prose-h2:border-b prose-h2:border-hoppr-green prose-h2:pb-2
+            prose-h3:text-xl sm:prose-h3:text-2xl lg:prose-h3:text-3xl prose-h3:border-l-4 prose-h3:border-hoppr-green prose-h3:pl-2
+            prose-h4:text-lg sm:prose-h4:text-xl lg:prose-h4:text-2xl prose-h4:italic
             prose-p:text-base sm:prose-p:text-base lg:prose-p:text-lg
-            prose-h1:no-underline max-w-6xl mx-auto prose-zinc dark:prose-invert prose-img:rounded-lg
+            prose-h2:no-underline max-w-6xl mx-auto prose-zinc dark:prose-invert prose-img:rounded-lg
             prose-headings:font-bold
-            prose-a:text-hoppr-green prose-a:no-underline prose-a:border-b prose-a:border-hoppr-green prose-a:border-opacity-30 hover:prose-a:border-opacity-100 hover:prose-a:bg-hoppr-green hover:prose-a:bg-opacity-10 transition-all duration-300 dark:prose-h1:border-zinc-700
-            prose-h2:border-l-4 prose-h2:border-hoppr-green prose-h2:pl-2
-            prose-h3:italic
+            prose-a:text-hoppr-green prose-a:no-underline prose-a:border-b prose-a:border-hoppr-green prose-a:border-opacity-30 hover:prose-a:border-opacity-100 hover:prose-a:bg-hoppr-green hover:prose-a:bg-opacity-10 transition-all duration-300 dark:prose-h2:border-zinc-700
             prose-table:border prose-table:border-collapse prose-table:w-full
             prose-th:bg-gray-100 prose-th:dark:bg-slate-800 prose-th:p-2 prose-th:border prose-th:border-gray-300 prose-th:dark:border-zinc-600
             prose-td:p-2 prose-td:border prose-td:border-gray-300 prose-td:dark:border-zinc-600
@@ -179,6 +142,10 @@ defineOgImageComponent('About', {
           </ContentRenderer>
         </div>
         <BlogFooter :authors="authors" />
+        <BlogRelatedPosts
+          :current-path="path"
+          :current-tags="blogPostProps.tags"
+        />
       </div>
       <BlogToc />
     </div>

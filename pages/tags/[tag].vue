@@ -1,7 +1,9 @@
 <script lang="ts" setup>
+import { usePageSeo } from '@/composables/usePageSeo'
+import { capitalize } from '@/utils/stringUtils'
+
 const route = useRoute()
 
-// Récupérer la catégorie depuis les paramètres de route et la convertir en minuscules
 const tag = computed(() => {
   const name = route.params.tag || ''
   let strName = ''
@@ -13,14 +15,12 @@ const tag = computed(() => {
   return strName.toLowerCase()
 })
 
-// Récupérer les articles correspondant à la catégorie
+const MIN_ARTICLES_FOR_INDEX = 3
+
 const { data } = await useAsyncData(`tag-data-${tag.value}`, async () => {
   const allPosts = await queryCollection('blogs').all()
   return allPosts.filter(article => article.tags?.includes(tag.value))
 })
-
-// console.error('Tag:', tag.value)
-// console.error('Articles trouvés:', data.value)
 
 const formattedData = computed(() => {
   return data.value?.map((articles) => {
@@ -38,23 +38,21 @@ const formattedData = computed(() => {
   })
 })
 
-useHead({
-  title: tag.value,
-  meta: [
-    {
-      name: 'description',
-      content: `Tu trouveras tous les articles en relation avec la ${tag.value}.`,
-    },
-  ],
-  titleTemplate: 'Blog HoppR - %s',
+const shouldNoindex = computed(() => (data.value?.length || 0) < MIN_ARTICLES_FOR_INDEX)
+
+usePageSeo({
+  title: capitalize(tag.value),
+  description: `Découvrez nos articles sur le thème ${capitalize(tag.value)}.`,
+  url: `/tags/${tag.value}`,
+  noindex: shouldNoindex.value,
 })
 
 // Generate OG Image
 const siteData = useSiteConfig()
 defineOgImage({
   props: {
-    title: tag.value?.toUpperCase(),
-    description: `Tu trouveras tous les articles en relation avec la ${tag.value}.`,
+    title: capitalize(tag.value),
+    description: `Découvrez nos articles sur le thème ${capitalize(tag.value)}.`,
     siteName: siteData.url,
   },
 })
@@ -62,6 +60,11 @@ defineOgImage({
 
 <template>
   <main class="container max-w-6xl mx-auto text-zinc-600 px-4">
+    <BlogBreadcrumb
+      :title="capitalize(tag)"
+      :path="`/tags/${tag}`"
+      :custom-items="[{ name: 'Tags', url: '/tags' }, { name: capitalize(tag), url: `/tags/${tag}` }]"
+    />
     <TagTopic />
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       <BlogCard

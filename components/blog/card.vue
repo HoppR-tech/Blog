@@ -20,7 +20,7 @@ const props = withDefaults(defineProps<Props>(), {
   date: 'no-date',
   description: 'no-description',
   image: '/not-found.jpg',
-  alt: 'no-alt',
+  alt: '',
   ogImage: '/not-found.jpg',
   tags: () => [],
   published: false,
@@ -90,7 +90,7 @@ const buttonLabel = computed(() =>
         >
         <!-- Foreground Layer -->
         <img
-          :src="image" :alt="alt" :width="300" :height="200" loading="lazy" decoding="async"
+          :src="image" :alt="alt || `Image de l'article : ${title}`" :width="300" :height="200" loading="lazy" decoding="async"
           class="w-full h-full object-contain object-center relative z-10 group-hover:scale-110 transition-transform duration-500 [mask-image:radial-gradient(ellipse_at_center,black_60%,transparent_100%)] webkit-mask-image-[radial-gradient(ellipse_at_center,black_60%,transparent_100%)]"
         >
       </div>
@@ -123,11 +123,11 @@ const buttonLabel = computed(() =>
             </span>
           </div>
         </div>
-        <h2
+        <h3
           class="text-xl font-bold text-black dark:text-zinc-300 pb-1 relative group-hover:text-hoppr-green dark:group-hover:text-hoppr-green"
         >
           {{ title }}
-        </h2>
+        </h3>
         <div class="text-ellipsis line-clamp-2 text-base" v-html="renderedDescription" />
         <div class="flex group-hover:underline text-hoppr-green items-center py-2">
           <p>Lire la suite</p>

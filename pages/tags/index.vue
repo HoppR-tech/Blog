@@ -29,16 +29,10 @@ const filteredTags = computed(() => {
   ))
 })
 
-useHead({
+usePageSeo({
   title: 'Tags',
-  meta: [
-    {
-      name: 'description',
-      content:
-        'Tous les sujets sur lesquels nous avons écrit un article ou sur lesquels nous allons écrire un article prochainement sont listés ci-dessous.',
-    },
-  ],
-  titleTemplate: 'Blog HoppR - %s',
+  description: 'Tous les sujets sur lesquels nous avons écrit un article ou sur lesquels nous allons écrire un article prochainement sont listés ci-dessous.',
+  url: '/tags',
 })
 
 // Generate OG Image

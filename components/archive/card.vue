@@ -21,7 +21,7 @@ const props = withDefaults(defineProps<Props>(), {
   date: 'no-date',
   description: 'no-description',
   image: '/not-found.jpg',
-  alt: 'no-alt',
+  alt: '',
   ogImage: '/not-found.jpg',
   tags: () => [],
   published: false,
@@ -90,16 +90,16 @@ const buttonLabel = computed(() =>
         <!-- Foreground Layer -->
         <img
           class="w-full h-full object-contain object-center relative z-10 group-hover:scale-110 transition-transform duration-500 [mask-image:radial-gradient(ellipse_at_center,black_60%,transparent_100%)] webkit-mask-image-[radial-gradient(ellipse_at_center,black_60%,transparent_100%)]"
-          width="300" :src="image" :alt="alt"
+          width="300" :src="image" :alt="alt || `Image de l'article : ${title}`"
         >
       </div>
       <div class="sm:col-span-7 p-5 relative">
         <div class="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-white dark:from-zinc-800 to-transparent opacity-90" />
-        <h2
+        <h3
           class="text-lg font-bold text-black dark:text-zinc-300 pb-1 relative group-hover:text-hoppr-green dark:group-hover:text-hoppr-green text-ellipsis line-clamp-1"
         >
           {{ title }}
-        </h2>
+        </h3>
         <div class="font-luciole text-ellipsis line-clamp-2" v-html="renderedDescription" />
         <div class="text-black dark:text-zinc-300 text-xs mt-2 mb-1 flex flex-col gap-3 md:flex-row md:items-center md:space-x-6 font-luciole">
           <div class="flex items-center">

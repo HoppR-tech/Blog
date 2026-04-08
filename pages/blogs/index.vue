@@ -1,9 +1,11 @@
 <script lang="ts" setup>
 import type { NuxtError } from 'nuxt/app'
 import { computed, ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
+import { usePageSeo } from '@/composables/usePageSeo'
 
 const route = useRoute()
+const router = useRouter()
 const { data, error } = await useAsyncData('all-blog-post', () =>
   queryCollection('blogs')
     .order('date', 'DESC')
@@ -14,24 +16,20 @@ const { data, error } = await useAsyncData('all-blog-post', () =>
       return []
     }))
 
-const elementPerPage = ref(5)
-const pageNumber = ref(1)
+const elementPerPage = 5
+const pageNumber = computed(() => {
+  const p = Number(route.query.page)
+  return (Number.isFinite(p) && p >= 1) ? p : 1
+})
 const searchTest = ref('')
-const isLoading = ref(true)
 
 watch(() => route.query.search, (newSearch) => {
   if (newSearch) {
     searchTest.value = newSearch as string
-    pageNumber.value = 1
   }
   else {
     searchTest.value = ''
   }
-}, { immediate: true })
-
-watch(data, (newData) => {
-  if (newData !== undefined)
-    isLoading.value = false
 }, { immediate: true })
 
 const formattedData = computed(() => {
@@ -71,41 +69,51 @@ const searchData = computed(() => {
 })
 
 const paginatedData = computed(() => {
-  return searchData.value?.filter((data, idx) => {
-    const startInd = ((pageNumber.value - 1) * elementPerPage.value)
-    const endInd = (pageNumber.value * elementPerPage.value) - 1
-
-    if (idx >= startInd && idx <= endInd)
-      return true
-    else return false
+  return searchData.value?.filter((_data, idx) => {
+    const startInd = ((pageNumber.value - 1) * elementPerPage)
+    const endInd = (pageNumber.value * elementPerPage) - 1
+    return idx >= startInd && idx <= endInd
   }) || []
 })
 
-function onPreviousPageClick() {
-  if (pageNumber.value > 1)
-    pageNumber.value -= 1
-}
-
 const totalPage = computed(() => {
   const ttlContent = searchData.value?.length || 0
-  const totalPage = Math.ceil(ttlContent / elementPerPage.value)
-  return totalPage
+  return Math.ceil(ttlContent / elementPerPage)
 })
 
-function onNextPageClick() {
-  if (pageNumber.value < totalPage.value)
-    pageNumber.value += 1
+function onPageChange(page: number) {
+  const query: Record<string, string> = {}
+  if (page > 1)
+    query.page = String(page)
+  if (searchTest.value)
+    query.search = searchTest.value
+  router.push({ path: '/blogs', query })
 }
 
+const canonicalUrl = computed(() => {
+  return pageNumber.value > 1 ? `/blogs?page=${pageNumber.value}` : '/blogs'
+})
+
+const prevNextLinks = computed(() => {
+  const links: Array<{ rel: string, href: string }> = []
+  if (pageNumber.value > 1) {
+    const prevPage = pageNumber.value === 2 ? '/blogs' : `/blogs?page=${pageNumber.value - 1}`
+    links.push({ rel: 'prev', href: prevPage })
+  }
+  if (pageNumber.value < totalPage.value) {
+    links.push({ rel: 'next', href: `/blogs?page=${pageNumber.value + 1}` })
+  }
+  return links
+})
+
+usePageSeo({
+  title: 'Tous nos Articles',
+  description: 'Toutes les publications sur le blog d\'HoppR sont ici. Découvrez nos articles sur le Software Craftsmanship, le Cloud, l\'Architecture et la Tech.',
+  url: canonicalUrl.value,
+})
+
 useHead({
-  title: 'Articles',
-  meta: [
-    {
-      name: 'description',
-      content: 'Toutes les publications sur le blog d\'HoppR sont ici.',
-    },
-  ],
-  titleTemplate: 'Blog HoppR - %s',
+  link: prevNextLinks.value,
 })
 
 // Generate OG Image
@@ -136,46 +144,32 @@ defineOgImage({
       >
     </div>
 
-    <ClientOnly>
-      <div v-if="isLoading" class="space-y-5 my-5 px-4">
-        <BlogLoader />
-        <BlogLoader />
-        <BlogLoader />
-      </div>
-      <div v-else-if="error" class="space-y-5 my-5 px-4">
-        <p>{{ error }}</p>
-      </div>
-      <div v-else class="space-y-5 my-5 px-4">
-        <template v-for="post in paginatedData" :key="post.title">
-          <ArchiveCard
-            :path="post.path" :title="post.title" :date="post.date" :description="post.description"
-            :image="post.image" :alt="post.alt" :og-image="post.ogImage" :tags="post.tags"
-            :published="post.published"
-          />
-        </template>
-
-        <ArchiveCard v-if="paginatedData.length <= 0" title="No Post Found" image="/not-found.jpg" />
-      </div>
-
-      <template #fallback>
-        <!-- this will be rendered on server side -->
-        <BlogLoader />
-        <BlogLoader />
-        <BlogLoader />
-      </template>
-    </ClientOnly>
-
-    <div class="flex justify-center items-center space-x-6 ">
-      <button :disabled="pageNumber <= 1" @click="onPreviousPageClick">
-        <Icon name="mdi:code-less-than" size="30" :class="{ 'text-sky-700 dark:text-sky-400': pageNumber > 1 }" />
-      </button>
-      <p>{{ pageNumber }} / {{ totalPage }}</p>
-      <button :disabled="pageNumber >= totalPage" @click="onNextPageClick">
-        <Icon
-          name="mdi:code-greater-than" size="30"
-          :class="{ 'text-sky-700 dark:text-sky-400': pageNumber < totalPage }"
-        />
-      </button>
+    <div v-if="!data" class="space-y-5 my-5 px-4">
+      <BlogLoader />
+      <BlogLoader />
+      <BlogLoader />
     </div>
+    <div v-else-if="error" class="space-y-5 my-5 px-4">
+      <p>{{ error }}</p>
+    </div>
+    <div v-else class="space-y-5 my-5 px-4">
+      <template v-for="post in paginatedData" :key="post.title">
+        <ArchiveCard
+          :path="post.path" :title="post.title" :date="post.date" :description="post.description"
+          :image="post.image" :alt="post.alt" :og-image="post.ogImage" :tags="post.tags"
+          :published="post.published"
+        />
+      </template>
+
+      <ArchiveCard v-if="paginatedData.length <= 0" title="No Post Found" image="/not-found.jpg" />
+    </div>
+
+    <UiPagination
+      v-if="totalPage > 1"
+      :current-page="pageNumber"
+      :total-pages="totalPage"
+      base-url="/blogs"
+      @page-change="onPageChange"
+    />
   </main>
 </template>

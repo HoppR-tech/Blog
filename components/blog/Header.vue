@@ -60,7 +60,7 @@ const props = withDefaults(defineProps<Props>(), {
         </div>
         <div class="flex items-start w-full mb-2">
           <LogoDate class="flex-shrink-0 mt-0.5 mr-2" />
-          <p>{{ formatDate(date) }}</p>
+          <time :datetime="date">{{ formatDate(date) }}</time>
         </div>
         <div class="flex items-start gap-2 flex-wrap w-full">
           <LogoTag class="flex-shrink-0 mt-0.5" />

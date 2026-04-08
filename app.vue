@@ -5,10 +5,9 @@ const ogTitle
   = 'Blog Tech HoppR'
 const twitterDescription
   = 'Partage, veille et ressources de la communauté sur les thématiques du Software Craftsmanship, du Cloud, de l\'architecture et de la Tech en générale.'
-const image
-  = '/hoppr-white.png'
 const config = useRuntimeConfig()
 const mySite = config.public.baseUrl
+const absoluteImage = `${mySite}/hoppr-white.png`
 useHead({
   htmlAttrs: {
     lang: 'fr',
@@ -22,7 +21,7 @@ useHead({
       content: description,
     },
     // Test on: https://developers.facebook.com/tools/debug/ or https://socialsharepreview.com/
-    { property: 'og:site_name', content: mySite },
+    { property: 'og:site_name', content: 'Blog HoppR' },
     { property: 'og:type', content: 'website' },
     { property: 'og:locale', content: 'fr_FR' },
     {
@@ -39,11 +38,7 @@ useHead({
     },
     {
       property: 'og:image',
-      content: image,
-    },
-    {
-      property: 'og:image:secure_url',
-      content: image.startsWith('https://') ? image : `https://${mySite.replace('https://', '')}${image}`,
+      content: absoluteImage,
     },
     // Test on: https://cards-dev.twitter.com/validator or https://socialsharepreview.com/
     { name: 'twitter:site', content: '@HoppR_Tech' },
@@ -63,7 +58,7 @@ useHead({
     },
     {
       name: 'twitter:image',
-      content: image,
+      content: absoluteImage,
     },
   ],
 })

@@ -142,12 +142,6 @@ defineOgImageComponent('About', {
           </ContentRenderer>
         </div>
         <BlogFooter :authors="authors" />
-        <ContactCTA
-          :article-title="blogPostProps.title"
-          :article-link="path"
-          :authors="authors.map(author => ({ name: author.name, id: author.notionId }))"
-          :published-date="blogPostProps.date"
-        />
         <BlogRelatedPosts
           :current-path="path"
           :current-tags="blogPostProps.tags"
@@ -155,5 +149,11 @@ defineOgImageComponent('About', {
       </div>
       <BlogToc />
     </div>
+    <ContactCTA
+      :article-title="blogPostProps.title"
+      :article-link="path"
+      :authors="authors.map(author => ({ name: author.name, id: author.notionId }))"
+      :published-date="blogPostProps.date"
+    />
   </div>
 </template>

@@ -6,6 +6,8 @@ WORKDIR /usr/src/app
 # install dependencies into temp directory
 # this will cache them and speed up future builds
 FROM base AS install
+# better-sqlite3 requires native build tools
+RUN apt-get update && apt-get install -y python3 make g++ && rm -rf /var/lib/apt/lists/*
 RUN mkdir -p /temp/dev
 COPY package.json bun.lock /temp/dev/
 RUN cd /temp/dev && bun install --frozen-lockfile

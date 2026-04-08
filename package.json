@@ -97,5 +97,8 @@
     "overrides": {
       "vue": "3.5.32"
     }
+  },
+  "overrides": {
+    "vue": "3.5.32"
   }
 }

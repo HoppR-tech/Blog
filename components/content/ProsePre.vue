@@ -43,7 +43,7 @@ async function copyCode() {
 <template>
   <div class="prose-pre-wrapper relative rounded-lg overflow-hidden my-4">
     <div class="flex items-center justify-between px-3 py-1.5 bg-gray-900 rounded-t-lg">
-      <span class="text-xs font-semibold text-gray-300">{{ language }}</span>
+      <span v-if="language" class="text-sm font-mono font-semibold text-white uppercase tracking-wide">{{ language }}</span>
       <button
         class="bg-hoppr-green hover:bg-opacity-80 text-hoppr-black rounded px-2 py-1 text-xs flex items-center"
         :aria-label="copied ? 'Code copié' : 'Copier le code'"

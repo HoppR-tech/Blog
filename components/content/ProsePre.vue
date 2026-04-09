@@ -42,16 +42,23 @@ async function copyCode() {
 
 <template>
   <div class="prose-pre-wrapper relative rounded-lg overflow-hidden my-4">
-    <div class="flex items-center justify-between px-3 py-1.5 bg-gray-900 rounded-t-lg">
-      <span class="text-xs font-semibold text-gray-300">{{ language }}</span>
+    <div class="flex items-center justify-between px-4 py-2 bg-gray-800 border-b border-gray-700 rounded-t-lg">
+      <div class="flex items-center gap-2">
+        <div class="flex gap-1.5">
+          <span class="w-3 h-3 rounded-full bg-red-500/80" />
+          <span class="w-3 h-3 rounded-full bg-yellow-500/80" />
+          <span class="w-3 h-3 rounded-full bg-green-500/80" />
+        </div>
+        <span v-if="language" class="text-xs font-mono font-medium text-gray-400 uppercase tracking-wider ml-2">{{ language }}</span>
+      </div>
       <button
-        class="bg-hoppr-green hover:bg-opacity-80 text-hoppr-black rounded px-2 py-1 text-xs flex items-center"
+        class="text-gray-400 hover:text-white transition-colors rounded px-2 py-1 text-xs flex items-center gap-1 hover:bg-gray-700"
         :aria-label="copied ? 'Code copié' : 'Copier le code'"
         @click="copyCode"
       >
-        <span class="mr-1">{{ copied ? 'Copié' : 'Copier' }}</span>
         <svg v-if="!copied" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 21H8V7h11m0-2H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2m-3-4H4a2 2 0 0 0-2 2v12h2V3h12V1Z" /></svg>
-        <svg v-else xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 7L9 19l-5.5-5.5l1.41-1.41L9 16.17L19.59 5.59L21 7Z" /></svg>
+        <svg v-else xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" class="text-hoppr-green" aria-hidden="true"><path d="M21 7L9 19l-5.5-5.5l1.41-1.41L9 16.17L19.59 5.59L21 7Z" /></svg>
+        <span>{{ copied ? 'Copié !' : 'Copier' }}</span>
       </button>
     </div>
     <pre class="shiki"><code class="shiki"><slot /></code></pre>

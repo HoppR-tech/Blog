@@ -11,9 +11,7 @@ const category = computed(() => {
 
 const { data } = await useAsyncData(`category-${categoryValue.value}`, async () => {
   const allPosts = await queryCollection('blogs').all()
-  return allPosts
-    .filter(article => article.tags?.some(t => t.toLowerCase() === categoryValue.value.toLowerCase()))
-    .sort((a, b) => b.date.localeCompare(a.date))
+  return allPosts.filter(article => article.tags?.includes(categoryValue.value))
 })
 
 const formattedData = computed(() => {

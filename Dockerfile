@@ -34,7 +34,7 @@ COPY --from=build /usr/src/app/package.json .
 COPY entrypoint.sh .
 
 USER root
-RUN chmod +x entrypoint.sh
+RUN chmod +x entrypoint.sh && chown -R bun:bun .data/
 USER bun
 
 EXPOSE 3000/tcp

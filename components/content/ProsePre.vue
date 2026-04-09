@@ -43,7 +43,7 @@ async function copyCode() {
 <template>
   <div class="prose-pre-wrapper relative rounded-lg overflow-hidden my-4">
     <div class="flex items-center justify-between px-3 py-1.5 bg-gray-900 rounded-t-lg">
-      <span v-if="language" class="text-sm font-mono font-semibold text-white uppercase tracking-wide">{{ language }}</span>
+      <span v-if="language" class="prose-pre-lang">{{ language }}</span>
       <button
         class="bg-hoppr-green hover:bg-opacity-80 text-hoppr-black rounded px-2 py-1 text-xs flex items-center"
         :aria-label="copied ? 'Code copié' : 'Copier le code'"
@@ -79,5 +79,14 @@ async function copyCode() {
 .prose-pre-wrapper pre.shiki code .line {
   display: block;
   min-height: 1rem;
+}
+
+.prose-pre-lang {
+  color: #ffffff !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 </style>

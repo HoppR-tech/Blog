@@ -9,16 +9,10 @@ const category = computed(() => {
   return categories.find(cat => cat.value === categoryValue.value) || { label: categoryValue.value, icon: 'mdi:tag', colors: { light: '#3b82f6', dark: '#60A5FA' } }
 })
 
-const { data } = await useAsyncData(
-  `category-${categoryValue.value}`,
-  async () => {
-    const allPosts = await queryCollection('blogs').all()
-    return allPosts.filter(article => article.tags?.includes(categoryValue.value))
-  },
-  {
-    getCachedData: (key, nuxtApp) => nuxtApp.payload.data[key] || nuxtApp.static.data[key],
-  },
-)
+const { data } = await useAsyncData(`category-${categoryValue.value}`, async () => {
+  const allPosts = await queryCollection('blogs').all()
+  return allPosts.filter(article => article.tags?.includes(categoryValue.value))
+})
 
 const formattedData = computed(() => {
   return data.value?.map((article) => {

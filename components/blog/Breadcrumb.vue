@@ -80,17 +80,17 @@ useHead({
 
 <template>
   <nav aria-label="Fil d'Ariane" class="mb-4 text-sm text-zinc-500 dark:text-zinc-400">
-    <ol class="flex flex-wrap items-center gap-1">
-      <li v-for="(item, index) in breadcrumbItems" :key="item.url" class="flex items-center">
-        <span v-if="index > 0" class="mx-1">&gt;</span>
+    <ol class="flex items-center gap-1 overflow-hidden">
+      <li v-for="(item, index) in breadcrumbItems" :key="item.url" class="flex items-center min-w-0" :class="{ 'shrink-0': index < breadcrumbItems.length - 1, 'truncate': index === breadcrumbItems.length - 1 }">
+        <span v-if="index > 0" class="mx-1 shrink-0">&gt;</span>
         <NuxtLink
           v-if="index < breadcrumbItems.length - 1"
           :to="item.url"
-          class="hover:text-hoppr-green transition-colors"
+          class="hover:text-hoppr-green transition-colors whitespace-nowrap"
         >
           {{ item.name }}
         </NuxtLink>
-        <span v-else class="text-zinc-700 dark:text-zinc-200 font-medium">
+        <span v-else class="text-zinc-700 dark:text-zinc-200 font-medium truncate" :title="item.name">
           {{ item.name }}
         </span>
       </li>

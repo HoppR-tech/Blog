@@ -18,23 +18,27 @@ export function selectFeaturedArticles<T extends Post>(
   categoryValues: readonly string[],
 ): T[] {
   const recentPaths = new Set(allPosts.slice(0, 3).map(p => p.path))
+  const usedPaths = new Set<string>()
 
   const featured = categoryValues.reduce<T[]>((result, category) => {
     const categoryLower = category.toLowerCase()
 
-    // Find first article matching this category that is NOT in recent posts
+    // Find first article matching this category that is NOT in recent posts AND not already selected
     const preferred = allPosts.find(
       post => post.tags.map(t => t.toLowerCase()).includes(categoryLower)
-        && !recentPaths.has(post.path),
+        && !recentPaths.has(post.path)
+        && !usedPaths.has(post.path),
     )
 
-    // Fallback: first article matching this category (even if in recent)
+    // Fallback: first article matching this category not already selected (even if in recent)
     const fallback = allPosts.find(
-      post => post.tags.map(t => t.toLowerCase()).includes(categoryLower),
+      post => post.tags.map(t => t.toLowerCase()).includes(categoryLower)
+        && !usedPaths.has(post.path),
     )
 
     const selected = preferred ?? fallback
     if (selected) {
+      usedPaths.add(selected.path)
       return [...result, selected]
     }
     return result

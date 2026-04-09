@@ -98,6 +98,32 @@ describe('Articles a la Une - selection par categorie', () => {
     })
   })
 
+  // Article with multiple categories should not appear twice
+  describe('Scenario: Pas de doublon quand un article a plusieurs catégories', () => {
+    it('should never select the same article twice even if it matches multiple categories', () => {
+      const allPosts: Post[] = [
+        makePost({ path: '/recent-1', date: '2026-04-08', tags: ['craft'] }),
+        makePost({ path: '/recent-2', date: '2026-04-07', tags: ['cloud-platform'] }),
+        makePost({ path: '/recent-3', date: '2026-04-06', tags: ['architecture'] }),
+        // This article matches BOTH craft and cloud-platform
+        makePost({ path: '/multi-cat', date: '2026-02-03', tags: ['craft', 'cloud-platform'] }),
+        makePost({ path: '/craft-only', date: '2026-01-15', tags: ['craft'] }),
+        makePost({ path: '/cloud-only', date: '2026-01-10', tags: ['cloud-platform'] }),
+        makePost({ path: '/archi-1', date: '2026-01-05', tags: ['architecture'] }),
+        makePost({ path: '/others-1', date: '2025-12-01', tags: ['others'] }),
+      ]
+
+      const result = selectFeaturedArticles(allPosts, CATEGORIES)
+
+      // No duplicate paths
+      const paths = result.map(p => p.path)
+      expect(new Set(paths).size).toBe(paths.length)
+
+      // 4 unique articles
+      expect(result).toHaveLength(4)
+    })
+  })
+
   // TASK-004: Ordre d'affichage par date DESC
   describe('Scenario: Ordre d\'affichage par date', () => {
     it('should return the 4 articles sorted by date descending', () => {

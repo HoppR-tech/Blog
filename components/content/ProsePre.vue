@@ -42,18 +42,16 @@ async function copyCode() {
 
 <template>
   <div class="prose-pre-wrapper relative rounded-lg overflow-hidden my-4">
-    <div class="absolute top-0 left-0 m-2 text-xs font-semibold text-gray-300 z-10">
-      {{ language }}
-    </div>
-    <div class="absolute top-0 right-0 m-2 z-10">
+    <div class="flex items-center justify-between px-3 py-1.5 bg-gray-900 rounded-t-lg">
+      <span class="text-xs font-semibold text-gray-300">{{ language }}</span>
       <button
-        class="bg-hoppr-green hover:bg-opacity-80 text-hoppr-black rounded px-2 py-1 text-xs sm:text-sm flex items-center"
+        class="bg-hoppr-green hover:bg-opacity-80 text-hoppr-black rounded px-2 py-1 text-xs flex items-center"
         :aria-label="copied ? 'Code copié' : 'Copier le code'"
         @click="copyCode"
       >
         <span class="mr-1">{{ copied ? 'Copié' : 'Copier' }}</span>
-        <svg v-if="!copied" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 21H8V7h11m0-2H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2m-3-4H4a2 2 0 0 0-2 2v12h2V3h12V1Z" /></svg>
-        <svg v-else xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 7L9 19l-5.5-5.5l1.41-1.41L9 16.17L19.59 5.59L21 7Z" /></svg>
+        <svg v-if="!copied" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 21H8V7h11m0-2H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2m-3-4H4a2 2 0 0 0-2 2v12h2V3h12V1Z" /></svg>
+        <svg v-else xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 7L9 19l-5.5-5.5l1.41-1.41L9 16.17L19.59 5.59L21 7Z" /></svg>
       </button>
     </div>
     <pre class="shiki"><code class="shiki"><slot /></code></pre>
@@ -63,8 +61,8 @@ async function copyCode() {
 <style>
 .prose-pre-wrapper pre.shiki {
   margin: 0 !important;
-  border-radius: 0.5rem;
-  padding: 2.5rem 1.5rem 1rem !important;
+  border-radius: 0 0 0.5rem 0.5rem;
+  padding: 1rem 1.5rem !important;
   background-color: #111827 !important;
   overflow-x: auto;
 }

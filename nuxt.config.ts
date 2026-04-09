@@ -98,6 +98,10 @@ export default defineNuxtConfig({
       routes: [
         '/',
         '/rss.xml',
+        '/categories/craft',
+        '/categories/cloud-platform',
+        '/categories/architecture',
+        '/categories/others',
       ],
       // Exclude OG image routes from prerendering to avoid ultrahtml/satori-html crash
       // Images will be generated at runtime when requested by social media crawlers

@@ -38,9 +38,9 @@ const formattedData = computed(() => {
         Articles à la Une
       </h2>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+    <div class="grid grid-cols-1 gap-6">
       <template v-for="post in formattedData" :key="post.title">
-        <BlogCard
+        <ArchiveCard
           :path="post.path"
           :title="post.title"
           :date="post.date"

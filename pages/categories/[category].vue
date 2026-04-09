@@ -14,7 +14,7 @@ const { data } = await useAsyncData(`category-${categoryValue.value}`, async () 
   return allPosts
     .filter(article => article.tags?.some(t => t.toLowerCase() === categoryValue.value.toLowerCase()))
     .sort((a, b) => b.date.localeCompare(a.date))
-}, { server: true })
+})
 
 const formattedData = computed(() => {
   return data.value?.map((article) => {

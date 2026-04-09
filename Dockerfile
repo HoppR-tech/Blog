@@ -28,6 +28,7 @@ FROM base AS release
 
 # Only copy what's needed at runtime
 COPY --from=build /usr/src/app/.output .output
+COPY --from=build /usr/src/app/.data .data
 COPY --from=build /usr/src/app/content/blogs content/blogs
 COPY --from=build /usr/src/app/package.json .
 COPY entrypoint.sh .

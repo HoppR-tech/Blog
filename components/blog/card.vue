@@ -128,9 +128,9 @@ const buttonLabel = computed(() =>
           {{ title }}
         </h3>
         <div class="text-ellipsis line-clamp-2 text-base text-zinc-600 dark:text-zinc-400" v-html="renderedDescription" />
-        <div class="flex group-hover:underline text-hoppr-green-text dark:text-hoppr-green items-center py-2">
+        <div class="flex items-center py-2 text-zinc-800 dark:text-zinc-200 font-medium group-hover:text-hoppr-green dark:group-hover:text-hoppr-green transition-colors">
           <p>Lire la suite</p>
-          <LogoArrow />
+          <span class="ml-1 text-hoppr-green transition-transform group-hover:translate-x-1">&rarr;</span>
         </div>
       </div>
     </NuxtLink>

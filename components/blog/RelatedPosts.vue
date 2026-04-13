@@ -69,7 +69,7 @@ const { data: relatedArticles } = await useAsyncData(
           <h3 class="text-sm font-semibold text-black dark:text-zinc-300 line-clamp-2 group-hover:text-hoppr-green transition-colors duration-200">
             {{ article.title }}
           </h3>
-          <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
+          <p class="text-xs text-zinc-600 dark:text-zinc-400 mt-1">
             {{ article.date }}
           </p>
           <div class="flex flex-wrap gap-1 mt-2">

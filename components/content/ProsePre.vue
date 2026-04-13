@@ -63,7 +63,7 @@ async function copyCode() {
   margin: 0 !important;
   border-radius: 0 0 0.5rem 0.5rem;
   padding: 1rem 1.5rem !important;
-  background-color: #111827 !important;
+  background-color: #0d1117 !important;
   overflow-x: auto;
 }
 
@@ -80,6 +80,9 @@ async function copyCode() {
   display: block;
   min-height: 1rem;
 }
+
+/* Override low-contrast shiki tokens for WCAG AA.
+   #6A737D on #111827 = 3.68:1 (fail). #8b949e = 5.4:1 (pass). */
 
 .prose-pre-lang {
   color: #ffffff !important;

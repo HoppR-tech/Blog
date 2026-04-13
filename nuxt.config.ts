@@ -181,7 +181,7 @@ export default defineNuxtConfig({
     build: {
       markdown: {
         highlight: {
-          theme: 'github-dark',
+          theme: 'github-dark-default',
           langs: [
             'bash',
             'shell',

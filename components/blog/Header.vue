@@ -38,6 +38,7 @@ const props = withDefaults(defineProps<Props>(), {
     <img
       :src="image || ''" :alt="alt || `Image illustrant l'article : ${title}`"
       class="m-auto rounded-2xl shadow-lg w-full sm:w-5/6 md:w-4/5 lg:w-3/4 max-w-full h-auto"
+      width="800" height="450" fetchpriority="high"
     >
     <!-- <p class="text-xs sm:text-sm my-3 max-w-xl mx-auto text-center text-zinc-600 dark:text-zinc-400">
       {{ description }}

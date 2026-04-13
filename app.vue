@@ -116,8 +116,6 @@ html.dark {
 }
 </style>
 
-<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/fonts/fira-sans-700.woff2" crossorigin>
 
 <link rel="preload" as="image" href="/images/blog.webp">

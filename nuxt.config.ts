@@ -19,11 +19,6 @@ export default defineNuxtConfig({
       titleTemplate: '%s | HoppR',
       meta: [{ name: 'description', content: 'Blog Tech de HoppR' }],
       link: [
-        { rel: 'preconnect', href: 'https://cdn.jsdelivr.net', crossorigin: '' },
-        {
-          rel: 'stylesheet',
-          href: 'https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css',
-        },
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
         { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
         { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },

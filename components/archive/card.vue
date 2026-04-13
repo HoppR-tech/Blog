@@ -80,7 +80,7 @@ const buttonLabel = computed(() =>
   <article
     class="group border dark:border-zinc-500 m-2 rounded-2xl overflow-hidden shadow-sm text-zinc-700 dark:text-zinc-300"
   >
-    <NuxtLink :to="path" class="grid grid-cols-1 sm:grid-cols-10 gap-1">
+    <NuxtLink :to="path" class="grid grid-cols-1 sm:grid-cols-10 gap-1 sm:h-48">
       <div :class="`sm:col-span-3 relative overflow-hidden rounded-t-2xl sm:rounded-l-2xl sm:rounded-t-none ${imageSize} sm:h-full`">
         <!-- Background Layer (Ambience) -->
         <img

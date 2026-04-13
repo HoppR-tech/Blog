@@ -223,7 +223,6 @@ export default defineNuxtConfig({
             },
           },
           [resolve(__dirname, 'content-plugins/rehype-content-assets.mjs')]: {},
-          [resolve(__dirname, 'content-plugins/rehype-heading-shift.mjs')]: {},
         },
       },
     },

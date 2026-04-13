@@ -122,16 +122,20 @@ defineOgImageComponent('About', {
         />
         <div
           class="prose prose-pre:max-w-full prose-sm sm:prose-base lg:prose-lg w-full break-words [overflow-wrap:anywhere]
-            prose-h2:text-2xl sm:prose-h2:text-3xl md:prose-h2:text-4xl lg:prose-h2:text-5xl prose-h2:font-bold prose-h2:text-hoppr-green prose-h2:mt-8 prose-h2:mb-6 prose-h2:border-b prose-h2:border-hoppr-green prose-h2:pb-2
-            prose-h3:text-lg sm:prose-h3:text-xl md:prose-h3:text-2xl lg:prose-h3:text-3xl prose-h3:border-l-4 prose-h3:border-hoppr-green prose-h3:pl-2
-            prose-h4:text-base sm:prose-h4:text-lg md:prose-h4:text-xl lg:prose-h4:text-2xl prose-h4:italic
-            prose-p:text-base lg:prose-p:text-lg
-            prose-h2:no-underline max-w-full mx-auto prose-zinc dark:prose-invert prose-img:rounded-lg prose-img:max-w-full
+            prose-h2:text-2xl sm:prose-h2:text-3xl lg:prose-h2:text-4xl prose-h2:font-bold prose-h2:text-hoppr-purple dark:prose-h2:text-zinc-100 prose-h2:mt-12 prose-h2:mb-5 prose-h2:pb-0 prose-h2:border-l-4 prose-h2:border-hoppr-green prose-h2:pl-4 prose-h2:border-t-0 prose-h2:border-r-0 prose-h2:border-b-0
+            prose-h3:text-xl sm:prose-h3:text-2xl lg:prose-h3:text-3xl prose-h3:border-l-[3px] prose-h3:border-hoppr-green prose-h3:pl-3 prose-h3:not-italic prose-h3:text-zinc-800 dark:prose-h3:text-zinc-200 prose-h3:mt-8 prose-h3:mb-3
+            prose-h4:text-lg sm:prose-h4:text-xl lg:prose-h4:text-2xl prose-h4:not-italic prose-h4:text-zinc-700 dark:prose-h4:text-zinc-300 prose-h4:mt-6 prose-h4:mb-2 prose-h4:border-l-2 prose-h4:border-hoppr-green/40 prose-h4:pl-3
+            prose-p:text-base lg:prose-p:text-lg prose-p:leading-relaxed
+            max-w-full mx-auto prose-zinc dark:prose-invert prose-img:rounded-lg prose-img:max-w-full
             prose-headings:font-bold
-            prose-a:text-hoppr-purple dark:prose-a:text-hoppr-green prose-a:no-underline prose-a:border-b prose-a:border-hoppr-green prose-a:border-opacity-50 hover:prose-a:border-opacity-100 hover:prose-a:text-hoppr-green hover:prose-a:bg-hoppr-green hover:prose-a:bg-opacity-10 transition-all duration-300 dark:prose-h2:border-zinc-700
+            prose-a:text-hoppr-purple dark:prose-a:text-hoppr-green prose-a:no-underline prose-a:border-b prose-a:border-hoppr-green prose-a:border-opacity-50 hover:prose-a:border-opacity-100 hover:prose-a:text-hoppr-green hover:prose-a:bg-hoppr-green hover:prose-a:bg-opacity-10 transition-all duration-300
+            prose-hr:border-zinc-200 dark:prose-hr:border-zinc-700 prose-hr:my-8
             prose-table:border prose-table:border-collapse prose-table:w-full [&_table]:block [&_table]:overflow-x-auto
             prose-th:bg-gray-100 prose-th:dark:bg-slate-800 prose-th:p-1.5 sm:prose-th:p-2 prose-th:border prose-th:border-gray-300 prose-th:dark:border-zinc-600 prose-th:text-sm sm:prose-th:text-base
             prose-td:p-1.5 sm:prose-td:p-2 prose-td:border prose-td:border-gray-300 prose-td:dark:border-zinc-600 prose-td:text-sm sm:prose-td:text-base
+            prose-li:marker:text-hoppr-green
+            prose-blockquote:border-l-hoppr-green prose-blockquote:bg-gray-50 dark:prose-blockquote:bg-zinc-800/50 prose-blockquote:rounded-r-lg prose-blockquote:py-1 prose-blockquote:pr-4
+            prose-strong:text-zinc-900 dark:prose-strong:text-zinc-100
             [&_.katex]:overflow-x-auto [&_.katex]:max-w-[calc(100%-1rem)]"
         >
           <ContentRenderer v-if="article" :value="article" class="article-section">

@@ -135,7 +135,7 @@ defineOgImageComponent('About', {
             prose-td:p-2.5 sm:prose-td:p-3 prose-td:border-0 prose-td:border-b prose-td:border-gray-200 prose-td:dark:border-zinc-700 prose-td:text-sm sm:prose-td:text-base
             [&_tbody_tr]:bg-white [&_tbody_tr:nth-child(even)]:bg-gray-50 [&_tbody_tr]:dark:bg-zinc-800/50 [&_tbody_tr:nth-child(even)]:dark:bg-zinc-800 [&_tbody_tr:hover]:bg-hoppr-green/5 [&_tbody_tr:hover]:dark:bg-hoppr-green/10 [&_tbody_tr]:transition-colors
             prose-li:marker:text-hoppr-green
-            prose-blockquote:border-l-hoppr-green prose-blockquote:bg-gray-50 dark:prose-blockquote:bg-zinc-800/50 prose-blockquote:rounded-r-lg prose-blockquote:py-1 prose-blockquote:pr-4
+            prose-blockquote:border-l-hoppr-green prose-blockquote:bg-gray-50 dark:prose-blockquote:bg-zinc-800/50 prose-blockquote:rounded-r-lg prose-blockquote:py-1 prose-blockquote:pr-4 prose-blockquote:text-zinc-700 dark:prose-blockquote:text-zinc-200
             prose-strong:text-zinc-900 dark:prose-strong:text-zinc-100
             [&_.katex]:overflow-x-auto [&_.katex]:max-w-[calc(100%-1rem)]"
         >

@@ -49,14 +49,14 @@ const { data: relatedArticles } = await useAsyncData(
     >
       Articles connexes
     </h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
       <NuxtLink
         v-for="article in relatedArticles"
         :key="article.path"
         :to="article.path"
         class="group block border dark:border-zinc-500 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300"
       >
-        <div class="relative h-32 overflow-hidden">
+        <div class="relative h-28 sm:h-32 overflow-hidden">
           <img
             :src="article.image"
             :alt="`Image de l'article : ${article.title}`"

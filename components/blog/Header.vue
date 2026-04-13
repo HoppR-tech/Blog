@@ -32,12 +32,12 @@ const props = withDefaults(defineProps<Props>(), {
 
 <template>
   <header>
-    <h1 class="text-2xl dark:text-zinc-300 md:text-3xl lg:text-4xl m-7 font-bold text-center">
+    <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl dark:text-zinc-300 mx-4 sm:mx-7 my-5 sm:my-7 font-bold text-center leading-tight">
       {{ title || '' }}
     </h1>
     <img
-      :src="image || ''" :alt="alt || `Image illustrant l'article : ${title}`" width="600"
-      class="m-auto rounded-2xl shadow-lg w-4/6 md:w-4/5 content-center h-auto"
+      :src="image || ''" :alt="alt || `Image illustrant l'article : ${title}`"
+      class="m-auto rounded-2xl shadow-lg w-full sm:w-5/6 md:w-4/5 lg:w-3/4 max-w-full h-auto"
     >
     <!-- <p class="text-xs sm:text-sm my-3 max-w-xl mx-auto text-center text-zinc-600 dark:text-zinc-400">
       {{ description }}

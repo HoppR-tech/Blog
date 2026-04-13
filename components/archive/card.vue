@@ -89,7 +89,7 @@ const buttonLabel = computed(() =>
         >
         <!-- Foreground Layer -->
         <img
-          class="w-full h-full object-cover object-center relative z-10 group-hover:scale-110 transition-transform duration-500"
+          class="w-full h-full object-contain object-center relative z-10 group-hover:scale-110 transition-transform duration-500 [mask-image:radial-gradient(ellipse_at_center,black_60%,transparent_100%)]"
           width="300" :src="image" :alt="alt || `Image de l'article : ${title}`"
         >
       </div>

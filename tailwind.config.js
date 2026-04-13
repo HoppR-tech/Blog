@@ -18,6 +18,7 @@ module.exports = {
       colors: {
         'hoppr-black': '#23272A',
         'hoppr-green': '#00cca5',
+        'hoppr-green-text': '#008a6e',
         'hoppr-red': '#F85352',
         'hoppr-purple': '#2F2D85',
       },

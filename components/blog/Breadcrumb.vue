@@ -79,7 +79,7 @@ useHead({
 </script>
 
 <template>
-  <nav aria-label="Fil d'Ariane" class="mb-4 text-sm text-zinc-500 dark:text-zinc-400 max-w-full overflow-hidden">
+  <nav aria-label="Fil d'Ariane" class="mb-4 text-sm text-zinc-600 dark:text-zinc-400 max-w-full overflow-hidden">
     <ol class="flex items-center gap-0.5 sm:gap-1">
       <li v-for="(item, index) in breadcrumbItems" :key="item.url" class="flex items-center min-w-0" :class="{ 'shrink-0': index < breadcrumbItems.length - 1, 'shrink min-w-0': index === breadcrumbItems.length - 1 }">
         <span v-if="index > 0" class="mx-0.5 sm:mx-1 shrink-0 text-xs">&gt;</span>

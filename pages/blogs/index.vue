@@ -144,6 +144,10 @@ defineOgImage({
       >
     </div>
 
+    <h2 class="sr-only">
+      Liste des articles
+    </h2>
+
     <div v-if="!data" class="space-y-5 my-5 px-4">
       <BlogLoader />
       <BlogLoader />

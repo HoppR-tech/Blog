@@ -100,7 +100,7 @@ const buttonLabel = computed(() =>
         >
           {{ title }}
         </h3>
-        <div class="font-luciole text-ellipsis line-clamp-2" v-html="renderedDescription" />
+        <div class="font-luciole text-ellipsis line-clamp-2 text-zinc-600 dark:text-zinc-400" v-html="renderedDescription" />
         <div class="text-black dark:text-zinc-300 text-xs mt-2 mb-1 flex flex-col gap-3 md:flex-row md:items-center md:space-x-6 font-luciole">
           <div class="flex items-center">
             <LogoDate />
@@ -108,17 +108,16 @@ const buttonLabel = computed(() =>
               {{ date }}
             </p>
           </div>
-          <div class="flex items-center gap-2 flex-wrap" role="list" aria-label="Tags de l'article">
+          <div class="flex items-center gap-2 flex-wrap" aria-label="Tags de l'article">
             <LogoTag />
             <template v-for="tag in visibleTags" :key="tag">
-              <span class="inline-flex items-center justify-center bg-hoppr-purple text-white rounded-md px-2 pb-0 text-xs font-bold uppercase tracking-widest shadow-sm leading-normal" role="listitem" style="padding-top: 0.25em">{{ tag }}</span>
+              <span class="inline-flex items-center justify-center bg-hoppr-purple text-white rounded-md px-2 py-1.5 text-xs font-bold uppercase tracking-widest shadow-sm leading-normal">{{ tag }}</span>
             </template>
             <span
               v-if="props.tags.length > 2"
               role="button"
               tabindex="0"
-              class="inline-flex items-center justify-center bg-hoppr-purple/10 text-hoppr-purple rounded-md px-2 pb-0 text-xs font-bold uppercase tracking-widest shadow-sm leading-normal hover:bg-hoppr-purple/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-hoppr-purple transition-colors duration-300 dark:bg-purple-500/20 dark:text-purple-200 dark:hover:bg-purple-500/30 cursor-pointer"
-              style="padding-top: 0.25em"
+              class="inline-flex items-center justify-center bg-hoppr-purple/10 text-hoppr-purple rounded-md px-2 py-1.5 text-xs font-bold uppercase tracking-widest shadow-sm leading-normal hover:bg-hoppr-purple/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-hoppr-purple transition-colors duration-300 dark:bg-purple-500/20 dark:text-purple-200 dark:hover:bg-purple-500/30 cursor-pointer"
               :aria-expanded="showAllTags"
               :aria-label="buttonLabel"
               @click.prevent="toggleTags"
@@ -129,7 +128,7 @@ const buttonLabel = computed(() =>
             </span>
           </div>
         </div>
-        <div class="flex group-hover:underline text-hoppr-green dark:text-hoppr-green items-center pt-2">
+        <div class="flex group-hover:underline text-hoppr-green-text dark:text-hoppr-green items-center pt-2">
           <p>Lire la suite</p>
           <LogoArrow />
         </div>

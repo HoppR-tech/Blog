@@ -1,21 +1,16 @@
 import { visit } from 'unist-util-visit'
 
-const HEADING_PATTERN = /^h([1-5])$/
-
 /**
- * Rehype plugin that shifts all headings by +1 level.
- * H1 -> H2, H2 -> H3, etc.
- * This ensures the article content doesn't produce multiple H1 elements,
- * since H1 is reserved for the article title in the page layout.
+ * Rehype plugin that shifts only H1 headings to H2.
+ * This prevents multiple H1 elements on the page (H1 is reserved for the
+ * article title in the page layout) while preserving the heading hierarchy
+ * for H2 and below, so articles maintain proper heading order (H2 -> H3 -> ...).
  */
 export default function rehypeHeadingShift() {
   return (tree) => {
     visit(tree, 'element', (node) => {
-      const match = HEADING_PATTERN.exec(node.tagName)
-      if (match) {
-        const currentLevel = Number.parseInt(match[1], 10)
-        const newLevel = Math.min(currentLevel + 1, 6)
-        node.tagName = `h${newLevel}`
+      if (node.tagName === 'h1') {
+        node.tagName = 'h2'
       }
     })
   }

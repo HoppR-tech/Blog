@@ -128,7 +128,7 @@ defineOgImageComponent('About', {
             prose-p:text-base lg:prose-p:text-lg
             prose-h2:no-underline max-w-full mx-auto prose-zinc dark:prose-invert prose-img:rounded-lg prose-img:max-w-full
             prose-headings:font-bold
-            prose-a:text-hoppr-green prose-a:no-underline prose-a:border-b prose-a:border-hoppr-green prose-a:border-opacity-30 hover:prose-a:border-opacity-100 hover:prose-a:bg-hoppr-green hover:prose-a:bg-opacity-10 transition-all duration-300 dark:prose-h2:border-zinc-700
+            prose-a:text-hoppr-green-text dark:prose-a:text-hoppr-green prose-a:no-underline prose-a:border-b prose-a:border-hoppr-green prose-a:border-opacity-30 hover:prose-a:border-opacity-100 hover:prose-a:bg-hoppr-green hover:prose-a:bg-opacity-10 transition-all duration-300 dark:prose-h2:border-zinc-700
             prose-table:border prose-table:border-collapse prose-table:w-full [&_table]:block [&_table]:overflow-x-auto
             prose-th:bg-gray-100 prose-th:dark:bg-slate-800 prose-th:p-1.5 sm:prose-th:p-2 prose-th:border prose-th:border-gray-300 prose-th:dark:border-zinc-600 prose-th:text-sm sm:prose-th:text-base
             prose-td:p-1.5 sm:prose-td:p-2 prose-td:border prose-td:border-gray-300 prose-td:dark:border-zinc-600 prose-td:text-sm sm:prose-td:text-base

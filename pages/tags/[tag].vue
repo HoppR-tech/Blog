@@ -66,6 +66,9 @@ defineOgImage({
       :custom-items="[{ name: 'Tags', url: '/tags' }, { name: capitalize(tag), url: `/tags/${tag}` }]"
     />
     <TagTopic />
+    <h2 class="sr-only">
+      Articles avec ce tag
+    </h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       <BlogCard
         v-for="post in formattedData"

@@ -31,8 +31,8 @@ const props = withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-  <header>
-    <h1 class="text-lg sm:text-xl md:text-2xl lg:text-4xl dark:text-zinc-300 mx-2 sm:mx-4 md:mx-7 my-4 sm:my-7 font-bold text-center leading-snug sm:leading-tight">
+  <header class="overflow-hidden">
+    <h1 class="text-lg sm:text-xl md:text-2xl lg:text-4xl dark:text-zinc-300 mx-0 sm:mx-4 md:mx-7 my-4 sm:my-7 font-bold text-center leading-snug sm:leading-tight break-words">
       {{ title || '' }}
     </h1>
     <img

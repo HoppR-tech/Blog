@@ -65,7 +65,7 @@ useHead({
 </script>
 
 <template>
-  <div class="bg-[#F1F2F4] dark:text-zinc-300 dark:bg-hoppr-black">
+  <div class="bg-[#F1F2F4] dark:text-zinc-300 dark:bg-hoppr-black overflow-x-hidden">
     <NuxtLoadingIndicator />
     <NuxtLayout>
       <Suspense>

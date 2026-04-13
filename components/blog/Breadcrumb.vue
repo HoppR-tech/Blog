@@ -79,18 +79,18 @@ useHead({
 </script>
 
 <template>
-  <nav aria-label="Fil d'Ariane" class="mb-4 text-sm text-zinc-500 dark:text-zinc-400">
-    <ol class="flex items-center gap-1 overflow-hidden">
-      <li v-for="(item, index) in breadcrumbItems" :key="item.url" class="flex items-center min-w-0" :class="{ 'shrink-0': index < breadcrumbItems.length - 1, 'truncate': index === breadcrumbItems.length - 1 }">
-        <span v-if="index > 0" class="mx-1 shrink-0">&gt;</span>
+  <nav aria-label="Fil d'Ariane" class="mb-4 text-sm text-zinc-500 dark:text-zinc-400 max-w-full overflow-hidden">
+    <ol class="flex items-center gap-0.5 sm:gap-1">
+      <li v-for="(item, index) in breadcrumbItems" :key="item.url" class="flex items-center min-w-0" :class="{ 'shrink-0': index < breadcrumbItems.length - 1, 'shrink min-w-0': index === breadcrumbItems.length - 1 }">
+        <span v-if="index > 0" class="mx-0.5 sm:mx-1 shrink-0 text-xs">&gt;</span>
         <NuxtLink
           v-if="index < breadcrumbItems.length - 1"
           :to="item.url"
-          class="hover:text-hoppr-green transition-colors whitespace-nowrap"
+          class="hover:text-hoppr-green transition-colors whitespace-nowrap text-xs sm:text-sm"
         >
           {{ item.name }}
         </NuxtLink>
-        <span v-else class="text-zinc-700 dark:text-zinc-200 font-medium truncate" :title="item.name">
+        <span v-else class="text-zinc-700 dark:text-zinc-200 font-medium truncate block text-xs sm:text-sm" :title="item.name">
           {{ item.name }}
         </span>
       </li>

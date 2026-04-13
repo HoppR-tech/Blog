@@ -102,9 +102,9 @@ defineOgImageComponent('About', {
 </script>
 
 <template>
-  <div>
-    <div class="px-4 sm:px-6 container max-w-6xl mx-auto lg:grid lg:grid-cols-12 lg:gap-x-12">
-      <div class="col-span-12 lg:col-span-9 min-w-0">
+  <div class="overflow-x-hidden">
+    <div class="px-4 sm:px-6 max-w-6xl mx-auto lg:grid lg:grid-cols-12 lg:gap-x-12">
+      <div class="col-span-12 lg:col-span-9 min-w-0 w-[calc(100vw-2rem)] sm:w-[calc(100vw-3rem)] lg:w-auto">
         <BlogBreadcrumb
           :title="blogPostProps.title"
           :path="path"
@@ -121,7 +121,7 @@ defineOgImageComponent('About', {
           :reviewers="reviewers"
         />
         <div
-          class="prose prose-pre:max-w-full prose-sm sm:prose-base lg:prose-lg
+          class="prose prose-pre:max-w-full prose-sm sm:prose-base lg:prose-lg w-full break-words [overflow-wrap:anywhere]
             prose-h2:text-2xl sm:prose-h2:text-3xl md:prose-h2:text-4xl lg:prose-h2:text-5xl prose-h2:font-bold prose-h2:text-hoppr-green prose-h2:mt-8 prose-h2:mb-6 prose-h2:border-b prose-h2:border-hoppr-green prose-h2:pb-2
             prose-h3:text-lg sm:prose-h3:text-xl md:prose-h3:text-2xl lg:prose-h3:text-3xl prose-h3:border-l-4 prose-h3:border-hoppr-green prose-h3:pl-2
             prose-h4:text-base sm:prose-h4:text-lg md:prose-h4:text-xl lg:prose-h4:text-2xl prose-h4:italic

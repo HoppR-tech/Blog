@@ -102,9 +102,9 @@ defineOgImageComponent('About', {
 </script>
 
 <template>
-  <div class="overflow-x-hidden">
+  <div>
     <div class="px-4 sm:px-6 max-w-6xl mx-auto lg:grid lg:grid-cols-12 lg:gap-x-12">
-      <div class="col-span-12 lg:col-span-9 min-w-0 w-[calc(100vw-2rem)] sm:w-[calc(100vw-3rem)] lg:w-auto">
+      <div class="col-span-12 lg:col-span-9 min-w-0 w-[calc(100vw-2rem)] sm:w-[calc(100vw-3rem)] lg:w-auto overflow-x-hidden">
         <BlogBreadcrumb
           :title="blogPostProps.title"
           :path="path"

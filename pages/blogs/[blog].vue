@@ -130,9 +130,10 @@ defineOgImageComponent('About', {
             prose-headings:font-bold
             prose-a:text-hoppr-purple dark:prose-a:text-hoppr-green prose-a:no-underline prose-a:border-b prose-a:border-hoppr-green prose-a:border-opacity-50 hover:prose-a:border-opacity-100 hover:prose-a:text-hoppr-green hover:prose-a:bg-hoppr-green hover:prose-a:bg-opacity-10 transition-all duration-300
             prose-hr:border-zinc-200 dark:prose-hr:border-zinc-700 prose-hr:my-8
-            prose-table:border prose-table:border-collapse prose-table:w-full [&_table]:block [&_table]:overflow-x-auto
-            prose-th:bg-gray-100 prose-th:dark:bg-slate-800 prose-th:p-1.5 sm:prose-th:p-2 prose-th:border prose-th:border-gray-300 prose-th:dark:border-zinc-600 prose-th:text-sm sm:prose-th:text-base
-            prose-td:p-1.5 sm:prose-td:p-2 prose-td:border prose-td:border-gray-300 prose-td:dark:border-zinc-600 prose-td:text-sm sm:prose-td:text-base
+            prose-table:border-collapse prose-table:w-full prose-table:rounded-lg prose-table:overflow-hidden prose-table:border-0 [&_table]:block [&_table]:overflow-x-auto
+            prose-th:bg-hoppr-purple prose-th:text-white prose-th:dark:bg-hoppr-purple/80 prose-th:p-2.5 sm:prose-th:p-3 prose-th:border-0 prose-th:border-b-2 prose-th:border-hoppr-green prose-th:text-sm sm:prose-th:text-base prose-th:font-semibold prose-th:text-left
+            prose-td:p-2.5 sm:prose-td:p-3 prose-td:border-0 prose-td:border-b prose-td:border-gray-200 prose-td:dark:border-zinc-700 prose-td:text-sm sm:prose-td:text-base
+            [&_tbody_tr]:bg-white [&_tbody_tr:nth-child(even)]:bg-gray-50 [&_tbody_tr]:dark:bg-zinc-800/50 [&_tbody_tr:nth-child(even)]:dark:bg-zinc-800 [&_tbody_tr:hover]:bg-hoppr-green/5 [&_tbody_tr:hover]:dark:bg-hoppr-green/10 [&_tbody_tr]:transition-colors
             prose-li:marker:text-hoppr-green
             prose-blockquote:border-l-hoppr-green prose-blockquote:bg-gray-50 dark:prose-blockquote:bg-zinc-800/50 prose-blockquote:rounded-r-lg prose-blockquote:py-1 prose-blockquote:pr-4
             prose-strong:text-zinc-900 dark:prose-strong:text-zinc-100

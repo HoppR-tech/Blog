@@ -100,6 +100,7 @@ export default defineNuxtConfig({
 
   nitro: {
     preset: process.env.NITRO_PRESET || 'bun',
+    compressPublicAssets: true,
     prerender: {
       crawlLinks: true,
       routes: [
@@ -128,6 +129,12 @@ export default defineNuxtConfig({
       },
       '/images/**': {
         cache: { maxAge: 60 * 60 * 24 * 30 }, // 30 jours pour les images
+      },
+      '/fonts/**': {
+        cache: { maxAge: 60 * 60 * 24 * 365 }, // 1 an pour les fonts (immutables)
+      },
+      '/content-assets/**': {
+        cache: { maxAge: 60 * 60 * 24 * 30 }, // 30 jours pour les assets de contenu
       },
     },
   },

@@ -41,7 +41,7 @@ function toggleSearch() {
 <template>
   <div>
     <div class="bg-hoppr-purple fixed top-0 left-0 right-0 z-50">
-      <nav class="container max-w-screen-xl px-6 py-2 mx-auto">
+      <nav class="container max-w-screen-xl px-3 sm:px-6 py-2 mx-auto">
         <div class="flex items-center justify-between">
           <div class="flex items-center">
             <LogoSvg class="h-14 w-auto mr-4" />
@@ -133,7 +133,7 @@ function toggleSearch() {
             <LazyIcon name="mdi:close" size="24" />
           </button>
         </div>
-        <ul class="flex flex-col mt-16 space-y-2 px-6 py-4">
+        <ul class="flex flex-col mt-16 space-y-2 px-3 sm:px-6 py-4">
           <li v-for="(item, index) in menuItems" :key="index">
             <NuxtLink
               :to="item.to" class="block py-2 text-gray-100 hover:text-hoppr-green uppercase tracking-wider"

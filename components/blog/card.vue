@@ -79,10 +79,10 @@ const buttonLabel = computed(() =>
 
 <template>
   <article
-    class="group border dark:border-zinc-500 m-2 overflow-hidden rounded-2xl shadow-sm text-zinc-700 dark:text-zinc-300"
+    class="group border dark:border-zinc-500 m-1 sm:m-2 overflow-hidden rounded-2xl shadow-sm text-zinc-700 dark:text-zinc-300"
   >
     <NuxtLink :to="path">
-      <div class="relative overflow-hidden lg:h-48 md:h-36 rounded-t-2xl">
+      <div class="relative overflow-hidden h-32 sm:h-36 md:h-40 lg:h-48 rounded-t-2xl">
         <!-- Background Layer (Ambience) -->
         <img
           :src="image" aria-hidden="true" role="presentation"
@@ -105,13 +105,13 @@ const buttonLabel = computed(() =>
           <div class="flex items-center gap-2 flex-wrap mt-2" role="list" aria-label="Tags de l'article">
             <LogoTag />
             <template v-for="tag in visibleTags" :key="tag">
-              <span class="inline-flex items-center justify-center bg-hoppr-purple text-white rounded-md px-2 pb-0 text-[0.65rem] font-bold uppercase tracking-widest shadow-sm leading-normal" role="listitem" style="padding-top: 0.25em">{{ tag }}</span>
+              <span class="inline-flex items-center justify-center bg-hoppr-purple text-white rounded-md px-2 pb-0 text-xs font-bold uppercase tracking-widest shadow-sm leading-normal" role="listitem" style="padding-top: 0.25em">{{ tag }}</span>
             </template>
             <span
               v-if="props.tags.length > 2"
               role="button"
               tabindex="0"
-              class="inline-flex items-center justify-center bg-hoppr-purple/10 text-hoppr-purple rounded-md px-2 pb-0 text-[0.65rem] font-bold uppercase tracking-widest shadow-sm leading-normal hover:bg-hoppr-purple/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-hoppr-purple transition-colors duration-300 dark:bg-purple-500/20 dark:text-purple-200 dark:hover:bg-purple-500/30 cursor-pointer"
+              class="inline-flex items-center justify-center bg-hoppr-purple/10 text-hoppr-purple rounded-md px-2 pb-0 text-xs font-bold uppercase tracking-widest shadow-sm leading-normal hover:bg-hoppr-purple/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-hoppr-purple transition-colors duration-300 dark:bg-purple-500/20 dark:text-purple-200 dark:hover:bg-purple-500/30 cursor-pointer"
               style="padding-top: 0.25em"
               :aria-expanded="showAllTags"
               :aria-label="buttonLabel"

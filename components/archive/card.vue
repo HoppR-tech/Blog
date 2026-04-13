@@ -25,7 +25,7 @@ const props = withDefaults(defineProps<Props>(), {
   ogImage: '/not-found.jpg',
   tags: () => [],
   published: false,
-  imageSize: 'h-48',
+  imageSize: 'h-36 sm:h-48',
 })
 
 const md = new MarkdownIt()
@@ -93,7 +93,7 @@ const buttonLabel = computed(() =>
           width="300" :src="image" :alt="alt || `Image de l'article : ${title}`"
         >
       </div>
-      <div class="sm:col-span-7 p-5 relative">
+      <div class="sm:col-span-7 p-3 sm:p-5 relative">
         <div class="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-white dark:from-zinc-800 to-transparent opacity-90" />
         <h3
           class="text-lg font-bold text-black dark:text-zinc-300 pb-1 relative group-hover:text-hoppr-green dark:group-hover:text-hoppr-green text-ellipsis line-clamp-1"
@@ -111,13 +111,13 @@ const buttonLabel = computed(() =>
           <div class="flex items-center gap-2 flex-wrap" role="list" aria-label="Tags de l'article">
             <LogoTag />
             <template v-for="tag in visibleTags" :key="tag">
-              <span class="inline-flex items-center justify-center bg-hoppr-purple text-white rounded-md px-2 pb-0 text-[0.65rem] font-bold uppercase tracking-widest shadow-sm leading-normal" role="listitem" style="padding-top: 0.25em">{{ tag }}</span>
+              <span class="inline-flex items-center justify-center bg-hoppr-purple text-white rounded-md px-2 pb-0 text-xs font-bold uppercase tracking-widest shadow-sm leading-normal" role="listitem" style="padding-top: 0.25em">{{ tag }}</span>
             </template>
             <span
               v-if="props.tags.length > 2"
               role="button"
               tabindex="0"
-              class="inline-flex items-center justify-center bg-hoppr-purple/10 text-hoppr-purple rounded-md px-2 pb-0 text-[0.65rem] font-bold uppercase tracking-widest shadow-sm leading-normal hover:bg-hoppr-purple/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-hoppr-purple transition-colors duration-300 dark:bg-purple-500/20 dark:text-purple-200 dark:hover:bg-purple-500/30 cursor-pointer"
+              class="inline-flex items-center justify-center bg-hoppr-purple/10 text-hoppr-purple rounded-md px-2 pb-0 text-xs font-bold uppercase tracking-widest shadow-sm leading-normal hover:bg-hoppr-purple/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-hoppr-purple transition-colors duration-300 dark:bg-purple-500/20 dark:text-purple-200 dark:hover:bg-purple-500/30 cursor-pointer"
               style="padding-top: 0.25em"
               :aria-expanded="showAllTags"
               :aria-label="buttonLabel"

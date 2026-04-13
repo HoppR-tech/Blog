@@ -2,7 +2,7 @@
   <section class="container mx-auto" aria-labelledby="main-heading">
     <div class="grid grid-cols-1 sm:grid-cols-2 items-center">
       <div class="px-6">
-        <h1 id="main-heading" class="text-black dark:text-zinc-300 font-semibold leading-tight text-4xl md:text-5xl my-5 font-fira">
+        <h1 id="main-heading" class="text-black dark:text-zinc-300 font-semibold leading-tight text-2xl sm:text-3xl md:text-4xl lg:text-5xl my-5 font-fira">
           Bienvenue sur le Blog Tech d'HoppR
         </h1>
         <p class="dark:text-zinc-300">

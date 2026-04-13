@@ -32,7 +32,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 <template>
   <header>
-    <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl dark:text-zinc-300 mx-4 sm:mx-7 my-5 sm:my-7 font-bold text-center leading-tight">
+    <h1 class="text-lg sm:text-xl md:text-2xl lg:text-4xl dark:text-zinc-300 mx-2 sm:mx-4 md:mx-7 my-4 sm:my-7 font-bold text-center leading-snug sm:leading-tight">
       {{ title || '' }}
     </h1>
     <img
@@ -43,7 +43,7 @@ const props = withDefaults(defineProps<Props>(), {
       {{ description }}
     </p> -->
     <div class="flex flex-col w-full justify-start text-sm md:text-base my-8">
-      <div class="flex flex-wrap justify-start text-black dark:text-zinc-300 content-center gap-4 text-sm sm:text-base">
+      <div class="flex flex-wrap justify-start text-black dark:text-zinc-300 content-center gap-2 sm:gap-4 text-sm sm:text-base">
         <div class="flex items-start w-full mb-2">
           <LogoAuthor class="flex-shrink-0 mt-0.5 mr-2" />
           <p>
@@ -66,7 +66,7 @@ const props = withDefaults(defineProps<Props>(), {
           <LogoTag class="flex-shrink-0 mt-0.5" />
           <template v-for="tag in props.tags" :key="tag">
             <NuxtLink :to="`/tags/${tag}`" class="group">
-              <span class="inline-flex items-center justify-center bg-hoppr-purple text-white rounded-md px-2 pb-0 text-[0.65rem] font-bold uppercase tracking-widest shadow-sm transition-all duration-300 ease-out group-hover:scale-105 group-hover:bg-opacity-90 leading-normal" style="padding-top: 0.25em">{{ tag }}</span>
+              <span class="inline-flex items-center justify-center bg-hoppr-purple text-white rounded-md px-2 pb-0 text-xs font-bold uppercase tracking-widest shadow-sm transition-all duration-300 ease-out group-hover:scale-105 group-hover:bg-opacity-90 leading-normal" style="padding-top: 0.25em">{{ tag }}</span>
             </NuxtLink>
           </template>
         </div>

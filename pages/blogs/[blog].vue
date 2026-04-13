@@ -121,7 +121,7 @@ defineOgImageComponent('About', {
           :reviewers="reviewers"
         />
         <div
-          class="prose prose-pre:max-w-full prose-base sm:prose-base lg:prose-lg
+          class="prose prose-pre:max-w-full prose-sm sm:prose-base lg:prose-lg
             prose-h2:text-2xl sm:prose-h2:text-3xl md:prose-h2:text-4xl lg:prose-h2:text-5xl prose-h2:font-bold prose-h2:text-hoppr-green prose-h2:mt-8 prose-h2:mb-6 prose-h2:border-b prose-h2:border-hoppr-green prose-h2:pb-2
             prose-h3:text-lg sm:prose-h3:text-xl md:prose-h3:text-2xl lg:prose-h3:text-3xl prose-h3:border-l-4 prose-h3:border-hoppr-green prose-h3:pl-2
             prose-h4:text-base sm:prose-h4:text-lg md:prose-h4:text-xl lg:prose-h4:text-2xl prose-h4:italic
@@ -132,7 +132,7 @@ defineOgImageComponent('About', {
             prose-table:border prose-table:border-collapse prose-table:w-full [&_table]:block [&_table]:overflow-x-auto
             prose-th:bg-gray-100 prose-th:dark:bg-slate-800 prose-th:p-1.5 sm:prose-th:p-2 prose-th:border prose-th:border-gray-300 prose-th:dark:border-zinc-600 prose-th:text-sm sm:prose-th:text-base
             prose-td:p-1.5 sm:prose-td:p-2 prose-td:border prose-td:border-gray-300 prose-td:dark:border-zinc-600 prose-td:text-sm sm:prose-td:text-base
-            [&_.katex]:overflow-x-auto [&_.katex]:max-w-[calc(100vw-3rem)]"
+            [&_.katex]:overflow-x-auto [&_.katex]:max-w-[calc(100%-1rem)]"
         >
           <ContentRenderer v-if="article" :value="article" class="article-section">
             <template #empty>

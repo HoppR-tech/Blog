@@ -108,7 +108,7 @@ async function submitForm() {
 
     <!-- Modal -->
     <div v-if="showModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4">
-      <div class="bg-white dark:bg-gray-800 p-8 rounded-lg w-full max-w-2xl">
+      <div class="bg-white dark:bg-gray-800 p-8 rounded-lg w-[calc(100%-2rem)] sm:w-full max-w-2xl">
         <h4 class="text-xl font-bold mb-4 text-black dark:text-white">
           Contactez-nous
         </h4>
@@ -134,7 +134,7 @@ async function submitForm() {
               class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-hoppr-green focus:ring focus:ring-hoppr-green focus:ring-opacity-50 dark:bg-gray-700 dark:text-white"
             />
           </div>
-          <div class="flex justify-end space-x-4">
+          <div class="flex justify-end space-x-2 sm:space-x-4">
             <button
               type="button"
               class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"

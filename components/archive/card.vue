@@ -128,7 +128,7 @@ const buttonLabel = computed(() =>
             </span>
           </div>
         </div>
-        <div class="flex items-center pt-2 text-zinc-800 dark:text-zinc-200 font-medium group-hover:text-hoppr-green dark:group-hover:text-hoppr-green transition-colors">
+        <div class="flex items-center pt-2 text-zinc-800 dark:text-zinc-200 font-semibold group-hover:text-hoppr-green dark:group-hover:text-hoppr-green transition-colors">
           <p>Lire la suite</p>
           <span class="ml-1 text-hoppr-green transition-transform group-hover:translate-x-1">&rarr;</span>
         </div>

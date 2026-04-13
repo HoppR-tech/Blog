@@ -4,7 +4,6 @@ import ContactCTA from '@/components/blog/ContactCTA.vue'
 import { useAbsoluteUrl } from '@/composables/useAbsoluteUrl'
 import { usePageSeo } from '@/composables/usePageSeo'
 import { stripMarkdown } from '@/utils/stringUtils'
-import 'katex/dist/katex.min.css'
 
 const { path } = useRoute()
 const config = useRuntimeConfig()
@@ -98,6 +97,13 @@ defineOgImageComponent('About', {
   description: ogDescription.value || '',
   imageTop: '/images/og-post.png',
   imageBottom: '/images/og-home.png',
+})
+
+// Load KaTeX CSS only when the article contains math formulas
+onMounted(() => {
+  if (document.querySelector('.katex, .katex-display')) {
+    import('katex/dist/katex.min.css')
+  }
 })
 </script>
 

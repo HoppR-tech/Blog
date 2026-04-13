@@ -47,6 +47,17 @@ export default defineNuxtConfig({
     optimizeDeps: {
       include: [],
     },
+    build: {
+      cssCodeSplit: true,
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('shiki') || id.includes('shikijs'))
+              return 'shiki'
+          },
+        },
+      },
+    },
   },
 
   css: ['~/assets/css/tailwind.css', '~/assets/css/katex.responsive.css'],

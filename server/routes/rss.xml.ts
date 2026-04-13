@@ -1,5 +1,10 @@
+import type { H3Event } from 'h3'
 import RSS from 'rss'
 import { resolveContentAsset } from '@/utils/contentAssets'
+
+// Server-side queryCollection has signature (event, collection) but auto-import types only expose client-side (collection)
+// @ts-expect-error - Nuxt Content v3 server auto-import provides 2-arg overload at runtime
+const serverQueryCollection: (event: H3Event, collection: 'blogs') => ReturnType<typeof queryCollection> = queryCollection
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
@@ -23,7 +28,7 @@ export default defineEventHandler(async (event) => {
       ttl: 60,
     })
 
-    const blogPosts = await queryCollection(event, 'blogs').order('date', 'DESC').all()
+    const blogPosts = await serverQueryCollection(event, 'blogs').order('date', 'DESC').all()
 
     for (const post of blogPosts) {
       const url = `${siteURL}${post.path}`

@@ -128,7 +128,7 @@ function buildDefaultParagraphBlock(): ParagraphBlockObjectResponse {
       rich_text: [],
       color: 'default',
     },
-  } as ParagraphBlockObjectResponse
+  } as unknown as ParagraphBlockObjectResponse
 }
 
 function buildDefaultHeading1Block(): Heading1BlockObjectResponse {
@@ -140,7 +140,7 @@ function buildDefaultHeading1Block(): Heading1BlockObjectResponse {
       color: 'default',
       is_toggleable: true,
     },
-  } as Heading1BlockObjectResponse
+  } as unknown as Heading1BlockObjectResponse
 }
 
 function buildDefaultHeading2Block(): Heading2BlockObjectResponse {

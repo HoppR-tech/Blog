@@ -18,7 +18,7 @@ describe('notionUtils', () => {
       { type: 'heading_1', heading_1: { rich_text: [{ plain_text: 'Title', annotations: {} }] } },
       { type: 'image', image: { file: { url: 'http://example.com/image.png' }, caption: [{ plain_text: 'An image' }] } },
     ]
-    const { markdownContent, images } = await convertBlocksToMarkdown(mockClient, blocks)
+    const { markdownContent, images } = await convertBlocksToMarkdown(mockClient, blocks as unknown as Parameters<typeof convertBlocksToMarkdown>[1])
 
     expect(markdownContent).toContain('Hello\n\n')
     expect(markdownContent).toContain('# Title\n\n')

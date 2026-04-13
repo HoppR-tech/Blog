@@ -29,7 +29,7 @@ function buildCategorySitemapEntries(
   return categories.map((cat) => {
     const articles = articlesByCategory[cat.value] || []
     const latestDate = articles.length > 0
-      ? articles.sort((a, b) => b.date.localeCompare(a.date))[0].date
+      ? articles.sort((a, b) => b.date.localeCompare(a.date))[0]?.date ?? ''
       : new Date().toISOString().split('T')[0]
     return {
       loc: `${baseUrl}/categories/${cat.value}`,
@@ -68,8 +68,8 @@ describe('sitemap - article entries with lastmod (TASK-035)', () => {
       expect(entry.lastmod).toBeDefined()
       expect(entry.lastmod).toMatch(/^\d{4}-\d{2}-\d{2}/)
     }
-    expect(entries[0].loc).toBe('https://blog.hoppr.tech/blogs/article-1')
-    expect(entries[0].lastmod).toBe('2024-06-10')
+    expect(entries[0]?.loc).toBe('https://blog.hoppr.tech/blogs/article-1')
+    expect(entries[0]?.lastmod).toBe('2024-06-10')
   })
 })
 
@@ -91,9 +91,9 @@ describe('sitemap - category entries (TASK-040)', () => {
     const entries = buildCategorySitemapEntries(categories, articlesByCategory, 'https://blog.hoppr.tech')
 
     expect(entries).toHaveLength(4)
-    expect(entries[0].loc).toBe('https://blog.hoppr.tech/categories/craft')
+    expect(entries[0]?.loc).toBe('https://blog.hoppr.tech/categories/craft')
     // lastmod should be the latest article date in that category
-    expect(entries[0].lastmod).toBe('2024-07-01')
+    expect(entries[0]?.lastmod).toBe('2024-07-01')
   })
 })
 

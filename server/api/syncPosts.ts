@@ -53,11 +53,12 @@ export default defineEventHandler(async (event) => {
           const error = (result as PromiseRejectedResult).reason
           const errorMessage = error instanceof Error ? error.message : 'Unknown error'
           const post = postsToPublish[index]
+          const postTitle = post?.title ?? 'Unknown'
           const lastValidImageUrl = errorMessage.includes('Invalid URL:')
-            ? errorMessage.split('Last valid image URL:')[1].trim()
+            ? errorMessage.split('Last valid image URL:')[1]?.trim() ?? 'Not available'
             : 'Not available'
 
-          return `Title: "${post.title}" - ${errorMessage} - Last valid image URL: ${lastValidImageUrl}`
+          return `Title: "${postTitle}" - ${errorMessage} - Last valid image URL: ${lastValidImageUrl}`
         }),
       }
     }

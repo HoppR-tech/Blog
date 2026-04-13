@@ -1,13 +1,7 @@
-import { describe, expect, it, mock } from 'bun:test'
+import { describe, expect, it } from 'bun:test'
+import { getLastHeadCall, setupSeoMocks } from '@/tests/seo/test-helpers'
 
-const mockUseRuntimeConfig = mock(() => ({
-  public: { baseUrl: 'https://blog.hoppr.tech' },
-}))
-
-const mockUseHead = mock(() => {})
-
-;(globalThis as any).useRuntimeConfig = mockUseRuntimeConfig
-;(globalThis as any).useHead = mockUseHead
+const { mockUseHead } = setupSeoMocks()
 
 const { usePageSeo } = await import('@/composables/usePageSeo')
 
@@ -45,13 +39,13 @@ describe('homepage structured data - Organization + WebSite (TASK-028)', () => {
     })
 
     // When: we parse the JSON-LD script
-    const call = mockUseHead.mock.lastCall![0]
-    const scriptTag = call.script.find((s: any) => s.type === 'application/ld+json')
-    const parsed = JSON.parse(scriptTag.innerHTML)
+    const call = getLastHeadCall(mockUseHead)
+    const scriptTag = call.script.find((s: { type?: string }) => s.type === 'application/ld+json')
+    const parsed = JSON.parse(scriptTag?.innerHTML ?? '{}')
 
     // Then: we find Organization and WebSite schemas
-    const org = parsed['@graph'].find((item: any) => item['@type'] === 'Organization')
-    const website = parsed['@graph'].find((item: any) => item['@type'] === 'WebSite')
+    const org = parsed['@graph'].find((item: { '@type': string }) => item['@type'] === 'Organization')
+    const website = parsed['@graph'].find((item: { '@type': string }) => item['@type'] === 'WebSite')
 
     expect(org).toBeDefined()
     expect(org.name).toBe('HoppR')

@@ -1,13 +1,7 @@
-import { describe, expect, it, mock } from 'bun:test'
+import { describe, expect, it } from 'bun:test'
+import { getLastHeadCall, setupSeoMocks } from '@/tests/seo/test-helpers'
 
-const mockUseRuntimeConfig = mock(() => ({
-  public: { baseUrl: 'https://blog.hoppr.tech' },
-}))
-
-const mockUseHead = mock(() => {})
-
-;(globalThis as any).useRuntimeConfig = mockUseRuntimeConfig
-;(globalThis as any).useHead = mockUseHead
+const { mockUseHead } = setupSeoMocks()
 
 const { usePageSeo } = await import('@/composables/usePageSeo')
 
@@ -21,15 +15,15 @@ describe('listing pages meta - OG tags (TASK-021)', () => {
     })
 
     // When: we analyze OG meta
-    const call = mockUseHead.mock.lastCall![0]
-    const ogUrl = call.meta.find((m: any) => m.property === 'og:url')
-    const ogTitle = call.meta.find((m: any) => m.property === 'og:title')
-    const ogDesc = call.meta.find((m: any) => m.property === 'og:description')
+    const call = getLastHeadCall(mockUseHead)
+    const ogUrl = call.meta.find((m: { property?: string }) => m.property === 'og:url')
+    const ogTitle = call.meta.find((m: { property?: string }) => m.property === 'og:title')
+    const ogDesc = call.meta.find((m: { property?: string }) => m.property === 'og:description')
 
     // Then: og:url is specific to /blogs, title and description are not default
-    expect(ogUrl.content).toBe('https://blog.hoppr.tech/blogs')
-    expect(ogTitle.content).toContain('Articles')
-    expect(ogDesc.content).not.toBe('')
+    expect(ogUrl?.content).toBe('https://blog.hoppr.tech/blogs')
+    expect(ogTitle?.content).toContain('Articles')
+    expect(ogDesc?.content).not.toBe('')
   })
 
   it('should set specific og:url for /tags page', () => {
@@ -39,9 +33,9 @@ describe('listing pages meta - OG tags (TASK-021)', () => {
       url: '/tags',
     })
 
-    const call = mockUseHead.mock.lastCall![0]
-    const ogUrl = call.meta.find((m: any) => m.property === 'og:url')
-    expect(ogUrl.content).toBe('https://blog.hoppr.tech/tags')
+    const call = getLastHeadCall(mockUseHead)
+    const ogUrl = call.meta.find((m: { property?: string }) => m.property === 'og:url')
+    expect(ogUrl?.content).toBe('https://blog.hoppr.tech/tags')
   })
 
   it('should set specific og:url for /categories page', () => {
@@ -51,9 +45,9 @@ describe('listing pages meta - OG tags (TASK-021)', () => {
       url: '/categories',
     })
 
-    const call = mockUseHead.mock.lastCall![0]
-    const ogUrl = call.meta.find((m: any) => m.property === 'og:url')
-    expect(ogUrl.content).toBe('https://blog.hoppr.tech/categories')
+    const call = getLastHeadCall(mockUseHead)
+    const ogUrl = call.meta.find((m: { property?: string }) => m.property === 'og:url')
+    expect(ogUrl?.content).toBe('https://blog.hoppr.tech/categories')
   })
 
   it('should set specific og:url for /tags/craft page', () => {
@@ -63,9 +57,9 @@ describe('listing pages meta - OG tags (TASK-021)', () => {
       url: '/tags/craft',
     })
 
-    const call = mockUseHead.mock.lastCall![0]
-    const ogUrl = call.meta.find((m: any) => m.property === 'og:url')
-    expect(ogUrl.content).toBe('https://blog.hoppr.tech/tags/craft')
+    const call = getLastHeadCall(mockUseHead)
+    const ogUrl = call.meta.find((m: { property?: string }) => m.property === 'og:url')
+    expect(ogUrl?.content).toBe('https://blog.hoppr.tech/tags/craft')
   })
 
   it('should set specific og:url for /categories/craft page', () => {
@@ -75,8 +69,8 @@ describe('listing pages meta - OG tags (TASK-021)', () => {
       url: '/categories/craft',
     })
 
-    const call = mockUseHead.mock.lastCall![0]
-    const ogUrl = call.meta.find((m: any) => m.property === 'og:url')
-    expect(ogUrl.content).toBe('https://blog.hoppr.tech/categories/craft')
+    const call = getLastHeadCall(mockUseHead)
+    const ogUrl = call.meta.find((m: { property?: string }) => m.property === 'og:url')
+    expect(ogUrl?.content).toBe('https://blog.hoppr.tech/categories/craft')
   })
 })

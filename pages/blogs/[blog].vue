@@ -96,7 +96,6 @@ defineOgImageComponent('About', {
   headline: 'Bienvenue 👋',
   title: blogPostProps.value.title || '',
   description: ogDescription.value || '',
-  link: blogPostProps.value.ogImage ? new URL(blogPostProps.value.ogImage, config.public.baseUrl).href : '',
   imageTop: '/images/og-post.png',
   imageBottom: '/images/og-home.png',
 })

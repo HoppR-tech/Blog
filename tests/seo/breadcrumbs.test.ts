@@ -87,10 +87,10 @@ describe('breadcrumbs - items generation (TASK-030)', () => {
     )
 
     expect(items).toHaveLength(3)
-    expect(items[0].name).toBe('Accueil')
-    expect(items[1].name).toBe('Craft')
-    expect(items[1].url).toBe('https://blog.hoppr.tech/categories/craft')
-    expect(items[2].name).toBe('Mon Article')
+    expect(items[0]?.name).toBe('Accueil')
+    expect(items[1]?.name).toBe('Craft')
+    expect(items[1]?.url).toBe('https://blog.hoppr.tech/categories/craft')
+    expect(items[2]?.name).toBe('Mon Article')
   })
 
   it('should generate Accueil > Article when no category matches', () => {
@@ -102,8 +102,8 @@ describe('breadcrumbs - items generation (TASK-030)', () => {
     )
 
     expect(items).toHaveLength(2)
-    expect(items[0].name).toBe('Accueil')
-    expect(items[1].name).toBe('Mon Article')
+    expect(items[0]?.name).toBe('Accueil')
+    expect(items[1]?.name).toBe('Mon Article')
   })
 
   it('should produce BreadcrumbList JSON-LD structure', () => {
@@ -127,7 +127,7 @@ describe('breadcrumbs - items generation (TASK-030)', () => {
 
     expect(jsonLd['@type']).toBe('BreadcrumbList')
     expect(jsonLd.itemListElement).toHaveLength(3)
-    expect(jsonLd.itemListElement[0].position).toBe(1)
-    expect(jsonLd.itemListElement[0].name).toBe('Accueil')
+    expect(jsonLd.itemListElement[0]?.position).toBe(1)
+    expect(jsonLd.itemListElement[0]?.name).toBe('Accueil')
   })
 })

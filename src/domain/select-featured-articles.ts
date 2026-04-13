@@ -1,7 +1,7 @@
-interface Post {
+export interface Post {
   path: string
   date: string
-  tags: string[]
+  tags?: string[]
 }
 
 /**
@@ -25,14 +25,14 @@ export function selectFeaturedArticles<T extends Post>(
 
     // Find first article matching this category that is NOT in recent posts AND not already selected
     const preferred = allPosts.find(
-      post => post.tags.map(t => t.toLowerCase()).includes(categoryLower)
+      post => (post.tags ?? []).map(t => t.toLowerCase()).includes(categoryLower)
         && !recentPaths.has(post.path)
         && !usedPaths.has(post.path),
     )
 
     // Fallback: first article matching this category not already selected (even if in recent)
     const fallback = allPosts.find(
-      post => post.tags.map(t => t.toLowerCase()).includes(categoryLower)
+      post => (post.tags ?? []).map(t => t.toLowerCase()).includes(categoryLower)
         && !usedPaths.has(post.path),
     )
 

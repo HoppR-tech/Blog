@@ -26,6 +26,7 @@ export async function getDataSourceId(notionClient: any): Promise<string> {
   if (!dataSources || dataSources.length === 0) {
     throw new Error(`No data sources found for database ${DATABASE_POSTS_ID}`)
   }
-  cachedDataSourceId = dataSources[0].id
-  return cachedDataSourceId
+  const dataSourceId: string = dataSources[0].id
+  cachedDataSourceId = dataSourceId
+  return dataSourceId
 }

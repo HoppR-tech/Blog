@@ -27,8 +27,10 @@ function validateHeadingHierarchy(rules: HeadingRule[]): { valid: boolean, viola
   // Check no heading skips (e.g., H1 -> H3 without H2)
   const levels = rules.map(r => r.expectedLevel).sort((a, b) => a - b)
   for (let i = 1; i < levels.length; i++) {
-    if (levels[i] - levels[i - 1] > 1 && !levels.includes(levels[i] - 1)) {
-      violations.push(`Heading level skip: H${levels[i - 1]} to H${levels[i]} without H${levels[i] - 1}`)
+    const currentLevel = levels[i] ?? 0
+    const previousLevel = levels[i - 1] ?? 0
+    if (currentLevel - previousLevel > 1 && !levels.includes(currentLevel - 1)) {
+      violations.push(`Heading level skip: H${previousLevel} to H${currentLevel} without H${currentLevel - 1}`)
     }
   }
 

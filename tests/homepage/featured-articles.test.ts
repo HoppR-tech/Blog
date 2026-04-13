@@ -143,7 +143,11 @@ describe('Articles a la Une - selection par categorie', () => {
 
       // Then: sorted by date descending
       for (let i = 0; i < result.length - 1; i++) {
-        expect(result[i].date >= result[i + 1].date).toBe(true)
+        const current = result[i]
+        const next = result[i + 1]
+        if (current && next) {
+          expect(current.date >= next.date).toBe(true)
+        }
       }
     })
   })

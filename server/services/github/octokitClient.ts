@@ -24,7 +24,11 @@ export async function getOctokit(): Promise<Octokit> {
   if (installations.data.length === 0) {
     throw new Error('No installations found for this GitHub App')
   }
-  const installationId = installations.data[0].id
+  const firstInstallation = installations.data[0]
+  if (!firstInstallation) {
+    throw new Error('No installations found for this GitHub App')
+  }
+  const installationId = firstInstallation.id
 
   return await app.getInstallationOctokit(installationId)
 }

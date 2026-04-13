@@ -118,21 +118,21 @@ describe('pageContentExtractor', () => {
 
     // No need for nock since we're using vi mocks
 
-    // Use our mock client
-    const content = await getPageContent(mockClient, mockPage)
+    // Use our mock client (partial mock — only methods used in the function are stubbed)
+    const content = await getPageContent(mockClient as unknown as Client, mockPage)
 
     expect(content.notionId).toBe('page-id')
     expect(content.title).toBe('Test Title')
     expect(content.content).toContain('Hello\n\n')
     expect(content.authors).toBeDefined()
     expect(content.authors.length).toBe(1)
-    expect(content.authors[0].name).toEqual('Author Name')
-    expect(content.authors[0].image).toEqual('http://example.com/avatar.png')
+    expect(content.authors[0]?.name).toEqual('Author Name')
+    expect(content.authors[0]?.image).toEqual('http://example.com/avatar.png')
     expect(content.tags).toEqual(['Tag1', 'Tag2'])
     expect(content.reviewers).toBeDefined()
     expect(content.reviewers?.length).toBe(1)
-    expect(content.reviewers?.[0].name).toEqual('Reviewer Name')
-    expect(content.reviewers?.[0].image).toEqual('http://example.com/reviewer-avatar.png')
+    expect(content.reviewers?.[0]?.name).toEqual('Reviewer Name')
+    expect(content.reviewers?.[0]?.image).toEqual('http://example.com/reviewer-avatar.png')
 
     // No need to check nock since we're using vi mocks
   })
@@ -170,36 +170,38 @@ describe('pageContentExtractor', () => {
         children: {
           list: ({ block_id, start_cursor }): Promise<ListBlockChildrenResponse> => {
             if (!start_cursor) {
-              return new Promise(resolve => resolve({
-                object: 'list',
+              return Promise.resolve({
+                object: 'list' as const,
                 next_cursor: 'next-cursor',
                 has_more: true,
+                type: 'block',
+                block: {},
                 results: [
                   {
-                    type: 'paragraph',
+                    type: 'paragraph' as const,
                     paragraph: {
-                      // @ts-expect-error for test purpose
                       rich_text: [{ plain_text: 'Hello' }],
                     },
                   },
                 ],
-              }))
+              } as unknown as ListBlockChildrenResponse)
             }
 
-            return new Promise(resolve => resolve({
-              object: 'list',
+            return Promise.resolve({
+              object: 'list' as const,
               next_cursor: null,
               has_more: false,
+              type: 'block',
+              block: {},
               results: [
                 {
-                  type: 'paragraph',
+                  type: 'paragraph' as const,
                   paragraph: {
-                    // @ts-expect-error for test purpose
                     rich_text: [{ plain_text: 'world' }],
                   },
                 },
               ],
-            }))
+            } as unknown as ListBlockChildrenResponse)
           },
 
         },

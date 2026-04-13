@@ -1,13 +1,7 @@
-import { describe, expect, it, mock } from 'bun:test'
+import { describe, expect, it } from 'bun:test'
+import { getLastHeadCall, setupSeoMocks } from '@/tests/seo/test-helpers'
 
-const mockUseRuntimeConfig = mock(() => ({
-  public: { baseUrl: 'https://blog.hoppr.tech' },
-}))
-
-const mockUseHead = mock(() => {})
-
-;(globalThis as any).useRuntimeConfig = mockUseRuntimeConfig
-;(globalThis as any).useHead = mockUseHead
+const { mockUseHead } = setupSeoMocks()
 
 const { usePageSeo } = await import('@/composables/usePageSeo')
 
@@ -21,12 +15,12 @@ describe('global meta - og:site_name (TASK-008)', () => {
     })
 
     // When: we analyze OG meta
-    const call = mockUseHead.mock.lastCall![0]
-    const ogSiteName = call.meta.find((m: any) => m.property === 'og:site_name')
+    const call = getLastHeadCall(mockUseHead)
+    const ogSiteName = call.meta.find((m: { property?: string }) => m.property === 'og:site_name')
 
     // Then: og:site_name = "Blog HoppR" (not a URL)
-    expect(ogSiteName.content).toBe('Blog HoppR')
-    expect(ogSiteName.content).not.toContain('http')
+    expect(ogSiteName?.content).toBe('Blog HoppR')
+    expect(ogSiteName?.content).not.toContain('http')
   })
 })
 
@@ -41,15 +35,15 @@ describe('global meta - no og:image conflict (TASK-010)', () => {
     })
 
     // When: we analyze OG meta
-    const call = mockUseHead.mock.lastCall![0]
+    const call = getLastHeadCall(mockUseHead)
 
     // Then: there should be no og:image:secure_url pointing to a different image
-    const ogImageSecure = call.meta.find((m: any) => m.property === 'og:image:secure_url')
-    const ogImage = call.meta.find((m: any) => m.property === 'og:image')
+    const ogImageSecure = call.meta.find((m: { property?: string }) => m.property === 'og:image:secure_url')
+    const ogImage = call.meta.find((m: { property?: string }) => m.property === 'og:image')
 
     // Either no secure_url at all, or it matches og:image
     if (ogImageSecure) {
-      expect(ogImageSecure.content).toBe(ogImage.content)
+      expect(ogImageSecure.content).toBe(ogImage?.content)
     }
     else {
       expect(ogImageSecure).toBeUndefined()

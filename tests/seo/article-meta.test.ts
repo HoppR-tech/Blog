@@ -1,4 +1,5 @@
-import { describe, expect, it, mock } from 'bun:test'
+import { describe, expect, it } from 'bun:test'
+import { getLastHeadCall, setupSeoMocks } from '@/tests/seo/test-helpers'
 
 /**
  * These tests verify the SEO behavior of article pages by testing
@@ -7,14 +8,7 @@ import { describe, expect, it, mock } from 'bun:test'
  * is not feasible in unit tests.
  */
 
-const mockUseRuntimeConfig = mock(() => ({
-  public: { baseUrl: 'https://blog.hoppr.tech' },
-}))
-
-const mockUseHead = mock(() => {})
-
-;(globalThis as any).useRuntimeConfig = mockUseRuntimeConfig
-;(globalThis as any).useHead = mockUseHead
+const { mockUseHead } = setupSeoMocks()
 
 const { usePageSeo } = await import('@/composables/usePageSeo')
 const { useAbsoluteUrl } = await import('@/composables/useAbsoluteUrl')
@@ -34,14 +28,14 @@ describe('article meta tags - og:image absolute URLs (TASK-004)', () => {
     })
 
     // Then: og:image starts with https://
-    const call = mockUseHead.mock.lastCall![0]
-    const ogImage = call.meta.find((m: any) => m.property === 'og:image')
-    expect(ogImage.content).toMatch(/^https:\/\//)
-    expect(ogImage.content).toBe('https://blog.hoppr.tech/content-assets/2024-01-01-my-article/assets/cover.webp')
+    const call = getLastHeadCall(mockUseHead)
+    const ogImage = call.meta.find((m: { property?: string }) => m.property === 'og:image')
+    expect(ogImage?.content).toMatch(/^https:\/\//)
+    expect(ogImage?.content).toBe('https://blog.hoppr.tech/content-assets/2024-01-01-my-article/assets/cover.webp')
 
     // And: twitter:image also starts with https://
-    const twitterImage = call.meta.find((m: any) => m.name === 'twitter:image')
-    expect(twitterImage.content).toMatch(/^https:\/\//)
+    const twitterImage = call.meta.find((m: { name?: string }) => m.name === 'twitter:image')
+    expect(twitterImage?.content).toMatch(/^https:\/\//)
   })
 
   it('should produce absolute image URL via useAbsoluteUrl for JSON-LD', () => {
@@ -69,9 +63,9 @@ describe('article meta tags - og:type is "article" (TASK-006)', () => {
     })
 
     // Then: og:type = "article"
-    const call = mockUseHead.mock.lastCall![0]
-    const ogType = call.meta.find((m: any) => m.property === 'og:type')
-    expect(ogType.content).toBe('article')
+    const call = getLastHeadCall(mockUseHead)
+    const ogType = call.meta.find((m: { property?: string }) => m.property === 'og:type')
+    expect(ogType?.content).toBe('article')
   })
 })
 

@@ -27,6 +27,8 @@ function checkContent(content: string) {
 
 export function checkBlocks(blocks: BlockObjectResponse[]) {
   const firstBlock = blocks[0]
+  if (!firstBlock)
+    throw new Error('Content is empty')
   if (firstBlock.type != 'heading_1' && firstBlock.type != 'paragraph')
     throw new Error('An article must start with a title or an introduction')
 

@@ -1,6 +1,19 @@
 <script lang="ts" setup>
+import type { Post } from '~/src/domain/select-featured-articles'
 import { selectFeaturedArticles } from '~/src/domain/select-featured-articles'
 import { categories } from '~/utils/categories'
+
+interface FormattedPost {
+  path: string
+  title: string
+  description: string
+  image: string
+  alt: string
+  ogImage: string
+  date: string
+  tags: string[]
+  published: boolean
+}
 
 const categoryValues = categories.map(c => c.value)
 
@@ -8,18 +21,20 @@ const { data } = await useAsyncData('trending-post', async () => {
   const allPosts = await queryCollection('blogs')
     .order('date', 'DESC')
     .all()
-  return selectFeaturedArticles(allPosts, categoryValues)
+  return selectFeaturedArticles(allPosts as (typeof allPosts[number] & Post)[], categoryValues)
 }, { server: true })
 
-const formattedData = computed(() => {
-  return data.value?.map((article) => {
+const formattedData = computed<FormattedPost[]>(() => {
+  if (!data.value)
+    return []
+  return data.value.map((article): FormattedPost => {
     return {
-      path: article.path,
+      path: article.path ?? '',
       title: article.title || 'no-title available',
       description: article.description || 'no-description available',
-      image: resolveContentAsset(article.image || '/not-found.jpg', article.path),
+      image: resolveContentAsset(article.image || '/not-found.jpg', article.path ?? ''),
       alt: article.alt || 'no alter data available',
-      ogImage: resolveContentAsset(article.ogImage || '/not-found.jpg', article.path),
+      ogImage: resolveContentAsset(article.ogImage || '/not-found.jpg', article.path ?? ''),
       date: formatDate(article.date) || 'not-date-available',
       tags: article.tags || [],
       published: article.published || false,

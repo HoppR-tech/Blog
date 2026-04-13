@@ -37,13 +37,9 @@ usePageSeo({
 })
 
 // Generate OG Image
-const siteData = useSiteConfig()
-defineOgImage({
-  props: {
-    title: `Catégorie: ${category.value.label}`,
-    description: `Découvrez nos articles dans la catégorie ${category.value.label}.`,
-    siteName: siteData.url,
-  },
+defineOgImage('About', {
+  title: `Catégorie: ${category.value.label}`,
+  description: `Découvrez nos articles dans la catégorie ${category.value.label}.`,
 })
 </script>
 

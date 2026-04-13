@@ -278,7 +278,7 @@ function findPartialMatch(tocLinks: NodeListOf<Element>, sectionHref: string): {
     if (!linkHref)
       continue
 
-    const linkId = linkHref.includes('#') ? linkHref.split('#')[1] : ''
+    const linkId = linkHref.includes('#') ? linkHref.split('#')[1] ?? '' : ''
 
     // Trouver tous les liens enfants de ce lien de niveau 2
     const childLinks = findChildLinks(tocLinks, linkId)
@@ -293,7 +293,7 @@ function findPartialMatch(tocLinks: NodeListOf<Element>, sectionHref: string): {
 
       if (childAnchor === sectionHref) {
         console.log('Correspondance trouvée dans les enfants:', childHref)
-        return { link: childLink, parentId: linkId }
+        return { link: childLink, parentId: linkId ?? '' }
       }
     }
   }
@@ -331,7 +331,7 @@ function findContentMatch(tocLinks: NodeListOf<Element>, sectionId: string): { l
       else {
         // Si c'est un lien de niveau 2, son ID est l'ID parent
         const linkHref = link.getAttribute('href')
-        const linkId = linkHref?.includes('#') ? linkHref.split('#')[1] : ''
+        const linkId = linkHref?.includes('#') ? linkHref.split('#')[1] ?? '' : ''
         if (linkId) {
           console.log('Parent ID (depuis linkId):', linkId)
           return { link, parentId: linkId }
@@ -441,7 +441,7 @@ function findClosestLinkByDistance(level2Links: Element[], sectionId: string): s
     if (!linkHref)
       continue
 
-    const linkId = linkHref.includes('#') ? linkHref.split('#')[1] : ''
+    const linkId = linkHref.includes('#') ? linkHref.split('#')[1] ?? '' : ''
     const linkElement = document.getElementById(linkId)
 
     if (linkElement) {
@@ -455,7 +455,7 @@ function findClosestLinkByDistance(level2Links: Element[], sectionId: string): s
     }
   }
 
-  const closestLinkHref = closestLink.getAttribute('href')
+  const closestLinkHref = closestLink!.getAttribute('href')
   if (!closestLinkHref)
     return null
 
@@ -502,7 +502,7 @@ function updateExpandedSections(activeParentId: string | null, sectionId: string
 
   // Stratégie 3: Ouvrir la première section si aucune autre stratégie n'a fonctionné
   if (level2Links.length > 0) {
-    const firstLink = level2Links[0]
+    const firstLink = level2Links[0]!
     const firstLinkHref = firstLink.getAttribute('href')
     if (firstLinkHref) {
       const firstLinkId = firstLinkHref.includes('#') ? firstLinkHref.split('#')[1] : ''

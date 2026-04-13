@@ -49,7 +49,7 @@ describe('personInfoFetcher', () => {
     // For simplicity, let's just test with one person ID
     const personIds = ['838dec96-f9fc-404f-a302-07719225d785']
 
-    const persons = await getPersonsInfo(mockClient, personIds, 'Author')
+    const persons = await getPersonsInfo(mockClient as unknown as Parameters<typeof getPersonsInfo>[0], personIds, 'Author')
 
     expect(persons).toHaveLength(1)
     expect(persons[0]).toEqual({

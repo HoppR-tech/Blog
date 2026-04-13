@@ -39,7 +39,8 @@ function processMarkdownFile(filePath: string) {
     return
   }
 
-  const [_, frontmatter, ...contentParts] = parts
+  const [_, rawFrontmatter, ...contentParts] = parts
+  const frontmatter = rawFrontmatter ?? ''
   const mainContent = contentParts.join('---\n')
 
   // Ajouter des guillemets aux champs spécifiés et échapper les guillemets existants

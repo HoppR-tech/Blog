@@ -1,11 +1,22 @@
 // This file is used to setup vitest
 import { vi } from 'vitest'
 
+interface GlobalWithVitest {
+  vi: typeof vi
+  useRuntimeConfig: () => {
+    github: { owner: string, repo: string, branch: string, appId: string, privateKey: string }
+    notion: { apiKey: string, databasePostsId: string }
+    slack: { botToken: string, channelId: string }
+    public: { baseUrl: string, contactEmail: string, contactName: string }
+  }
+}
+
 // Make vi.mock work with bun
-global.vi = vi
+const g = globalThis as unknown as GlobalWithVitest
+g.vi = vi
 
 // Provide useRuntimeConfig global for server modules that call it at top-level
-;(globalThis as any).useRuntimeConfig = () => ({
+g.useRuntimeConfig = () => ({
   github: { owner: '', repo: '', branch: '', appId: '', privateKey: '' },
   notion: { apiKey: '', databasePostsId: '' },
   slack: { botToken: '', channelId: '' },

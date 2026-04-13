@@ -44,7 +44,7 @@ defineOgImage({
     description: 'Découvrez nos articles classés par catégories. Explorez nos contenus sur le Craft, le Cloud & Platform, l\'Architecture, et d\'autres sujets passionnants de la tech.',
     siteName: siteData.url,
   },
-})
+} as any)
 
 function getCategoryCount(categoryValue: string): number {
   if (!data.value)

@@ -36,7 +36,7 @@ export class GitHubService {
   }
 
   async publishPostToGitHub(post: BlogPost) {
-    const currentDate = new Date().toISOString().split('T')[0]
+    const currentDate = new Date().toISOString().split('T')[0] ?? ''
     const folderName = createFolderName(currentDate, post.title)
     const folderPath = `content/blogs/${folderName}`
     const assetsFolderPath = `${folderPath}/assets`

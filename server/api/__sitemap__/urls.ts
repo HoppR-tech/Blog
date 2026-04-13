@@ -1,12 +1,22 @@
-import { defineSitemapEventHandler } from '#imports'
+import type { H3Event } from 'h3'
 import { categories } from '@/utils/categories'
+
+// Server-side queryCollection has signature (event, collection) but auto-import types only expose client-side (collection)
+// @ts-expect-error - Nuxt Content v3 server auto-import provides 2-arg overload at runtime
+const serverQueryCollection: (event: H3Event, collection: 'blogs') => ReturnType<typeof queryCollection> = queryCollection
 
 const MIN_ARTICLES_FOR_TAG_INDEX = 3
 
-export default defineSitemapEventHandler(async (event) => {
-  const articles = await queryCollection(event, 'blogs').order('date', 'DESC').all()
+interface SitemapArticle {
+  path: string
+  date?: string
+  tags?: string[]
+}
 
-  const articleUrls = articles.map(article => ({
+export default defineEventHandler(async (event) => {
+  const articles: SitemapArticle[] = await serverQueryCollection(event, 'blogs').order('date', 'DESC').all()
+
+  const articleUrls = articles.map((article: SitemapArticle) => ({
     loc: article.path,
     lastmod: article.date || undefined,
   }))
@@ -36,10 +46,10 @@ export default defineSitemapEventHandler(async (event) => {
 
   // Category pages with lastmod = latest article date in that category
   const categoryUrls = categories.map((cat) => {
-    const categoryArticles = articles.filter(a =>
-      a.tags?.map(t => t.toLowerCase()).includes(cat.value.toLowerCase()),
+    const categoryArticles = articles.filter((a: SitemapArticle) =>
+      a.tags?.map((t: string) => t.toLowerCase()).includes(cat.value.toLowerCase()),
     )
-    const latestDate = categoryArticles.length > 0 ? categoryArticles[0].date : undefined
+    const latestDate = categoryArticles.length > 0 ? categoryArticles[0]?.date : undefined
     return {
       loc: `/categories/${cat.value}`,
       lastmod: latestDate || undefined,

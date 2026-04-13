@@ -174,7 +174,7 @@ export function extractTitleFromPage(page: NotionPage): string {
   if (!post || !Array.isArray(post.title) || post.title.length === 0)
     throw new Error('Title property not found in page')
 
-  const title = post.title[0].plain_text
+  const title = post.title[0]?.plain_text
   if (!title || title.trim() === '')
     throw new Error('Title is missing or empty')
 

@@ -43,7 +43,7 @@ defineOgImage({
     description: 'Tous les sujets sur lesquels nous avons écrit un article ou sur lesquels nous allons écrire un article prochainement sont listés ci-dessous.',
     siteName: siteData.url,
   },
-})
+} as any)
 </script>
 
 <template>

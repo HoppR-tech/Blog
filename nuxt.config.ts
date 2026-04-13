@@ -65,10 +65,11 @@ export default defineNuxtConfig({
     },
   },
 
-  purgecss: {
-    enabled: true,
-    safelist: [/nuxt-devtools-./, 'katex-display', 'katex'], // katex responsive fix classes
-  },
+  // Note: nuxt-purgecss is incompatible with Nuxt 4 — disabled until updated
+  // purgecss: {
+  //   enabled: true,
+  //   safelist: [/nuxt-devtools-./, 'katex-display', 'katex'],
+  // },
 
   icon: {
     size: '24px',
@@ -174,7 +175,7 @@ export default defineNuxtConfig({
 
   mdc: {
     optimize: false,
-  },
+  } as any,
 
   content: {
     build: {

@@ -55,7 +55,7 @@ defineOgImage({
     description: `Découvrez nos articles sur le thème ${capitalize(tag.value)}.`,
     siteName: siteData.url,
   },
-})
+} as any)
 </script>
 
 <template>

@@ -17,18 +17,18 @@ describe('rSS feed - content asset URLs (TASK-017/TASK-019)', () => {
 
   it('should handle null authors gracefully with optional chaining', () => {
     // Given: an article with null authors
-    const authors: { name: string }[] | null = null
+    const authors = null as { name: string }[] | null
 
     // When: we safely access authors with optional chaining
-    const authorStr = authors?.map(a => a.name).join(', ') || ''
+    const authorStr = authors?.map((a: { name: string }) => a.name).join(', ') || ''
 
     // Then: no crash, returns empty string
     expect(authorStr).toBe('')
   })
 
   it('should handle undefined authors gracefully', () => {
-    const authors: { name: string }[] | undefined = undefined
-    const authorStr = authors?.map(a => a.name).join(', ') || ''
+    const authors = undefined as { name: string }[] | undefined
+    const authorStr = authors?.map((a: { name: string }) => a.name).join(', ') || ''
     expect(authorStr).toBe('')
   })
 

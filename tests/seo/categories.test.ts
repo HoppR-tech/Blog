@@ -17,8 +17,8 @@ describe('category filtering - case normalization (TASK-026)', () => {
 
     // Then: both articles with "Craft" and "craft" are included
     expect(filtered).toHaveLength(2)
-    expect(filtered[0].title).toBe('Article 1')
-    expect(filtered[1].title).toBe('Article 2')
+    expect(filtered[0]?.title).toBe('Article 1')
+    expect(filtered[1]?.title).toBe('Article 2')
   })
 
   it('should not match when category is not in tags', () => {

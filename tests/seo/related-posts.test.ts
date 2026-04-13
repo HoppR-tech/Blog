@@ -51,7 +51,7 @@ describe('related posts - scoring algorithm (TASK-047)', () => {
 
   it('should return articles sharing the most tags with the current article', () => {
     // Given: article-1 with tags [craft, typescript, testing]
-    const current = articles[0]
+    const current = articles[0]!
 
     // When: we score related articles
     const related = scoreRelatedArticles(current, articles)
@@ -64,18 +64,18 @@ describe('related posts - scoring algorithm (TASK-047)', () => {
     // article-5 shares [typescript, craft] = 2 common tags
     // article-2 shares [craft] = 1 common tag
     // article-6 shares [craft] = 1 common tag
-    expect(related[0].tags).toEqual(expect.arrayContaining(['craft']))
+    expect(related[0]?.tags).toEqual(expect.arrayContaining(['craft']))
   })
 
   it('should exclude the current article from results', () => {
-    const current = articles[0]
+    const current = articles[0]!
     const related = scoreRelatedArticles(current, articles)
 
     expect(related.find(a => a.path === current.path)).toBeUndefined()
   })
 
   it('should return at most maxResults articles', () => {
-    const current = articles[0]
+    const current = articles[0]!
     const related = scoreRelatedArticles(current, articles, 2)
 
     expect(related).toHaveLength(2)
@@ -94,7 +94,7 @@ describe('related posts - scoring algorithm (TASK-047)', () => {
   })
 
   it('should prefer more recent articles when scores are equal', () => {
-    const current = articles[0] // [craft, typescript, testing]
+    const current = articles[0]! // [craft, typescript, testing]
     const related = scoreRelatedArticles(current, articles)
 
     // article-4 and article-5 both have 2 common tags

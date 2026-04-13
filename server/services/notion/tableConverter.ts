@@ -166,9 +166,10 @@ function convertBulletListToHtml(content: string): string {
 }
 
 function extractPrefixAndBulletLines(lines: string[]): { prefix: string, bulletLines: string[] } {
-  const startsWithBullet = lines[0].trim().startsWith('• ')
+  const firstLine = lines[0] ?? ''
+  const startsWithBullet = firstLine.trim().startsWith('• ')
   if (!startsWithBullet && lines.length > 1) {
-    return { prefix: lines[0], bulletLines: lines.slice(1) }
+    return { prefix: firstLine, bulletLines: lines.slice(1) }
   }
   return { prefix: '', bulletLines: lines }
 }

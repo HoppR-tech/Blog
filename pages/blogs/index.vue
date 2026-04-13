@@ -124,7 +124,7 @@ defineOgImage({
     description: 'Toutes les publications sur le blog d\'HoppR sont ici.',
     siteName: siteData.url,
   },
-})
+} as any)
 </script>
 
 <template>

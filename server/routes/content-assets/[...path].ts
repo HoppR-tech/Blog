@@ -35,8 +35,7 @@ export default defineEventHandler((event) => {
     throw createError({ statusCode: 415, message: 'Unsupported file type' })
   }
 
-  setResponseHeader(event, 'Content-Type', mimeType)
   setResponseHeader(event, 'Cache-Control', 'public, max-age=2592000') // 30 days
 
-  return readFileSync(filePath)
+  return send(event, readFileSync(filePath), mimeType)
 })

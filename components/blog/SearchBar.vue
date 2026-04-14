@@ -72,7 +72,7 @@ defineExpose({ toggleSearch, isExpanded, performSearch })
       </button>
     </div>
     <button
-      class="ml-2 text-gray-100 hover:text-hoppr-green transition-transform duration-300 ease-in-out"
+      class="ml-2 p-2 text-gray-100 hover:text-hoppr-green transition-transform duration-300 ease-in-out"
       :aria-label="isExpanded ? 'Effectuer la recherche' : 'Ouvrir la recherche'"
       @click="isExpanded ? performSearch() : toggleSearch()"
     >

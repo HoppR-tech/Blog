@@ -52,6 +52,14 @@ services:
         - traefik.http.routers.blog.entrypoints=websecure
         - traefik.http.routers.blog.tls.certresolver=letsencrypt
         - traefik.http.services.blog.loadbalancer.server.port=3000
+        # Compression gzip (blog-specific, does not affect other services)
+        - traefik.http.middlewares.blog-compress.compress=true
+        # Security + cache headers (blog-specific)
+        - traefik.http.middlewares.blog-headers.headers.customresponseheaders.X-Content-Type-Options=nosniff
+        - traefik.http.middlewares.blog-headers.headers.customresponseheaders.X-Frame-Options=DENY
+        - traefik.http.middlewares.blog-headers.headers.customresponseheaders.Referrer-Policy=strict-origin-when-cross-origin
+        # Apply middlewares to blog router
+        - traefik.http.routers.blog.middlewares=blog-compress,blog-headers
 
 networks:
   traefik-network:

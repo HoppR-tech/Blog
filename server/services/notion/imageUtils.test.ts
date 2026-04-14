@@ -7,8 +7,10 @@ import { downloadAndConvertImage, extractImagesAndUpdateContent } from '~/server
 // Mock sharp module
 mock.module('sharp', () => ({
   default: () => ({
-    webp: () => ({
-      toBuffer: () => Promise.resolve(Buffer.from('webp image data')),
+    resize: () => ({
+      webp: () => ({
+        toBuffer: () => Promise.resolve(Buffer.from('webp image data')),
+      }),
     }),
   }),
 }))

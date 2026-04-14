@@ -23,6 +23,7 @@ export async function downloadAndConvertImage(imageUrl: string, imageName: strin
 
     // console.log(`Successfully downloaded image. Converting to WebP: ${webpImageName}`)
     const webpBuffer = await sharp(response.data)
+      .resize({ width: 1600, withoutEnlargement: true })
       .webp({ quality: 80 })
       .toBuffer()
 

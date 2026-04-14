@@ -125,13 +125,13 @@ export default defineNuxtConfig({
         },
       },
       '/_nuxt/**': {
-        cache: { maxAge: 60 * 60 * 24 * 365 }, // 1 an pour les assets générés par Nuxt
+        headers: { 'Cache-Control': 'public, max-age=31536000, immutable' }, // 1 an, immutable
       },
       '/images/**': {
-        cache: { maxAge: 60 * 60 * 24 * 30 }, // 30 jours pour les images
+        headers: { 'Cache-Control': 'public, max-age=2592000' }, // 30 jours
       },
       '/fonts/**': {
-        cache: { maxAge: 60 * 60 * 24 * 365 }, // 1 an pour les fonts (immutables)
+        headers: { 'Cache-Control': 'public, max-age=31536000, immutable' }, // 1 an, immutable
       },
     },
   },

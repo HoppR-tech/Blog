@@ -519,7 +519,7 @@ function updateExpandedSections(activeParentId: string | null, sectionId: string
 <template>
   <div id="toc-container" class="lg:col-span-3 sticky top-28 mt-5 hidden lg:block justify-self-end w-full self-start">
     <div class="border dark:border-zinc-500 p-4 rounded-md w-[250px] max-w-[350px] dark:bg-slate-900 shadow-md overflow-hidden">
-      <h2 class="text-lg font-bold mb-4 border-b dark:border-zinc-500 pb-2 text-[#006b56] dark:text-hoppr-green">
+      <h2 class="text-lg font-bold mb-4 border-b dark:border-zinc-500 pb-2 text-hoppr-purple dark:text-hoppr-green">
         Table des matières
       </h2>
       <div id="toc-content" class="relative max-h-[calc(100vh-200px)] overflow-y-auto pr-2">

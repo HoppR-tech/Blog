@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { capitalize, createFolderName, stripMarkdown } from './stringUtils'
+
+import { capitalize, createFolderName, slugify, stripMarkdown } from './stringUtils'
 
 describe('capitalize', () => {
   it('should capitalize the first letter', () => {
@@ -45,6 +46,24 @@ describe('createFolderName', () => {
     const date = 'invalid-date'
     const title = 'Test'
     expect(() => createFolderName(date, title)).toThrow('Date invalide fournie')
+  })
+})
+
+describe('slugify', () => {
+  it('should transliterate French accented characters', () => {
+    expect(slugify('Connecter à un réseau hors-ligne')).toBe('connecter-a-un-reseau-hors-ligne')
+  })
+
+  it('should handle ç, è, ê, ë, à, ù, ô, î', () => {
+    expect(slugify('Français façonné à Noël')).toBe('francais-faconne-a-noel')
+  })
+
+  it('should handle emojis and special characters', () => {
+    expect(slugify('REX: Environnements éphémères 🦖')).toBe('rex-environnements-ephemeres')
+  })
+
+  it('should collapse multiple dashes', () => {
+    expect(slugify('titre --- avec   espaces')).toBe('titre-avec-espaces')
   })
 })
 

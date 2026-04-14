@@ -24,9 +24,11 @@ export function capitalize(str: string): string {
 export function slugify(text: string): string {
   return text
     .toString()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036F]/g, '') // Remove diacritical marks (é→e, ç→c, à→a, etc.)
     .toLowerCase()
     .replace(/\s+/g, '-')
-    .replace(/[^\w\-]+/g, '')
+    .replace(/[^\w-]+/g, '')
     .replace(/-{2,}/g, '-')
     .replace(/^-+/, '')
     .replace(/-+$/, '')

@@ -133,9 +133,6 @@ export default defineNuxtConfig({
       '/fonts/**': {
         cache: { maxAge: 60 * 60 * 24 * 365 }, // 1 an pour les fonts (immutables)
       },
-      '/content-assets/**': {
-        cache: { maxAge: 60 * 60 * 24 * 30 }, // 30 jours pour les assets de contenu
-      },
     },
   },
 

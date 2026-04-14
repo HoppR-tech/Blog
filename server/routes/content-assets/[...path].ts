@@ -1,6 +1,6 @@
-import { existsSync, readFileSync } from 'node:fs'
+import { createReadStream, existsSync } from 'node:fs'
 import { extname, join } from 'node:path'
-import { createError, defineEventHandler, getRouterParam, setResponseHeader } from 'h3'
+import { createError, defineEventHandler, getRouterParam } from 'h3'
 
 const MIME_TYPES: Record<string, string> = {
   '.webp': 'image/webp',
@@ -18,7 +18,6 @@ export default defineEventHandler((event) => {
     throw createError({ statusCode: 400, message: 'Missing path' })
   }
 
-  // Prevent directory traversal
   if (path.includes('..')) {
     throw createError({ statusCode: 400, message: 'Invalid path' })
   }
@@ -35,7 +34,14 @@ export default defineEventHandler((event) => {
     throw createError({ statusCode: 415, message: 'Unsupported file type' })
   }
 
-  setResponseHeader(event, 'Cache-Control', 'public, max-age=2592000') // 30 days
+  const res = event.node.res
+  res.setHeader('Content-Type', mimeType)
+  res.setHeader('Cache-Control', 'public, max-age=2592000')
 
-  return send(event, readFileSync(filePath), mimeType)
+  return new Promise<void>((resolve, reject) => {
+    const stream = createReadStream(filePath)
+    stream.pipe(res)
+    stream.on('end', resolve)
+    stream.on('error', reject)
+  })
 })

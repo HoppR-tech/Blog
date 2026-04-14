@@ -29,12 +29,22 @@ const menuItems = [
 ]
 
 const searchBarRef = ref<SearchBarRef | null>(null)
+const mobileSearchQuery = ref('')
+const router = useRouter()
 
 function toggleSearch() {
   if (searchBarRef.value?.isExpanded)
     searchBarRef.value?.performSearch()
   else
     searchBarRef.value?.toggleSearch()
+}
+
+function mobileSearch() {
+  if (mobileSearchQuery.value.trim()) {
+    router.push({ path: '/blogs', query: { search: mobileSearchQuery.value.trim() } })
+    mobileSearchQuery.value = ''
+    closeMenu()
+  }
 }
 </script>
 
@@ -127,13 +137,30 @@ function toggleSearch() {
       leave-active-class="transition duration-200 ease-in" leave-from-class="transform translate-y-0 opacity-100"
       leave-to-class="transform -translate-y-full opacity-0"
     >
-      <div v-if="showMenu" class="fixed top-0 left-0 right-0 bottom-0 bg-hoppr-purple z-50 lg:hidden">
+      <div v-if="showMenu" class="fixed top-0 left-0 right-0 bottom-0 bg-hoppr-purple z-50 lg:hidden overflow-y-auto">
         <div class="flex justify-end p-4">
           <button class="text-white" aria-label="Fermer le menu de navigation" @click="closeMenu">
             <LazyIcon name="mdi:close" size="24" />
           </button>
         </div>
-        <ul class="flex flex-col mt-16 space-y-2 px-3 sm:px-6 py-4">
+        <!-- Search field at the top so the keyboard never hides it -->
+        <div class="px-3 sm:px-6 mb-4">
+          <div class="relative">
+            <input
+              v-model="mobileSearchQuery"
+              type="text"
+              placeholder="Rechercher un article..."
+              class="w-full bg-white/10 text-white placeholder-hoppr-green/50 rounded-full pl-12 pr-4 py-3 outline-none border border-hoppr-green/30 focus:border-hoppr-green focus:bg-hoppr-green/10 focus:shadow-[0_0_16px_rgba(0,204,165,0.2)] transition-all duration-200 text-base"
+              aria-label="Rechercher un article"
+              @keyup.enter="mobileSearch"
+            >
+            <Icon
+              name="mdi:magnify" size="22"
+              class="absolute left-4 top-1/2 -translate-y-1/2 text-hoppr-green/60"
+            />
+          </div>
+        </div>
+        <ul class="flex flex-col space-y-2 px-3 sm:px-6 py-4">
           <li v-for="(item, index) in menuItems" :key="index">
             <NuxtLink
               :to="item.to" class="block py-2 text-gray-100 hover:text-hoppr-green uppercase tracking-wider"
@@ -143,28 +170,6 @@ function toggleSearch() {
             >
               {{ item.label }}
             </NuxtLink>
-          </li>
-          <li class="flex items-center justify-between py-2 uppercase tracking-wider relative">
-            <div class="w-full relative">
-              <span
-                class="text-gray-100 cursor-pointer z-20 flex items-center justify-between w-full absolute inset-0"
-                :class="{ 'opacity-0': searchBarRef?.isExpanded }"
-                @click="toggleSearch"
-              >
-                Recherche
-                <Icon name="mdi:magnify" size="24" class="text-gray-100" />
-              </span>
-              <div class="w-full" :class="{ 'opacity-0': !searchBarRef?.isExpanded }">
-                <SearchBar ref="searchBarRef" @close="closeMenu" />
-              </div>
-            </div>
-            <Icon
-              v-if="searchBarRef?.isExpanded"
-              name="mdi:magnify"
-              size="24"
-              class="text-gray-100 cursor-pointer absolute right-0 top-1/2 transform -translate-y-1/2"
-              @click="toggleSearch"
-            />
           </li>
           <li class="flex items-center justify-between py-2 uppercase tracking-wider" @click="onClick">
             <span class="text-gray-100">

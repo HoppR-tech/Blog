@@ -2,7 +2,7 @@ import { Buffer } from 'node:buffer'
 import axios from 'axios'
 
 import { describe, expect, it, mock, spyOn } from 'bun:test'
-import { downloadAndConvertImage, extractImagesAndUpdateContent } from '~/server/services/notion/imageUtils'
+import { downloadAndConvertImage, extractImagesAndUpdateContent, extractMarkdownImageUrls } from '~/server/services/notion/imageUtils'
 
 // Mock sharp module
 mock.module('sharp', () => ({
@@ -62,5 +62,39 @@ describe('image Utils', () => {
     expect(imageFiles[1]?.name).toBe('img2.webp')
     expect(imageFiles[0]?.content).toBe(Buffer.from('webp image data').toString('base64'))
     expect(imageFiles[1]?.content).toBe(Buffer.from('webp image data').toString('base64'))
+  })
+
+  describe('extractMarkdownImageUrls', () => {
+    it('extracts the URL correctly when the alt text contains parentheses', () => {
+      const content = '![alt with (parens) and (more) parens](https://example.com/img.png?a=1&b=2)'
+      const urls = extractMarkdownImageUrls(content)
+      expect(urls).toEqual(['https://example.com/img.png?a=1&b=2'])
+    })
+
+    it('extracts multiple image URLs from content', () => {
+      const content = '![one](https://a.com/1.png) and ![two (with parens)](https://b.com/2.png?x=y)'
+      const urls = extractMarkdownImageUrls(content)
+      expect(urls).toEqual(['https://a.com/1.png', 'https://b.com/2.png?x=y'])
+    })
+
+    it('extracts real Notion S3 signed URL even when alt text contains parens', () => {
+      const alt = 'Schéma (avec paren) et (autre paren), fin.'
+      const url = 'https://prod-files-secure.s3.us-west-2.amazonaws.com/abc/def/Schema.png?X-Amz-Signature=xyz&X-Amz-SignedHeaders=host'
+      const content = `![${alt}](${url})`
+      const urls = extractMarkdownImageUrls(content)
+      expect(urls).toEqual([url])
+    })
+  })
+
+  it('throws if a Notion S3 URL remains after extraction attempt failed silently', async () => {
+    const notionUrl = 'https://prod-files-secure.s3.us-west-2.amazonaws.com/abc/def/Schema.png?X-Amz-Signature=expired'
+    const content = `![alt (with parens)](${notionUrl})`
+
+    // Simulate all downloads failing (e.g. expired signed URL)
+    mockGet.mockImplementation(() => Promise.reject(new Error('Request failed with status code 403')))
+
+    const spy = spyOn(console, 'error').mockImplementation(() => {})
+    await expect(extractImagesAndUpdateContent(content)).rejects.toThrow(/Failed to download inline image from Notion/)
+    spy.mockRestore()
   })
 })

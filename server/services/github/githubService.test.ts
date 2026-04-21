@@ -58,6 +58,7 @@ function createMockNotionService() {
   return {
     extractImagesAndUpdateContent: mock(() => Promise.resolve({ updatedContent: 'content', imageFiles: [] })),
     processAuthorsImages: mock(() => Promise.resolve({ updatedAuthors: [], authorImages: [] })),
+    processReviewersImages: mock(() => Promise.resolve({ updatedReviewers: [], reviewerImages: [] })),
     generateMarkdownContent: mock(() => '# Markdown'),
     updatePostStatusInNotion: mock(() => Promise.resolve(undefined)),
     updatePublishedDateInNotion: mock(() => Promise.resolve(undefined)),

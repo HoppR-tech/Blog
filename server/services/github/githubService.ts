@@ -54,13 +54,16 @@ export class GitHubService {
       let updatedPost: BlogPost = { ...post, ...await uploadCoverImage(this.octokit, post, assetsFolderPath, branchName) }
 
       const { updatedAuthors, authorImages } = await this.notionService.processAuthorsImages(post.authors)
+      const { updatedReviewers, reviewerImages } = await this.notionService.processReviewersImages(post.reviewers)
 
       await uploadAllImages(this.octokit, imageFiles, assetsFolderPath, branchName)
       await uploadAllImages(this.octokit, authorImages, assetsFolderPath, branchName)
+      await uploadAllImages(this.octokit, reviewerImages, assetsFolderPath, branchName)
 
       updatedPost = {
         ...updatedPost,
         authors: updatedAuthors,
+        reviewers: updatedReviewers,
       }
 
       const markdownContent = this.notionService.generateMarkdownContent(updatedPost, updatedContent)

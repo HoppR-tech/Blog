@@ -37,57 +37,84 @@ export async function downloadAndConvertImage(imageUrl: string, imageName: strin
 }
 
 export async function extractImagesAndUpdateContent(content: string): Promise<{ updatedContent: string, imageFiles: ImageFile[], lastValidImageUrl: string | null }> {
-  const imageRegex = /!\[.*?\]\((.*?)\)/g
-  const imageUrls = content.match(imageRegex)?.map(match => match.match(/\((.*?)\)/)?.[1]) || []
+  const imageUrls = extractMarkdownImageUrls(content)
   const imageFiles: ImageFile[] = []
   let updatedContent = content
   let imageCounter = 1
   let lastValidImageUrl: string | null = null
 
   for (const imageUrl of imageUrls) {
-    if (imageUrl) {
-      try {
-        const imageName = `img${imageCounter}`
-        const { webpImageName, imageContent } = await downloadAndConvertImage(imageUrl, imageName)
-        imageFiles.push({ name: webpImageName, content: imageContent })
-        updatedContent = replaceImageLinkInMarkdown(updatedContent, imageUrl, webpImageName)
-        lastValidImageUrl = imageUrl
-        imageCounter++
-      }
-      catch (error) {
-        console.error(`Error processing image: ${imageUrl}`, error)
-      }
+    if (!imageUrl)
+      continue
+
+    try {
+      const imageName = `img${imageCounter}`
+      const { webpImageName, imageContent } = await downloadAndConvertImage(imageUrl, imageName)
+      imageFiles.push({ name: webpImageName, content: imageContent })
+      updatedContent = replaceImageLinkInMarkdown(updatedContent, imageUrl, webpImageName)
+      lastValidImageUrl = imageUrl
+      imageCounter++
+    }
+    catch (error) {
+      console.error(`Error processing image: ${imageUrl}`, error)
+      throw new Error(`Failed to download inline image from Notion (URL may have expired). URL: ${imageUrl}`, { cause: error })
     }
   }
+
+  assertNoNotionImageUrlsRemain(updatedContent)
+
   return { updatedContent, imageFiles, lastValidImageUrl }
 }
 
+const MARKDOWN_IMAGE_REGEX = /!\[[^\]]*\]\(([^)]+)\)/g
+const NOTION_S3_HOST = 'prod-files-secure.s3'
+
+export function extractMarkdownImageUrls(content: string): string[] {
+  return [...content.matchAll(MARKDOWN_IMAGE_REGEX)].map(match => match[1]).filter((url): url is string => typeof url === 'string')
+}
+
+function assertNoNotionImageUrlsRemain(content: string): void {
+  const remaining = extractMarkdownImageUrls(content).filter(url => url.includes(NOTION_S3_HOST))
+  if (remaining.length > 0)
+    throw new Error(`Unprocessed Notion image URLs remain in content after extraction: ${remaining.join(', ')}`)
+}
+
 export async function processAuthorsImages(authors: Person[]): Promise<{ updatedAuthors: Person[], authorImages: ImageFile[] }> {
-  const authorImages: ImageFile[] = []
-  const updatedAuthors = await Promise.all(authors.map(async (author) => {
-    if (!author.image || author.image === '')
-      return { ...author, image: DEFAULT_AUTHOR_IMAGE }
+  const { updatedPersons, personImages } = await processPersonsImages(authors, 'author')
+  return { updatedAuthors: updatedPersons, authorImages: personImages }
+}
 
-    if (author.image.startsWith('./assets/'))
-      return author
+export async function processReviewersImages(reviewers: Person[]): Promise<{ updatedReviewers: Person[], reviewerImages: ImageFile[] }> {
+  const { updatedPersons, personImages } = await processPersonsImages(reviewers, 'reviewer')
+  return { updatedReviewers: updatedPersons, reviewerImages: personImages }
+}
 
-    if (!author.image.startsWith('http://') && !author.image.startsWith('https://')) {
-      console.error(`The image is not an absolute URL: ${author.image}`)
-      return { ...author, image: DEFAULT_AUTHOR_IMAGE }
+async function processPersonsImages(persons: Person[], role: 'author' | 'reviewer'): Promise<{ updatedPersons: Person[], personImages: ImageFile[] }> {
+  const personImages: ImageFile[] = []
+  const updatedPersons = await Promise.all(persons.map(async (person) => {
+    if (!person.image || person.image === '')
+      return { ...person, image: DEFAULT_AUTHOR_IMAGE }
+
+    if (person.image.startsWith('./assets/'))
+      return person
+
+    if (!person.image.startsWith('http://') && !person.image.startsWith('https://')) {
+      console.error(`The image is not an absolute URL: ${person.image}`)
+      return { ...person, image: DEFAULT_AUTHOR_IMAGE }
     }
 
     try {
-      const { webpImageName, imageContent } = await downloadAndConvertImage(author.image, `author-${author.name}`)
+      const { webpImageName, imageContent } = await downloadAndConvertImage(person.image, `${role}-${person.name}`)
       const newImagePath = `./assets/${webpImageName}`
-      authorImages.push({ name: webpImageName, content: imageContent })
-      return { ...author, image: newImagePath }
+      personImages.push({ name: webpImageName, content: imageContent })
+      return { ...person, image: newImagePath }
     }
     catch (error) {
-      console.error(`Error processing image for author ${author.name}:`, error)
-      return { ...author, image: DEFAULT_AUTHOR_IMAGE }
+      console.error(`Error processing image for ${role} ${person.name}:`, error)
+      return { ...person, image: DEFAULT_AUTHOR_IMAGE }
     }
   }))
-  return { updatedAuthors, authorImages }
+  return { updatedPersons, personImages }
 }
 
 function replaceImageLinkInMarkdown(content: string, oldUrl: string, newImageName: string): string {

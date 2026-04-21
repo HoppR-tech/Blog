@@ -1,6 +1,6 @@
-import type { BlogPost } from '@/types/blog'
+import type { BlogPost, Person } from '@/types/blog'
 import type { ImageFile } from '@/types/files'
-import { downloadAndConvertImage, extractImagesAndUpdateContent, processAuthorsImages } from './imageUtils'
+import { downloadAndConvertImage, extractImagesAndUpdateContent, processAuthorsImages, processReviewersImages } from './imageUtils'
 import { generateMarkdownContent } from './markdownGenerator'
 import { getNotionClient } from './notionClient'
 import { fetchPostsToPublish, updatePostStatus, updatePublishedDate } from './postRepository'
@@ -24,12 +24,16 @@ export class NotionService {
     return await downloadAndConvertImage(imageUrl, imageName)
   }
 
-  async extractImagesAndUpdateContent(content: string): Promise<{ updatedContent: string, imageFiles: ImageFile[] }> {
+  async extractImagesAndUpdateContent(content: string): Promise<{ updatedContent: string, imageFiles: ImageFile[], lastValidImageUrl: string | null }> {
     return await extractImagesAndUpdateContent(content)
   }
 
-  async processAuthorsImages(authors: any[]): Promise<{ updatedAuthors: any[], authorImages: ImageFile[] }> {
+  async processAuthorsImages(authors: Person[]): Promise<{ updatedAuthors: Person[], authorImages: ImageFile[] }> {
     return await processAuthorsImages(authors)
+  }
+
+  async processReviewersImages(reviewers: Person[]): Promise<{ updatedReviewers: Person[], reviewerImages: ImageFile[] }> {
+    return await processReviewersImages(reviewers)
   }
 
   generateMarkdownContent(post: BlogPost, content: string): string {

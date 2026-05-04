@@ -180,7 +180,6 @@ export default defineNuxtConfig({
 
   ogImage: {
     runtimeCacheStorage: true,
-    zeroRuntime: true,
   },
 
   mdc: {
@@ -188,6 +187,10 @@ export default defineNuxtConfig({
   } as any,
 
   content: {
+    database: {
+      type: 'sqlite',
+      filename: '.data/content/contents.sqlite',
+    },
     build: {
       markdown: {
         highlight: {

@@ -16,7 +16,7 @@ const { data, error } = await useAsyncData('all-blog-post', () =>
       return []
     }))
 
-const elementPerPage = 5
+const elementPerPage = 12
 const pageNumber = computed(() => {
   const p = Number(route.query.page)
   return (Number.isFinite(p) && p >= 1) ? p : 1

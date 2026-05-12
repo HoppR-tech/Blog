@@ -3,6 +3,7 @@ import { usePageSeo } from '@/composables/usePageSeo'
 import { capitalize } from '@/utils/stringUtils'
 
 const route = useRoute()
+const router = useRouter()
 
 const tag = computed(() => {
   const name = route.params.tag || ''
@@ -38,13 +39,62 @@ const formattedData = computed(() => {
   })
 })
 
+const elementPerPage = 12
+
+const pageNumber = computed(() => {
+  const p = Number(route.query.page)
+  return (Number.isFinite(p) && p >= 1) ? p : 1
+})
+
+const paginatedData = computed(() => {
+  return formattedData.value?.filter((_data, idx) => {
+    const startInd = ((pageNumber.value - 1) * elementPerPage)
+    const endInd = (pageNumber.value * elementPerPage) - 1
+    return idx >= startInd && idx <= endInd
+  }) || []
+})
+
+const totalPages = computed(() => {
+  const ttlContent = formattedData.value?.length || 0
+  return Math.ceil(ttlContent / elementPerPage)
+})
+
+function onPageChange(page: number) {
+  router.push({
+    path: `/tags/${tag.value}`,
+    query: { ...(page > 1 && { page: String(page) }) },
+  })
+}
+
 const shouldNoindex = computed(() => (data.value?.length || 0) < MIN_ARTICLES_FOR_INDEX)
+
+const canonicalUrl = computed(() => {
+  const base = `/tags/${tag.value}`
+  return pageNumber.value > 1 ? `${base}?page=${pageNumber.value}` : base
+})
+
+const prevNextLinks = computed(() => {
+  const base = `/tags/${tag.value}`
+  const links: Array<{ rel: string, href: string }> = []
+  if (pageNumber.value > 1) {
+    const prevPage = pageNumber.value === 2 ? base : `${base}?page=${pageNumber.value - 1}`
+    links.push({ rel: 'prev', href: prevPage })
+  }
+  if (pageNumber.value < totalPages.value) {
+    links.push({ rel: 'next', href: `${base}?page=${pageNumber.value + 1}` })
+  }
+  return links
+})
 
 usePageSeo({
   title: capitalize(tag.value),
   description: `Découvrez nos articles sur le thème ${capitalize(tag.value)}.`,
-  url: `/tags/${tag.value}`,
+  url: canonicalUrl.value,
   noindex: shouldNoindex.value,
+})
+
+useHead({
+  link: prevNextLinks.value,
 })
 
 // Generate OG Image
@@ -71,7 +121,7 @@ defineOgImage({
     </h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       <BlogCard
-        v-for="post in formattedData"
+        v-for="post in paginatedData"
         :key="post.title"
         :path="post.path"
         :title="post.title"
@@ -83,7 +133,14 @@ defineOgImage({
         :tags="post.tags"
         :published="post.published"
       />
-      <BlogEmpty v-if="data?.length === 0" />
+      <BlogEmpty v-if="!paginatedData || paginatedData.length === 0" />
     </div>
+    <UiPagination
+      v-if="totalPages > 1"
+      :current-page="pageNumber"
+      :total-pages="totalPages"
+      :base-url="`/tags/${tag}`"
+      @page-change="onPageChange"
+    />
   </main>
 </template>

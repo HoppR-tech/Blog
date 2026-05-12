@@ -3,6 +3,7 @@ import { usePageSeo } from '@/composables/usePageSeo'
 import { categories } from '@/utils/categories'
 
 const route = useRoute()
+const router = useRouter()
 const categoryValue = computed(() => route.params.category as string)
 
 const category = computed(() => {
@@ -30,10 +31,59 @@ const formattedData = computed(() => {
   })
 })
 
+const elementPerPage = 12
+
+const pageNumber = computed(() => {
+  const p = Number(route.query.page)
+  return (Number.isFinite(p) && p >= 1) ? p : 1
+})
+
+const paginatedData = computed(() => {
+  return formattedData.value?.filter((_data, idx) => {
+    const startInd = ((pageNumber.value - 1) * elementPerPage)
+    const endInd = (pageNumber.value * elementPerPage) - 1
+    return idx >= startInd && idx <= endInd
+  }) || []
+})
+
+const totalPages = computed(() => {
+  const ttlContent = formattedData.value?.length || 0
+  return Math.ceil(ttlContent / elementPerPage)
+})
+
+function onPageChange(page: number) {
+  router.push({
+    path: `/categories/${categoryValue.value}`,
+    query: { ...(page > 1 && { page: String(page) }) },
+  })
+}
+
+const canonicalUrl = computed(() => {
+  const base = `/categories/${categoryValue.value}`
+  return pageNumber.value > 1 ? `${base}?page=${pageNumber.value}` : base
+})
+
+const prevNextLinks = computed(() => {
+  const base = `/categories/${categoryValue.value}`
+  const links: Array<{ rel: string, href: string }> = []
+  if (pageNumber.value > 1) {
+    const prevPage = pageNumber.value === 2 ? base : `${base}?page=${pageNumber.value - 1}`
+    links.push({ rel: 'prev', href: prevPage })
+  }
+  if (pageNumber.value < totalPages.value) {
+    links.push({ rel: 'next', href: `${base}?page=${pageNumber.value + 1}` })
+  }
+  return links
+})
+
 usePageSeo({
   title: `Articles ${category.value.label}`,
   description: `Découvrez nos articles dans la catégorie ${category.value.label}.`,
-  url: `/categories/${categoryValue.value}`,
+  url: canonicalUrl.value,
+})
+
+useHead({
+  link: prevNextLinks.value,
 })
 
 // Generate OG Image
@@ -56,11 +106,18 @@ defineOgImage('About', {
     </h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <BlogCard
-        v-for="post in formattedData"
+        v-for="post in paginatedData"
         :key="post.path"
         v-bind="post"
       />
-      <BlogEmpty v-if="!formattedData || formattedData.length === 0" />
+      <BlogEmpty v-if="!paginatedData || paginatedData.length === 0" />
     </div>
+    <UiPagination
+      v-if="totalPages > 1"
+      :current-page="pageNumber"
+      :total-pages="totalPages"
+      :base-url="`/categories/${categoryValue}`"
+      @page-change="onPageChange"
+    />
   </main>
 </template>

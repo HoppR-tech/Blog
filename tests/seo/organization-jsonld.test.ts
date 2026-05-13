@@ -58,7 +58,7 @@ describe('buildOrganizationJsonLd', () => {
     const org = buildOrganizationJsonLd(baseUrl)
 
     expect(org.legalName).toBe('HoppR SAS')
-    expect(org.foundingDate).toBe('2025-09-15')
+    expect(org.foundingDate).toBe('2023-02-06')
     expect(org.email).toBe('hello@hoppr.tech')
     expect(org.slogan).toBe('There is a New Hopp(R)')
 

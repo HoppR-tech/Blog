@@ -20,7 +20,7 @@ export default defineEventHandler((event) => {
       name: 'HoppR',
       legalName: 'HoppR SAS',
       url: 'https://hoppr.tech',
-      foundingDate: '2025-09-15',
+      foundingDate: '2023-02-06',
       certifications: ['B Corp'],
       locations: ['Paris', 'Lille', 'Lyon'],
       country: 'France',

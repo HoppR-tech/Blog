@@ -112,7 +112,7 @@ export function buildOrganizationJsonLd(baseUrl: string): OrganizationJsonLd {
     'description': 'HoppR — ESN française certifiée B Corp, présente à Paris, Lille et Lyon. Spécialisée Software Craftsmanship, Cloud et Architecture logicielle.',
     'slogan': 'There is a New Hopp(R)',
     'knowsAbout': HOPPR_EXPERTISE,
-    'foundingDate': '2025-09-15',
+    'foundingDate': '2023-02-06',
     'email': 'hello@hoppr.tech',
     'address': HOPPR_LOCATIONS,
     'areaServed': ['France'],

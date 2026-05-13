@@ -67,7 +67,7 @@ defineOgImageComponent('About', {
     >
       <h2>Notre histoire</h2>
       <p>
-        HoppR (HoppR SAS) a été fondée le <strong>15 septembre 2025</strong>.
+        HoppR (HoppR SAS) a été fondée le <strong>6 février 2023</strong>.
         Son nom rend hommage à
         <a href="https://fr.wikipedia.org/wiki/Grace_Hopper" rel="noopener" target="_blank">Grace Hopper</a>,
         pionnière de l'informatique qui a réalisé le <strong>premier compilateur</strong>

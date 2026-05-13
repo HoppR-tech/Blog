@@ -1,38 +1,19 @@
-import type { H3Event } from 'h3'
+/**
+ * llms.txt — standard llmstxt.org for LLM-friendly site description.
+ *
+ * Kept static to avoid coupling LLM discovery with Nuxt Content queries:
+ * - the section descriptor is what LLMs actually need (intent + entry points)
+ * - the exhaustive article index is already exposed via /sitemap.xml and /rss.xml
+ *   (both referenced below), so duplicating it here adds no signal.
+ */
 
-// Server-side queryCollection has signature (event, collection) but auto-import types only expose client-side (collection)
-// @ts-expect-error - Nuxt Content v3 server auto-import provides 2-arg overload at runtime
-const serverQueryCollection: (event: H3Event, collection: 'blogs') => ReturnType<typeof queryCollection> = queryCollection
+const TRAILING_SLASH = /\/$/
 
-const MAX_FEATURED_ARTICLES = 10
-const MAX_DESCRIPTION_LENGTH = 140
-
-function truncate(text: string, maxLength: number): string {
-  if (text.length <= maxLength)
-    return text
-  return `${text.slice(0, maxLength - 1).trimEnd()}…`
-}
-
-export default defineEventHandler(async (event) => {
+export default defineEventHandler((event) => {
   const config = useRuntimeConfig()
-  const siteURL = config.public.baseUrl as string
+  const siteURL = (config.public.baseUrl as string).replace(TRAILING_SLASH, '')
 
-  try {
-    const allPosts = await serverQueryCollection(event, 'blogs')
-      .order('date', 'DESC')
-      .all()
-
-    const featured = allPosts.slice(0, MAX_FEATURED_ARTICLES)
-
-    const featuredLines = featured
-      .map((post) => {
-        const url = `${siteURL}${post.path}`
-        const desc = truncate((post.description as string) || '', MAX_DESCRIPTION_LENGTH)
-        return `- [${post.title}](${url}): ${desc}`
-      })
-      .join('\n')
-
-    const body = `# Blog HoppR
+  const body = `# Blog HoppR
 
 > Blog tech francophone de HoppR (ESN Lyon, Software Craftsmanship & Cloud).
 > Articles longs (1500-3000 mots) sur l'architecture, le DDD, le craft, le cloud, la data, l'observabilité et l'IA appliquée.
@@ -48,22 +29,17 @@ export default defineEventHandler(async (event) => {
 
 ## Ressources techniques
 
-- [Flux RSS](${siteURL}/rss.xml): syndication standard
-- [Sitemap](${siteURL}/sitemap.xml): index des URLs indexables
+- [Flux RSS](${siteURL}/rss.xml): syndication standard, tous les articles
+- [Sitemap XML](${siteURL}/sitemap.xml): index des URLs indexables (articles, catégories, tags)
 
-## Articles récents (${featured.length}/${allPosts.length} publiés)
+## Crédit
 
-${featuredLines}
+- Organisation : HoppR — https://hoppr.tech
+- Code source du blog : https://github.com/HoppR-tech/Blog
+- Contact : hello@hoppr.tech
 `
 
-    event.node.res.setHeader('Content-Type', 'text/plain; charset=utf-8')
-    event.node.res.setHeader('Cache-Control', 'public, max-age=3600')
-    return body
-  }
-  catch (err) {
-    console.error('llms.txt generation failed:', err)
-    event.node.res.statusCode = 500
-    event.node.res.setHeader('Content-Type', 'text/plain; charset=utf-8')
-    return '# Blog HoppR\n\nError generating llms.txt\n'
-  }
+  event.node.res.setHeader('Content-Type', 'text/plain; charset=utf-8')
+  event.node.res.setHeader('Cache-Control', 'public, max-age=3600')
+  return body
 })

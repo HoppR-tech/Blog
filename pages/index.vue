@@ -1,8 +1,10 @@
 <script lang="ts" setup>
 import { useAbsoluteUrl } from '@/composables/useAbsoluteUrl'
 import { usePageSeo } from '@/composables/usePageSeo'
+import { buildOrganizationJsonLd } from '@/utils/organization'
 
 const baseUrl = useAbsoluteUrl('/')
+const trimmedBase = baseUrl.replace(/\/$/, '')
 
 usePageSeo({
   title: 'Software Craftsmanship, Cloud & Architecture',
@@ -11,22 +13,15 @@ usePageSeo({
   jsonLd: {
     '@context': 'https://schema.org',
     '@graph': [
-      {
-        '@type': 'Organization',
-        'name': 'HoppR',
-        'url': 'https://hoppr.tech',
-        'logo': `${baseUrl}hoppr.png`,
-        'sameAs': [
-          'https://github.com/HoppR-tech',
-          'https://www.linkedin.com/company/hopprtech',
-          'https://twitter.com/HoppR_Tech',
-        ],
-      },
+      buildOrganizationJsonLd(trimmedBase),
       {
         '@type': 'WebSite',
+        '@id': `${trimmedBase}/#website`,
         'name': 'Blog HoppR',
-        'url': baseUrl.replace(/\/$/, ''),
+        'url': trimmedBase,
         'description': 'Partage, veille et ressources de la communauté sur les thématiques du Software Craftsmanship, du Cloud, de l\'architecture et de la Tech en générale.',
+        'inLanguage': 'fr-FR',
+        'publisher': { '@id': 'https://hoppr.tech/#organization' },
       },
     ],
   },

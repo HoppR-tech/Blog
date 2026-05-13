@@ -3,10 +3,12 @@ import type { Person } from '@/types/blog'
 import ContactCTA from '@/components/blog/ContactCTA.vue'
 import { useAbsoluteUrl } from '@/composables/useAbsoluteUrl'
 import { usePageSeo } from '@/composables/usePageSeo'
+import { buildBlogPostingJsonLd } from '@/utils/blogPostingJsonLd'
 import { stripMarkdown } from '@/utils/stringUtils'
 
 const { path } = useRoute()
 const config = useRuntimeConfig()
+const baseUrl = config.public.baseUrl as string
 
 const { data: article, error } = await useAsyncData(`blog-post-${path}`, () => {
   return queryCollection('blogs').path(path).first()
@@ -50,34 +52,30 @@ const ogDescription = computed(() => stripMarkdown(blogPostProps.value.descripti
 
 const absoluteImage = computed(() => useAbsoluteUrl(blogPostProps.value.ogImage || blogPostProps.value.image))
 
-function generateStructuredData() {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
-    'headline': blogPostProps.value.title,
-    'image': absoluteImage.value,
-    'datePublished': blogPostProps.value.date,
-    'dateModified': blogPostProps.value.date,
-    'inLanguage': 'fr',
-    'author': authors.map(author => ({
-      '@type': 'Person',
-      'name': author.name,
-    })),
-    'publisher': {
-      '@type': 'Organization',
-      'name': 'HoppR',
-      'logo': {
-        '@type': 'ImageObject',
-        'url': `${config.public.baseUrl}/hoppr.png`,
-      },
-    },
-    'description': ogDescription.value,
-    'mainEntityOfPage': {
-      '@type': 'WebPage',
-      '@id': `${config.public.baseUrl}${path}`,
-    },
-  }
-}
+const articleDateModified = computed(() => {
+  const updated = (article.value as { lastEditedTime?: string, updatedAt?: string } | undefined)?.lastEditedTime
+    || (article.value as { updatedAt?: string } | undefined)?.updatedAt
+  return typeof updated === 'string' && updated.length > 0 ? updated : blogPostProps.value.date
+})
+
+const articleRawBody = computed(() => {
+  const rb = (article.value as { rawbody?: string, body?: { text?: string } } | undefined)?.rawbody
+    || (article.value as { body?: { text?: string } } | undefined)?.body?.text
+  return typeof rb === 'string' ? rb : undefined
+})
+
+const structuredData = computed(() => buildBlogPostingJsonLd({
+  baseUrl,
+  path: articlePath.value,
+  title: blogPostProps.value.title,
+  description: ogDescription.value,
+  image: absoluteImage.value,
+  datePublished: blogPostProps.value.date,
+  dateModified: articleDateModified.value,
+  tags: blogPostProps.value.tags,
+  authors,
+  rawBody: articleRawBody.value,
+}))
 
 usePageSeo({
   title: blogPostProps.value.title || '',
@@ -86,8 +84,9 @@ usePageSeo({
   image: blogPostProps.value.ogImage || blogPostProps.value.image,
   type: 'article',
   publishedTime: blogPostProps.value.date,
+  modifiedTime: articleDateModified.value,
   authors: authors.map(a => a.name),
-  jsonLd: generateStructuredData(),
+  jsonLd: structuredData.value,
 })
 
 // Generate OG Image

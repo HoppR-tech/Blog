@@ -1,0 +1,196 @@
+import type { Person } from '@/types/blog'
+import { categories } from '@/utils/categories'
+import { buildPublisherJsonLd } from '@/utils/organization'
+
+/**
+ * Build the BlogPosting JSON-LD entity for a blog post page.
+ *
+ * Enriched signals for LLM crawlers & Google AI Overview:
+ * - Person.url + Person.image + Person.sameAs (LinkedIn, X) when known
+ * - dateModified distinct from datePublished when provided
+ * - wordCount, articleSection, keywords, inLanguage
+ * - image as ImageObject
+ * - publisher as full Organization reference (cf. utils/organization.ts SSOT)
+ */
+
+export interface BuildBlogPostingInput {
+  baseUrl: string
+  path: string
+  title: string
+  description: string
+  image: string
+  datePublished: string
+  dateModified?: string
+  tags: string[]
+  authors: Person[]
+  rawBody?: string
+}
+
+export interface BlogPostingJsonLd {
+  '@context': 'https://schema.org'
+  '@type': 'BlogPosting'
+  'headline': string
+  'description': string
+  'image': {
+    '@type': 'ImageObject'
+    'url': string
+  }
+  'datePublished': string
+  'dateModified': string
+  'inLanguage': 'fr-FR'
+  'author': Array<{
+    '@type': 'Person'
+    'name': string
+    'url'?: string
+    'image'?: string
+    'sameAs'?: string[]
+  }>
+  'publisher': ReturnType<typeof buildPublisherJsonLd>
+  'mainEntityOfPage': {
+    '@type': 'WebPage'
+    '@id': string
+  }
+  'articleSection'?: string
+  'keywords'?: string
+  'wordCount'?: number
+}
+
+const AUTHOR_SLUG_NON_ALPHANUM = /[^a-z0-9]+/g
+const AUTHOR_SLUG_EDGES = /^-+|-+$/g
+const COMBINING_DIACRITICS = /\p{M}/gu
+const CODE_FENCE = /```[\s\S]*?```/g
+const INLINE_CODE = /`[^`]*`/g
+const MARKDOWN_TOKENS = /[#*_>[\]()!\-]/g
+const WHITESPACE = /\s+/g
+const TRAILING_SLASH = /\/$/
+
+/**
+ * Slug used to deep-link author pages (cf. need seo-authors-pages.md).
+ * Stable mapping name → kebab-case ASCII.
+ */
+export function slugifyAuthorName(name: string): string {
+  return name
+    .normalize('NFD')
+    .replace(COMBINING_DIACRITICS, '')
+    .toLowerCase()
+    .replace(AUTHOR_SLUG_NON_ALPHANUM, '-')
+    .replace(AUTHOR_SLUG_EDGES, '')
+}
+
+/**
+ * Estimate the word count of a markdown body, excluding code blocks and inline code
+ * (LLMs ignore code blocks when answering, so they shouldn't inflate wordCount either).
+ */
+export function estimateWordCount(rawBody: string | undefined): number | undefined {
+  if (!rawBody)
+    return undefined
+
+  const cleaned = rawBody
+    .replace(CODE_FENCE, ' ')
+    .replace(INLINE_CODE, ' ')
+    .replace(MARKDOWN_TOKENS, ' ')
+    .replace(WHITESPACE, ' ')
+    .trim()
+
+  if (!cleaned)
+    return undefined
+
+  return cleaned.split(' ').filter(w => w.length > 0).length
+}
+
+/**
+ * Pick the primary category label from an article's tags (first match wins).
+ * Returns undefined if none of the tags map to a known category.
+ */
+export function findPrimaryCategoryLabel(tags: string[]): string | undefined {
+  if (!tags || tags.length === 0)
+    return undefined
+
+  for (const tag of tags) {
+    const cat = categories.find(c => c.value.toLowerCase() === tag.toLowerCase())
+    if (cat)
+      return cat.label
+  }
+
+  return undefined
+}
+
+/**
+ * Build the enriched Person entry, filtering out undefined / empty fields.
+ */
+export function buildPersonEntry(
+  baseUrl: string,
+  author: Person,
+): BlogPostingJsonLd['author'][number] {
+  const trimmedBase = baseUrl.replace(TRAILING_SLASH, '')
+  const sameAs = [author.linkedin, author.x].filter(
+    (link): link is string => typeof link === 'string' && link.length > 0,
+  )
+
+  const entry: BlogPostingJsonLd['author'][number] = {
+    '@type': 'Person',
+    'name': author.name,
+    'url': `${trimmedBase}/auteurs/${slugifyAuthorName(author.name)}`,
+  }
+
+  if (author.image && author.image.length > 0) {
+    entry.image = author.image.startsWith('http')
+      ? author.image
+      : `${trimmedBase}${author.image.startsWith('/') ? '' : '/'}${author.image}`
+  }
+
+  if (sameAs.length > 0)
+    entry.sameAs = sameAs
+
+  return entry
+}
+
+export function buildBlogPostingJsonLd(input: BuildBlogPostingInput): BlogPostingJsonLd {
+  const {
+    baseUrl,
+    path,
+    title,
+    description,
+    image,
+    datePublished,
+    dateModified,
+    tags,
+    authors,
+    rawBody,
+  } = input
+
+  const trimmedBase = baseUrl.replace(TRAILING_SLASH, '')
+  const absoluteImage = image.startsWith('http')
+    ? image
+    : `${trimmedBase}${image.startsWith('/') ? '' : '/'}${image}`
+
+  const jsonLd: BlogPostingJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    'headline': title,
+    'description': description,
+    'image': { '@type': 'ImageObject', 'url': absoluteImage },
+    'datePublished': datePublished,
+    'dateModified': dateModified || datePublished,
+    'inLanguage': 'fr-FR',
+    'author': authors.map(author => buildPersonEntry(baseUrl, author)),
+    'publisher': buildPublisherJsonLd(baseUrl),
+    'mainEntityOfPage': {
+      '@type': 'WebPage',
+      '@id': `${trimmedBase}${path}`,
+    },
+  }
+
+  const articleSection = findPrimaryCategoryLabel(tags)
+  if (articleSection)
+    jsonLd.articleSection = articleSection
+
+  if (tags && tags.length > 0)
+    jsonLd.keywords = tags.join(', ')
+
+  const wordCount = estimateWordCount(rawBody)
+  if (typeof wordCount === 'number' && wordCount > 0)
+    jsonLd.wordCount = wordCount
+
+  return jsonLd
+}

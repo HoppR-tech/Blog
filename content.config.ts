@@ -36,17 +36,5 @@ export default defineContentConfig({
         })).optional().default([]),
       }),
     }),
-    // Pillar pages éditoriales pour les catégories du blog.
-    // Une page guide par catégorie (craft, cloud-platform, architecture)
-    // qui explique le domaine côté HoppR avant d'afficher la grille d'articles.
-    categories: defineCollection({
-      type: 'page',
-      source: 'categories/**/*.md',
-      schema: z.object({
-        title: z.string(),
-        slug: z.string(),
-        description: z.string(),
-      }),
-    }),
   },
 })

@@ -22,12 +22,6 @@ const { data } = await useAsyncData(`category-${categoryValue.value}`, async () 
   return allPosts.filter(article => article.tags?.includes(categoryValue.value))
 })
 
-// Pillar editorial : charge le contenu /content/categories/<slug>.md s'il existe.
-// Pas bloquant : si pas de fichier, on tombe juste sur la grille sans intro.
-// Match par slug du frontmatter (le path Nuxt Content v3 strippe le préfixe).
-const { data: editorial } = await useAsyncData(`category-editorial-${categoryValue.value}`, () =>
-  queryCollection('categories').where('slug', '=', categoryValue.value).first())
-
 const formattedData = computed(() => {
   return data.value?.map((article) => {
     return {
@@ -134,26 +128,9 @@ defineOgImage('About', {
       :custom-items="[{ name: 'Catégories', url: '/categories' }, { name: category.label, url: `/categories/${categoryValue}` }]"
     />
     <CategoryTopic :category="category.label" :icon="category.icon" />
-
-    <article
-      v-if="editorial"
-      class="prose prose-sm sm:prose-base lg:prose-lg max-w-3xl mx-auto mb-12 prose-zinc dark:prose-invert
-        prose-h2:text-2xl sm:prose-h2:text-3xl prose-h2:font-bold prose-h2:text-hoppr-purple
-        dark:prose-h2:text-zinc-100 prose-h2:mt-10 prose-h2:mb-4 prose-h2:pl-4
-        prose-h2:border-l-4 prose-h2:border-hoppr-green
-        prose-a:text-hoppr-purple dark:prose-a:text-hoppr-green
-        prose-a:no-underline prose-a:border-b prose-a:border-hoppr-green prose-a:border-opacity-50
-        hover:prose-a:border-opacity-100 hover:prose-a:text-hoppr-green
-        prose-li:marker:text-hoppr-green
-        prose-strong:text-zinc-900 dark:prose-strong:text-zinc-100"
-    >
-      <ContentRenderer :value="editorial" />
-    </article>
-
-    <h2 v-if="!editorial" class="sr-only">
+    <h2 class="sr-only">
       Articles dans cette catégorie
     </h2>
-
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <BlogCard
         v-for="post in paginatedData"

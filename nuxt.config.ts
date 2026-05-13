@@ -96,7 +96,6 @@ export default defineNuxtConfig({
     identity: {
       type: 'Company',
     },
-    twitter: '@HoppR_Tech',
   },
 
   typescript: {

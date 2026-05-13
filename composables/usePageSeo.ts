@@ -42,7 +42,6 @@ export function usePageSeo(options: SeoMetaOptions): void {
     { property: 'og:url', content: absoluteUrl },
     { property: 'og:title', content: title },
     { property: 'og:description', content: description },
-    { name: 'twitter:site', content: '@HoppR_Tech' },
     { name: 'twitter:card', content: 'summary_large_image' },
     { name: 'twitter:url', content: absoluteUrl },
     { name: 'twitter:title', content: title },

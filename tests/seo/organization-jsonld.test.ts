@@ -32,15 +32,16 @@ describe('buildOrganizationJsonLd', () => {
     expect(org.logo.url).toBe('https://blog.hoppr.tech/hoppr.png')
   })
 
-  it('exposes the social profiles in sameAs (LinkedIn, GitHub, X, YouTube)', () => {
+  it('exposes the social profiles in sameAs (LinkedIn, GitHub, YouTube)', () => {
     const org = buildOrganizationJsonLd(baseUrl)
 
     expect(org.sameAs).toBeInstanceOf(Array)
-    expect(org.sameAs.length).toBeGreaterThanOrEqual(4)
+    expect(org.sameAs.length).toBeGreaterThanOrEqual(3)
     expect(org.sameAs).toContain('https://github.com/HoppR-tech')
     expect(org.sameAs).toContain('https://www.linkedin.com/company/hopprtech')
-    expect(org.sameAs).toContain('https://twitter.com/HoppR_Tech')
     expect(org.sameAs).toContain('https://www.youtube.com/@HoppR-Tech')
+    // Twitter/X removed: HoppR no longer maintains an account.
+    expect(org.sameAs).not.toContain('https://twitter.com/HoppR_Tech')
   })
 
   it('exposes knowsAbout with HoppR thematics for LLM knowledge graphs', () => {

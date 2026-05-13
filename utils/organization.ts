@@ -64,7 +64,6 @@ export interface OrganizationJsonLd {
 const HOPPR_SOCIAL_PROFILES = [
   'https://github.com/HoppR-tech',
   'https://www.linkedin.com/company/hopprtech',
-  'https://twitter.com/HoppR_Tech',
   'https://www.youtube.com/@HoppR-Tech',
 ]
 

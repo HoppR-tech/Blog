@@ -28,7 +28,6 @@ export default defineEventHandler((event) => {
         linkedin: 'https://www.linkedin.com/company/hopprtech',
         github: 'https://github.com/HoppR-tech',
         youtube: 'https://www.youtube.com/@HoppR-Tech',
-        twitter: 'https://twitter.com/HoppR_Tech',
       },
     },
     description: 'Blog tech francophone de HoppR. Retours d\'expérience sur le Software Craftsmanship, le Cloud, l\'Architecture, l\'observabilité et le platform engineering, écrits par les consultant·es HoppR à partir de leurs missions réelles.',

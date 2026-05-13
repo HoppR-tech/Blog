@@ -44,9 +44,8 @@ useHead({
       property: 'og:image',
       content: absoluteImage,
     },
-    // Test on: https://cards-dev.twitter.com/validator or https://socialsharepreview.com/
-    { name: 'twitter:site', content: '@HoppR_Tech' },
-    { name: 'twitter:creator', content: '@HoppR_Tech' },
+    // Twitter card metas (rendering when someone shares the URL on X/Twitter).
+    // twitter:site / twitter:creator removed: HoppR does not maintain an X account.
     { name: 'twitter:card', content: 'summary_large_image' },
     {
       name: 'twitter:url',

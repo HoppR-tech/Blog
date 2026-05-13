@@ -2,7 +2,7 @@
 const socialLinks = [
   { url: 'https://github.com/HoppR-tech', icon: 'fa:github', label: 'Visitez notre page GitHub' },
   { url: 'https://www.linkedin.com/company/hopprtech', icon: 'fa:linkedin-square', label: 'Suivez-nous sur LinkedIn' },
-  { url: 'https://twitter.com/HoppR_Tech', icon: 'fa:twitter-square', label: 'Suivez-nous sur X (anciennement Twitter)' },
+  { url: 'https://www.youtube.com/@HoppR-Tech', icon: 'fa:youtube-square', label: 'Notre chaîne YouTube' },
   { url: 'https://hoppr.tech', icon: 'fa:globe', label: 'Visitez notre site web' },
   { url: '/rss.xml', icon: 'fa:rss', label: 'Abonnez-vous à notre flux RSS' },
 ]

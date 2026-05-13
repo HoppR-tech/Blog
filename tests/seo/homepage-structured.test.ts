@@ -19,7 +19,7 @@ describe('homepage structured data - Organization + WebSite (TASK-028)', () => {
           'sameAs': [
             'https://github.com/HoppR-tech',
             'https://www.linkedin.com/company/hopprtech',
-            'https://twitter.com/HoppR_Tech',
+            'https://www.youtube.com/@HoppR-Tech',
           ],
         },
         {

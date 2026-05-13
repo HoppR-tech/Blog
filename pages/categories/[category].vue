@@ -1,6 +1,8 @@
 <script lang="ts" setup>
+import { useAbsoluteUrl } from '@/composables/useAbsoluteUrl'
 import { usePageSeo } from '@/composables/usePageSeo'
 import { categories } from '@/utils/categories'
+import { wrapInGraph } from '@/utils/organization'
 
 const route = useRoute()
 const router = useRouter()
@@ -87,10 +89,24 @@ const seoDescription = computed(() => {
   return count > 0 ? `${base} ${count} articles publiés.` : base
 })
 
+const categoryBaseUrl = useAbsoluteUrl('/')
+const categoryTrimmedBase = categoryBaseUrl.replace(/\/$/, '')
+
 usePageSeo({
   title: `Articles ${category.value.label}`,
   description: seoDescription.value,
   url: canonicalUrl.value,
+  jsonLd: wrapInGraph(categoryBaseUrl, {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    '@id': `${categoryTrimmedBase}/categories/${categoryValue.value}#collectionpage`,
+    'url': `${categoryTrimmedBase}/categories/${categoryValue.value}`,
+    'name': `Catégorie : ${category.value.label}`,
+    'description': seoDescription.value,
+    'inLanguage': 'fr-FR',
+    'isPartOf': { '@id': `${categoryTrimmedBase}/#website` },
+    'about': { '@id': 'https://hoppr.tech/#organization' },
+  }),
 })
 
 useHead({

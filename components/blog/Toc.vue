@@ -532,6 +532,8 @@ function updateExpandedSections(activeParentId: string | null, sectionId: string
           <div class="w-6 flex-shrink-0 flex items-center justify-center">
             <button
               v-if="link.depth === parentDepth"
+              :aria-label="link.children ? (isExpanded(link.id) ? `Replier la section ${link.text}` : `Déplier la section ${link.text}`) : link.text"
+              :aria-expanded="link.children ? isExpanded(link.id) : undefined"
               class="text-hoppr-green hover:text-opacity-80 transition-colors duration-200 w-full text-left"
               @click="toggleSection(link.id)"
             >

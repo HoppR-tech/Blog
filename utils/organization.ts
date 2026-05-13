@@ -187,9 +187,79 @@ interface FaqPageEntity {
   }>
 }
 
+export interface WebSiteEntity {
+  '@context': 'https://schema.org'
+  '@type': 'WebSite'
+  '@id': string
+  'url': string
+  'name': string
+  'description': string
+  'inLanguage': 'fr-FR'
+  'publisher': { '@id': string }
+  'potentialAction': {
+    '@type': 'SearchAction'
+    'target': {
+      '@type': 'EntryPoint'
+      'urlTemplate': string
+    }
+    'query-input': string
+  }
+}
+
+/**
+ * Build the canonical WebSite entity for the blog. Always referenced via @id
+ * by other entities (BlogPosting.isPartOf, ProfilePage.isPartOf, etc.).
+ */
+export function buildWebSiteJsonLd(baseUrl: string): WebSiteEntity {
+  const trimmedBase = baseUrl.replace(TRAILING_SLASH, '')
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${trimmedBase}/#website`,
+    'url': trimmedBase,
+    'name': 'Blog HoppR',
+    'description': 'Blog tech francophone de HoppR. Retours d\'expérience sur le Software Craftsmanship, le Cloud, l\'Architecture, l\'observabilité et le platform engineering.',
+    'inLanguage': 'fr-FR',
+    'publisher': { '@id': 'https://hoppr.tech/#organization' },
+    'potentialAction': {
+      '@type': 'SearchAction',
+      'target': {
+        '@type': 'EntryPoint',
+        'urlTemplate': `${trimmedBase}/blogs?search={search_term_string}`,
+      },
+      'query-input': 'required name=search_term_string',
+    },
+  }
+}
+
+/**
+ * Wrap one or more page-specific JSON-LD entities in a @graph that always
+ * includes the canonical Organization + WebSite. This satisfies validators
+ * (geo-optimizer, Google Rich Results) that scan each page independently
+ * and expect those entities on every URL, without duplicating boilerplate
+ * in every page component.
+ *
+ * Pass the page-specific entities (BlogPosting, ProfilePage, AboutPage,
+ * CollectionPage, FAQPage, etc.) as the variadic argument. The @context
+ * is set at the graph level once.
+ */
+export function wrapInGraph(
+  baseUrl: string,
+  ...entities: Array<Record<string, unknown>>
+): { '@context': 'https://schema.org', '@graph': Array<Record<string, unknown>> } {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      buildOrganizationJsonLd(baseUrl),
+      buildWebSiteJsonLd(baseUrl),
+      ...entities,
+    ],
+  }
+}
+
 export interface AboutPageJsonLd {
   '@context': 'https://schema.org'
-  '@graph': Array<OrganizationJsonLd | {
+  '@graph': Array<OrganizationJsonLd | WebSiteEntity | {
     '@context': 'https://schema.org'
     '@type': 'AboutPage'
     '@id': string
@@ -199,14 +269,6 @@ export interface AboutPageJsonLd {
     'isPartOf': { '@id': string }
     'about': { '@id': string }
     'mainEntity': { '@id': string }
-  } | {
-    '@context': 'https://schema.org'
-    '@type': 'WebSite'
-    '@id': string
-    'url': string
-    'name': string
-    'inLanguage': 'fr-FR'
-    'publisher': { '@id': string }
   } | FaqPageEntity>
 }
 
@@ -219,20 +281,13 @@ export interface AboutPageJsonLd {
 export function buildAboutPageJsonLd(baseUrl: string): AboutPageJsonLd {
   const trimmedBase = baseUrl.replace(TRAILING_SLASH, '')
   const org = buildOrganizationJsonLd(baseUrl)
+  const website = buildWebSiteJsonLd(baseUrl)
 
   return {
     '@context': 'https://schema.org',
     '@graph': [
       org,
-      {
-        '@context': 'https://schema.org',
-        '@type': 'WebSite',
-        '@id': `${trimmedBase}/#website`,
-        'url': trimmedBase,
-        'name': 'Blog HoppR',
-        'inLanguage': 'fr-FR',
-        'publisher': { '@id': org['@id'] },
-      },
+      website,
       {
         '@context': 'https://schema.org',
         '@type': 'AboutPage',
@@ -240,7 +295,7 @@ export function buildAboutPageJsonLd(baseUrl: string): AboutPageJsonLd {
         'url': `${trimmedBase}/a-propos`,
         'name': 'À propos de HoppR',
         'inLanguage': 'fr-FR',
-        'isPartOf': { '@id': `${trimmedBase}/#website` },
+        'isPartOf': { '@id': website['@id'] },
         'about': { '@id': org['@id'] },
         'mainEntity': { '@id': org['@id'] },
       },

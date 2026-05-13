@@ -6,6 +6,7 @@ import { usePageSeo } from '@/composables/usePageSeo'
 import { extractHowToSteps } from '@/utils/articleEnrichment'
 import { buildBlogPostingJsonLd } from '@/utils/blogPostingJsonLd'
 import { buildFaqJsonLd, extractFaqEntries, serializeAstToMarkdownLite } from '@/utils/faqJsonLd'
+import { wrapInGraph } from '@/utils/organization'
 import { stripMarkdown } from '@/utils/stringUtils'
 
 const { path } = useRoute()
@@ -103,7 +104,7 @@ usePageSeo({
   publishedTime: blogPostProps.value.date,
   modifiedTime: articleDateModified.value,
   authors: authors.map(a => a.name),
-  jsonLd: structuredData.value,
+  jsonLd: wrapInGraph(baseUrl, structuredData.value as unknown as Record<string, unknown>),
 })
 
 // `articleRawBody` is computed from `article.value` which is resolved at SSR

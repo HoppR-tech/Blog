@@ -5,6 +5,7 @@ import { useAbsoluteUrl } from '@/composables/useAbsoluteUrl'
 import { usePageSeo } from '@/composables/usePageSeo'
 import { aggregateAuthors, buildProfilePageJsonLd } from '@/utils/authorsAggregation'
 import { resolveContentAsset } from '@/utils/contentAssets'
+import { wrapInGraph } from '@/utils/organization'
 
 const route = useRoute()
 const baseUrl = useAbsoluteUrl('/')
@@ -83,7 +84,10 @@ usePageSeo({
   url: profileUrl.value,
   image: authorImage.value,
   type: 'profile',
-  jsonLd: buildProfilePageJsonLd({ baseUrl, author: author.value }),
+  jsonLd: wrapInGraph(
+    baseUrl,
+    buildProfilePageJsonLd({ baseUrl, author: author.value }) as unknown as Record<string, unknown>,
+  ),
 })
 
 defineOgImageComponent('About', {

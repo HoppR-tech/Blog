@@ -58,6 +58,8 @@ export interface BlogPostingJsonLd {
   'articleSection'?: string
   'keywords'?: string
   'wordCount'?: number
+  'timeRequired'?: string
+  'articleBody'?: string
   'citation'?: CitationEntry[]
   'speakable'?: SpeakableSpec
   'isAccessibleForFree': true
@@ -204,8 +206,25 @@ export function buildBlogPostingJsonLd(input: BuildBlogPostingInput): BlogPostin
     jsonLd.keywords = tags.join(', ')
 
   const wordCount = estimateWordCount(rawBody)
-  if (typeof wordCount === 'number' && wordCount > 0)
+  if (typeof wordCount === 'number' && wordCount > 0) {
     jsonLd.wordCount = wordCount
+    // ISO 8601 duration. Reading speed 200 wpm (Average French reader).
+    const minutes = Math.max(1, Math.round(wordCount / 200))
+    jsonLd.timeRequired = `PT${minutes}M`
+  }
+
+  // articleBody : plain text (markdown stripped) — useful for LLM extraction
+  // without parsing HTML. Cap at 5000 chars to avoid bloating the head tag.
+  if (rawBody && rawBody.length > 0) {
+    const plain = rawBody
+      .replace(/```[\s\S]*?```/g, ' ')
+      .replace(/`[^`]*`/g, ' ')
+      .replace(/[#*_>[\]()!]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim()
+    if (plain.length > 0)
+      jsonLd.articleBody = plain.length > 5000 ? `${plain.slice(0, 4999)}…` : plain
+  }
 
   // Enrichments from body AST when provided (Princeton "Cite Sources" + Speakable).
   if (body !== undefined && body !== null) {

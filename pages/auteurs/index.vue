@@ -4,6 +4,7 @@ import { useAbsoluteUrl } from '@/composables/useAbsoluteUrl'
 import { usePageSeo } from '@/composables/usePageSeo'
 import { aggregateAuthors } from '@/utils/authorsAggregation'
 import { resolveContentAsset } from '@/utils/contentAssets'
+import { wrapInGraph } from '@/utils/organization'
 
 const baseUrl = useAbsoluteUrl('/')
 const trimmedBase = baseUrl.replace(/\/$/, '')
@@ -39,7 +40,7 @@ usePageSeo({
   title: 'L\'équipe HoppR',
   description: `Découvrez les ${authors.value.length} auteur·rices du blog HoppR : développeur·euses, architectes cloud, software crafter·euses et platform engineer·euses qui partagent leurs retours d'expérience.`,
   url: '/auteurs',
-  jsonLd: {
+  jsonLd: wrapInGraph(baseUrl, {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
     '@id': `${trimmedBase}/auteurs#collectionpage`,
@@ -54,7 +55,7 @@ usePageSeo({
       'url': `${trimmedBase}/auteurs/${a.slug}`,
       'name': a.name,
     })),
-  },
+  }),
 })
 
 defineOgImageComponent('About', {

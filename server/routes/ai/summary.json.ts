@@ -68,6 +68,7 @@ export default defineEventHandler((event) => {
       sitemap: `${siteURL}/sitemap.xml`,
       llms: `${siteURL}/llms.txt`,
       faq: `${siteURL}/ai/faq.json`,
+      service: `${siteURL}/ai/service.json`,
     },
     license: {
       name: 'open source',

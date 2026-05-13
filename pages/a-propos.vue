@@ -163,7 +163,6 @@ defineOgImageComponent('About', {
         <li><strong>GitHub</strong>&nbsp;: <a href="https://github.com/HoppR-tech" rel="noopener" target="_blank">github.com/HoppR-tech</a></li>
         <li><strong>LinkedIn</strong>&nbsp;: <a href="https://www.linkedin.com/company/hopprtech" rel="noopener" target="_blank">linkedin.com/company/hopprtech</a></li>
         <li><strong>YouTube</strong>&nbsp;: <a href="https://www.youtube.com/@HoppR-Tech" rel="noopener" target="_blank">@HoppR-Tech</a></li>
-        <li><strong>X / Twitter</strong>&nbsp;: <a href="https://twitter.com/HoppR_Tech" rel="noopener" target="_blank">@HoppR_Tech</a></li>
       </ul>
 
       <h2>Nous écrire</h2>

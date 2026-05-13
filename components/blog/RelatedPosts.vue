@@ -61,6 +61,8 @@ const { data: relatedArticles } = await useAsyncData(
             :src="article.image"
             :alt="`Image de l'article : ${article.title}`"
             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            width="320"
+            height="128"
             loading="lazy"
             decoding="async"
           >

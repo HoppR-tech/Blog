@@ -6,6 +6,20 @@ import { wrapInGraph } from '@/utils/organization'
 const baseUrl = useAbsoluteUrl('/')
 const trimmedBase = baseUrl.replace(/\/$/, '')
 
+// Preload du hero LCP de la home — gain ~5s sur le LCP mobile (Lighthouse).
+// HOME-only via useHead pour ne pas charger l'image sur les autres routes.
+useHead({
+  link: [
+    {
+      rel: 'preload',
+      as: 'image',
+      href: '/images/blog.webp',
+      fetchpriority: 'high',
+      type: 'image/webp',
+    },
+  ],
+})
+
 usePageSeo({
   title: 'Software Craftsmanship, Cloud & Architecture',
   description: 'Bienvenue sur le Blog Tech d\'HoppR. Partage, veille et ressources de la communauté sur les thématiques du Software Craftsmanship, du Cloud, de l\'architecture et de la Tech en générale.',

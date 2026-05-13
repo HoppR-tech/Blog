@@ -85,12 +85,14 @@ const buttonLabel = computed(() =>
         <!-- Background Layer (Ambience) -->
         <img
           :src="image" aria-hidden="true" role="presentation"
+          width="300" height="200" loading="lazy" decoding="async"
           class="absolute inset-0 w-full h-full object-cover blur-xl scale-125 opacity-100 transition-transform duration-500 group-hover:scale-130"
         >
         <!-- Foreground Layer -->
         <img
           class="w-full h-full object-contain object-center relative z-10 group-hover:scale-110 transition-transform duration-500 [mask-image:radial-gradient(ellipse_at_center,black_60%,transparent_100%)]"
-          width="300" :src="image" :alt="alt || `Image de l'article : ${title}`"
+          width="300" height="200" loading="lazy" decoding="async"
+          :src="image" :alt="alt || `Image de l'article : ${title}`"
         >
       </div>
       <div class="sm:col-span-7 p-3 sm:p-5 relative">

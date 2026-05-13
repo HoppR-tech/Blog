@@ -117,11 +117,11 @@ export default defineNuxtConfig({
         '/categories/architecture',
         '/categories/others',
       ],
-      // Exclude OG image routes from prerendering to avoid ultrahtml/satori-html crash
-      // Images will be generated at runtime when requested by social media crawlers
-      ignore: ['/__og-image__/**'],
-      // Allow build to continue despite OG image prerender failures
-      // The images still work at runtime - this just skips prerendering them
+      // Exclude OG image routes from prerendering (both legacy /__og-image__/**
+      // and the new /_og/** path pattern emitted by nuxt-og-image v3+).
+      // Images are generated at runtime when requested by social media crawlers.
+      ignore: ['/__og-image__/**', '/_og/**'],
+      // Allow build to continue despite OG image prerender failures.
       failOnError: false,
     },
     routeRules: {
@@ -184,8 +184,18 @@ export default defineNuxtConfig({
     ...(process.env.NODE_ENV === 'test' ? ['@nuxt/test-utils/module'] : []),
   ],
 
+  // OG image config — runtime generation only (no prerender hash URLs).
+  // `runtimeCacheStorage: true` forçait des URLs hash (o_xxxxxx.png) qui
+  // ne sont valides qu'au build : un container Docker redéployé sans le
+  // fichier .png correspondant retournait 400 avec
+  //   "Hash-based URLs are only supported during prerendering. Use encoded params or query params for runtime."
+  // En retirant cette option, le module émet des URLs param-encoded
+  // toujours regénérables à la volée par satori.
   ogImage: {
-    runtimeCacheStorage: true,
+    enabled: true,
+    defaults: {
+      cacheMaxAgeSeconds: 60 * 60 * 24 * 7, // 7 jours de cache HTTP côté CDN
+    },
   },
 
   mdc: {

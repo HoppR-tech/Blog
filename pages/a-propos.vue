@@ -18,7 +18,7 @@ onMounted(() => {
 
 usePageSeo({
   title: 'À propos',
-  description: 'HoppR — ESN française certifiée B Corp, présente à Paris, Lille et Lyon. Blog technique de retours d\'expérience sur le Software Craftsmanship, le Cloud et l\'Architecture.',
+  description: 'HoppR — ESN française certifiée B Corp, présente à Paris, Lille et Lyon. Spécialisée Software Craftsmanship, Cloud et Architecture logicielle.',
   url: '/a-propos',
   jsonLd: buildAboutPageJsonLd(baseUrl),
 })
@@ -47,10 +47,11 @@ defineOgImageComponent('About', {
 
     <p class="text-base sm:text-lg lg:text-xl text-zinc-700 dark:text-zinc-300 mb-8 leading-relaxed">
       <strong>HoppR</strong> est une ESN française <strong>certifiée B Corp</strong>,
-      présente à <strong>Paris, Lille et Lyon</strong>. Spécialisée en
-      <strong>Software Craftsmanship</strong>, <strong>Cloud</strong> et
-      <strong>Architecture logicielle</strong>, elle construit des logiciels durables
-      en privilégiant le code de qualité.
+      présente à <strong>Paris, Lille et Lyon</strong>. Notre métier&nbsp;:
+      construire des logiciels durables en privilégiant
+      <strong>le code de qualité</strong>. Nos terrains de jeu&nbsp;: le
+      <strong>Software Craftsmanship</strong>, le <strong>Cloud</strong> et
+      l'<strong>Architecture logicielle</strong>.
     </p>
 
     <article
@@ -64,36 +65,29 @@ defineOgImageComponent('About', {
         prose-li:marker:text-hoppr-green
         prose-strong:text-zinc-900 dark:prose-strong:text-zinc-100"
     >
-      <h2>Notre mission</h2>
+      <h2>Notre histoire</h2>
       <p>
-        HoppR construit des logiciels durables en privilégiant le code de qualité.
-        Notre conviction&nbsp;: un bon logiciel se reconnaît à sa capacité à durer
-        dans le temps, à supporter le changement, et à rester maintenable au-delà
-        de sa mise en production.
-      </p>
-      <p>
-        Nous accompagnons nos clients en mission depuis nos trois agences&nbsp;:
-        Paris, Lille et Lyon. L'équipe HoppR est en pleine croissance et choisit
-        ses missions avec soin pour respecter ses engagements de B Corp&nbsp;:
-        transparence, responsabilité environnementale et sociale.
+        HoppR (HoppR SAS) a été fondée le <strong>15 septembre 2025</strong>.
+        Son nom rend hommage à
+        <a href="https://fr.wikipedia.org/wiki/Grace_Hopper" rel="noopener" target="_blank">Grace Hopper</a>,
+        pionnière de l'informatique qui a réalisé le <strong>premier compilateur</strong>
+        de l'histoire en <strong>1952</strong>. Une filiation pas anodine&nbsp;: comme
+        elle, nous croyons aux outils qui durent et aux abstractions qui clarifient.
       </p>
 
-      <h2>Vous avez dit HoppR&nbsp;?</h2>
+      <h2>Notre conviction</h2>
       <p>
-        Le nom vient de
-        <a href="https://fr.wikipedia.org/wiki/Grace_Hopper" rel="noopener" target="_blank">Grace Hopper</a>,
-        pionnière de l'informatique qui a réalisé le <strong>premier compilateur de l'histoire</strong>.
-        C'est un hommage à son travail et à sa passion qui ont profondément impacté l'informatique.
+        Un bon logiciel se reconnaît à sa capacité à <strong>durer dans le temps</strong>,
+        à supporter le changement, et à rester maintenable au-delà de sa mise en production.
+        Pas à sa vélocité initiale ni au nombre de frameworks empilés.
       </p>
 
       <h2>Pourquoi ce blog&nbsp;?</h2>
       <p>
-        Ce blog rassemble les <strong>retours d'expérience</strong> de l'équipe HoppR.
-      </p>
-      <p>
+        Le blog rassemble les <strong>retours d'expérience</strong> de l'équipe.
         Chaque article est écrit par un·e consultant·e à partir d'une mission réelle&nbsp;:
         une architecture mise en place, un problème rencontré en production, une approche
-        qui a bien fonctionné, ou au contraire un échec instructif. L'objectif&nbsp;:
+        qui a bien fonctionné — ou au contraire un échec instructif. L'objectif&nbsp;:
         partager ce qu'on aurait aimé lire avant de se lancer.
       </p>
 
@@ -110,7 +104,7 @@ defineOgImageComponent('About', {
             Cloud &amp; Platform
           </NuxtLink>
           — AWS, GCP, Kubernetes, Terraform, observabilité Datadog, FinOps, GreenOps,
-          plateformes internes.
+          plateformes internes (IDP).
         </li>
         <li>
           <NuxtLink to="/categories/architecture">
@@ -120,19 +114,7 @@ defineOgImageComponent('About', {
         </li>
       </ul>
 
-      <h2>Conférences &amp; événements</h2>
-      <p>
-        L'équipe HoppR participe et contribue à plusieurs <strong>événements tech francophones</strong>
-        — DevFest Lyon, Lyon Craft, Cloud Nord, et d'autres.
-      </p>
-      <p>
-        →&nbsp;<NuxtLink to="/categories/others">
-          Retours de conférences et événements
-        </NuxtLink>
-      </p>
-
       <h2>Nos valeurs</h2>
-      <p>Cinq valeurs qui guident le quotidien chez HoppR&nbsp;:</p>
       <ul>
         <li><strong>Envie</strong> — choix des missions, accompagnement, partage entre consultant·es.</li>
         <li><strong>Sens du collectif</strong> — la cohésion d'équipe avant tout.</li>
@@ -143,31 +125,36 @@ defineOgImageComponent('About', {
 
       <h2>L'équipe</h2>
       <p>
-        Une équipe de consultant·es — développeur·euses, architectes cloud,
-        software crafter·euses et platform engineer·euses — répartie entre Paris,
-        Lille et Lyon, en mission chez des clients de toute taille.
+        Développeur·euses, architectes cloud, software crafter·euses et platform
+        engineer·euses, en mission chez des clients de toute taille — du grand
+        groupe à la scale-up. Découvrez nos
+        <NuxtLink to="/auteurs">
+          auteur·rices
+        </NuxtLink>
+        et les articles qu'ils et elles publient.
       </p>
 
-      <h2>Engagements</h2>
+      <h2>Nos engagements concrets</h2>
+      <p>
+        Notre <a href="https://www.bcorporation.net/en-us/find-a-b-corp/company/hoppr/" rel="noopener" target="_blank">certification B Corp</a>
+        se traduit par des choix opérationnels, pas par un badge sur le site&nbsp;:
+      </p>
       <ul>
-        <li>
-          <strong>🌍 B Corp</strong> — entreprise certifiée.
-          <a
-            href="https://www.bcorporation.net/en-us/find-a-b-corp/company/hoppr/"
-            rel="noopener"
-            target="_blank"
-          >
-            Voir notre note B Corp
-          </a>.
-        </li>
-        <li>
-          <strong>💜 Grille de salaires transparente</strong>, marges plafonnées,
-          redistribution directe aux consultant·es.
-        </li>
-        <li>
-          <strong>🌱 GreenOps &amp; FinOps</strong> intégrés aux missions plateforme.
-        </li>
+        <li><strong>💜 Grille de salaires transparente</strong>, marges plafonnées, redistribution directe aux consultant·es.</li>
+        <li><strong>📚 10 jours de formation</strong> par an et par consultant·e, plus le budget pour les conférences.</li>
+        <li><strong>🤝 1 jour par an</strong> dédié au volontariat associatif.</li>
+        <li><strong>🌱 GreenOps &amp; FinOps</strong> intégrés aux missions plateforme.</li>
+        <li><strong>🩺 Mutuelle Alan</strong> prise en charge à 100% pour les consultant·es et leurs enfants.</li>
       </ul>
+
+      <h2>Conférences &amp; événements</h2>
+      <p>
+        Nous co-organisons et intervenons dans des événements tech francophones —
+        DevFest Lyon, Lyon Craft, Cloud Nord. →
+        <NuxtLink to="/categories/others">
+          Retours d'événements
+        </NuxtLink>
+      </p>
 
       <h2>En savoir plus</h2>
       <ul>

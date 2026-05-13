@@ -1,9 +1,20 @@
 <script lang="ts" setup>
+import { onMounted, ref } from 'vue'
 import { useAbsoluteUrl } from '@/composables/useAbsoluteUrl'
 import { usePageSeo } from '@/composables/usePageSeo'
 import { buildAboutPageJsonLd } from '@/utils/organization'
 
 const baseUrl = useAbsoluteUrl('/')
+
+// SSR-safe : init avec l'année de la build (évite hydration mismatch),
+// puis re-synchronise côté client après hydration. Garantit que l'année
+// du copyright reste à jour entre deux déploiements (page prerendée).
+const currentYear = ref(new Date().getFullYear())
+onMounted(() => {
+  const real = new Date().getFullYear()
+  if (real !== currentYear.value)
+    currentYear.value = real
+})
 
 usePageSeo({
   title: 'À propos',
@@ -171,7 +182,7 @@ defineOgImageComponent('About', {
         <a href="https://hoppr-tech.notion.site/politique-de-confidentialite" rel="noopener" target="_blank">
           Politique de confidentialité
         </a>
-        — © HoppR&nbsp;{{ new Date().getFullYear() }}
+        — © HoppR&nbsp;{{ currentYear }}
       </p>
     </article>
   </main>

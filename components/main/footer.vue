@@ -1,5 +1,15 @@
 <script setup lang="ts">
-const currentYear = new Date().getFullYear()
+import { onMounted, ref } from 'vue'
+
+// SSR-safe : init avec l'année de la build (évite hydration mismatch),
+// puis re-synchronise côté client après hydration. Garantit que l'année
+// reste à jour entre deux déploiements (pages prerendées).
+const currentYear = ref(new Date().getFullYear())
+onMounted(() => {
+  const real = new Date().getFullYear()
+  if (real !== currentYear.value)
+    currentYear.value = real
+})
 </script>
 
 <template>

@@ -71,7 +71,7 @@
     "happy-dom": "^20.8.9",
     "nock": "^14.0.12",
     "nuxt": "^4.4.2",
-    "nuxt-og-image": "^6.3.3",
+    "nuxt-og-image": "^6.5.0",
     "nuxt-purgecss": "^2.0.0",
     "parse5": "^8.0.0",
     "playwright-core": "^1.59.1",

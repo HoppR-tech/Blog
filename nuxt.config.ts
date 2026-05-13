@@ -184,21 +184,8 @@ export default defineNuxtConfig({
     ...(process.env.NODE_ENV === 'test' ? ['@nuxt/test-utils/module'] : []),
   ],
 
-  // OG image dynamique désactivée — fallback sur l'og:image statique
-  // (`/hoppr-white.png`) défini dans app.vue.
-  //
-  // Bug constaté : nuxt-og-image émettait des URLs hash-based
-  // (/_og/s/o_xxxxxx.png) qui retournaient HTTP 400 en runtime avec
-  // "Options not found for hash". Cause : conflit entre crawler du
-  // prerender, satori et le mode hash. Le module v6.3.3 a un bug
-  // d'ordre de prerender qui n'a pas pu être contourné via config.
-  //
-  // Conséquence : toutes les pages utilisent le même og:image statique
-  // (logo HoppR). C'est une régression par rapport aux OG dynamiques
-  // mais c'est ROBUSTE — à re-activer plus tard avec une config qui
-  // marche ou en migrant vers une autre solution.
   ogImage: {
-    enabled: false,
+    enabled: true,
   },
 
   mdc: {

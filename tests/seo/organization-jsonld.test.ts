@@ -146,6 +146,32 @@ describe('buildAboutPageJsonLd', () => {
       expect((node as any)['@context']).toBe('https://schema.org')
     }
   })
+
+  it('@graph includes a FAQPage entity for /a-propos', () => {
+    const ld = buildAboutPageJsonLd(baseUrl)
+    const faq = ld['@graph'].find(n => n['@type'] === 'FAQPage') as any
+    expect(faq).toBeDefined()
+    expect(faq['@id']).toBe('https://blog.hoppr.tech/a-propos#faq')
+    expect(faq.inLanguage).toBe('fr-FR')
+    expect(faq.isPartOf['@id']).toBe('https://blog.hoppr.tech/a-propos#aboutpage')
+  })
+
+  it('FAQPage exposes site-level questions about HoppR', () => {
+    const ld = buildAboutPageJsonLd(baseUrl)
+    const faq = ld['@graph'].find(n => n['@type'] === 'FAQPage') as any
+    expect(faq.mainEntity).toBeInstanceOf(Array)
+    expect(faq.mainEntity.length).toBeGreaterThanOrEqual(5)
+    const questions = faq.mainEntity.map((q: any) => q.name.toLowerCase())
+    // Coverage: identity, locations, name origin, B Corp, values, jobs, contact
+    expect(questions.some((q: string) => q.includes('hoppr'))).toBe(true)
+    expect(questions.some((q: string) => q.includes('b corp'))).toBe(true)
+    expect(questions.some((q: string) => q.includes('valeurs'))).toBe(true)
+    for (const q of faq.mainEntity) {
+      expect(q['@type']).toBe('Question')
+      expect(q.acceptedAnswer['@type']).toBe('Answer')
+      expect(q.acceptedAnswer.text.length).toBeGreaterThan(30)
+    }
+  })
 })
 
 describe('buildPublisherJsonLd', () => {

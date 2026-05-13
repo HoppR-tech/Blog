@@ -171,6 +171,22 @@ export function buildPublisherJsonLd(baseUrl: string): {
   }
 }
 
+interface FaqPageEntity {
+  '@context': 'https://schema.org'
+  '@type': 'FAQPage'
+  '@id': string
+  'inLanguage': 'fr-FR'
+  'isPartOf': { '@id': string }
+  'mainEntity': Array<{
+    '@type': 'Question'
+    'name': string
+    'acceptedAnswer': {
+      '@type': 'Answer'
+      'text': string
+    }
+  }>
+}
+
 export interface AboutPageJsonLd {
   '@context': 'https://schema.org'
   '@graph': Array<OrganizationJsonLd | {
@@ -191,7 +207,7 @@ export interface AboutPageJsonLd {
     'name': string
     'inLanguage': 'fr-FR'
     'publisher': { '@id': string }
-  }>
+  } | FaqPageEntity>
 }
 
 /**
@@ -227,6 +243,75 @@ export function buildAboutPageJsonLd(baseUrl: string): AboutPageJsonLd {
         'isPartOf': { '@id': `${trimmedBase}/#website` },
         'about': { '@id': org['@id'] },
         'mainEntity': { '@id': org['@id'] },
+      },
+      buildAboutPageFaq(trimmedBase),
+    ],
+  }
+}
+
+function buildAboutPageFaq(trimmedBase: string): FaqPageEntity {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': `${trimmedBase}/a-propos#faq`,
+    'inLanguage': 'fr-FR',
+    'isPartOf': { '@id': `${trimmedBase}/a-propos#aboutpage` },
+    'mainEntity': [
+      {
+        '@type': 'Question',
+        'name': 'Qu\'est-ce que HoppR ?',
+        'acceptedAnswer': {
+          '@type': 'Answer',
+          'text': 'HoppR (HoppR SAS) est une ESN française fondée en 2025, certifiée B Corp. L\'entreprise est spécialisée en Software Craftsmanship, Cloud et Architecture logicielle.',
+        },
+      },
+      {
+        '@type': 'Question',
+        'name': 'Où est implantée HoppR ?',
+        'acceptedAnswer': {
+          '@type': 'Answer',
+          'text': 'HoppR est présente à Paris, Lille et Lyon, en pleine croissance. Les consultant·es interviennent en mission depuis ces trois agences chez des clients de toute taille.',
+        },
+      },
+      {
+        '@type': 'Question',
+        'name': 'D\'où vient le nom HoppR ?',
+        'acceptedAnswer': {
+          '@type': 'Answer',
+          'text': 'Le nom HoppR est un hommage à Grace Hopper, pionnière de l\'informatique qui a réalisé le premier compilateur de l\'histoire.',
+        },
+      },
+      {
+        '@type': 'Question',
+        'name': 'Qu\'est-ce que la certification B Corp pour HoppR ?',
+        'acceptedAnswer': {
+          '@type': 'Answer',
+          'text': 'B Corp est une certification internationale qui mesure l\'impact social et environnemental d\'une entreprise. Pour HoppR, elle se traduit par une grille de salaires transparente, des marges plafonnées, une redistribution directe aux consultant·es et l\'intégration de GreenOps et FinOps dans les missions.',
+        },
+      },
+      {
+        '@type': 'Question',
+        'name': 'Quelles sont les valeurs de HoppR ?',
+        'acceptedAnswer': {
+          '@type': 'Answer',
+          'text': 'Cinq valeurs guident le quotidien chez HoppR : Envie, Sens du collectif, Confiance réciproque, Épanouissement et Convivialité.',
+        },
+      },
+      {
+        '@type': 'Question',
+        'name': 'Quels métiers HoppR recrute-t-elle ?',
+        'acceptedAnswer': {
+          '@type': 'Answer',
+          'text': 'HoppR recrute principalement des Consultant·es Fullstack Craft, des Consultant·es Cloud & DevOps et des Software Architectes (DDD). Les offres sont publiées sur hoppr.tech/nos-offres.',
+        },
+      },
+      {
+        '@type': 'Question',
+        'name': 'Comment contacter HoppR ?',
+        'acceptedAnswer': {
+          '@type': 'Answer',
+          'text': 'Par mail à hello@hoppr.tech. Pour découvrir l\'offre commerciale ou les missions, visitez hoppr.tech.',
+        },
       },
     ],
   }

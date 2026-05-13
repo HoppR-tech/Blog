@@ -12,6 +12,10 @@ useHead({
   htmlAttrs: {
     lang: 'fr',
   },
+  link: [
+    { rel: 'alternate', type: 'application/rss+xml', title: 'Blog HoppR — Flux RSS', href: `${mySite}/rss.xml` },
+    { rel: 'sitemap', type: 'application/xml', title: 'Sitemap', href: `${mySite}/sitemap.xml` },
+  ],
   meta: [
     {
       charset: 'utf-8',

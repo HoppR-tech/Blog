@@ -1,0 +1,44 @@
+# Blog HoppR — AI discovery descriptor
+# https://github.com/HoppR-tech/Blog
+
+site_name: Blog HoppR
+publisher: HoppR (HoppR SAS)
+publisher_url: https://hoppr.tech
+url: https://blog.hoppr.tech
+language: fr-FR
+
+description: >
+  Blog tech francophone de HoppR, ESN française certifiée B Corp, présente
+  à Paris, Lille et Lyon. Retours d'expérience sur le Software Craftsmanship,
+  le Cloud, l'Architecture, l'observabilité et le platform engineering,
+  écrits par les consultant·es HoppR à partir de leurs missions réelles.
+
+topics:
+  - Software Craftsmanship
+  - Domain-Driven Design
+  - Cloud Computing (AWS, GCP)
+  - Kubernetes
+  - Terraform
+  - Observabilité (Datadog)
+  - FinOps
+  - GreenOps
+  - Platform Engineering
+  - DORA Metrics
+
+ai_endpoints:
+  llms_txt: https://blog.hoppr.tech/llms.txt
+  llms_full: https://blog.hoppr.tech/llms.txt
+  summary_json: https://blog.hoppr.tech/ai/summary.json
+  faq_json: https://blog.hoppr.tech/ai/faq.json
+  sitemap_xml: https://blog.hoppr.tech/sitemap.xml
+  rss_feed: https://blog.hoppr.tech/rss.xml
+
+policy:
+  citation_allowed: true
+  training_allowed: false
+  attribution_required: true
+  attribution_format: "Source : Blog HoppR — https://blog.hoppr.tech/<path>"
+
+contact:
+  email: hello@hoppr.tech
+  source_code: https://github.com/HoppR-tech/Blog

@@ -16,6 +16,7 @@ export interface PostalAddress {
 }
 
 export interface OrganizationJsonLd {
+  '@context': 'https://schema.org'
   '@type': 'Organization'
   '@id': string
   'name': string
@@ -79,6 +80,7 @@ export function buildOrganizationJsonLd(baseUrl: string): OrganizationJsonLd {
   const trimmedBase = baseUrl.replace(TRAILING_SLASH, '')
 
   return {
+    '@context': 'https://schema.org',
     '@type': 'Organization',
     '@id': 'https://hoppr.tech/#organization',
     'name': 'HoppR',
@@ -110,6 +112,8 @@ export function buildOrganizationJsonLd(baseUrl: string): OrganizationJsonLd {
 /**
  * Compact publisher reference for use inside BlogPosting.publisher.
  * Includes the minimum required by schema.org while pointing to the full Org via @id.
+ * @context omitted on purpose — publisher is always nested inside a parent
+ * BlogPosting which carries its own @context.
  */
 export function buildPublisherJsonLd(baseUrl: string): {
   '@type': 'Organization'
@@ -131,6 +135,7 @@ export function buildPublisherJsonLd(baseUrl: string): {
 export interface AboutPageJsonLd {
   '@context': 'https://schema.org'
   '@graph': Array<OrganizationJsonLd | {
+    '@context': 'https://schema.org'
     '@type': 'AboutPage'
     '@id': string
     'url': string
@@ -140,6 +145,7 @@ export interface AboutPageJsonLd {
     'about': { '@id': string }
     'mainEntity': { '@id': string }
   } | {
+    '@context': 'https://schema.org'
     '@type': 'WebSite'
     '@id': string
     'url': string
@@ -164,6 +170,7 @@ export function buildAboutPageJsonLd(baseUrl: string): AboutPageJsonLd {
     '@graph': [
       org,
       {
+        '@context': 'https://schema.org',
         '@type': 'WebSite',
         '@id': `${trimmedBase}/#website`,
         'url': trimmedBase,
@@ -172,6 +179,7 @@ export function buildAboutPageJsonLd(baseUrl: string): AboutPageJsonLd {
         'publisher': { '@id': org['@id'] },
       },
       {
+        '@context': 'https://schema.org',
         '@type': 'AboutPage',
         '@id': `${trimmedBase}/a-propos#aboutpage`,
         'url': `${trimmedBase}/a-propos`,

@@ -41,9 +41,17 @@ defineOgImageComponent('About', {
       :custom-items="[{ name: 'À propos', url: '/a-propos' }]"
     />
 
-    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-hoppr-purple dark:text-zinc-100 mb-8">
+    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-hoppr-purple dark:text-zinc-100 mb-4">
       À propos de HoppR
     </h1>
+
+    <p class="text-base sm:text-lg lg:text-xl text-zinc-700 dark:text-zinc-300 mb-8 leading-relaxed">
+      <strong>HoppR</strong> est une ESN française <strong>certifiée B Corp</strong>,
+      présente à <strong>Paris, Lille et Lyon</strong>. Spécialisée en
+      <strong>Software Craftsmanship</strong>, <strong>Cloud</strong> et
+      <strong>Architecture logicielle</strong>, elle construit des logiciels durables
+      en privilégiant le code de qualité.
+    </p>
 
     <article
       class="prose prose-sm sm:prose-base lg:prose-lg max-w-full prose-zinc dark:prose-invert
@@ -59,12 +67,15 @@ defineOgImageComponent('About', {
       <h2>Notre mission</h2>
       <p>
         HoppR construit des logiciels durables en privilégiant le code de qualité.
+        Notre conviction&nbsp;: un bon logiciel se reconnaît à sa capacité à durer
+        dans le temps, à supporter le changement, et à rester maintenable au-delà
+        de sa mise en production.
       </p>
       <p>
-        Nous sommes une ESN française <strong>présente à Paris, Lille et Lyon</strong>,
-        en pleine croissance, <strong>certifiée B Corp</strong>. Notre conviction&nbsp;:
-        un bon logiciel se reconnaît à sa capacité à durer dans le temps, à supporter
-        le changement, et à rester maintenable au-delà de sa mise en production.
+        Nous accompagnons nos clients en mission depuis nos trois agences&nbsp;:
+        Paris, Lille et Lyon. L'équipe HoppR est en pleine croissance et choisit
+        ses missions avec soin pour respecter ses engagements de B Corp&nbsp;:
+        transparence, responsabilité environnementale et sociale.
       </p>
 
       <h2>Vous avez dit HoppR&nbsp;?</h2>

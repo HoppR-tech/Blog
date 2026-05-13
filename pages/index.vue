@@ -15,6 +15,7 @@ usePageSeo({
     '@graph': [
       buildOrganizationJsonLd(trimmedBase),
       {
+        '@context': 'https://schema.org',
         '@type': 'WebSite',
         '@id': `${trimmedBase}/#website`,
         'name': 'Blog HoppR',
@@ -22,6 +23,61 @@ usePageSeo({
         'description': 'Partage, veille et ressources de la communauté sur les thématiques du Software Craftsmanship, du Cloud, de l\'architecture et de la Tech en générale.',
         'inLanguage': 'fr-FR',
         'publisher': { '@id': 'https://hoppr.tech/#organization' },
+        'potentialAction': {
+          '@type': 'SearchAction',
+          'target': {
+            '@type': 'EntryPoint',
+            'urlTemplate': `${trimmedBase}/blogs?search={search_term_string}`,
+          },
+          'query-input': 'required name=search_term_string',
+        },
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        '@id': `${trimmedBase}/#faq`,
+        'mainEntity': [
+          {
+            '@type': 'Question',
+            'name': 'Qui est HoppR ?',
+            'acceptedAnswer': {
+              '@type': 'Answer',
+              'text': 'HoppR est une ESN française certifiée B Corp, présente à Paris, Lille et Lyon. L\'entreprise est spécialisée en Software Craftsmanship, Cloud et Architecture logicielle.',
+            },
+          },
+          {
+            '@type': 'Question',
+            'name': 'À qui s\'adresse le blog HoppR ?',
+            'acceptedAnswer': {
+              '@type': 'Answer',
+              'text': 'Le blog HoppR s\'adresse aux développeur·euses, architectes cloud, software crafter·euses et platform engineer·euses francophones qui veulent monter en compétence via des retours d\'expérience concrets.',
+            },
+          },
+          {
+            '@type': 'Question',
+            'name': 'Quels sujets sont couverts par le blog ?',
+            'acceptedAnswer': {
+              '@type': 'Answer',
+              'text': 'TDD, refactoring, DDD, clean code, BDD, architecture hexagonale, AWS, GCP, Kubernetes, Terraform, observabilité Datadog, FinOps, GreenOps, plateformes internes (IDP), patterns de résilience et bounded contexts.',
+            },
+          },
+          {
+            '@type': 'Question',
+            'name': 'Qui écrit les articles ?',
+            'acceptedAnswer': {
+              '@type': 'Answer',
+              'text': 'Les articles sont écrits par les consultant·es HoppR à partir de leurs missions réelles : architectures mises en place, problèmes rencontrés en production, retours d\'expérience instructifs.',
+            },
+          },
+          {
+            '@type': 'Question',
+            'name': 'Le blog est-il open source ?',
+            'acceptedAnswer': {
+              '@type': 'Answer',
+              'text': 'Oui, le code du blog HoppR est open source et disponible sur GitHub : github.com/HoppR-tech/Blog.',
+            },
+          },
+        ],
       },
     ],
   },

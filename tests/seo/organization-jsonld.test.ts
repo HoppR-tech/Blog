@@ -13,6 +13,11 @@ describe('buildOrganizationJsonLd', () => {
     expect(org.url).toBe('https://hoppr.tech')
   })
 
+  it('exposes an explicit @context (required for validators scanning entities individually)', () => {
+    const org = buildOrganizationJsonLd(baseUrl)
+    expect(org['@context']).toBe('https://schema.org')
+  })
+
   it('exposes logo as an ImageObject with explicit dimensions', () => {
     const org = buildOrganizationJsonLd(baseUrl)
 
@@ -112,6 +117,13 @@ describe('buildAboutPageJsonLd', () => {
     const ld = buildAboutPageJsonLd(baseUrl)
     const website = ld['@graph'].find(n => n['@type'] === 'WebSite') as any
     expect(website.publisher['@id']).toBe('https://hoppr.tech/#organization')
+  })
+
+  it('every entity in the @graph carries its own explicit @context', () => {
+    const ld = buildAboutPageJsonLd(baseUrl)
+    for (const node of ld['@graph']) {
+      expect((node as any)['@context']).toBe('https://schema.org')
+    }
   })
 })
 

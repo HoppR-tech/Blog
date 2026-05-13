@@ -84,15 +84,20 @@ const buttonLabel = computed(() =>
     <NuxtLink :to="path">
       <div class="relative overflow-hidden h-32 sm:h-36 md:h-40 lg:h-48 rounded-t-2xl">
         <!-- Background Layer (Ambience) -->
-        <img
+        <NuxtImg
           :src="image" aria-hidden="true" role="presentation"
+          width="300" height="200" loading="lazy" decoding="async"
+          sizes="xs:160px sm:320px md:400px lg:480px xl:560px"
+          format="webp" :quality="60"
           class="absolute inset-0 w-full h-full object-cover blur-xl scale-125 opacity-100 transition-transform duration-500 group-hover:scale-130"
-        >
+        />
         <!-- Foreground Layer -->
-        <img
-          :src="image" :alt="alt || `Image de l'article : ${title}`" :width="300" :height="200" loading="lazy" decoding="async"
+        <NuxtImg
+          :src="image" :alt="alt || `Image de l'article : ${title}`" width="300" height="200" loading="lazy" decoding="async"
+          sizes="xs:160px sm:320px md:400px lg:480px xl:560px"
+          format="webp" :quality="80"
           class="w-full h-full object-contain object-center relative z-10 group-hover:scale-110 transition-transform duration-500 [mask-image:radial-gradient(ellipse_at_center,black_60%,transparent_100%)] webkit-mask-image-[radial-gradient(ellipse_at_center,black_60%,transparent_100%)]"
-        >
+        />
       </div>
       <div class="px-3 pb-4 relative">
         <div class="text-black dark:text-zinc-300 pt-3 pb-2 text-xs">

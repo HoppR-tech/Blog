@@ -57,7 +57,7 @@ const { data: relatedArticles } = await useAsyncData(
         class="group block border dark:border-zinc-500 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300"
       >
         <div class="relative h-28 sm:h-32 overflow-hidden">
-          <img
+          <NuxtImg
             :src="article.image"
             :alt="`Image de l'article : ${article.title}`"
             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
@@ -65,7 +65,10 @@ const { data: relatedArticles } = await useAsyncData(
             height="128"
             loading="lazy"
             decoding="async"
-          >
+            sizes="xs:320px sm:160px md:240px lg:280px xl:320px"
+            format="webp"
+            :quality="80"
+          />
         </div>
         <div class="p-3">
           <h3 class="text-sm font-semibold text-black dark:text-zinc-300 line-clamp-2 group-hover:text-hoppr-green transition-colors duration-200">

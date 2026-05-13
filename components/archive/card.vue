@@ -83,17 +83,21 @@ const buttonLabel = computed(() =>
     <NuxtLink :to="path" class="grid grid-cols-1 sm:grid-cols-10 gap-1 sm:h-48">
       <div :class="`sm:col-span-3 relative overflow-hidden rounded-t-2xl sm:rounded-l-2xl sm:rounded-t-none ${imageSize} sm:h-full`">
         <!-- Background Layer (Ambience) -->
-        <img
+        <NuxtImg
           :src="image" aria-hidden="true" role="presentation"
           width="300" height="200" loading="lazy" decoding="async"
+          sizes="xs:320px sm:240px md:280px lg:320px xl:360px"
+          format="webp" :quality="60"
           class="absolute inset-0 w-full h-full object-cover blur-xl scale-125 opacity-100 transition-transform duration-500 group-hover:scale-130"
-        >
+        />
         <!-- Foreground Layer -->
-        <img
+        <NuxtImg
           class="w-full h-full object-contain object-center relative z-10 group-hover:scale-110 transition-transform duration-500 [mask-image:radial-gradient(ellipse_at_center,black_60%,transparent_100%)]"
           width="300" height="200" loading="lazy" decoding="async"
+          sizes="xs:320px sm:240px md:280px lg:320px xl:360px"
+          format="webp" :quality="80"
           :src="image" :alt="alt || `Image de l'article : ${title}`"
-        >
+        />
       </div>
       <div class="sm:col-span-7 p-3 sm:p-5 relative">
         <div class="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-white dark:from-zinc-800 to-transparent opacity-90" />

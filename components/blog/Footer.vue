@@ -26,7 +26,7 @@ function authorProfilePath(person: Person): string {
           <template v-for="(author, index) in props.authors" :key="author.notionId">
             <div :class="{ 'flex flex-row items-center mb-6 sm:mb-0 relative sm:px-4': !isSingleAuthor, 'flex flex-row items-center': isSingleAuthor }">
               <NuxtLink :to="authorProfilePath(author)" :aria-label="`Profil de ${author.name}`">
-                <img :src="author.image" :alt="author.name" width="64" height="64" loading="lazy" decoding="async" class="w-16 h-16 rounded-full mb-0 sm:mr-4 object-cover hover:opacity-80 transition-opacity">
+                <NuxtImg :src="author.image" :alt="author.name" width="64" height="64" loading="lazy" decoding="async" sizes="64px" format="webp" :quality="80" class="w-16 h-16 rounded-full mb-0 sm:mr-4 object-cover hover:opacity-80 transition-opacity" />
               </NuxtLink>
               <div class="text-left ml-4">
                 <NuxtLink :to="authorProfilePath(author)" rel="author" class="font-semibold text-base hover:underline">

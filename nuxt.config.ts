@@ -17,7 +17,12 @@ export default defineNuxtConfig({
       viewport: 'width=device-width,initial-scale=1',
       title: 'HoppR Blog',
       titleTemplate: '%s | HoppR',
-      meta: [{ name: 'description', content: 'Blog Tech de HoppR' }],
+      meta: [
+        {
+          name: 'description',
+          content: 'Blog tech de HoppR — retours d\'expérience sur le Software Craftsmanship, le Cloud, l\'Architecture, la Data et l\'IA. Par et pour les développeurs francophones.',
+        },
+      ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
         { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },

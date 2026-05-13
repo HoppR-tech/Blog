@@ -1,4 +1,6 @@
 import type { H3Event } from 'h3'
+import type { RawArticle } from '@/utils/authorsAggregation'
+import { aggregateAuthors } from '@/utils/authorsAggregation'
 import { categories } from '@/utils/categories'
 
 // Server-side queryCollection has signature (event, collection) but auto-import types only expose client-side (collection)
@@ -11,6 +13,7 @@ interface SitemapArticle {
   path: string
   date?: string
   tags?: string[]
+  authors?: Array<{ id?: string, name?: string }>
 }
 
 export default defineEventHandler(async (event) => {
@@ -62,8 +65,16 @@ export default defineEventHandler(async (event) => {
     { loc: '/blogs', lastmod: articles[0]?.date || undefined },
     { loc: '/tags', lastmod: articles[0]?.date || undefined },
     { loc: '/categories', lastmod: articles[0]?.date || undefined },
+    { loc: '/auteurs', lastmod: articles[0]?.date || undefined },
     { loc: '/a-propos', lastmod: articles[0]?.date || undefined },
   ]
 
-  return [...staticUrls, ...articleUrls, ...categoryUrls, ...tagUrls]
+  // Author profile pages aggregated from articles
+  const authors = aggregateAuthors(articles as unknown as RawArticle[])
+  const authorUrls = authors.map(author => ({
+    loc: `/auteurs/${author.slug}`,
+    lastmod: author.articles[0]?.date || undefined,
+  }))
+
+  return [...staticUrls, ...articleUrls, ...categoryUrls, ...tagUrls, ...authorUrls]
 })

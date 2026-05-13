@@ -4,6 +4,7 @@ const menuItems = [
   { label: 'Tous nos Articles', to: '/blogs' },
   { label: 'Catégories', to: '/categories' },
   { label: 'Tags', to: '/tags' },
+  { label: 'Auteur·rices', to: '/auteurs' },
   { label: 'À Propos', to: '/a-propos' },
 ]
 </script>

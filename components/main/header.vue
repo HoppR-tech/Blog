@@ -25,6 +25,7 @@ const menuItems = [
   { label: 'Tous nos Articles', to: '/blogs', path: 'blogs' },
   { label: 'Catégories', to: '/categories', path: 'categories' },
   { label: 'Tags', to: '/tags', path: 'tags' },
+  { label: 'Auteur·rices', to: '/auteurs', path: 'auteurs' },
   { label: 'À Propos', to: '/a-propos', path: 'a-propos' },
 ]
 

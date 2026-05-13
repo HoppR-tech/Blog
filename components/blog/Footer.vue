@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Person } from '@/types/blog'
+import { slugifyAuthorName } from '@/utils/authorsAggregation'
 
 interface Props {
   authors: Person[]
@@ -8,6 +9,10 @@ interface Props {
 const props = defineProps<Props>()
 
 const isSingleAuthor = computed(() => props.authors.length === 1)
+
+function authorProfilePath(person: Person): string {
+  return `/auteurs/${slugifyAuthorName(person.name)}`
+}
 </script>
 
 <template>
@@ -20,10 +25,18 @@ const isSingleAuthor = computed(() => props.authors.length === 1)
         <div :class="{ 'grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl': !isSingleAuthor, 'flex justify-center': isSingleAuthor }">
           <template v-for="(author, index) in props.authors" :key="author.notionId">
             <div :class="{ 'flex flex-row items-center mb-6 sm:mb-0 relative sm:px-4': !isSingleAuthor, 'flex flex-row items-center': isSingleAuthor }">
-              <img :src="author.image" :alt="author.name" class="w-16 h-16 rounded-full mb-0 sm:mr-4 object-cover">
+              <NuxtLink :to="authorProfilePath(author)" :aria-label="`Profil de ${author.name}`">
+                <img :src="author.image" :alt="author.name" class="w-16 h-16 rounded-full mb-0 sm:mr-4 object-cover hover:opacity-80 transition-opacity">
+              </NuxtLink>
               <div class="text-left ml-4">
-                <p class="font-semibold text-base">
+                <NuxtLink :to="authorProfilePath(author)" rel="author" class="font-semibold text-base hover:underline">
                   {{ author.name }}
+                </NuxtLink>
+                <p v-if="author.jobTitle" class="text-sm text-zinc-600 dark:text-zinc-400">
+                  {{ author.jobTitle }}
+                </p>
+                <p v-if="author.bio" class="text-sm text-zinc-600 dark:text-zinc-400 mt-1 line-clamp-3">
+                  {{ author.bio }}
                 </p>
                 <div class="flex justify-start space-x-2 mt-2">
                   <a
@@ -37,6 +50,12 @@ const isSingleAuthor = computed(() => props.authors.length === 1)
                     class="text-hoppr-green hover:text-opacity-80" aria-label="Twitter"
                   >
                     <Icon name="fa:twitter-square" size="1.5em" />
+                  </a>
+                  <a
+                    v-if="author.github" :href="author.github" target="_blank" rel="noopener noreferrer"
+                    class="text-hoppr-green hover:text-opacity-80" aria-label="GitHub"
+                  >
+                    <Icon name="fa:github-square" size="1.5em" />
                   </a>
                 </div>
               </div>

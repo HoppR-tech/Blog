@@ -111,6 +111,7 @@ export default defineNuxtConfig({
       routes: [
         '/',
         '/a-propos',
+        '/auteurs',
         '/rss.xml',
         '/categories/craft',
         '/categories/cloud-platform',

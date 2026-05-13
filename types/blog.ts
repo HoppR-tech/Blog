@@ -31,4 +31,7 @@ export interface Person {
   image: string
   linkedin?: string
   x?: string
+  github?: string
+  jobTitle?: string
+  bio?: string
 }

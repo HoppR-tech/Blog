@@ -1,18 +1,8 @@
 <script setup lang="ts">
 import type { Person } from '@/types/blog'
 
+import { slugifyAuthorName } from '@/utils/authorsAggregation'
 import { formatDate } from '@/utils/helper'
-
-interface Props {
-  title: string
-  image: string
-  alt: string
-  description: string
-  date: string
-  tags: Array<string>
-  authors: Person[]
-  reviewers: Person[]
-}
 
 const props = withDefaults(defineProps<Props>(), {
   title: 'no-title',
@@ -28,6 +18,21 @@ const props = withDefaults(defineProps<Props>(), {
   }],
   reviewers: () => [],
 })
+
+function authorProfilePath(person: Person): string {
+  return `/auteurs/${slugifyAuthorName(person.name)}`
+}
+
+interface Props {
+  title: string
+  image: string
+  alt: string
+  description: string
+  date: string
+  tags: Array<string>
+  authors: Person[]
+  reviewers: Person[]
+}
 </script>
 
 <template>
@@ -50,9 +55,13 @@ const props = withDefaults(defineProps<Props>(), {
           <p>
             Écrit par :
             <template v-for="(author, index) in props.authors" :key="author.notionId">
-              <a :href="author.linkedin" target="_blank" rel="noopener noreferrer" class="hover:underline font-semibold">
+              <NuxtLink
+                :to="authorProfilePath(author)"
+                rel="author"
+                class="hover:underline font-semibold"
+              >
                 {{ author.name }}
-              </a>
+              </NuxtLink>
               <template v-if="index < props.authors.length - 1">
                 |
               </template>
@@ -78,9 +87,12 @@ const props = withDefaults(defineProps<Props>(), {
           <p>
             Relu par :
             <template v-for="(reviewer, index) in props.reviewers" :key="reviewer.notionId">
-              <a :href="reviewer.linkedin" target="_blank" rel="noopener noreferrer" class="hover:underline font-semibold">
+              <NuxtLink
+                :to="authorProfilePath(reviewer)"
+                class="hover:underline font-semibold"
+              >
                 {{ reviewer.name }}
-              </a>
+              </NuxtLink>
               <template v-if="index < props.reviewers.length - 1">
                 |
               </template>

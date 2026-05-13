@@ -42,6 +42,9 @@ const authors: Person[] = (article.value?.authors || []).map(a => ({
   image: resolveContentAsset(a.image || '', articlePath.value),
   linkedin: a.linkedin,
   x: a.x,
+  github: (a as { github?: string }).github,
+  jobTitle: (a as { jobTitle?: string }).jobTitle,
+  bio: (a as { bio?: string }).bio,
 }))
 const reviewers: Person[] = (article.value?.reviewers || []).map(r => ({
   notionId: r.id,
@@ -49,6 +52,9 @@ const reviewers: Person[] = (article.value?.reviewers || []).map(r => ({
   image: resolveContentAsset(r.image || '', articlePath.value),
   linkedin: r.linkedin,
   x: r.x,
+  github: (r as { github?: string }).github,
+  jobTitle: (r as { jobTitle?: string }).jobTitle,
+  bio: (r as { bio?: string }).bio,
 }))
 const ogDescription = computed(() => stripMarkdown(blogPostProps.value.description))
 

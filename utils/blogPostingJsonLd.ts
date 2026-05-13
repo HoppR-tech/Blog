@@ -47,6 +47,8 @@ export interface BlogPostingJsonLd {
     'url'?: string
     'image'?: string
     'sameAs'?: string[]
+    'jobTitle'?: string
+    'description'?: string
   }>
   'publisher': ReturnType<typeof buildPublisherJsonLd>
   'mainEntityOfPage': {
@@ -129,7 +131,7 @@ export function buildPersonEntry(
   author: Person,
 ): BlogPostingJsonLd['author'][number] {
   const trimmedBase = baseUrl.replace(TRAILING_SLASH, '')
-  const sameAs = [author.linkedin, author.x].filter(
+  const sameAs = [author.linkedin, author.x, author.github].filter(
     (link): link is string => typeof link === 'string' && link.length > 0,
   )
 
@@ -147,6 +149,11 @@ export function buildPersonEntry(
 
   if (sameAs.length > 0)
     entry.sameAs = sameAs
+
+  if (author.jobTitle)
+    entry.jobTitle = author.jobTitle
+  if (author.bio)
+    entry.description = author.bio
 
   return entry
 }

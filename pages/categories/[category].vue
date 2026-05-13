@@ -24,8 +24,9 @@ const { data } = await useAsyncData(`category-${categoryValue.value}`, async () 
 
 // Pillar editorial : charge le contenu /content/categories/<slug>.md s'il existe.
 // Pas bloquant : si pas de fichier, on tombe juste sur la grille sans intro.
+// Match par slug du frontmatter (le path Nuxt Content v3 strippe le préfixe).
 const { data: editorial } = await useAsyncData(`category-editorial-${categoryValue.value}`, () =>
-  queryCollection('categories').path(`/categories/${categoryValue.value}`).first())
+  queryCollection('categories').where('slug', '=', categoryValue.value).first())
 
 const formattedData = computed(() => {
   return data.value?.map((article) => {

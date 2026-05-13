@@ -25,7 +25,7 @@ const menuItems = [
   { label: 'Tous nos Articles', to: '/blogs', path: 'blogs' },
   { label: 'Catégories', to: '/categories', path: 'categories' },
   { label: 'Tags', to: '/tags', path: 'tags' },
-  { label: 'À Propos', to: 'https://www.hoppr.tech/', path: 'about' },
+  { label: 'À Propos', to: '/a-propos', path: 'a-propos' },
 ]
 
 const searchBarRef = ref<SearchBarRef | null>(null)
@@ -70,14 +70,13 @@ function mobileSearch() {
                       :to="item.to"
                       class="text-sm text-gray-100 hover:text-hoppr-green font-luciole font-lightest uppercase tracking-wider pb-1 transition-all duration-300 relative"
                       :class="{
-                        'text-hoppr-green': (path === item.path && item.path !== 'about') || (item.path === 'blogs' && isSearchActive),
-                      }" :target="item.path === 'about' ? '_blank' : '_self'"
-                      :rel="item.path === 'about' ? 'noopener noreferrer' : ''"
+                        'text-hoppr-green': path === item.path || (item.path === 'blogs' && isSearchActive),
+                      }"
                     >
                       {{ item.label }}
                       <span
                         class="absolute bottom-0 left-0 w-full h-0.5 bg-hoppr-green transform scale-x-0 transition-transform duration-300"
-                        :class="{ 'scale-x-100': (path === item.path && item.path !== 'about') || (path === 'blogs' && isSearchActive) }"
+                        :class="{ 'scale-x-100': path === item.path || (path === 'blogs' && isSearchActive) }"
                       />
                     </NuxtLink>
                   </li>
@@ -164,9 +163,8 @@ function mobileSearch() {
           <li v-for="(item, index) in menuItems" :key="index">
             <NuxtLink
               :to="item.to" class="block py-2 text-gray-100 hover:text-hoppr-green uppercase tracking-wider"
-              :class="{ 'text-hoppr-green font-bold': path === item.path && item.path !== 'about' }"
-              :target="item.path === 'about' ? '_blank' : '_self'"
-              :rel="item.path === 'about' ? 'noopener noreferrer' : ''" @click="closeMenu"
+              :class="{ 'text-hoppr-green font-bold': path === item.path }"
+              @click="closeMenu"
             >
               {{ item.label }}
             </NuxtLink>

@@ -110,6 +110,7 @@ export default defineNuxtConfig({
       crawlLinks: true,
       routes: [
         '/',
+        '/a-propos',
         '/rss.xml',
         '/categories/craft',
         '/categories/cloud-platform',

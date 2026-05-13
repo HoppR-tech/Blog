@@ -8,10 +8,18 @@
  * and every consumer picks it up.
  */
 
+export interface PostalAddress {
+  '@type': 'PostalAddress'
+  'addressLocality': string
+  'addressRegion'?: string
+  'addressCountry': string
+}
+
 export interface OrganizationJsonLd {
   '@type': 'Organization'
   '@id': string
   'name': string
+  'legalName': string
   'url': string
   'logo': {
     '@type': 'ImageObject'
@@ -23,12 +31,29 @@ export interface OrganizationJsonLd {
   'description': string
   'slogan': string
   'knowsAbout': string[]
+  'foundingDate': string
+  'email': string
+  'address': PostalAddress[]
+  'areaServed': string[]
+  'hasCredential': {
+    '@type': 'EducationalOccupationalCredential'
+    'name': string
+    'credentialCategory': string
+    'url': string
+  }
 }
 
 const HOPPR_SOCIAL_PROFILES = [
   'https://github.com/HoppR-tech',
   'https://www.linkedin.com/company/hopprtech',
   'https://twitter.com/HoppR_Tech',
+  'https://www.youtube.com/@HoppR-Tech',
+]
+
+const HOPPR_LOCATIONS: PostalAddress[] = [
+  { '@type': 'PostalAddress', 'addressLocality': 'Paris', 'addressCountry': 'FR' },
+  { '@type': 'PostalAddress', 'addressLocality': 'Lille', 'addressCountry': 'FR' },
+  { '@type': 'PostalAddress', 'addressLocality': 'Lyon', 'addressCountry': 'FR' },
 ]
 
 const TRAILING_SLASH = /\/$/
@@ -41,7 +66,8 @@ const HOPPR_EXPERTISE = [
   'DevOps',
   'Platform Engineering',
   'Observability',
-  'Data Engineering',
+  'GreenOps',
+  'FinOps',
 ]
 
 /**
@@ -56,6 +82,7 @@ export function buildOrganizationJsonLd(baseUrl: string): OrganizationJsonLd {
     '@type': 'Organization',
     '@id': 'https://hoppr.tech/#organization',
     'name': 'HoppR',
+    'legalName': 'HoppR SAS',
     'url': 'https://hoppr.tech',
     'logo': {
       '@type': 'ImageObject',
@@ -64,9 +91,19 @@ export function buildOrganizationJsonLd(baseUrl: string): OrganizationJsonLd {
       'height': 512,
     },
     'sameAs': HOPPR_SOCIAL_PROFILES,
-    'description': 'HoppR — ESN lyonnaise spécialisée Software Craftsmanship, Cloud et Platform Engineering.',
-    'slogan': 'Plus que du code, du craft.',
+    'description': 'HoppR — ESN française certifiée B Corp, présente à Paris, Lille et Lyon. Spécialisée Software Craftsmanship, Cloud et Architecture logicielle.',
+    'slogan': 'There is a New Hopp(R)',
     'knowsAbout': HOPPR_EXPERTISE,
+    'foundingDate': '2025-09-15',
+    'email': 'hello@hoppr.tech',
+    'address': HOPPR_LOCATIONS,
+    'areaServed': ['France'],
+    'hasCredential': {
+      '@type': 'EducationalOccupationalCredential',
+      'name': 'B Corp Certification',
+      'credentialCategory': 'certification',
+      'url': 'https://www.bcorporation.net/en-us/find-a-b-corp/company/hoppr/',
+    },
   }
 }
 
@@ -88,5 +125,62 @@ export function buildPublisherJsonLd(baseUrl: string): {
     'name': org.name,
     'url': org.url,
     'logo': org.logo,
+  }
+}
+
+export interface AboutPageJsonLd {
+  '@context': 'https://schema.org'
+  '@graph': Array<OrganizationJsonLd | {
+    '@type': 'AboutPage'
+    '@id': string
+    'url': string
+    'name': string
+    'inLanguage': 'fr-FR'
+    'isPartOf': { '@id': string }
+    'about': { '@id': string }
+    'mainEntity': { '@id': string }
+  } | {
+    '@type': 'WebSite'
+    '@id': string
+    'url': string
+    'name': string
+    'inLanguage': 'fr-FR'
+    'publisher': { '@id': string }
+  }>
+}
+
+/**
+ * Builds the full JSON-LD graph for the /a-propos page, exposing:
+ * - the canonical HoppR Organization (E-A-T, knowledge graph)
+ * - the WebSite entity (cohérence avec la home)
+ * - the AboutPage entity (mainEntity → Organization)
+ */
+export function buildAboutPageJsonLd(baseUrl: string): AboutPageJsonLd {
+  const trimmedBase = baseUrl.replace(TRAILING_SLASH, '')
+  const org = buildOrganizationJsonLd(baseUrl)
+
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      org,
+      {
+        '@type': 'WebSite',
+        '@id': `${trimmedBase}/#website`,
+        'url': trimmedBase,
+        'name': 'Blog HoppR',
+        'inLanguage': 'fr-FR',
+        'publisher': { '@id': org['@id'] },
+      },
+      {
+        '@type': 'AboutPage',
+        '@id': `${trimmedBase}/a-propos#aboutpage`,
+        'url': `${trimmedBase}/a-propos`,
+        'name': 'À propos de HoppR',
+        'inLanguage': 'fr-FR',
+        'isPartOf': { '@id': `${trimmedBase}/#website` },
+        'about': { '@id': org['@id'] },
+        'mainEntity': { '@id': org['@id'] },
+      },
+    ],
   }
 }

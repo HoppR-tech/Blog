@@ -62,6 +62,7 @@ export default defineEventHandler(async (event) => {
     { loc: '/blogs', lastmod: articles[0]?.date || undefined },
     { loc: '/tags', lastmod: articles[0]?.date || undefined },
     { loc: '/categories', lastmod: articles[0]?.date || undefined },
+    { loc: '/a-propos', lastmod: articles[0]?.date || undefined },
   ]
 
   return [...staticUrls, ...articleUrls, ...categoryUrls, ...tagUrls]

@@ -173,7 +173,6 @@ export default defineNuxtConfig({
 
   modules: [
     '@nuxt/icon',
-    '@nuxt/image',
     '@vueuse/nuxt',
     'nuxt-og-image',
     '@nuxt/content',
@@ -187,20 +186,6 @@ export default defineNuxtConfig({
 
   ogImage: {
     enabled: true,
-  },
-
-  // @nuxt/image — srcset responsive (gain estimé ~500 KiB mobile transfer)
-  // IPX provider local, génère les variants à la build/runtime.
-  image: {
-    format: ['webp'],
-    screens: {
-      xs: 320,
-      sm: 640,
-      md: 768,
-      lg: 1024,
-      xl: 1280,
-    },
-    quality: 80,
   },
 
   mdc: {

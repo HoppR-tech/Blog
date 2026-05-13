@@ -118,11 +118,18 @@ defineOgImageComponent('About', {
             <p v-if="author.jobTitle" class="text-sm text-zinc-600 dark:text-zinc-400 truncate">
               {{ author.jobTitle }}
             </p>
-            <p v-else-if="author.primaryCategory" class="text-sm text-zinc-500 dark:text-zinc-500 truncate">
-              {{ author.primaryCategory }}
-            </p>
           </div>
         </div>
+        <ul v-if="author.categories.length > 0" class="flex flex-wrap gap-1.5 mb-3">
+          <li
+            v-for="cat in author.categories.slice(0, 2)"
+            :key="cat.value"
+            class="inline-flex items-center gap-1 px-2 py-0.5 text-xs rounded-full bg-hoppr-purple/10 dark:bg-hoppr-purple/20 text-hoppr-purple dark:text-hoppr-green"
+          >
+            <Icon :name="cat.icon" size="12" aria-hidden="true" />
+            {{ cat.label }}
+          </li>
+        </ul>
         <p class="text-sm text-zinc-600 dark:text-zinc-400">
           {{ author.articleCount }} article{{ author.articleCount > 1 ? 's' : '' }} publié{{ author.articleCount > 1 ? 's' : '' }}
         </p>

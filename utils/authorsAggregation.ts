@@ -44,6 +44,13 @@ export interface RawArticle {
   authors?: RawArticleAuthor[]
 }
 
+export interface AuthorCategory {
+  label: string
+  value: string
+  icon: string
+  count: number
+}
+
 export interface AuthorAggregate {
   slug: string
   notionId: string
@@ -58,6 +65,7 @@ export interface AuthorAggregate {
   knowsAbout: string[]
   articleCount: number
   primaryCategory?: string
+  categories: AuthorCategory[]
 }
 
 const AUTHOR_SLUG_NON_ALPHANUM = /[^a-z0-9]+/g
@@ -124,6 +132,7 @@ export function aggregateAuthors(articles: RawArticle[]): AuthorAggregate[] {
           articles: [],
           knowsAbout: [],
           articleCount: 0,
+          categories: [],
         }
         byId.set(id, agg)
         tagCountByAuthor.set(id, new Map())
@@ -168,17 +177,26 @@ export function aggregateAuthors(articles: RawArticle[]): AuthorAggregate[] {
       .slice(0, MAX_KNOWS_ABOUT)
       .map(([tag]) => tag)
 
-    // Primary category = first tag matching a known category.
+    // Categories = ALL known categories where the author has at least 1 article,
+    // sorted by count desc. Primary category = first (highest count).
     const knownValues = new Set(categories.map(c => c.value.toLowerCase()))
-    for (const [tag] of sortedTags) {
-      if (knownValues.has(tag)) {
-        const cat = categories.find(c => c.value.toLowerCase() === tag)
-        if (cat) {
-          agg.primaryCategory = cat.label
-          break
-        }
-      }
+    const authorCategories: AuthorCategory[] = []
+    for (const [tag, count] of sortedTags) {
+      if (!knownValues.has(tag))
+        continue
+      const cat = categories.find(c => c.value.toLowerCase() === tag)
+      if (!cat)
+        continue
+      authorCategories.push({
+        label: cat.label,
+        value: cat.value,
+        icon: cat.icon,
+        count,
+      })
     }
+    agg.categories = authorCategories
+    if (authorCategories.length > 0)
+      agg.primaryCategory = authorCategories[0].label
   }
 
   return [...byId.values()].sort((a, b) => b.articleCount - a.articleCount)
@@ -207,6 +225,12 @@ export interface ProfilePageJsonLd {
     'description'?: string
     'knowsAbout'?: string[]
     'worksFor': { '@id': string }
+    'subjectOf'?: Array<{
+      '@type': 'CollectionPage'
+      '@id': string
+      'url': string
+      'name': string
+    }>
   }
 }
 
@@ -247,6 +271,17 @@ export function buildProfilePageJsonLd(input: BuildProfilePageInput): ProfilePag
     person.description = author.bio
   if (author.knowsAbout.length > 0)
     person.knowsAbout = author.knowsAbout
+
+  // Link the Person to the CollectionPage of each category they contribute to.
+  // Signal de spécialisation pour les LLM : "Maxime écrit principalement sur Cloud + Craft".
+  if (author.categories.length > 0) {
+    person.subjectOf = author.categories.map(c => ({
+      '@type': 'CollectionPage',
+      '@id': `${trimmedBase}/categories/${c.value}#collectionpage`,
+      'url': `${trimmedBase}/categories/${c.value}`,
+      'name': `Articles ${c.label}`,
+    }))
+  }
 
   return {
     '@context': 'https://schema.org',

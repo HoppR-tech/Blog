@@ -175,15 +175,38 @@ defineOgImageComponent('About', {
           </li>
         </ul>
 
-        <ul v-if="author.knowsAbout.length > 0" class="flex flex-wrap gap-2 mb-2">
-          <li
-            v-for="topic in author.knowsAbout"
-            :key="topic"
-            class="px-2 py-1 text-xs rounded bg-hoppr-green/10 text-hoppr-purple dark:text-hoppr-green"
-          >
-            {{ topic }}
-          </li>
-        </ul>
+        <div v-if="author.categories.length > 0" class="mb-3">
+          <p class="text-xs uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-2">
+            Catégories
+          </p>
+          <ul class="flex flex-wrap gap-2">
+            <li v-for="cat in author.categories" :key="cat.value">
+              <NuxtLink
+                :to="`/categories/${cat.value}`"
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-full bg-hoppr-purple/10 dark:bg-hoppr-purple/20 text-hoppr-purple dark:text-hoppr-green border border-hoppr-purple/20 dark:border-hoppr-green/30 hover:bg-hoppr-purple/20 dark:hover:bg-hoppr-green/10 transition-colors"
+              >
+                <Icon :name="cat.icon" size="16" aria-hidden="true" />
+                <span class="font-semibold">{{ cat.label }}</span>
+                <span class="text-xs opacity-75">· {{ cat.count }}</span>
+              </NuxtLink>
+            </li>
+          </ul>
+        </div>
+
+        <div v-if="author.knowsAbout.length > 0" class="mb-2">
+          <p class="text-xs uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-2">
+            Sujets
+          </p>
+          <ul class="flex flex-wrap gap-2">
+            <li
+              v-for="topic in author.knowsAbout"
+              :key="topic"
+              class="px-2 py-1 text-xs rounded bg-hoppr-green/10 text-hoppr-purple dark:text-hoppr-green"
+            >
+              {{ topic }}
+            </li>
+          </ul>
+        </div>
 
         <p class="text-sm text-zinc-500 dark:text-zinc-500 mt-2">
           {{ author.articleCount }} article{{ author.articleCount > 1 ? 's' : '' }} publié{{ author.articleCount > 1 ? 's' : '' }}

@@ -107,6 +107,29 @@ describe('aggregateAuthors', () => {
       article({ tags: ['kubernetes', 'ddd'], authors: [{ id: 'p1', name: 'X' }] }),
     ])
     expect(result[0].primaryCategory).toBeUndefined()
+    expect(result[0].categories).toEqual([])
+  })
+
+  it('aggregates categories[] with all known categories where author has articles', () => {
+    const result = aggregateAuthors([
+      article({ path: '/a/1', tags: ['craft', 'tdd'], authors: [{ id: 'p1', name: 'Maxime' }] }),
+      article({ path: '/a/2', tags: ['craft', 'ddd'], authors: [{ id: 'p1', name: 'Maxime' }] }),
+      article({ path: '/a/3', tags: ['cloud-platform', 'aws'], authors: [{ id: 'p1', name: 'Maxime' }] }),
+      article({ path: '/a/4', tags: ['kubernetes'], authors: [{ id: 'p1', name: 'Maxime' }] }),
+    ])
+    const cats = result[0].categories
+    expect(cats).toHaveLength(2)
+    expect(cats[0].value).toBe('craft')
+    expect(cats[0].count).toBe(2)
+    expect(cats[1].value).toBe('cloud-platform')
+    expect(cats[1].count).toBe(1)
+  })
+
+  it('exposes category icon for badge rendering', () => {
+    const result = aggregateAuthors([
+      article({ tags: ['craft'], authors: [{ id: 'p1', name: 'X' }] }),
+    ])
+    expect(result[0].categories[0].icon).toBe('mdi:hammer-wrench')
   })
 
   it('sorts authors by article count desc', () => {
@@ -147,6 +170,10 @@ describe('buildProfilePageJsonLd', () => {
     knowsAbout: ['cloud', 'craft', 'ddd'],
     articleCount: 5,
     primaryCategory: 'Cloud & Platform',
+    categories: [
+      { label: 'Cloud & Platform', value: 'cloud-platform', icon: 'mdi:cloud-outline', count: 3 },
+      { label: 'Craft', value: 'craft', icon: 'mdi:hammer-wrench', count: 2 },
+    ],
   }
 
   it('produces a ProfilePage with stable @id and url', () => {
@@ -185,6 +212,7 @@ describe('buildProfilePageJsonLd', () => {
       jobTitle: undefined,
       bio: undefined,
       knowsAbout: [],
+      categories: [],
     }
     const ld = buildProfilePageJsonLd({ baseUrl, author: minimal })
     expect(ld.mainEntity.image).toBeUndefined()
@@ -192,6 +220,19 @@ describe('buildProfilePageJsonLd', () => {
     expect(ld.mainEntity.jobTitle).toBeUndefined()
     expect(ld.mainEntity.description).toBeUndefined()
     expect(ld.mainEntity.knowsAbout).toBeUndefined()
+    expect(ld.mainEntity.subjectOf).toBeUndefined()
+  })
+
+  it('emits subjectOf with CollectionPage refs for each contributed category', () => {
+    const ld = buildProfilePageJsonLd({ baseUrl, author })
+    expect(ld.mainEntity.subjectOf).toBeDefined()
+    expect(ld.mainEntity.subjectOf).toHaveLength(2)
+    expect(ld.mainEntity.subjectOf?.[0]).toEqual({
+      '@type': 'CollectionPage',
+      '@id': 'https://blog.hoppr.tech/categories/cloud-platform#collectionpage',
+      'url': 'https://blog.hoppr.tech/categories/cloud-platform',
+      'name': 'Articles Cloud & Platform',
+    })
   })
 
   it('isPartOf points to the canonical WebSite', () => {

@@ -6,7 +6,10 @@
 import { computed } from 'vue'
 
 interface Props {
-  title?: string
+  // Renamed from `title` because `nuxt-og-image` intercepts the `title` prop
+  // and never forwards it to the Satori component — the rendered image then
+  // shows the literal default "title" instead of the page title.
+  mainTitle?: string
   description?: string
   headline?: string
   imageTop?: string
@@ -14,14 +17,14 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  title: 'title',
+  mainTitle: 'title',
   description: 'description',
   headline: 'headline',
   imageTop: '',
   imageBottom: '',
 })
 
-const title = computed(() => props.title.slice(0, 60))
+const title = computed(() => props.mainTitle.slice(0, 60))
 </script>
 
 <template>

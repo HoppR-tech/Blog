@@ -99,7 +99,7 @@ useHead({
 
 // Generate OG Image
 defineOgImage('About', {
-  title: `Catégorie: ${category.value.label}`,
+  mainTitle: `Catégorie: ${category.value.label}`,
   description: seoDescription.value,
 })
 </script>

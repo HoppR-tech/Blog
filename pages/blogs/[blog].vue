@@ -110,7 +110,7 @@ if (faqJsonLdValue) {
 // Generate OG Image
 defineOgImageComponent('About', {
   headline: 'Bienvenue 👋',
-  title: blogPostProps.value.title || '',
+  mainTitle: blogPostProps.value.title || '',
   description: ogDescription.value || '',
   imageTop: '/images/og-post.png',
   imageBottom: '/images/og-home.png',

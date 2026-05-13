@@ -1,7 +1,7 @@
 <script setup lang="ts">
 defineOgImageComponent('About', {
   headline: 'Wrong Path',
-  title: '404',
+  mainTitle: '404',
   description: 'Page Not Found',
 })
 </script>

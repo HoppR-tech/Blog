@@ -26,7 +26,7 @@ usePageSeo({
 // Generate OG image
 defineOgImageComponent('About', {
   headline: 'À propos',
-  title: 'À propos de HoppR',
+  mainTitle: 'À propos de HoppR',
   description: 'ESN française certifiée B Corp · Paris · Lille · Lyon',
   imageTop: '/images/og-post.png',
   imageBottom: '/images/og-home.png',

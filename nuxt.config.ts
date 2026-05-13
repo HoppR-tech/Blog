@@ -184,18 +184,21 @@ export default defineNuxtConfig({
     ...(process.env.NODE_ENV === 'test' ? ['@nuxt/test-utils/module'] : []),
   ],
 
-  // OG image config — runtime generation only (no prerender hash URLs).
-  // `runtimeCacheStorage: true` forçait des URLs hash (o_xxxxxx.png) qui
-  // ne sont valides qu'au build : un container Docker redéployé sans le
-  // fichier .png correspondant retournait 400 avec
-  //   "Hash-based URLs are only supported during prerendering. Use encoded params or query params for runtime."
-  // En retirant cette option, le module émet des URLs param-encoded
-  // toujours regénérables à la volée par satori.
+  // OG image dynamique désactivée — fallback sur l'og:image statique
+  // (`/hoppr-white.png`) défini dans app.vue.
+  //
+  // Bug constaté : nuxt-og-image émettait des URLs hash-based
+  // (/_og/s/o_xxxxxx.png) qui retournaient HTTP 400 en runtime avec
+  // "Options not found for hash". Cause : conflit entre crawler du
+  // prerender, satori et le mode hash. Le module v6.3.3 a un bug
+  // d'ordre de prerender qui n'a pas pu être contourné via config.
+  //
+  // Conséquence : toutes les pages utilisent le même og:image statique
+  // (logo HoppR). C'est une régression par rapport aux OG dynamiques
+  // mais c'est ROBUSTE — à re-activer plus tard avec une config qui
+  // marche ou en migrant vers une autre solution.
   ogImage: {
-    enabled: true,
-    defaults: {
-      cacheMaxAgeSeconds: 60 * 60 * 24 * 7, // 7 jours de cache HTTP côté CDN
-    },
+    enabled: false,
   },
 
   mdc: {

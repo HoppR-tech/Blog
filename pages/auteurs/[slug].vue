@@ -176,7 +176,7 @@ defineOgImageComponent('About', {
         </ul>
 
         <div v-if="author.categories.length > 0" class="mb-3">
-          <p class="text-xs uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-2">
+          <p class="text-xs uppercase tracking-wider text-zinc-700 dark:text-zinc-200 font-semibold mb-2">
             Catégories
           </p>
           <ul class="flex flex-wrap gap-2">
@@ -194,7 +194,7 @@ defineOgImageComponent('About', {
         </div>
 
         <div v-if="author.knowsAbout.length > 0" class="mb-2">
-          <p class="text-xs uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-2">
+          <p class="text-xs uppercase tracking-wider text-zinc-700 dark:text-zinc-200 font-semibold mb-2">
             Sujets
           </p>
           <ul class="flex flex-wrap gap-2">
@@ -208,7 +208,7 @@ defineOgImageComponent('About', {
           </ul>
         </div>
 
-        <p class="text-sm text-zinc-500 dark:text-zinc-500 mt-2">
+        <p class="text-sm text-zinc-600 dark:text-zinc-400 mt-2">
           {{ author.articleCount }} article{{ author.articleCount > 1 ? 's' : '' }} publié{{ author.articleCount > 1 ? 's' : '' }}
         </p>
       </div>
@@ -241,7 +241,7 @@ defineOgImageComponent('About', {
           <p v-if="article.description" class="text-sm text-zinc-600 dark:text-zinc-400 mt-1 line-clamp-2">
             {{ article.description }}
           </p>
-          <p class="text-xs text-zinc-500 dark:text-zinc-500 mt-2">
+          <p class="text-xs text-zinc-600 dark:text-zinc-400 mt-2">
             {{ article.date }}
           </p>
         </div>

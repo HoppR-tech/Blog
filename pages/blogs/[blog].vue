@@ -4,7 +4,7 @@ import ContactCTA from '@/components/blog/ContactCTA.vue'
 import { useAbsoluteUrl } from '@/composables/useAbsoluteUrl'
 import { usePageSeo } from '@/composables/usePageSeo'
 import { buildBlogPostingJsonLd } from '@/utils/blogPostingJsonLd'
-import { buildFaqJsonLd, extractFaqEntries } from '@/utils/faqJsonLd'
+import { buildFaqJsonLd, extractFaqEntries, serializeAstToMarkdownLite } from '@/utils/faqJsonLd'
 import { stripMarkdown } from '@/utils/stringUtils'
 
 const { path } = useRoute()
@@ -60,9 +60,13 @@ const articleDateModified = computed(() => {
 })
 
 const articleRawBody = computed(() => {
-  const rb = (article.value as { rawbody?: string, body?: { text?: string } } | undefined)?.rawbody
-    || (article.value as { body?: { text?: string } } | undefined)?.body?.text
-  return typeof rb === 'string' ? rb : undefined
+  const a = article.value as { rawbody?: string, body?: unknown } | undefined
+  if (typeof a?.rawbody === 'string' && a.rawbody.length > 0)
+    return a.rawbody
+  // Nuxt Content v3 exposes the parsed MDC AST on `body`. Re-serialize it
+  // into a markdown-lite string the FAQ extractor can consume.
+  const serialized = serializeAstToMarkdownLite(a?.body as Parameters<typeof serializeAstToMarkdownLite>[0])
+  return serialized.length > 0 ? serialized : undefined
 })
 
 const structuredData = computed(() => buildBlogPostingJsonLd({

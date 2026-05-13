@@ -1,5 +1,6 @@
+import type { MdcAstNode } from '@/utils/faqJsonLd'
 import { describe, expect, it } from 'bun:test'
-import { buildFaqJsonLd, extractFaqEntries } from '@/utils/faqJsonLd'
+import { buildFaqJsonLd, extractFaqEntries, serializeAstToMarkdownLite } from '@/utils/faqJsonLd'
 
 const LONG_ANSWER = 'Une réponse longue qui dépasse les trente caractères minimum requis pour être retenue dans le FAQ.'
 
@@ -268,6 +269,123 @@ describe('extractFaqEntries — priority ordering between strategies', () => {
 
     const entries = extractFaqEntries(body)
     expect(entries).toHaveLength(1)
+    expect(entries[0].question).toBe('Que retenir de ce point ?')
+  })
+})
+
+describe('serializeAstToMarkdownLite — Nuxt Content v3 body AST → markdown-lite', () => {
+  function text(value: string): MdcAstNode {
+    return { type: 'text', value }
+  }
+
+  function element(tag: string, children: MdcAstNode[]): MdcAstNode {
+    return { type: 'element', tag, children }
+  }
+
+  it('returns an empty string for undefined / empty body', () => {
+    expect(serializeAstToMarkdownLite(undefined)).toBe('')
+    expect(serializeAstToMarkdownLite(null)).toBe('')
+    expect(serializeAstToMarkdownLite({ children: [] })).toBe('')
+  })
+
+  it('serializes H2 / H3 / H4 with the right number of hashes', () => {
+    const body: MdcAstNode = {
+      children: [
+        element('h2', [text('Pourquoi DDD ?')]),
+        element('h3', [text('Bounded Context')]),
+        element('h4', [text('Ubiquitous Language')]),
+      ],
+    }
+    const out = serializeAstToMarkdownLite(body)
+    expect(out).toContain('## Pourquoi DDD ?')
+    expect(out).toContain('### Bounded Context')
+    expect(out).toContain('#### Ubiquitous Language')
+  })
+
+  it('serializes paragraphs as plain lines', () => {
+    const body: MdcAstNode = {
+      children: [
+        element('p', [text('Première phrase.')]),
+        element('p', [text('Deuxième phrase.')]),
+      ],
+    }
+    expect(serializeAstToMarkdownLite(body)).toContain('Première phrase.')
+    expect(serializeAstToMarkdownLite(body)).toContain('Deuxième phrase.')
+  })
+
+  it('serializes ul / ol bullets with "-" prefix', () => {
+    const body: MdcAstNode = {
+      children: [
+        element('ul', [
+          element('li', [text('Premier item')]),
+          element('li', [text('Deuxième item')]),
+        ]),
+      ],
+    }
+    const out = serializeAstToMarkdownLite(body)
+    expect(out).toContain('- Premier item')
+    expect(out).toContain('- Deuxième item')
+  })
+
+  it('flattens nested text nodes inside elements (e.g. <strong> inside <h2>)', () => {
+    const body: MdcAstNode = {
+      children: [
+        element('h2', [
+          text('Pourquoi '),
+          element('strong', [text('DDD')]),
+          text(' ?'),
+        ]),
+      ],
+    }
+    expect(serializeAstToMarkdownLite(body)).toContain('## Pourquoi DDD ?')
+  })
+
+  it('drops code blocks, images, tables (only headings/paragraphs/lists survive)', () => {
+    const body: MdcAstNode = {
+      children: [
+        element('h2', [text('Section')]),
+        element('pre', [text('const noise = true')]),
+        element('img', []),
+        element('table', [element('tr', [element('td', [text('cell')])])]),
+        element('p', [text('Real content.')]),
+      ],
+    }
+    const out = serializeAstToMarkdownLite(body)
+    expect(out).toContain('## Section')
+    expect(out).toContain('Real content.')
+    expect(out).not.toContain('const noise')
+    expect(out).not.toContain('cell')
+  })
+
+  it('end-to-end: AST body with interrogative H2 produces a FAQ entry', () => {
+    const body: MdcAstNode = {
+      children: [
+        element('h2', [text('Pourquoi adopter le DDD ?')]),
+        element('p', [text('Pour aligner le code sur le métier et clarifier les frontières des bounded contexts dans un système complexe.')]),
+        element('h2', [text('Conclusion')]),
+        element('p', [text('Voilà.')]),
+      ],
+    }
+    const md = serializeAstToMarkdownLite(body)
+    const entries = extractFaqEntries(md)
+    expect(entries).toHaveLength(1)
+    expect(entries[0].question).toBe('Pourquoi adopter le DDD ?')
+    expect(entries[0].answer).toContain('aligner le code')
+  })
+
+  it('end-to-end: AST body with "## À retenir" bullets produces recap entries', () => {
+    const body: MdcAstNode = {
+      children: [
+        element('h2', [text('À retenir')]),
+        element('ul', [
+          element('li', [text('Premier apprentissage de l\'article, suffisamment développé pour passer le filtre.')]),
+          element('li', [text('Deuxième apprentissage de l\'article, également développé pour passer le filtre.')]),
+        ]),
+      ],
+    }
+    const md = serializeAstToMarkdownLite(body)
+    const entries = extractFaqEntries(md)
+    expect(entries).toHaveLength(2)
     expect(entries[0].question).toBe('Que retenir de ce point ?')
   })
 })

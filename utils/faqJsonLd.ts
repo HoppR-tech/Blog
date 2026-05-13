@@ -39,6 +39,17 @@ export interface FaqEntry {
   answer: string
 }
 
+/**
+ * Minimal MDC AST node shape (Nuxt Content v3 `article.body`).
+ * Only the fields the serializer needs are typed.
+ */
+export interface MdcAstNode {
+  type?: string
+  tag?: string
+  value?: string
+  children?: MdcAstNode[]
+}
+
 export interface FaqJsonLd {
   '@context': 'https://schema.org'
   '@type': 'FAQPage'
@@ -50,6 +61,66 @@ export interface FaqJsonLd {
       'text': string
     }
   }>
+}
+
+/**
+ * Recursively gather plain text from an MDC AST node (depth-first).
+ */
+function gatherText(node: MdcAstNode): string {
+  if (typeof node.value === 'string')
+    return node.value
+  if (!node.children || node.children.length === 0)
+    return ''
+  return node.children.map(gatherText).join('')
+}
+
+/**
+ * Re-serialize an MDC AST `body` (Nuxt Content v3) into a lightweight markdown
+ * string containing only the nodes that matter for FAQ extraction: H2/H3/H4
+ * headings, paragraphs, and list bullets. Code blocks, images, tables, etc.
+ * are dropped on purpose — they add noise to the parser.
+ *
+ * Output is consumed by extractFaqEntries which already knows markdown shape.
+ */
+export function serializeAstToMarkdownLite(body: MdcAstNode | undefined | null): string {
+  if (!body || !body.children || body.children.length === 0)
+    return ''
+
+  const lines: string[] = []
+
+  for (const node of body.children) {
+    const tag = node.tag
+    if (!tag)
+      continue
+
+    if (tag === 'h2' || tag === 'h3' || tag === 'h4') {
+      const hashes = tag === 'h2' ? '##' : tag === 'h3' ? '###' : '####'
+      const text = gatherText(node).trim()
+      if (text.length > 0)
+        lines.push(`${hashes} ${text}`)
+      continue
+    }
+
+    if (tag === 'p') {
+      const text = gatherText(node).trim()
+      if (text.length > 0)
+        lines.push(text)
+      continue
+    }
+
+    if (tag === 'ul' || tag === 'ol') {
+      for (const li of node.children ?? []) {
+        if (li.tag !== 'li')
+          continue
+        const text = gatherText(li).trim()
+        if (text.length > 0)
+          lines.push(`- ${text}`)
+      }
+      continue
+    }
+  }
+
+  return lines.join('\n\n')
 }
 
 function stripInlineMarkdown(text: string): string {

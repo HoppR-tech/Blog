@@ -50,13 +50,25 @@ const authorImage = computed(() => {
     : author.value.image
 })
 
-const articlesEnriched = computed(() =>
-  (author.value?.articles ?? []).map(a => ({
-    ...a,
-    resolvedImage: a.image
-      ? resolveContentAsset(a.image, a.path)
-      : undefined,
-  })),
+// Format article props pour BlogCard (cohérence avec /blogs, /categories, /tags).
+// Réutilisation du composant BlogCard plutôt qu'une mini-card custom : Jakob's
+// Law (l'utilisateur reconnaît le pattern partout sur le site). Grid 2 colonnes
+// pour réduire la verticalité quand l'auteur·rice a ~10 articles.
+const articleCards = computed(() =>
+  (author.value?.articles ?? []).map((a) => {
+    const resolved = a.image ? resolveContentAsset(a.image, a.path) : '/not-found.jpg'
+    return {
+      path: a.path,
+      title: a.title || '',
+      date: a.date ? formatDate(a.date) : '',
+      description: a.description || '',
+      image: resolved,
+      alt: a.title || '',
+      ogImage: resolved,
+      tags: a.tags || [],
+      published: true,
+    }
+  }),
 )
 
 const profileUrl = computed(() => `/auteurs/${slug.value}`)
@@ -215,34 +227,12 @@ defineOgImageComponent('About', {
       Articles
     </h2>
 
-    <div class="space-y-4">
-      <NuxtLink
-        v-for="article in articlesEnriched"
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <BlogCard
+        v-for="article in articleCards"
         :key="article.path"
-        :to="article.path"
-        class="group flex gap-4 items-start bg-white dark:bg-slate-900 rounded-lg p-4 hover:shadow-md transition-all border border-zinc-200 dark:border-zinc-700"
-      >
-        <img
-          v-if="article.resolvedImage"
-          :src="article.resolvedImage"
-          :alt="article.title"
-          class="w-20 h-20 sm:w-24 sm:h-24 rounded object-cover shrink-0"
-          width="96"
-          height="96"
-          loading="lazy"
-        >
-        <div class="flex-1 min-w-0">
-          <h3 class="text-base sm:text-lg font-semibold text-zinc-900 dark:text-zinc-100 group-hover:text-hoppr-green transition-colors">
-            {{ article.title }}
-          </h3>
-          <p v-if="article.description" class="text-sm text-zinc-600 dark:text-zinc-400 mt-1 line-clamp-2">
-            {{ article.description }}
-          </p>
-          <p class="text-xs text-zinc-600 dark:text-zinc-400 mt-2">
-            {{ article.date }}
-          </p>
-        </div>
-      </NuxtLink>
+        v-bind="article"
+      />
     </div>
   </main>
 </template>

@@ -93,43 +93,47 @@ defineOgImageComponent('About', {
         v-for="author in authorsWithResolvedImage"
         :key="author.notionId"
         :to="`/auteurs/${author.slug}`"
-        class="group block bg-white dark:bg-slate-900 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 p-5 border border-zinc-200 dark:border-zinc-700"
+        class="group block border dark:border-zinc-500 overflow-hidden rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 p-5 bg-white dark:bg-slate-900 text-zinc-700 dark:text-zinc-300"
       >
         <div class="flex items-center gap-4 mb-3">
           <img
             v-if="author.resolvedImage"
             :src="author.resolvedImage"
             :alt="`Photo de ${author.name}`"
-            class="w-16 h-16 rounded-full object-cover border-2 border-hoppr-green"
+            class="w-16 h-16 rounded-full object-cover border-2 border-hoppr-green shrink-0"
             width="64"
             height="64"
             loading="lazy"
           >
           <div
             v-else
-            class="w-16 h-16 rounded-full bg-hoppr-purple/10 flex items-center justify-center text-2xl text-hoppr-purple"
+            class="w-16 h-16 rounded-full bg-hoppr-purple/10 flex items-center justify-center text-2xl text-hoppr-purple shrink-0"
           >
             {{ author.name.charAt(0) }}
           </div>
           <div class="flex-1 min-w-0">
-            <h2 class="text-lg font-semibold text-zinc-900 dark:text-zinc-100 group-hover:text-hoppr-green transition-colors truncate">
+            <h2 class="text-lg font-bold text-black dark:text-zinc-100 group-hover:text-hoppr-green transition-colors truncate">
               {{ author.name }}
             </h2>
-            <p v-if="author.jobTitle" class="text-sm text-zinc-600 dark:text-zinc-400 truncate">
+            <p v-if="author.jobTitle" class="text-sm text-zinc-500 dark:text-zinc-400 truncate mt-0.5">
               {{ author.jobTitle }}
             </p>
           </div>
         </div>
-        <ul v-if="author.categories.length > 0" class="flex flex-wrap gap-1.5 mb-3">
-          <li
-            v-for="cat in author.categories.slice(0, 2)"
-            :key="cat.value"
-            class="inline-flex items-center gap-1 px-2 py-0.5 text-xs rounded-full bg-hoppr-purple/10 dark:bg-hoppr-purple/20 text-hoppr-purple dark:text-hoppr-green"
+        <!--
+          Catégorie principale uniquement (Hick's Law) : afficher 2 badges
+          sur une grille de 15 cartes crée 30 badges simultanés, donc du
+          bruit de scan plutôt qu'un signal. Le détail des catégories est
+          sur la page individuelle.
+        -->
+        <p v-if="author.categories.length > 0" class="mb-2">
+          <span
+            class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-semibold uppercase tracking-wider rounded-full bg-hoppr-purple/10 dark:bg-hoppr-purple/20 text-hoppr-purple dark:text-hoppr-green"
           >
-            <Icon :name="cat.icon" size="12" aria-hidden="true" />
-            {{ cat.label }}
-          </li>
-        </ul>
+            <Icon :name="author.categories[0].icon" size="12" aria-hidden="true" />
+            {{ author.categories[0].label }}
+          </span>
+        </p>
         <p class="text-sm text-zinc-600 dark:text-zinc-400">
           {{ author.articleCount }} article{{ author.articleCount > 1 ? 's' : '' }} publié{{ author.articleCount > 1 ? 's' : '' }}
         </p>

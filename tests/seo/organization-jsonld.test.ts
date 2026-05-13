@@ -79,6 +79,27 @@ describe('buildOrganizationJsonLd', () => {
     expect(org.hasCredential.url).toMatch(/bcorporation\.net/)
   })
 
+  it('exposes contactPoint with customer service + recruiting entries', () => {
+    const org = buildOrganizationJsonLd(baseUrl)
+    expect(org.contactPoint).toBeInstanceOf(Array)
+    expect(org.contactPoint.length).toBeGreaterThanOrEqual(2)
+    const types = org.contactPoint.map(c => c.contactType)
+    expect(types).toContain('customer service')
+    expect(types).toContain('recruiting')
+    for (const cp of org.contactPoint) {
+      expect(cp.email).toBe('hello@hoppr.tech')
+      expect(cp.areaServed).toContain('FR')
+      expect(cp.availableLanguage).toContain('fr')
+    }
+  })
+
+  it('exposes numberOfEmployees as a QuantitativeValue', () => {
+    const org = buildOrganizationJsonLd(baseUrl)
+    expect(org.numberOfEmployees['@type']).toBe('QuantitativeValue')
+    expect(org.numberOfEmployees.value).toBe(30)
+    expect(org.numberOfEmployees.unitText).toBe('consultants')
+  })
+
   it('description mentions ESN française, B Corp, and the three cities', () => {
     const org = buildOrganizationJsonLd(baseUrl)
     const d = org.description.toLowerCase()

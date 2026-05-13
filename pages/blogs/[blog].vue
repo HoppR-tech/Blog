@@ -3,6 +3,7 @@ import type { Person } from '@/types/blog'
 import ContactCTA from '@/components/blog/ContactCTA.vue'
 import { useAbsoluteUrl } from '@/composables/useAbsoluteUrl'
 import { usePageSeo } from '@/composables/usePageSeo'
+import { extractHowToSteps } from '@/utils/articleEnrichment'
 import { buildBlogPostingJsonLd } from '@/utils/blogPostingJsonLd'
 import { buildFaqJsonLd, extractFaqEntries, serializeAstToMarkdownLite } from '@/utils/faqJsonLd'
 import { stripMarkdown } from '@/utils/stringUtils'
@@ -59,13 +60,17 @@ const articleDateModified = computed(() => {
   return typeof updated === 'string' && updated.length > 0 ? updated : blogPostProps.value.date
 })
 
+const articleBody = computed(() => {
+  return (article.value as { body?: unknown } | undefined)?.body
+})
+
 const articleRawBody = computed(() => {
-  const a = article.value as { rawbody?: string, body?: unknown } | undefined
+  const a = article.value as { rawbody?: string } | undefined
   if (typeof a?.rawbody === 'string' && a.rawbody.length > 0)
     return a.rawbody
   // Nuxt Content v3 exposes the parsed MDC AST on `body`. Re-serialize it
   // into a markdown-lite string the FAQ extractor can consume.
-  const serialized = serializeAstToMarkdownLite(a?.body as Parameters<typeof serializeAstToMarkdownLite>[0])
+  const serialized = serializeAstToMarkdownLite(articleBody.value as Parameters<typeof serializeAstToMarkdownLite>[0])
   return serialized.length > 0 ? serialized : undefined
 })
 
@@ -80,6 +85,7 @@ const structuredData = computed(() => buildBlogPostingJsonLd({
   tags: blogPostProps.value.tags,
   authors,
   rawBody: articleRawBody.value,
+  body: articleBody.value,
 }))
 
 usePageSeo({
@@ -98,12 +104,16 @@ usePageSeo({
 // (await useAsyncData above). Evaluate synchronously here so the head is
 // emitted in the initial server-rendered HTML, not deferred to client hydration.
 const faqJsonLdValue = buildFaqJsonLd(extractFaqEntries(articleRawBody.value))
+const howToJsonLdValue = extractHowToSteps(articleBody.value, blogPostProps.value.title)
 
-if (faqJsonLdValue) {
+const extraJsonLdScripts = [
+  ...(faqJsonLdValue ? [{ type: 'application/ld+json', innerHTML: JSON.stringify(faqJsonLdValue) }] : []),
+  ...(howToJsonLdValue ? [{ type: 'application/ld+json', innerHTML: JSON.stringify(howToJsonLdValue) }] : []),
+]
+
+if (extraJsonLdScripts.length > 0) {
   useHead({
-    script: [
-      { type: 'application/ld+json', innerHTML: JSON.stringify(faqJsonLdValue) },
-    ],
+    script: extraJsonLdScripts,
   })
 }
 

@@ -15,7 +15,16 @@
  *
  * The factory is pure and tested in isolation. Returns null when no
  * extraction yields entries, so callers can skip injecting a FAQPage.
+ *
+ * The Nuxt Content v3 body AST (minimark / legacy MDC) is first reduced to
+ * a markdown-lite string via serializeAstToMarkdownLite() before parsing;
+ * the strategies then operate on simple line-based text.
  */
+
+// Re-export AST types and helpers shared with other enrichment factories.
+import { gatherText, getNodeChildren, getNodeTag, topLevelNodes } from '@/utils/astTraversal'
+
+export type { MdcAstNode, MinimarkNode } from '@/utils/astTraversal'
 
 const FAQ_HEADING = /^## (?:FAQ|Questions? fr[ée]quentes?|F\.A\.Q\.?) *$/i
 const RECAP_HEADING = /^## (?:[ÀA] retenir|TL;DR|En r[ée]sum[ée]|En bref|Key takeaways?) *$/i
@@ -39,25 +48,6 @@ export interface FaqEntry {
   answer: string
 }
 
-/**
- * Nuxt Content v3 exposes `article.body` in the minimark format:
- *   { type: 'minimark', value: [['tag', props, ...children]] }
- * where each node is either a string (text) or a tuple [tag, props, ...children].
- *
- * Older / alternative trees may still expose the legacy MDC AST:
- *   { children: [{ type: 'element', tag, children, value }] }
- *
- * The serializer tolerates both shapes.
- */
-export type MinimarkNode = string | [string, Record<string, unknown>, ...MinimarkNode[]]
-
-export interface MdcAstNode {
-  type?: string
-  tag?: string
-  value?: string | MinimarkNode[]
-  children?: MdcAstNode[]
-}
-
 export interface FaqJsonLd {
   '@context': 'https://schema.org'
   '@type': 'FAQPage'
@@ -69,84 +59,6 @@ export interface FaqJsonLd {
       'text': string
     }
   }>
-}
-
-function isMinimarkTuple(node: unknown): node is [string, Record<string, unknown>, ...MinimarkNode[]] {
-  return Array.isArray(node) && node.length >= 2 && typeof node[0] === 'string'
-}
-
-/**
- * Recursively gather plain text from any node shape (minimark tuple, legacy
- * MDC node, or raw string).
- */
-function gatherText(node: unknown): string {
-  if (typeof node === 'string')
-    return node
-
-  if (isMinimarkTuple(node)) {
-    const [, , ...children] = node
-    return children.map(gatherText).join('')
-  }
-
-  const ast = node as MdcAstNode | undefined
-  if (!ast)
-    return ''
-  if (typeof ast.value === 'string')
-    return ast.value
-  if (Array.isArray(ast.value))
-    return ast.value.map(gatherText).join('')
-  if (ast.children && ast.children.length > 0)
-    return ast.children.map(gatherText).join('')
-  return ''
-}
-
-/**
- * Get the immediate children of a node, regardless of format.
- */
-function getNodeChildren(node: unknown): unknown[] {
-  if (isMinimarkTuple(node)) {
-    const [, , ...children] = node
-    return children
-  }
-  const ast = node as MdcAstNode | undefined
-  if (!ast)
-    return []
-  if (ast.children && ast.children.length > 0)
-    return ast.children
-  if (Array.isArray(ast.value))
-    return ast.value
-  return []
-}
-
-/**
- * Get the tag of a node, regardless of format.
- */
-function getNodeTag(node: unknown): string | undefined {
-  if (isMinimarkTuple(node))
-    return node[0]
-  const ast = node as MdcAstNode | undefined
-  return ast?.tag
-}
-
-/**
- * Normalize a body AST to an array of top-level nodes, supporting:
- *   - minimark: { type: 'minimark', value: [...] }
- *   - MDC legacy: { type: 'root' | undefined, children: [...] }
- *   - direct array: [...]
- */
-function topLevelNodes(body: unknown): unknown[] {
-  if (!body)
-    return []
-  if (Array.isArray(body))
-    return body
-  if (typeof body !== 'object')
-    return []
-  const obj = body as MdcAstNode
-  if (Array.isArray(obj.value))
-    return obj.value
-  if (obj.children)
-    return obj.children
-  return []
 }
 
 /**

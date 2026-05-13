@@ -1,4 +1,6 @@
 import type { Person } from '@/types/blog'
+import type { CitationEntry, SpeakableSpec } from '@/utils/articleEnrichment'
+import { buildSpeakable, extractCitations } from '@/utils/articleEnrichment'
 import { categories } from '@/utils/categories'
 import { buildPublisherJsonLd } from '@/utils/organization'
 
@@ -24,6 +26,7 @@ export interface BuildBlogPostingInput {
   tags: string[]
   authors: Person[]
   rawBody?: string
+  body?: unknown
 }
 
 export interface BlogPostingJsonLd {
@@ -53,6 +56,9 @@ export interface BlogPostingJsonLd {
   'articleSection'?: string
   'keywords'?: string
   'wordCount'?: number
+  'citation'?: CitationEntry[]
+  'speakable'?: SpeakableSpec
+  'isAccessibleForFree': true
 }
 
 const AUTHOR_SLUG_NON_ALPHANUM = /[^a-z0-9]+/g
@@ -157,6 +163,7 @@ export function buildBlogPostingJsonLd(input: BuildBlogPostingInput): BlogPostin
     tags,
     authors,
     rawBody,
+    body,
   } = input
 
   const trimmedBase = baseUrl.replace(TRAILING_SLASH, '')
@@ -179,6 +186,7 @@ export function buildBlogPostingJsonLd(input: BuildBlogPostingInput): BlogPostin
       '@type': 'WebPage',
       '@id': `${trimmedBase}${path}`,
     },
+    'isAccessibleForFree': true,
   }
 
   const articleSection = findPrimaryCategoryLabel(tags)
@@ -191,6 +199,25 @@ export function buildBlogPostingJsonLd(input: BuildBlogPostingInput): BlogPostin
   const wordCount = estimateWordCount(rawBody)
   if (typeof wordCount === 'number' && wordCount > 0)
     jsonLd.wordCount = wordCount
+
+  // Enrichments from body AST when provided (Princeton "Cite Sources" + Speakable).
+  if (body !== undefined && body !== null) {
+    const blogHost = (() => {
+      try {
+        return new URL(trimmedBase).host
+      }
+      catch {
+        return ''
+      }
+    })()
+    const citations = extractCitations(body, blogHost)
+    if (citations.length > 0)
+      jsonLd.citation = citations
+
+    const speakable = buildSpeakable(body)
+    if (speakable)
+      jsonLd.speakable = speakable
+  }
 
   return jsonLd
 }

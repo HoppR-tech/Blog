@@ -15,6 +15,21 @@ export interface PostalAddress {
   'addressCountry': string
 }
 
+export interface ContactPoint {
+  '@type': 'ContactPoint'
+  'contactType': string
+  'email': string
+  'areaServed': string[]
+  'availableLanguage': string[]
+}
+
+export interface NumberOfEmployees {
+  '@type': 'QuantitativeValue'
+  'value': number
+  'minValue'?: number
+  'unitText': string
+}
+
 export interface OrganizationJsonLd {
   '@context': 'https://schema.org'
   '@type': 'Organization'
@@ -42,6 +57,8 @@ export interface OrganizationJsonLd {
     'credentialCategory': string
     'url': string
   }
+  'contactPoint': ContactPoint[]
+  'numberOfEmployees': NumberOfEmployees
 }
 
 const HOPPR_SOCIAL_PROFILES = [
@@ -105,6 +122,28 @@ export function buildOrganizationJsonLd(baseUrl: string): OrganizationJsonLd {
       'name': 'B Corp Certification',
       'credentialCategory': 'certification',
       'url': 'https://www.bcorporation.net/en-us/find-a-b-corp/company/hoppr/',
+    },
+    'contactPoint': [
+      {
+        '@type': 'ContactPoint',
+        'contactType': 'customer service',
+        'email': 'hello@hoppr.tech',
+        'areaServed': ['FR'],
+        'availableLanguage': ['fr', 'en'],
+      },
+      {
+        '@type': 'ContactPoint',
+        'contactType': 'recruiting',
+        'email': 'hello@hoppr.tech',
+        'areaServed': ['FR'],
+        'availableLanguage': ['fr', 'en'],
+      },
+    ],
+    'numberOfEmployees': {
+      '@type': 'QuantitativeValue',
+      'value': 30,
+      'minValue': 25,
+      'unitText': 'consultants',
     },
   }
 }

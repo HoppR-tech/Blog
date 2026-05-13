@@ -282,6 +282,12 @@ describe('serializeAstToMarkdownLite — Nuxt Content v3 body AST → markdown-l
     return { type: 'element', tag, children }
   }
 
+  // Minimark helpers — Nuxt Content v3 native format
+  type Minimark = string | [string, Record<string, unknown>, ...Minimark[]]
+  function mh(tag: string, ...kids: Minimark[]): Minimark {
+    return [tag, {}, ...kids]
+  }
+
   it('returns an empty string for undefined / empty body', () => {
     expect(serializeAstToMarkdownLite(undefined)).toBe('')
     expect(serializeAstToMarkdownLite(null)).toBe('')
@@ -371,6 +377,58 @@ describe('serializeAstToMarkdownLite — Nuxt Content v3 body AST → markdown-l
     expect(entries).toHaveLength(1)
     expect(entries[0].question).toBe('Pourquoi adopter le DDD ?')
     expect(entries[0].answer).toContain('aligner le code')
+  })
+
+  it('handles minimark format (Nuxt Content v3 native shape)', () => {
+    // { type: 'minimark', value: [['h2', {}, 'text'], ['p', {}, 'paragraph']] }
+    const body = {
+      type: 'minimark',
+      value: [
+        mh('h2', 'Pourquoi adopter le DDD ?'),
+        mh('p', 'Pour aligner le code sur le métier et clarifier les frontières des bounded contexts dans un système complexe.'),
+        mh('ul', mh('li', 'Premier bullet item'), mh('li', 'Deuxième bullet item')),
+      ],
+    }
+    const out = serializeAstToMarkdownLite(body)
+    expect(out).toContain('## Pourquoi adopter le DDD ?')
+    expect(out).toContain('aligner le code')
+    expect(out).toContain('- Premier bullet item')
+    expect(out).toContain('- Deuxième bullet item')
+  })
+
+  it('handles minimark with nested inline elements (strong inside h2)', () => {
+    const body = {
+      type: 'minimark',
+      value: [
+        mh('h2', 'Pourquoi ', mh('strong', 'DDD'), ' ?'),
+      ],
+    }
+    expect(serializeAstToMarkdownLite(body)).toContain('## Pourquoi DDD ?')
+  })
+
+  it('handles minimark as direct array (no wrapping {type, value})', () => {
+    const body: any = [
+      mh('h2', 'Comment ça marche ?'),
+      mh('p', 'Une réponse suffisamment longue pour ne pas être filtrée par le minimum de 30 caractères.'),
+    ]
+    const md = serializeAstToMarkdownLite(body)
+    expect(md).toContain('## Comment ça marche ?')
+    const entries = extractFaqEntries(md)
+    expect(entries).toHaveLength(1)
+  })
+
+  it('end-to-end minimark: interrogative H2 produces a FAQ entry', () => {
+    const body = {
+      type: 'minimark',
+      value: [
+        mh('h2', 'Pourquoi ce manifeste change la donne pour nos clients ?'),
+        mh('p', 'Parce que cela permet d\'aligner les attentes et de clarifier la valeur livrée par l\'équipe en mission.'),
+      ],
+    }
+    const md = serializeAstToMarkdownLite(body)
+    const entries = extractFaqEntries(md)
+    expect(entries).toHaveLength(1)
+    expect(entries[0].question).toContain('Pourquoi ce manifeste')
   })
 
   it('end-to-end: AST body with "## À retenir" bullets produces recap entries', () => {

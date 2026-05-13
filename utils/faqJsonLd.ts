@@ -40,13 +40,21 @@ export interface FaqEntry {
 }
 
 /**
- * Minimal MDC AST node shape (Nuxt Content v3 `article.body`).
- * Only the fields the serializer needs are typed.
+ * Nuxt Content v3 exposes `article.body` in the minimark format:
+ *   { type: 'minimark', value: [['tag', props, ...children]] }
+ * where each node is either a string (text) or a tuple [tag, props, ...children].
+ *
+ * Older / alternative trees may still expose the legacy MDC AST:
+ *   { children: [{ type: 'element', tag, children, value }] }
+ *
+ * The serializer tolerates both shapes.
  */
+export type MinimarkNode = string | [string, Record<string, unknown>, ...MinimarkNode[]]
+
 export interface MdcAstNode {
   type?: string
   tag?: string
-  value?: string
+  value?: string | MinimarkNode[]
   children?: MdcAstNode[]
 }
 
@@ -63,33 +71,101 @@ export interface FaqJsonLd {
   }>
 }
 
-/**
- * Recursively gather plain text from an MDC AST node (depth-first).
- */
-function gatherText(node: MdcAstNode): string {
-  if (typeof node.value === 'string')
-    return node.value
-  if (!node.children || node.children.length === 0)
-    return ''
-  return node.children.map(gatherText).join('')
+function isMinimarkTuple(node: unknown): node is [string, Record<string, unknown>, ...MinimarkNode[]] {
+  return Array.isArray(node) && node.length >= 2 && typeof node[0] === 'string'
 }
 
 /**
- * Re-serialize an MDC AST `body` (Nuxt Content v3) into a lightweight markdown
- * string containing only the nodes that matter for FAQ extraction: H2/H3/H4
- * headings, paragraphs, and list bullets. Code blocks, images, tables, etc.
- * are dropped on purpose — they add noise to the parser.
+ * Recursively gather plain text from any node shape (minimark tuple, legacy
+ * MDC node, or raw string).
+ */
+function gatherText(node: unknown): string {
+  if (typeof node === 'string')
+    return node
+
+  if (isMinimarkTuple(node)) {
+    const [, , ...children] = node
+    return children.map(gatherText).join('')
+  }
+
+  const ast = node as MdcAstNode | undefined
+  if (!ast)
+    return ''
+  if (typeof ast.value === 'string')
+    return ast.value
+  if (Array.isArray(ast.value))
+    return ast.value.map(gatherText).join('')
+  if (ast.children && ast.children.length > 0)
+    return ast.children.map(gatherText).join('')
+  return ''
+}
+
+/**
+ * Get the immediate children of a node, regardless of format.
+ */
+function getNodeChildren(node: unknown): unknown[] {
+  if (isMinimarkTuple(node)) {
+    const [, , ...children] = node
+    return children
+  }
+  const ast = node as MdcAstNode | undefined
+  if (!ast)
+    return []
+  if (ast.children && ast.children.length > 0)
+    return ast.children
+  if (Array.isArray(ast.value))
+    return ast.value
+  return []
+}
+
+/**
+ * Get the tag of a node, regardless of format.
+ */
+function getNodeTag(node: unknown): string | undefined {
+  if (isMinimarkTuple(node))
+    return node[0]
+  const ast = node as MdcAstNode | undefined
+  return ast?.tag
+}
+
+/**
+ * Normalize a body AST to an array of top-level nodes, supporting:
+ *   - minimark: { type: 'minimark', value: [...] }
+ *   - MDC legacy: { type: 'root' | undefined, children: [...] }
+ *   - direct array: [...]
+ */
+function topLevelNodes(body: unknown): unknown[] {
+  if (!body)
+    return []
+  if (Array.isArray(body))
+    return body
+  if (typeof body !== 'object')
+    return []
+  const obj = body as MdcAstNode
+  if (Array.isArray(obj.value))
+    return obj.value
+  if (obj.children)
+    return obj.children
+  return []
+}
+
+/**
+ * Re-serialize an article body AST (Nuxt Content v3 minimark or legacy MDC)
+ * into a lightweight markdown string containing only the nodes that matter
+ * for FAQ extraction: H2/H3/H4, paragraphs, list bullets. Code blocks,
+ * images, tables, etc. are dropped on purpose — they add noise.
  *
  * Output is consumed by extractFaqEntries which already knows markdown shape.
  */
-export function serializeAstToMarkdownLite(body: MdcAstNode | undefined | null): string {
-  if (!body || !body.children || body.children.length === 0)
+export function serializeAstToMarkdownLite(body: unknown): string {
+  const nodes = topLevelNodes(body)
+  if (nodes.length === 0)
     return ''
 
   const lines: string[] = []
 
-  for (const node of body.children) {
-    const tag = node.tag
+  for (const node of nodes) {
+    const tag = getNodeTag(node)
     if (!tag)
       continue
 
@@ -109,8 +185,8 @@ export function serializeAstToMarkdownLite(body: MdcAstNode | undefined | null):
     }
 
     if (tag === 'ul' || tag === 'ol') {
-      for (const li of node.children ?? []) {
-        if (li.tag !== 'li')
+      for (const li of getNodeChildren(node)) {
+        if (getNodeTag(li) !== 'li')
           continue
         const text = gatherText(li).trim()
         if (text.length > 0)

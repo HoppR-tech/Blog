@@ -94,17 +94,18 @@ usePageSeo({
   jsonLd: structuredData.value,
 })
 
-const faqJsonLd = computed(() => buildFaqJsonLd(extractFaqEntries(articleRawBody.value)))
+// `articleRawBody` is computed from `article.value` which is resolved at SSR
+// (await useAsyncData above). Evaluate synchronously here so the head is
+// emitted in the initial server-rendered HTML, not deferred to client hydration.
+const faqJsonLdValue = buildFaqJsonLd(extractFaqEntries(articleRawBody.value))
 
-useHead(() => {
-  if (!faqJsonLd.value)
-    return {}
-  return {
+if (faqJsonLdValue) {
+  useHead({
     script: [
-      { type: 'application/ld+json', innerHTML: JSON.stringify(faqJsonLd.value) },
+      { type: 'application/ld+json', innerHTML: JSON.stringify(faqJsonLdValue) },
     ],
-  }
-})
+  })
+}
 
 // Generate OG Image
 defineOgImageComponent('About', {

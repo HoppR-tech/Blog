@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'bun:test'
-import { categories } from '@/utils/categories'
+import { categories, categorySeoDescriptions } from '@/utils/categories'
 
 /**
  * Category page title tests.
@@ -43,5 +43,22 @@ describe('category pages - title with human label (TASK-052)', () => {
     const slug = 'architecture'
     const description = `Découvrez nos articles dans la catégorie ${getCategoryLabel(slug)}.`
     expect(description).toBe('Découvrez nos articles dans la catégorie Architecture.')
+  })
+})
+
+describe('category seoDescription — per-category SEO copy', () => {
+  it('exposes a seoDescription on every category (>= 120 chars, <= 160)', () => {
+    for (const cat of categories) {
+      expect(cat.seoDescription).toBeDefined()
+      expect(cat.seoDescription.length).toBeGreaterThanOrEqual(120)
+      expect(cat.seoDescription.length).toBeLessThanOrEqual(220)
+    }
+  })
+
+  it('contains the category-specific thematics in its description', () => {
+    expect(categorySeoDescriptions.craft.toLowerCase()).toContain('craftsmanship')
+    expect(categorySeoDescriptions['cloud-platform'].toLowerCase()).toContain('cloud')
+    expect(categorySeoDescriptions.architecture.toLowerCase()).toContain('architecture')
+    expect(categorySeoDescriptions.others.toLowerCase()).toContain('communauté')
   })
 })

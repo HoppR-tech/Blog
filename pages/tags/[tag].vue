@@ -86,9 +86,32 @@ const prevNextLinks = computed(() => {
   return links
 })
 
+const MAX_RECENT_TITLES_IN_DESCRIPTION = 3
+const MAX_TITLE_CHARS = 40
+
+const tagLabel = computed(() => capitalize(tag.value))
+
+const seoDescription = computed(() => {
+  const count = data.value?.length ?? 0
+
+  if (count === 0)
+    return `Articles HoppR tagués "${tag.value}" — Software Craftsmanship, Cloud et Architecture par l'équipe tech HoppR.`
+
+  const recentTitles = (data.value ?? [])
+    .slice(0, MAX_RECENT_TITLES_IN_DESCRIPTION)
+    .map((a) => {
+      const t = (a.title as string | undefined) ?? ''
+      return t.length > MAX_TITLE_CHARS ? `${t.slice(0, MAX_TITLE_CHARS - 1)}…` : t
+    })
+    .filter((t): t is string => t.length > 0)
+
+  const titlesPart = recentTitles.length > 0 ? ` Récents : ${recentTitles.join(' · ')}.` : ''
+  return `${count} article${count > 1 ? 's' : ''} HoppR tagué${count > 1 ? 's' : ''} "${tag.value}".${titlesPart}`
+})
+
 usePageSeo({
-  title: capitalize(tag.value),
-  description: `Découvrez nos articles sur le thème ${capitalize(tag.value)}.`,
+  title: tagLabel.value,
+  description: seoDescription.value,
   url: canonicalUrl.value,
   noindex: shouldNoindex.value,
 })
@@ -101,8 +124,8 @@ useHead({
 const siteData = useSiteConfig()
 defineOgImage({
   props: {
-    title: capitalize(tag.value),
-    description: `Découvrez nos articles sur le thème ${capitalize(tag.value)}.`,
+    title: tagLabel.value,
+    description: seoDescription.value,
     siteName: siteData.url,
   },
 } as any)

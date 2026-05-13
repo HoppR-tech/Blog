@@ -4,6 +4,7 @@ import ContactCTA from '@/components/blog/ContactCTA.vue'
 import { useAbsoluteUrl } from '@/composables/useAbsoluteUrl'
 import { usePageSeo } from '@/composables/usePageSeo'
 import { buildBlogPostingJsonLd } from '@/utils/blogPostingJsonLd'
+import { buildFaqJsonLd, extractFaqEntries } from '@/utils/faqJsonLd'
 import { stripMarkdown } from '@/utils/stringUtils'
 
 const { path } = useRoute()
@@ -87,6 +88,18 @@ usePageSeo({
   modifiedTime: articleDateModified.value,
   authors: authors.map(a => a.name),
   jsonLd: structuredData.value,
+})
+
+const faqJsonLd = computed(() => buildFaqJsonLd(extractFaqEntries(articleRawBody.value)))
+
+useHead(() => {
+  if (!faqJsonLd.value)
+    return {}
+  return {
+    script: [
+      { type: 'application/ld+json', innerHTML: JSON.stringify(faqJsonLd.value) },
+    ],
+  }
 })
 
 // Generate OG Image

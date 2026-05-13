@@ -7,7 +7,12 @@ const router = useRouter()
 const categoryValue = computed(() => route.params.category as string)
 
 const category = computed(() => {
-  return categories.find(cat => cat.value === categoryValue.value) || { label: categoryValue.value, icon: 'mdi:tag', colors: { light: '#3b82f6', dark: '#60A5FA' } }
+  return categories.find(cat => cat.value === categoryValue.value) || {
+    label: categoryValue.value,
+    icon: 'mdi:tag',
+    colors: { light: '#3b82f6', dark: '#60A5FA' },
+    seoDescription: `Articles HoppR dans la catégorie ${categoryValue.value}.`,
+  }
 })
 
 const { data } = await useAsyncData(`category-${categoryValue.value}`, async () => {
@@ -76,9 +81,15 @@ const prevNextLinks = computed(() => {
   return links
 })
 
+const seoDescription = computed(() => {
+  const base = category.value.seoDescription
+  const count = formattedData.value?.length ?? 0
+  return count > 0 ? `${base} ${count} articles publiés.` : base
+})
+
 usePageSeo({
   title: `Articles ${category.value.label}`,
-  description: `Découvrez nos articles dans la catégorie ${category.value.label}.`,
+  description: seoDescription.value,
   url: canonicalUrl.value,
 })
 
@@ -89,7 +100,7 @@ useHead({
 // Generate OG Image
 defineOgImage('About', {
   title: `Catégorie: ${category.value.label}`,
-  description: `Découvrez nos articles dans la catégorie ${category.value.label}.`,
+  description: seoDescription.value,
 })
 </script>
 

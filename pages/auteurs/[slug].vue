@@ -129,10 +129,7 @@ defineOgImageComponent('About', {
           {{ author.name }}
         </h1>
         <p v-if="author.jobTitle" class="text-lg text-zinc-700 dark:text-zinc-300 mb-3">
-          {{ author.jobTitle }}<span v-if="author.primaryCategory"> · {{ author.primaryCategory }}</span>
-        </p>
-        <p v-else-if="author.primaryCategory" class="text-lg text-zinc-700 dark:text-zinc-300 mb-3">
-          {{ author.primaryCategory }}
+          {{ author.jobTitle }}
         </p>
 
         <p v-if="author.bio" class="text-base text-zinc-700 dark:text-zinc-300 mb-4 leading-relaxed">

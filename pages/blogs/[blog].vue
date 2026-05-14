@@ -143,6 +143,7 @@ onMounted(() => {
 
 <template>
   <div>
+    <BlogReadingProgress />
     <div class="px-4 sm:px-6 max-w-6xl mx-auto lg:grid lg:grid-cols-12 lg:gap-x-12">
       <!--
         overflow-x-clip (et NON overflow-x-hidden) : par spec CSS, dès qu'un
@@ -200,6 +201,7 @@ onMounted(() => {
       </div>
       <BlogToc />
     </div>
+    <BlogTocMobile />
     <ContactCTA
       :article-title="blogPostProps.title"
       :article-link="path"

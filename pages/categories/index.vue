@@ -3,7 +3,18 @@ import { computed, ref } from 'vue'
 import { usePageSeo } from '@/composables/usePageSeo'
 import { categories } from '@/utils/categories'
 
-const { data } = await useAsyncData('all-blog-post-for-tag', () => queryCollection('blogs').order('date', 'DESC').all())
+// Clé spécifique à cette page (avant : 'all-blog-post-for-tag' était partagée
+// avec /tags/index.vue → collision useAsyncData possible). Try/catch pour ne
+// jamais propager une éventuelle erreur SQLite en 500 sur la route.
+const { data } = await useAsyncData('all-blog-posts-categories', async () => {
+  try {
+    return await queryCollection('blogs').order('date', 'DESC').all()
+  }
+  catch (err) {
+    console.error('[categories/index] queryCollection failed', err)
+    return []
+  }
+})
 
 const allTags = new Map()
 
@@ -36,15 +47,13 @@ usePageSeo({
   url: '/categories',
 })
 
-// Generate OG Image
-const siteData = useSiteConfig()
-defineOgImage({
-  props: {
-    title: 'Catégories',
-    description: 'Découvrez nos articles classés par catégories. Explorez nos contenus sur le Craft, le Cloud & Platform, l\'Architecture, et d\'autres sujets passionnants de la tech.',
-    siteName: siteData.url,
-  },
-} as any)
+// Generate OG Image (defineOgImageComponent — pas defineOgImage : sans nom de
+// composant explicite, unhead plante "originalName.split is not a function"
+// sur le SSR runtime de la route → 500. Voir aussi tags/, blogs/.)
+defineOgImageComponent('About', {
+  title: 'Catégories',
+  description: 'Découvrez nos articles classés par catégories. Explorez nos contenus sur le Craft, le Cloud & Platform, l\'Architecture, et d\'autres sujets passionnants de la tech.',
+})
 
 function getCategoryCount(categoryValue: string): number {
   if (!data.value)

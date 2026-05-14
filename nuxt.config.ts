@@ -120,6 +120,8 @@ export default defineNuxtConfig({
         '/',
         '/a-propos',
         '/auteurs',
+        '/categories',
+        '/tags',
         '/rss.xml',
         '/categories/craft',
         '/categories/cloud-platform',

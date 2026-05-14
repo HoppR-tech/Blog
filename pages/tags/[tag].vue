@@ -120,15 +120,12 @@ useHead({
   link: prevNextLinks.value,
 })
 
-// Generate OG Image
-const siteData = useSiteConfig()
-defineOgImage({
-  props: {
-    title: tagLabel.value,
-    description: seoDescription.value,
-    siteName: siteData.url,
-  },
-} as any)
+// Generate OG Image — defineOgImageComponent + nom de composant explicite,
+// sinon unhead plante "originalName.split is not a function" → 500 SSR.
+defineOgImageComponent('About', {
+  title: tagLabel.value,
+  description: seoDescription.value,
+})
 </script>
 
 <template>

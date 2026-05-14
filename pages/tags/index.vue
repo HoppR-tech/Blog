@@ -2,7 +2,18 @@
 import { computed, ref } from 'vue'
 import { makeFirstCharUpper } from '../../utils/helper'
 
-const { data } = await useAsyncData('all-blog-post-for-tag', () => queryCollection('blogs').order('date', 'DESC').all())
+// Clé spécifique à cette page (avant : 'all-blog-post-for-tag' était partagée
+// avec /categories/index.vue → collision useAsyncData possible). Try/catch pour
+// ne jamais propager une éventuelle erreur SQLite en 500 sur la route.
+const { data } = await useAsyncData('all-blog-posts-tags', async () => {
+  try {
+    return await queryCollection('blogs').order('date', 'DESC').all()
+  }
+  catch (err) {
+    console.error('[tags/index] queryCollection failed', err)
+    return []
+  }
+})
 
 const allTags = new Map()
 
@@ -35,15 +46,12 @@ usePageSeo({
   url: '/tags',
 })
 
-// Generate OG Image
-const siteData = useSiteConfig()
-defineOgImage({
-  props: {
-    title: 'Tags',
-    description: 'Tous les sujets sur lesquels nous avons écrit un article ou sur lesquels nous allons écrire un article prochainement sont listés ci-dessous.',
-    siteName: siteData.url,
-  },
-} as any)
+// Generate OG Image — defineOgImageComponent + nom de composant explicite,
+// sinon unhead plante "originalName.split is not a function" → 500 SSR.
+defineOgImageComponent('About', {
+  title: 'Tags',
+  description: 'Tous les sujets sur lesquels nous avons écrit un article ou sur lesquels nous allons écrire un article prochainement sont listés ci-dessous.',
+})
 </script>
 
 <template>

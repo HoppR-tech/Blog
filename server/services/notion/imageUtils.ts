@@ -22,9 +22,12 @@ export async function downloadAndConvertImage(imageUrl: string, imageName: strin
     const webpImageName = `${slugifiedImageName}.webp`
 
     // console.log(`Successfully downloaded image. Converting to WebP: ${webpImageName}`)
+    // 1000px = 2x retina pour un affichage max 500px (mobile 343px, desktop ~600px).
+    // Mesuré sur Lighthouse mobile : 1600px → 1000px divise le poids des assets
+    // d'article par ~2 sans perte visible (quality 82).
     const webpBuffer = await sharp(response.data)
-      .resize({ width: 1600, withoutEnlargement: true })
-      .webp({ quality: 80 })
+      .resize({ width: 1000, withoutEnlargement: true })
+      .webp({ quality: 82 })
       .toBuffer()
 
     // console.log(`Image successfully converted to WebP: ${webpImageName}`)

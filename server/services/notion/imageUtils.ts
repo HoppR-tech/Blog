@@ -11,7 +11,13 @@ interface ConvertedImage {
   imageContent: string
 }
 
-export async function downloadAndConvertImage(imageUrl: string, imageName: string): Promise<ConvertedImage> {
+// Largeurs cibles pour la conversion WebP (mesurées via Lighthouse mobile) :
+// - article : 1000px = 2x retina pour un affichage max ~500px (mobile 343px, desktop ~600px)
+// - avatar  : 256px  = 4x retina pour un affichage max 64-128px (Footer / cards auteurs)
+const ARTICLE_IMAGE_MAX_WIDTH = 1000
+const AVATAR_IMAGE_MAX_WIDTH = 256
+
+export async function downloadAndConvertImage(imageUrl: string, imageName: string, maxWidth: number = ARTICLE_IMAGE_MAX_WIDTH): Promise<ConvertedImage> {
   try {
     if (imageUrl.startsWith('./'))
       throw new Error(`The URL is a relative path: ${imageUrl}`)
@@ -21,16 +27,11 @@ export async function downloadAndConvertImage(imageUrl: string, imageName: strin
     const slugifiedImageName = slugify(imageName)
     const webpImageName = `${slugifiedImageName}.webp`
 
-    // console.log(`Successfully downloaded image. Converting to WebP: ${webpImageName}`)
-    // 1000px = 2x retina pour un affichage max 500px (mobile 343px, desktop ~600px).
-    // Mesuré sur Lighthouse mobile : 1600px → 1000px divise le poids des assets
-    // d'article par ~2 sans perte visible (quality 82).
     const webpBuffer = await sharp(response.data)
-      .resize({ width: 1000, withoutEnlargement: true })
+      .resize({ width: maxWidth, withoutEnlargement: true })
       .webp({ quality: 82 })
       .toBuffer()
 
-    // console.log(`Image successfully converted to WebP: ${webpImageName}`)
     return { webpImageName, imageContent: webpBuffer.toString('base64') }
   }
   catch (error) {
@@ -38,6 +39,8 @@ export async function downloadAndConvertImage(imageUrl: string, imageName: strin
     throw new Error(`Error while processing image ${imageUrl}: ${(error as Error).message}`)
   }
 }
+
+export { AVATAR_IMAGE_MAX_WIDTH, ARTICLE_IMAGE_MAX_WIDTH }
 
 export async function extractImagesAndUpdateContent(content: string): Promise<{ updatedContent: string, imageFiles: ImageFile[], lastValidImageUrl: string | null }> {
   const imageUrls = extractMarkdownImageUrls(content)
@@ -107,7 +110,7 @@ async function processPersonsImages(persons: Person[], role: 'author' | 'reviewe
     }
 
     try {
-      const { webpImageName, imageContent } = await downloadAndConvertImage(person.image, `${role}-${person.name}`)
+      const { webpImageName, imageContent } = await downloadAndConvertImage(person.image, `${role}-${person.name}`, AVATAR_IMAGE_MAX_WIDTH)
       const newImagePath = `./assets/${webpImageName}`
       personImages.push({ name: webpImageName, content: imageContent })
       return { ...person, image: newImagePath }

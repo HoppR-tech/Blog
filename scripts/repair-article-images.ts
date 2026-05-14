@@ -97,9 +97,11 @@ async function main() {
   const downloads = await Promise.all(imageUrls.map(async (entry, i) => {
     const localName = `img${i + 1}.webp`
     const response = await axios.get(entry.url, { responseType: 'arraybuffer' })
+    // Aligné sur le pipeline principal (server/services/notion/imageUtils.ts) :
+    // 1000px = 2x retina pour un affichage max 500px côté blog.
     const webpBuffer = await sharp(response.data)
-      .resize({ width: 1600, withoutEnlargement: true })
-      .webp({ quality: 80 })
+      .resize({ width: 1000, withoutEnlargement: true })
+      .webp({ quality: 82 })
       .toBuffer()
     await fs.writeFile(path.join(assetsDir, localName), webpBuffer)
     console.log(`   → saved ${localName} (caption: "${entry.caption.slice(0, 60)}${entry.caption.length > 60 ? '…' : ''}")`)
@@ -147,9 +149,11 @@ async function main() {
     const slug = personName.toLowerCase().normalize('NFD').replace(/[\u0300-\u036F]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
     const localName = `reviewer-${slug}.webp`
     const response = await axios.get(freshUrl, { responseType: 'arraybuffer' })
+    // 256px = 4x retina pour un affichage 64-128px (coh\u00E9rent avec AVATAR_IMAGE_MAX_WIDTH
+    // dans server/services/notion/imageUtils.ts).
     const webpBuffer = await sharp(response.data)
-      .resize({ width: 400, withoutEnlargement: true })
-      .webp({ quality: 80 })
+      .resize({ width: 256, withoutEnlargement: true })
+      .webp({ quality: 82 })
       .toBuffer()
     await fs.writeFile(path.join(assetsDir, localName), webpBuffer)
     console.log(`     → saved ${localName}`)

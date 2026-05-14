@@ -38,7 +38,7 @@ const authorsWithResolvedImage = computed(() =>
 
 usePageSeo({
   title: 'L\'équipe HoppR',
-  description: `Découvrez les ${authors.value.length} auteur·rices du blog HoppR : développeur·euses, architectes cloud, software crafter·euses et platform engineer·euses qui partagent leurs retours d'expérience.`,
+  description: `${authors.value.length} voix derrière le blog HoppR. Une équipe tech qui partage ses retours d'expérience — du software craft au platform engineering, en passant par le cloud et l'architecture — depuis Paris, Lille et Lyon.`,
   url: '/auteurs',
   jsonLd: wrapInGraph(baseUrl, {
     '@context': 'https://schema.org',
@@ -75,15 +75,30 @@ defineOgImageComponent('About', {
       :custom-items="[{ name: 'Auteur·rices', url: '/auteurs' }]"
     />
 
-    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-hoppr-purple dark:text-zinc-100 mb-4">
-      L'équipe HoppR
-    </h1>
-
-    <p class="text-base sm:text-lg text-zinc-700 dark:text-zinc-300 mb-10 leading-relaxed max-w-3xl">
-      Les <strong>{{ authors.length }} consultant·es HoppR</strong> qui écrivent sur ce blog —
-      développeur·euses, architectes cloud, software crafter·euses et platform engineer·euses,
-      partageant leurs retours d'expérience depuis Paris, Lille et Lyon.
-    </p>
+    <!--
+      Hero 2 colonnes (texte gauche, image blog droite) — pattern identique
+      à archive/hero.vue, category/hero.vue, tag/hero.vue, main/hero.vue.
+      Cohérence visuelle entre les pages d'entrée du blog.
+    -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 items-center gap-6 mb-10">
+      <div>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-hoppr-purple dark:text-zinc-100 mb-4">
+          L'équipe HoppR
+        </h1>
+        <p class="text-base sm:text-lg text-zinc-700 dark:text-zinc-300 leading-relaxed">
+          <strong>{{ authors.length }} voix</strong> derrière le blog HoppR.
+          Une équipe tech qui partage ses retours d'expérience — du software craft
+          au platform engineering, en passant par le cloud et l'architecture —
+          depuis Paris, Lille et Lyon.
+        </p>
+      </div>
+      <div class="justify-self-center mt-6 sm:mt-0">
+        <LogoBlogimg
+          class="w-full max-w-xs sm:max-w-full h-auto"
+          alt="Image avec un lego et un mur écrit blog derrière"
+        />
+      </div>
+    </div>
 
     <div
       v-if="authorsWithResolvedImage.length > 0"

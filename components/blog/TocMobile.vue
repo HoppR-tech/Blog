@@ -2,9 +2,20 @@
 import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 
 const { path } = useRoute()
-const articles = await queryCollection('blogs').path(path).first()
 
-const tocLinks = articles?.body?.toc?.links || []
+// useAsyncData partage le résultat avec BlogToc.vue qui interroge la même
+// collection sur la même path — évite une double requête SQLite. Try/catch
+// safe au cas où la query rejette : on dégrade en TOC vide, pas en 500.
+const { data: articleData } = await useAsyncData(`toc-${path}`, async () => {
+  try {
+    return await queryCollection('blogs').path(path).first()
+  }
+  catch {
+    return null
+  }
+})
+
+const tocLinks = articleData.value?.body?.toc?.links || []
 
 // Flatten parent + children pour un drawer linéaire (plus simple à scanner sur mobile
 // qu'une arborescence cliquable, sur 35 000 px de page on cherche une section vite).

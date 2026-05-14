@@ -201,7 +201,15 @@ onMounted(() => {
       </div>
       <BlogToc />
     </div>
-    <BlogTocMobile />
+    <!--
+      ClientOnly pour TocMobile : on évite que `await queryCollection` au top-level
+      du composant fasse planter le SSR de la page article si la query SQLite
+      jette (ce qui a probablement causé un 500 transient en prod 2026-05-14 21:35).
+      Le drawer mobile est de toute façon une couche d'interaction post-mount.
+    -->
+    <ClientOnly>
+      <BlogTocMobile />
+    </ClientOnly>
     <ContactCTA
       :article-title="blogPostProps.title"
       :article-link="path"

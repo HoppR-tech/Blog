@@ -28,6 +28,13 @@ export default defineNuxtConfig({
         { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
         { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
         { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
+        // Preconnect au domaine analytics (Plausible) — gain ~100-200ms DNS+TLS sur mobile
+        { rel: 'preconnect', href: 'https://analytics.hoppr.tech', crossorigin: '' },
+        // Preload des fonts utilisées dans le first paint (body + bold). Sans ça,
+        // le navigateur les découvre seulement après avoir parsé le CSS qui est
+        // lui-même bloquant. Sur mobile 4G ça décale le FCP de 200-400ms.
+        { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/fira-sans-400.woff2', crossorigin: 'anonymous' },
+        { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/fira-sans-700.woff2', crossorigin: 'anonymous' },
       ],
       script: [
         {

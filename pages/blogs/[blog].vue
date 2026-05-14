@@ -144,7 +144,14 @@ onMounted(() => {
 <template>
   <div>
     <div class="px-4 sm:px-6 max-w-6xl mx-auto lg:grid lg:grid-cols-12 lg:gap-x-12">
-      <div class="col-span-12 lg:col-span-9 min-w-0 w-[calc(100vw-2rem)] sm:w-[calc(100vw-3rem)] lg:w-auto overflow-x-hidden">
+      <!--
+        overflow-x-clip (et NON overflow-x-hidden) : par spec CSS, dès qu'un
+        axe est en `hidden`, l'autre passe de `visible` à `auto` → l'élément
+        devient un scroll container vertical. Sur iOS Safari ça créait un
+        scroll trap qui coupait le rendu visible de l'article mobile.
+        `clip` découpe sans créer de scroll container (Tailwind 3.1+).
+      -->
+      <div class="col-span-12 lg:col-span-9 min-w-0 w-[calc(100vw-2rem)] sm:w-[calc(100vw-3rem)] lg:w-auto overflow-x-clip">
         <BlogBreadcrumb
           :title="blogPostProps.title"
           :path="path"

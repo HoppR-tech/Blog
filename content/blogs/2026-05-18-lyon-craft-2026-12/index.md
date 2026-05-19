@@ -128,7 +128,7 @@ Il nous faut dompter nos biais et rester maîtres·ses du jeu. Finalement, `git 
 
 _Par Didier Erin et Laure Champel - 45 minutes -_ [_Abstract_](https://lyon-craft.fr/sessions/et-craft-la-chaise.html) _-_ [_Captation_](https://www.youtube.com/watch?v=XR7ZVn7fSt8)
 
-C’est un duo qui monte cette fois sur la scène principale du Lyon Craft 2026. Didier et Erin veulent nous parler de Liza, une bricoleuse qui construit des chaises. Seulement, elle est obligée de tester systématiquement chacune d’entre elles avant de les mettre en vente, ce qui lui prend beaucoup de temps (et quelques chutes !)
+C’est un duo qui monte cette fois sur la scène principale du Lyon Craft 2026. Didier et Laure veulent nous parler de Liza, une bricoleuse qui construit des chaises. Seulement, elle est obligée de tester systématiquement chacune d’entre elles avant de les mettre en vente, ce qui lui prend beaucoup de temps (et quelques chutes !)
 
 Nous avons bien entendu ici affaire à une analogie avec le SI et les livraisons en production de nouveaux produits. Ce REX montre les étapes de la mise en place de l’optimisation et de l’industrialisation chez Alptis.
 
@@ -140,7 +140,7 @@ De plus, la norme sur la création de nouveaux produits et de 6 mois de dévelop
 
 > Et si le problème n'était pas la vitesse, mais la façon de fabriquer la chaise ?
 
-Didier arrive alors avec l’occasion de tester une nouvelle manière de faire, respectant les méthodologies du _software craftsmanship, s_ur un nouveau produit et avec une nouvelle équipe.
+Didier arrive alors avec l’occasion de tester une nouvelle manière de faire, respectant les méthodologies du software craftsmanship, sur un nouveau produit et avec une nouvelle équipe.
 
 Le chemin est semé d’embûches : l’équipe ne connaît ni le métier, ni l’environnement de l’entreprise, et à part Didier ni le TDD. Viennent donc la mise en place de _mob programming_ pour apprendre ensemble et effectuer cette triple montée en compétences. La livraison continue, des US plus itératives, et un périmètre allégé (pour la sortie d’un [MVP](https://fr.wikipedia.org/wiki/Produit_minimum_viable)) sont d’autres nouvelles manières de faire mises en place.
 

@@ -5,14 +5,15 @@ description: "Retour sur la conférence Lyon Craft 2025 qui s’est déroulée l
 image: ./assets/cover-image.webp
 alt: "Photo de l’écran d’accueil au Lyon Craft 2025, présentant la liste des sessions prévues ainsi que le plan des lieux."
 ogImage: ./assets/cover-image.webp
-tags: ['événement', '2025', 'craft']
+tags: ['événement', '2025', 'craft', 'veille tech', 'lyoncraft']
 published: true
 authors:
   - id: 67adfd77-4b84-4496-b55d-3391541f59c5
     name: Michaël Bernasinski
-    image: ./assets/author-michal-bernasinski.webp
+    image: ./assets/author-michael-bernasinski.webp
     linkedin: https://www.linkedin.com/in/michael-bernasinski
-    x: 
+    x:
+    bio: "Principal Lead - Software Engineer - HoppR Lyon"
 reviewers:
   - id: 0bb914a6-f882-4951-bee6-53e8e8abb807
     name: Emmanuelle Gouvart

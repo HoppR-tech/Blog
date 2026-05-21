@@ -1,3 +1,4 @@
+import type { JsonLdNode } from '@/utils/organization'
 import { useAbsoluteUrl } from './useAbsoluteUrl'
 
 interface SeoMetaOptions {
@@ -9,7 +10,7 @@ interface SeoMetaOptions {
   publishedTime?: string
   modifiedTime?: string
   authors?: string[]
-  jsonLd?: Record<string, unknown> | Record<string, unknown>[]
+  jsonLd?: JsonLdNode | JsonLdNode[]
   noindex?: boolean
 }
 

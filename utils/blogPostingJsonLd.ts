@@ -1,5 +1,6 @@
 import type { Person } from '@/types/blog'
 import type { CitationEntry, SpeakableSpec } from '@/utils/articleEnrichment'
+import type { JsonLdNode } from '@/utils/organization'
 import { buildSpeakable, extractCitations } from '@/utils/articleEnrichment'
 import { categories } from '@/utils/categories'
 import { buildPublisherJsonLd } from '@/utils/organization'
@@ -29,7 +30,7 @@ export interface BuildBlogPostingInput {
   body?: unknown
 }
 
-export interface BlogPostingJsonLd {
+export interface BlogPostingJsonLd extends JsonLdNode {
   '@context': 'https://schema.org'
   '@type': 'BlogPosting'
   'headline': string

@@ -30,8 +30,8 @@ describe('extractFaqEntries — strategy 1: explicit "## FAQ" section', () => {
 
     const entries = extractFaqEntries(body)
     expect(entries).toHaveLength(2)
-    expect(entries[0].question).toBe('Pourquoi DDD ?')
-    expect(entries[1].question).toBe('Comment commencer ?')
+    expect(entries[0]!.question).toBe('Pourquoi DDD ?')
+    expect(entries[1]!.question).toBe('Comment commencer ?')
   })
 
   it('matches "Questions fréquentes" variant', () => {
@@ -52,10 +52,10 @@ describe('extractFaqEntries — strategy 1: explicit "## FAQ" section', () => {
     ].join('\n')
 
     const entries = extractFaqEntries(body)
-    expect(entries[0].question).toBe('Pourquoi DDD ?')
-    expect(entries[0].answer).toContain('Voir Eric Evans')
-    expect(entries[0].answer).not.toContain('[')
-    expect(entries[0].answer).not.toContain('**')
+    expect(entries[0]!.question).toBe('Pourquoi DDD ?')
+    expect(entries[0]!.answer).toContain('Voir Eric Evans')
+    expect(entries[0]!.answer).not.toContain('[')
+    expect(entries[0]!.answer).not.toContain('**')
   })
 
   it('stops at the next H2 (no bleed into following section)', () => {
@@ -68,7 +68,7 @@ describe('extractFaqEntries — strategy 1: explicit "## FAQ" section', () => {
 
     const entries = extractFaqEntries(body)
     expect(entries).toHaveLength(1)
-    expect(entries[0].question).toBe('Q1 ?')
+    expect(entries[0]!.question).toBe('Q1 ?')
   })
 
   it('skips Q/A pairs with too-short answers (< 30 chars)', () => {
@@ -113,7 +113,7 @@ describe('extractFaqEntries — strategy 2: interrogative headings auto-detectio
 
     const entries = extractFaqEntries(body)
     expect(entries).toHaveLength(1)
-    expect(entries[0].question.toLowerCase()).toContain('comment fonctionne')
+    expect(entries[0]!.question.toLowerCase()).toContain('comment fonctionne')
   })
 
   it('handles H3 questions inside a parent H2', () => {
@@ -127,7 +127,7 @@ describe('extractFaqEntries — strategy 2: interrogative headings auto-detectio
 
     const entries = extractFaqEntries(body)
     expect(entries).toHaveLength(1)
-    expect(entries[0].question).toMatch(/bulkhead/i)
+    expect(entries[0]!.question).toMatch(/bulkhead/i)
   })
 
   it('stops collecting the answer at the next heading of equal or higher level', () => {
@@ -154,8 +154,8 @@ describe('extractFaqEntries — strategy 2: interrogative headings auto-detectio
 
     const entries = extractFaqEntries(body)
     expect(entries).toHaveLength(1)
-    expect(entries[0].answer.length).toBeLessThanOrEqual(280)
-    expect(entries[0].answer.endsWith('…')).toBe(true)
+    expect(entries[0]!.answer.length).toBeLessThanOrEqual(280)
+    expect(entries[0]!.answer.endsWith('…')).toBe(true)
   })
 
   it('caps the number of entries at 5 even if the article has more questions', () => {
@@ -181,8 +181,8 @@ describe('extractFaqEntries — strategy 3: recap section', () => {
 
     const entries = extractFaqEntries(body)
     expect(entries).toHaveLength(3)
-    expect(entries[0].question).toBe('Que retenir de ce point ?')
-    expect(entries[0].answer).toContain('Premier point')
+    expect(entries[0]!.question).toBe('Que retenir de ce point ?')
+    expect(entries[0]!.answer).toContain('Premier point')
   })
 
   it('matches "TL;DR" variant', () => {
@@ -205,7 +205,7 @@ describe('extractFaqEntries — strategy 3: recap section', () => {
 
     const entries = extractFaqEntries(body)
     expect(entries).toHaveLength(1)
-    expect(entries[0].question).toBe('Que retenir de cet article ?')
+    expect(entries[0]!.question).toBe('Que retenir de cet article ?')
   })
 
   it('caps recap bullets at 5', () => {
@@ -239,7 +239,7 @@ describe('extractFaqEntries — priority ordering between strategies', () => {
 
     const entries = extractFaqEntries(body)
     expect(entries).toHaveLength(1)
-    expect(entries[0].question).toBe('Question explicite ?')
+    expect(entries[0]!.question).toBe('Question explicite ?')
   })
 
   it('uses interrogative headings when explicit FAQ is absent', () => {
@@ -252,7 +252,7 @@ describe('extractFaqEntries — priority ordering between strategies', () => {
     ].join('\n')
 
     const entries = extractFaqEntries(body)
-    expect(entries[0].question).toBe('Pourquoi adopter X ?')
+    expect(entries[0]!.question).toBe('Pourquoi adopter X ?')
   })
 
   it('falls back to recap when neither explicit FAQ nor interrogative headings exist', () => {
@@ -269,7 +269,7 @@ describe('extractFaqEntries — priority ordering between strategies', () => {
 
     const entries = extractFaqEntries(body)
     expect(entries).toHaveLength(1)
-    expect(entries[0].question).toBe('Que retenir de ce point ?')
+    expect(entries[0]!.question).toBe('Que retenir de ce point ?')
   })
 })
 
@@ -375,8 +375,8 @@ describe('serializeAstToMarkdownLite — Nuxt Content v3 body AST → markdown-l
     const md = serializeAstToMarkdownLite(body)
     const entries = extractFaqEntries(md)
     expect(entries).toHaveLength(1)
-    expect(entries[0].question).toBe('Pourquoi adopter le DDD ?')
-    expect(entries[0].answer).toContain('aligner le code')
+    expect(entries[0]!.question).toBe('Pourquoi adopter le DDD ?')
+    expect(entries[0]!.answer).toContain('aligner le code')
   })
 
   it('handles minimark format (Nuxt Content v3 native shape)', () => {
@@ -428,7 +428,7 @@ describe('serializeAstToMarkdownLite — Nuxt Content v3 body AST → markdown-l
     const md = serializeAstToMarkdownLite(body)
     const entries = extractFaqEntries(md)
     expect(entries).toHaveLength(1)
-    expect(entries[0].question).toContain('Pourquoi ce manifeste')
+    expect(entries[0]!.question).toContain('Pourquoi ce manifeste')
   })
 
   it('end-to-end: AST body with "## À retenir" bullets produces recap entries', () => {
@@ -444,7 +444,7 @@ describe('serializeAstToMarkdownLite — Nuxt Content v3 body AST → markdown-l
     const md = serializeAstToMarkdownLite(body)
     const entries = extractFaqEntries(md)
     expect(entries).toHaveLength(2)
-    expect(entries[0].question).toBe('Que retenir de ce point ?')
+    expect(entries[0]!.question).toBe('Que retenir de ce point ?')
   })
 })
 

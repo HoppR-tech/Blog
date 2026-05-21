@@ -12,6 +12,7 @@
  */
 
 import type { Person } from '@/types/blog'
+import type { JsonLdNode } from '@/utils/organization'
 import { categories } from '@/utils/categories'
 
 export interface ArticleSummary {
@@ -196,7 +197,7 @@ export function aggregateAuthors(articles: RawArticle[]): AuthorAggregate[] {
     }
     agg.categories = authorCategories
     if (authorCategories.length > 0)
-      agg.primaryCategory = authorCategories[0].label
+      agg.primaryCategory = authorCategories[0]!.label
   }
 
   return [...byId.values()].sort((a, b) => b.articleCount - a.articleCount)
@@ -207,7 +208,7 @@ export function aggregateAuthors(articles: RawArticle[]): AuthorAggregate[] {
  * The Person inside `mainEntity` mirrors the lightweight Person used in
  * BlogPosting.author[] but adds bio / jobTitle / knowsAbout / worksFor.
  */
-export interface ProfilePageJsonLd {
+export interface ProfilePageJsonLd extends JsonLdNode {
   '@context': 'https://schema.org'
   '@type': 'ProfilePage'
   '@id': string

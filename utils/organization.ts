@@ -8,6 +8,10 @@
  * and every consumer picks it up.
  */
 
+export interface JsonLdNode {
+  [key: string]: unknown
+}
+
 export interface PostalAddress {
   '@type': 'PostalAddress'
   'addressLocality': string
@@ -30,7 +34,7 @@ export interface NumberOfEmployees {
   'unitText': string
 }
 
-export interface OrganizationJsonLd {
+export interface OrganizationJsonLd extends JsonLdNode {
   '@context': 'https://schema.org'
   '@type': 'Organization'
   '@id': string
@@ -170,7 +174,7 @@ export function buildPublisherJsonLd(baseUrl: string): {
   }
 }
 
-interface FaqPageEntity {
+interface FaqPageEntity extends JsonLdNode {
   '@context': 'https://schema.org'
   '@type': 'FAQPage'
   '@id': string
@@ -186,7 +190,7 @@ interface FaqPageEntity {
   }>
 }
 
-export interface WebSiteEntity {
+export interface WebSiteEntity extends JsonLdNode {
   '@context': 'https://schema.org'
   '@type': 'WebSite'
   '@id': string
@@ -244,8 +248,8 @@ export function buildWebSiteJsonLd(baseUrl: string): WebSiteEntity {
  */
 export function wrapInGraph(
   baseUrl: string,
-  ...entities: Array<Record<string, unknown>>
-): { '@context': 'https://schema.org', '@graph': Array<Record<string, unknown>> } {
+  ...entities: JsonLdNode[]
+): JsonLdNode {
   return {
     '@context': 'https://schema.org',
     '@graph': [
@@ -256,7 +260,7 @@ export function wrapInGraph(
   }
 }
 
-export interface AboutPageJsonLd {
+export interface AboutPageJsonLd extends JsonLdNode {
   '@context': 'https://schema.org'
   '@graph': Array<OrganizationJsonLd | WebSiteEntity | {
     '@context': 'https://schema.org'

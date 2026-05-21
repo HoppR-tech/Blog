@@ -59,7 +59,7 @@ const title = computed(() => props.mainTitle.slice(0, 60))
         <span>{{ title }}</span>
       </h1>
       <p class="text-[32px] text-[#E4E4E7] leading-tight">
-        {{ description.slice(0, 200) }}
+        {{ description?.slice(0, 200) }}
       </p>
     </div>
 

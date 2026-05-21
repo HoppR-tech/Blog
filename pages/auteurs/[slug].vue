@@ -98,7 +98,7 @@ usePageSeo({
   type: 'profile',
   jsonLd: wrapInGraph(
     baseUrl,
-    buildProfilePageJsonLd({ baseUrl, author: author.value }) as unknown as Record<string, unknown>,
+    buildProfilePageJsonLd({ baseUrl, author: author.value }),
   ),
 })
 

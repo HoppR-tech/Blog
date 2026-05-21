@@ -104,7 +104,7 @@ usePageSeo({
   publishedTime: blogPostProps.value.date,
   modifiedTime: articleDateModified.value,
   authors: authors.map(a => a.name),
-  jsonLd: wrapInGraph(baseUrl, structuredData.value as unknown as Record<string, unknown>),
+  jsonLd: wrapInGraph(baseUrl, structuredData.value),
 })
 
 // `articleRawBody` is computed from `article.value` which is resolved at SSR

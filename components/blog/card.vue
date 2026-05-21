@@ -1,17 +1,16 @@
 <script lang="ts" setup>
-import MarkdownIt from 'markdown-it'
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 
 interface Props {
-  path: string
-  title: string
-  date: string
-  description: string
-  image: string
-  alt: string
-  ogImage: string
-  tags: Array<string>
-  published: boolean
+  path?: string
+  title?: string
+  date?: string
+  description?: string
+  image?: string
+  alt?: string
+  ogImage?: string
+  tags?: Array<string>
+  published?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -26,12 +25,28 @@ const props = withDefaults(defineProps<Props>(), {
   published: false,
 })
 
-const md = new MarkdownIt()
-const renderedDescription = computed(() => {
-  const rendered = md.renderInline(props.description)
-  // Strip HTML tags to avoid nested links inside NuxtLink
-  return rendered.replace(/<[^>]*>/g, '')
-})
+function stripMarkdown(text: string): string {
+  return text
+    // [text](url) → text
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+    // [text](url tronquée en fin de chaîne → text
+    .replace(/\[([^\]]+)\]\([^)]*$/g, '$1')
+    // [text orphelin en fin de chaîne → text
+    .replace(/\[([^\]]*)$/g, '$1')
+    // **bold** → bold
+    .replace(/\*\*([^*]+)\*\*/g, '$1')
+    // _italic_ ou *italic* → italic
+    .replace(/([_*])([^_*]+)\1/g, '$2')
+    // > blockquote en début de texte (avec espaces optionnels avant)
+    .replace(/^\s*>\s+/gm, '')
+    // > blockquote en milieu de texte (après 2+ espaces = saut de paragraphe collapsé)
+    .replace(/\s{2,}>\s+/g, ' ')
+    // normalise les espaces multiples
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+const renderedDescription = computed(() => stripMarkdown(props.description))
 
 const showAllTags = ref(false)
 const isMobile = ref(false)
@@ -85,7 +100,7 @@ const buttonLabel = computed(() =>
       <div class="relative overflow-hidden h-32 sm:h-36 md:h-40 lg:h-48 rounded-t-2xl">
         <!-- Background Layer (Ambience) -->
         <img
-          :src="image" aria-hidden="true" role="presentation"
+          :src="image" :alt="`Image de couverture : ${title}`" aria-hidden="true" role="presentation"
           width="300" height="200" loading="lazy" decoding="async"
           class="absolute inset-0 w-full h-full object-cover blur-xl scale-125 opacity-100 transition-transform duration-500 group-hover:scale-130"
         >
@@ -128,7 +143,7 @@ const buttonLabel = computed(() =>
         >
           {{ title }}
         </h3>
-        <div class="text-ellipsis line-clamp-2 text-base text-zinc-600 dark:text-zinc-400" v-html="renderedDescription" />
+        <div class="text-ellipsis line-clamp-2 text-base text-zinc-600 dark:text-zinc-400" v-text="renderedDescription" />
         <div class="flex items-center py-2 text-zinc-800 dark:text-zinc-200 font-semibold group-hover:text-hoppr-green dark:group-hover:text-hoppr-green transition-colors">
           <p>Lire la suite</p>
           <span class="ml-1 text-hoppr-green transition-transform group-hover:translate-x-1">&rarr;</span>

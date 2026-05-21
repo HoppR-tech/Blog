@@ -143,7 +143,7 @@ function indexOfMatch(
   from: number,
 ): number {
   for (let i = from; i < lines.length; i++) {
-    if (predicate(lines[i]))
+    if (predicate(lines[i]!))
       return i
   }
   return -1
@@ -178,7 +178,7 @@ function extractExplicitFaqEntries(lines: string[]): FaqEntry[] {
     const h3Match = H3.exec(line)
     if (h3Match) {
       flush()
-      currentQuestion = stripInlineMarkdown(h3Match[1].trim())
+      currentQuestion = stripInlineMarkdown(h3Match[1]!.trim())
       continue
     }
     if (currentQuestion !== null)
@@ -198,30 +198,30 @@ function extractInterrogativeHeadingEntries(lines: string[]): FaqEntry[] {
   const entries: FaqEntry[] = []
 
   for (let i = 0; i < lines.length; i++) {
-    const match = HEADING.exec(lines[i])
+    const match = HEADING.exec(lines[i]!)
     if (!match)
       continue
 
-    const headingLevel = match[1].length
+    const headingLevel = match[1]!.length
     if (headingLevel < 2 || headingLevel > 3)
       continue
 
-    const titleRaw = match[2].trim()
+    const titleRaw = match[2]!.trim()
     if (!isQuestionLine(titleRaw))
       continue
 
     // Skip explicit FAQ section and recap section: they have their own strategies.
-    if (FAQ_HEADING.test(lines[i]) || RECAP_HEADING.test(lines[i]))
+    if (FAQ_HEADING.test(lines[i]!) || RECAP_HEADING.test(lines[i]!))
       continue
 
     const answerLines: string[] = []
     for (let j = i + 1; j < lines.length; j++) {
-      const nextMatch = HEADING.exec(lines[j])
-      if (nextMatch && nextMatch[1].length <= headingLevel)
+      const nextMatch = HEADING.exec(lines[j]!)
+      if (nextMatch && nextMatch[1]!.length <= headingLevel)
         break
       if (nextMatch)
         continue
-      answerLines.push(lines[j])
+      answerLines.push(lines[j]!)
     }
 
     const answer = normalizeAnswer(answerLines.join('\n'))
@@ -257,7 +257,7 @@ function extractRecapEntries(lines: string[]): FaqEntry[] {
   for (const line of section) {
     const bulletMatch = BULLET_PREFIX.exec(line)
     if (bulletMatch)
-      bullets.push(bulletMatch[1].trim())
+      bullets.push(bulletMatch[1]!.trim())
     else
       paragraphLines.push(line)
   }

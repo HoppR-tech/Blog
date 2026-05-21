@@ -47,8 +47,8 @@ describe('aggregateAuthors', () => {
       }),
     ])
     expect(result).toHaveLength(1)
-    expect(result[0].articleCount).toBe(2)
-    expect(result[0].articles[0].path).toBe('/blogs/a') // sorted desc by date
+    expect(result[0]!.articleCount).toBe(2)
+    expect(result[0]!.articles[0]!.path).toBe('/blogs/a') // sorted desc by date
   })
 
   it('skips authors without id or name', () => {
@@ -56,7 +56,7 @@ describe('aggregateAuthors', () => {
       article({ authors: [{ id: '', name: 'X' }, { id: 'p1', name: '' }, { id: 'p2', name: 'OK' }] }),
     ])
     expect(result).toHaveLength(1)
-    expect(result[0].name).toBe('OK')
+    expect(result[0]!.name).toBe('OK')
   })
 
   it('merges enrichments when a later article has more data (bio populated later)', () => {
@@ -71,8 +71,8 @@ describe('aggregateAuthors', () => {
         authors: [{ id: 'p1', name: 'Maxime', image: '/m.webp', bio: 'Bio enrichie', jobTitle: 'Architecte cloud' }],
       }),
     ])
-    expect(result[0].bio).toBe('Bio enrichie')
-    expect(result[0].jobTitle).toBe('Architecte cloud')
+    expect(result[0]!.bio).toBe('Bio enrichie')
+    expect(result[0]!.jobTitle).toBe('Architecte cloud')
   })
 
   it('computes knowsAbout from most frequent tags', () => {
@@ -81,8 +81,8 @@ describe('aggregateAuthors', () => {
       article({ path: '/b/2', tags: ['craft', 'ddd'], authors: [{ id: 'p1', name: 'Théo' }] }),
       article({ path: '/b/3', tags: ['craft'], authors: [{ id: 'p1', name: 'Théo' }] }),
     ])
-    const knows = result[0].knowsAbout
-    expect(knows[0]).toBe('craft') // 3 occurrences
+    const knows = result[0]!.knowsAbout
+    expect(knows[0]!).toBe('craft') // 3 occurrences
     expect(knows).toContain('ddd') // 2
     expect(knows).toContain('tdd') // 1
   })
@@ -92,22 +92,22 @@ describe('aggregateAuthors', () => {
     const result = aggregateAuthors([
       article({ tags, authors: [{ id: 'p1', name: 'Théo' }] }),
     ])
-    expect(result[0].knowsAbout).toHaveLength(8)
+    expect(result[0]!.knowsAbout).toHaveLength(8)
   })
 
   it('sets primaryCategory to first known category in tags', () => {
     const result = aggregateAuthors([
       article({ tags: ['kubernetes', 'craft', 'ddd'], authors: [{ id: 'p1', name: 'X' }] }),
     ])
-    expect(result[0].primaryCategory).toBe('Craft')
+    expect(result[0]!.primaryCategory).toBe('Craft')
   })
 
   it('leaves primaryCategory undefined when no tag matches a known category', () => {
     const result = aggregateAuthors([
       article({ tags: ['kubernetes', 'ddd'], authors: [{ id: 'p1', name: 'X' }] }),
     ])
-    expect(result[0].primaryCategory).toBeUndefined()
-    expect(result[0].categories).toEqual([])
+    expect(result[0]!.primaryCategory).toBeUndefined()
+    expect(result[0]!.categories).toEqual([])
   })
 
   it('aggregates categories[] with all known categories where author has articles', () => {
@@ -117,19 +117,19 @@ describe('aggregateAuthors', () => {
       article({ path: '/a/3', tags: ['cloud-platform', 'aws'], authors: [{ id: 'p1', name: 'Maxime' }] }),
       article({ path: '/a/4', tags: ['kubernetes'], authors: [{ id: 'p1', name: 'Maxime' }] }),
     ])
-    const cats = result[0].categories
+    const cats = result[0]!.categories
     expect(cats).toHaveLength(2)
-    expect(cats[0].value).toBe('craft')
-    expect(cats[0].count).toBe(2)
-    expect(cats[1].value).toBe('cloud-platform')
-    expect(cats[1].count).toBe(1)
+    expect(cats[0]!.value).toBe('craft')
+    expect(cats[0]!.count).toBe(2)
+    expect(cats[1]!.value).toBe('cloud-platform')
+    expect(cats[1]!.count).toBe(1)
   })
 
   it('exposes category icon for badge rendering', () => {
     const result = aggregateAuthors([
       article({ tags: ['craft'], authors: [{ id: 'p1', name: 'X' }] }),
     ])
-    expect(result[0].categories[0].icon).toBe('mdi:hammer-wrench')
+    expect(result[0]!.categories[0]!.icon).toBe('mdi:hammer-wrench')
   })
 
   it('sorts authors by article count desc', () => {
@@ -148,7 +148,7 @@ describe('aggregateAuthors', () => {
       article({ path: '/b/2', date: '2026-05-01', authors: [{ id: 'p1', name: 'X' }] }),
       article({ path: '/b/3', date: '2025-12-15', authors: [{ id: 'p1', name: 'X' }] }),
     ])
-    const dates = result[0].articles.map(a => a.date)
+    const dates = result[0]!.articles.map(a => a.date)
     expect(dates).toEqual(['2026-05-01', '2025-12-15', '2024-01-01'])
   })
 })

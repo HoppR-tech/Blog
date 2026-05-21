@@ -43,7 +43,7 @@ describe('extractCitations', () => {
     }
     const citations = extractCitations(body, BLOG_HOST)
     expect(citations).toHaveLength(1)
-    expect(citations[0].url).toBe('https://example.com')
+    expect(citations[0]!.url).toBe('https://example.com')
   })
 
   it('skips anchors and relative URLs', () => {
@@ -120,9 +120,9 @@ describe('extractHowToSteps', () => {
     expect(ld).not.toBeNull()
     expect(ld?.name).toBe('Setup local')
     expect(ld?.step).toHaveLength(3)
-    expect(ld?.step[0].name).toBe('Prérequis')
-    expect(ld?.step[0].position).toBe(1)
-    expect(ld?.step[2].name).toBe('Lancement')
+    expect(ld?.step[0]!.name).toBe('Prérequis')
+    expect(ld?.step[0]!.position).toBe(1)
+    expect(ld?.step[2]!.name).toBe('Lancement')
   })
 
   it('extracts steps from "Étape N" heading sequence', () => {
@@ -138,7 +138,7 @@ describe('extractHowToSteps', () => {
     const ld = extractHowToSteps(body, 'Migration')
     expect(ld).not.toBeNull()
     expect(ld?.step).toHaveLength(2)
-    expect(ld?.step[0].name).toMatch(/Étape 1/)
+    expect(ld?.step[0]!.name).toMatch(/Étape 1/)
   })
 
   it('skips steps with too-short text', () => {

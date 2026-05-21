@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import MarkdownIt from 'markdown-it'
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 
 interface Props {
@@ -28,12 +27,28 @@ const props = withDefaults(defineProps<Props>(), {
   imageSize: 'h-36 sm:h-48',
 })
 
-const md = new MarkdownIt()
-const renderedDescription = computed(() => {
-  const rendered = md.renderInline(props.description)
-  // Strip HTML tags to avoid nested links inside NuxtLink
-  return rendered.replace(/<[^>]*>/g, '')
-})
+function stripMarkdown(text: string): string {
+  return text
+    // [text](url) → text
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+    // [text](url tronquée en fin de chaîne → text
+    .replace(/\[([^\]]+)\]\([^)]*$/g, '$1')
+    // [text orphelin en fin de chaîne → text
+    .replace(/\[([^\]]*)$/g, '$1')
+    // **bold** → bold
+    .replace(/\*\*([^*]+)\*\*/g, '$1')
+    // _italic_ ou *italic* → italic
+    .replace(/([_*])([^_*]+)\1/g, '$2')
+    // > blockquote en début de texte (avec espaces optionnels avant)
+    .replace(/^\s*>\s+/gm, '')
+    // > blockquote en milieu de texte (après 2+ espaces = saut de paragraphe collapsé)
+    .replace(/\s{2,}>\s+/g, ' ')
+    // normalise les espaces multiples
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+const renderedDescription = computed(() => stripMarkdown(props.description))
 
 const showAllTags = ref(false)
 
@@ -84,7 +99,7 @@ const buttonLabel = computed(() =>
       <div :class="`sm:col-span-3 relative overflow-hidden rounded-t-2xl sm:rounded-l-2xl sm:rounded-t-none ${imageSize} sm:h-full`">
         <!-- Background Layer (Ambience) -->
         <img
-          :src="image" aria-hidden="true" role="presentation"
+          :src="image" :alt="`Image de couverture : ${title}`" aria-hidden="true" role="presentation"
           width="300" height="200" loading="lazy" decoding="async"
           class="absolute inset-0 w-full h-full object-cover blur-xl scale-125 opacity-100 transition-transform duration-500 group-hover:scale-130"
         >
@@ -102,7 +117,7 @@ const buttonLabel = computed(() =>
         >
           {{ title }}
         </h3>
-        <div class="font-luciole text-ellipsis line-clamp-2 text-zinc-600 dark:text-zinc-400" v-html="renderedDescription" />
+        <div class="font-luciole text-ellipsis line-clamp-2 text-zinc-600 dark:text-zinc-400" v-text="renderedDescription" />
         <div class="text-black dark:text-zinc-300 text-xs mt-2 mb-1 flex flex-col gap-3 md:flex-row md:items-center md:space-x-6 font-luciole">
           <div class="flex items-center">
             <LogoDate />

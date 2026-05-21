@@ -145,9 +145,9 @@ describe('buildBlogPostingJsonLd', () => {
   it('builds enriched authors with deep-link URLs to /auteurs/<slug>', () => {
     const ld = buildBlogPostingJsonLd(base)
     expect(ld.author).toHaveLength(1)
-    expect(ld.author[0].name).toBe('Maxime Deroullers')
-    expect(ld.author[0].url).toBe('https://blog.hoppr.tech/auteurs/maxime-deroullers')
-    expect(ld.author[0].sameAs).toEqual([
+    expect(ld.author[0]!.name).toBe('Maxime Deroullers')
+    expect(ld.author[0]!.url).toBe('https://blog.hoppr.tech/auteurs/maxime-deroullers')
+    expect(ld.author[0]!.sameAs).toEqual([
       'https://www.linkedin.com/in/maxime-deroullers/',
       'https://x.com/mderoullers',
     ])

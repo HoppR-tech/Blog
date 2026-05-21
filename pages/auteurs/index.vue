@@ -145,8 +145,8 @@ defineOgImageComponent('About', {
           <span
             class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-semibold uppercase tracking-wider rounded-full bg-hoppr-purple/10 dark:bg-hoppr-purple/20 text-hoppr-purple dark:text-hoppr-green"
           >
-            <Icon :name="author.categories[0].icon" size="12" aria-hidden="true" />
-            {{ author.categories[0].label }}
+            <Icon :name="author.categories[0]!.icon" size="12" aria-hidden="true" />
+            {{ author.categories[0]!.label }}
           </span>
         </p>
         <p class="text-sm text-zinc-600 dark:text-zinc-400">

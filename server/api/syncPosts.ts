@@ -7,26 +7,27 @@ export default defineEventHandler(async (event) => {
   // console.log('Starting syncPosts process...')
   try {
     const notionService = new NotionService()
-    // console.log('Fetching posts to publish from Notion...')
-    const postsToPublish = await notionService.fetchPostsToPublishFromNotion()
+    const { posts: postsToPublish, skippedErrors } = await notionService.fetchPostsToPublishFromNotion()
 
-    if (postsToPublish.length === 0) {
-      // console.log('No articles to publish.')
+    if (postsToPublish.length === 0 && skippedErrors.length === 0) {
       return { message: 'No articles to publish.' }
     }
 
-    // console.log(`Found ${postsToPublish.length} posts to publish.`)
+    if (postsToPublish.length === 0 && skippedErrors.length > 0) {
+      return {
+        message: '❌ All articles were skipped due to validation errors',
+        skippedCount: skippedErrors.length,
+        skippedArticles: skippedErrors,
+      }
+    }
 
-    // console.log('Initializing GitHub service...')
     const octokit = await getOctokit()
     const githubService = new GitHubService(octokit, notionService)
 
-    // console.log('Checking GitHub access...')
     const githubAccess = await githubService.checkGitHubAccess()
     if (!githubAccess)
       throw new Error('GitHub access not authorized or incorrect configuration')
 
-    // console.log('Publishing posts to GitHub...')
     const publishResults: PromiseSettledResult<void>[] = []
 
     for (const post of postsToPublish) {
@@ -43,12 +44,12 @@ export default defineEventHandler(async (event) => {
     const successfulPublishes = publishResults.filter(result => result.status === 'fulfilled')
     const failedPublishes = publishResults.filter(result => result.status === 'rejected')
 
-    if (failedPublishes.length > 0) {
-      console.error(`Failed to publish ${failedPublishes.length} articles.`)
+    if (failedPublishes.length > 0 || skippedErrors.length > 0) {
       return {
         message: '❌ Error during article synchronization',
         successCount: successfulPublishes.length,
         failCount: failedPublishes.length,
+        skippedCount: skippedErrors.length,
         failedPosts: failedPublishes.map((result, index) => {
           const error = (result as PromiseRejectedResult).reason
           const errorMessage = error instanceof Error ? error.message : 'Unknown error'
@@ -60,6 +61,7 @@ export default defineEventHandler(async (event) => {
 
           return `Title: "${postTitle}" - ${errorMessage} - Last valid image URL: ${lastValidImageUrl}`
         }),
+        skippedArticles: skippedErrors,
       }
     }
 
@@ -67,6 +69,8 @@ export default defineEventHandler(async (event) => {
       message: '✅ Article synchronization process completed successfully',
       successCount: successfulPublishes.length,
       failCount: 0,
+      skippedCount: skippedErrors.length,
+      skippedArticles: skippedErrors.length > 0 ? skippedErrors : undefined,
     }
   }
   catch (error) {

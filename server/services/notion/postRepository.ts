@@ -6,7 +6,12 @@ import { generateDescription } from './descriptionGenerator'
 import { convertToNotionPage } from './notionUtils'
 import { getPageContent } from './pageContentExtractor'
 
-export async function fetchPostsToPublish(notionClient: NotionClientInterface): Promise<BlogPost[]> {
+export interface FetchPostsResult {
+  posts: BlogPost[]
+  skippedErrors: string[]
+}
+
+export async function fetchPostsToPublish(notionClient: NotionClientInterface): Promise<FetchPostsResult> {
   try {
     const dataSourceId = await getDataSourceId(notionClient)
     let allResults: any[] = []
@@ -29,10 +34,32 @@ export async function fetchPostsToPublish(notionClient: NotionClientInterface): 
       nextCursor = response.next_cursor || undefined
     }
 
-    const blogPosts = await Promise.all(
+    const results = await Promise.allSettled(
       allResults.map(result => getPageContent(notionClient, convertToNotionPage(result))),
     )
-    return blogPosts.map(convertToBlogPost)
+
+    const posts: BlogPost[] = []
+    const skippedErrors: string[] = []
+
+    for (const result of results) {
+      if (result.status === 'fulfilled') {
+        try {
+          posts.push(convertToBlogPost(result.value))
+        }
+        catch (error) {
+          const message = error instanceof Error ? error.message : 'Unknown error'
+          console.error(`⚠️ Skipping article due to conversion error: ${message}`)
+          skippedErrors.push(message)
+        }
+      }
+      else {
+        const message = result.reason instanceof Error ? result.reason.message : 'Unknown error'
+        console.error(`⚠️ Skipping article due to error: ${message}`)
+        skippedErrors.push(message)
+      }
+    }
+
+    return { posts, skippedErrors }
   }
   catch (error) {
     console.error('Error while fetching articles:', error)

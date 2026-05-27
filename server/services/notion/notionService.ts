@@ -3,12 +3,12 @@ import type { ImageFile } from '@/types/files'
 import { downloadAndConvertImage, extractImagesAndUpdateContent, processAuthorsImages, processReviewersImages } from './imageUtils'
 import { generateMarkdownContent } from './markdownGenerator'
 import { getNotionClient } from './notionClient'
-import { fetchPostsToPublish, updatePostStatus, updatePublishedDate } from './postRepository'
+import { type FetchPostsResult, fetchPostsToPublish, updatePostStatus, updatePublishedDate } from './postRepository'
 
 export class NotionService {
   private notionClient = getNotionClient()
 
-  async fetchPostsToPublishFromNotion(): Promise<BlogPost[]> {
+  async fetchPostsToPublishFromNotion(): Promise<FetchPostsResult> {
     return await fetchPostsToPublish(this.notionClient)
   }
 

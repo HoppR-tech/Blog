@@ -34,8 +34,10 @@ export async function getPageContent(notionClient: NotionClientInterface, page: 
     }
   }
   catch (error) {
-    console.error('Error while retrieving the page:', error)
-    throw error
+    const title = safeGetTitle(page)
+    const message = error instanceof Error ? error.message : 'Unknown error'
+    console.error(`Error while retrieving the page "${title}":`, error)
+    throw new Error(`Article "${title}": ${message}`)
   }
 }
 
@@ -179,6 +181,15 @@ export function extractTitleFromPage(page: NotionPage): string {
     throw new Error('Title is missing or empty')
 
   return title
+}
+
+function safeGetTitle(page: NotionPage): string {
+  try {
+    return extractTitleFromPage(page)
+  }
+  catch {
+    return page.id
+  }
 }
 
 function isBlockObjectResponse(item: PartialBlockObjectResponse | BlockObjectResponse): item is BlockObjectResponse {

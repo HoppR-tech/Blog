@@ -113,7 +113,7 @@ Pour la troisième page, le **détail d'une formation.** On a aussi cogné un au
 
 ![Le message d'avertissement de quota Claude Design](./assets/img2.webp)
 
-C'est probablement l'élément le plus important à anticiper si vous voulez utiliser Claude Design sur un vrai projet.
+C'est probablement l'élément le plus important à anticiper si vous voulez utiliser Claude Design sur un vrai projet. Nous utilisions le **plan Pro à 20 €/mois** qui est adapté à une utilisation ponctuelle, mais qui brûle vite pour une utilisation intensive. Les plans Max offrent des allocations hebdomadaires plus généreuses. Pour le détail par plan, voir la [documentation officielle](https://support.claude.com/fr/articles/14667344-utilisation-et-tarification-de-l-abonnement-claude-design).
 
 - Le quota Claude Design est **séparé du quota Claude classique** (pas de mutualisation).
 

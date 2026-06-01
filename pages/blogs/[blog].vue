@@ -210,6 +210,7 @@ onMounted(() => {
     <ClientOnly>
       <BlogTocMobile />
     </ClientOnly>
+    <BlogNewsletterCTA />
     <ContactCTA
       :article-title="blogPostProps.title"
       :article-link="path"

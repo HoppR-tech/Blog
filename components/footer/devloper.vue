@@ -29,5 +29,21 @@ const socialLinks = [
         <Icon :name="link.icon" size="1.5em" aria-hidden="true" />
       </NuxtLink>
     </div>
+
+    <hr class="border-gray-300 dark:border-zinc-500 my-4">
+    <p class="text-black dark:text-zinc-300 text-xl font-semibold">
+      Newsletter
+    </p>
+    <p class="dark:text-zinc-300">
+      Veille craft, cloud & archi — une fois par mois.
+    </p>
+    <a
+      href="https://3689c672.sibforms.com/serve/MUIFANdy1i8fx29Hhd4mIYF3WHfNC5hCiZOJh_6RZJ_eNu-I5ZMIXKP-XNj2_aZMXcUrtRVsViCXljK3jqlVm_kAoM57VnZ5rL-_NEOBJAITTjSz_6eQMnnwiiUo4Ou-MIk3gAA-LUHV7mB3vHRixJK7bYYUHSkqxFfI00KEglVaLzGnexPmyPXLkZ3ZIUEnif9NNmmLQX7PEcWaTA=="
+      target="_blank"
+      rel="noopener"
+      class="block text-center w-full border-2 border-hoppr-purple text-hoppr-purple dark:border-hoppr-green dark:text-hoppr-green p-2.5 sm:p-3 rounded-lg font-semibold mt-3 text-sm transition-all duration-300 hover:bg-hoppr-purple hover:text-white dark:hover:bg-hoppr-green dark:hover:text-hoppr-black hover:shadow-lg hover:scale-105"
+    >
+      Je m'abonne
+    </a>
   </div>
 </template>

@@ -159,17 +159,13 @@ const allProducts = Array.from({ length: 50 }, (_, i) => ({
 
 ---
 
-> 
-
 ## Un compilateur pour optimiser automatiquement
 
 React Compiler arrive avec une idée simple: écrire du code normal et laisser le compilateur optimiser automatiquement
 
 ### Contexte
 
-Le projet s'appelait à l'origine React Forget — le nom résumait bien l'ambition. Annoncé à React Conf 2021, il a été testé en production chez Meta (Instagram, Quest Store) pendant plusieurs années avant d'être ouvert au public.
-
-[file](https://www.youtube.com/watch?v=lGEMwh32soc)
+Le projet s'appelait à l'origine React Forget — le nom résumait bien l'ambition. [Annoncé à React Conf 2021](https://www.youtube.com/watch?v=lGEMwh32soc), il a été testé en production chez Meta (Instagram, Quest Store) pendant plusieurs années avant d'être ouvert au public.
 
 ---
 
@@ -312,7 +308,7 @@ Le compilateur opère au niveau de l'expression — plus fin qu'un `useMemo` cla
 
 ### Résultat (schéma simplifié)
 
-```plain text
+```javascript
 if (cache !== valeur) {
 	// recalcul
 	cache = valeur;
@@ -445,7 +441,7 @@ React Compiler est une évolution, Il présente plusieurs avantages et contribut
 
 ---
 
-## Mes Recommandation
+## Mes Recommandations
 
 Si tu as la chance de démarrer un nouveau projet, active le compilateur dès le début. C'est le cas idéal, tu pars d'une base propre sans comportement existant à préserver.
 

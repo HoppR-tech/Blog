@@ -1,6 +1,6 @@
 ---
 title: "Le vert ne suffit pas : 3 façons de douter de son code"
-date: 2026-06-19T07:06:35.396Z
+date: 2026-06-19T07:06:13.019Z
 description: "Retour de DevLille 2026, côté Java/Kotlin/Springboot.  BUILD SUCCESS. Coverage à 98 %. Toute la suite de tests au vert. On connaît tous ce petit shot de dopamine du pipeline tout propre. Et on connaît"
 image: ./assets/cover-image.webp
 alt: "Illustration de couverture pour l'article \"Le vert ne suffit pas\". Au centre, un grand badge vert fissuré affichant \"ALL TESTS GREEN : Coverage 98%\" avec une coche, entouré de flammes et de fumée : symbolisant une fausse confiance. 

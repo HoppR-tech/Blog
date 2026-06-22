@@ -24,7 +24,11 @@ const props = withDefaults(defineProps<Props>(), {
   imageBottom: '',
 })
 
-const title = computed(() => props.mainTitle.slice(0, 60))
+// nuxt-og-image serializes props into the image URL and coerces numeric-looking
+// values back to numbers on deserialization (e.g. the 404 page's mainTitle "404"
+// arrives as the number 404). Coerce to string before slicing to avoid a 500.
+const title = computed(() => String(props.mainTitle ?? '').slice(0, 60))
+const descriptionText = computed(() => String(props.description ?? '').slice(0, 200))
 </script>
 
 <template>
@@ -59,7 +63,7 @@ const title = computed(() => props.mainTitle.slice(0, 60))
         <span>{{ title }}</span>
       </h1>
       <p class="text-[32px] text-[#E4E4E7] leading-tight">
-        {{ description?.slice(0, 200) }}
+        {{ descriptionText }}
       </p>
     </div>
 

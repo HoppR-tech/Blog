@@ -34,8 +34,10 @@ services:
       # volume (SQLite WAL tolerates this for a read-mostly content cache).
       - blog-content-db:/usr/src/app/.output/server/.data
     healthcheck:
-      # curl/wget are absent from the oven/bun image, so probe via bun.
-      test: ["CMD", "bun", "-e", "fetch('http://localhost:3000/').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      # Readiness probe: /healthz verifies the content DB, not just that the
+      # process serves a page. curl/wget are absent from the oven/bun image, so
+      # probe via bun; AbortSignal keeps the fetch from hanging past the timeout.
+      test: ["CMD", "bun", "-e", "fetch('http://localhost:3000/healthz',{signal:AbortSignal.timeout(4000)}).then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
       interval: 30s
       timeout: 5s
       retries: 3

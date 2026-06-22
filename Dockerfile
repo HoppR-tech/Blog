@@ -33,8 +33,21 @@ COPY --from=build /usr/src/app/content/blogs content/blogs
 COPY --from=build /usr/src/app/package.json .
 COPY entrypoint.sh .
 
+# Runtime config (these ENVs are in the build stage only, useless at runtime otherwise)
+ENV NODE_ENV=production
+ENV NITRO_PRESET=bun
+# Nuxt Content's runtime content sync (Notion/GitHub -> SQLite) can exceed Bun's
+# default 10s idle timeout on a cold start. Without this the first render times out.
+ENV NITRO_BUN_IDLE_TIMEOUT=300
+
+# The container runs as the non-root `bun` user. Nuxt Content creates its runtime
+# SQLite database under .output/server/.data, so that tree must be writable by bun.
+# Pre-creating .data (owned by bun) also lets a mounted volume inherit the right
+# ownership on first creation.
 USER root
-RUN chmod +x entrypoint.sh && chown -R bun:bun .data/
+RUN chmod +x entrypoint.sh \
+    && mkdir -p .output/server/.data \
+    && chown -R bun:bun .output .data content
 USER bun
 
 EXPOSE 3000/tcp

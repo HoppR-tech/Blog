@@ -20,7 +20,8 @@ COPY . .
 
 ENV NODE_ENV=production
 ENV NITRO_PRESET=bun
-ENV NITRO_BUN_IDLE_TIMEOUT=300
+# Bun.serve caps idleTimeout at 255s (values above throw at startup).
+ENV NITRO_BUN_IDLE_TIMEOUT=255
 RUN bun run build
 
 # --- Stage 3: Production image (minimal) ---
@@ -38,7 +39,8 @@ ENV NODE_ENV=production
 ENV NITRO_PRESET=bun
 # Nuxt Content's runtime content sync (Notion/GitHub -> SQLite) can exceed Bun's
 # default 10s idle timeout on a cold start. Without this the first render times out.
-ENV NITRO_BUN_IDLE_TIMEOUT=300
+# 255s is Bun.serve's maximum (higher values throw ERR_INVALID_ARG_TYPE at startup).
+ENV NITRO_BUN_IDLE_TIMEOUT=255
 
 # The container runs as the non-root `bun` user. Nuxt Content creates its runtime
 # SQLite database under .output/server/.data, so that tree must be writable by bun.

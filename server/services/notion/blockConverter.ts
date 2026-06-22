@@ -8,6 +8,10 @@ interface image {
   alt: string
 }
 
+// Fallback alt text for Notion images that have no caption. Keeps the image
+// (and the article) accessible instead of dropping it.
+const IMAGE_FALLBACK_ALT = 'Illustration de l\'article'
+
 export async function convertBlocksToMarkdown(notionClient: NotionClientInterface, blocks: BlockObjectResponse[]): Promise<{ markdownContent: string, images: image[] }> {
   const n2m = new NotionToMarkdown({ notionClient })
   const images: { url: string, alt: string }[] = []
@@ -63,17 +67,24 @@ export async function convertBlocksToMarkdown(notionClient: NotionClientInterfac
           if (block.type === 'image') {
             const imageBlock = block as any
             const imageUrl = imageBlock.image?.external?.url || imageBlock.image?.file?.url
-            const imageAlt = imageBlock.image?.caption?.[0]?.plain_text || ''
+            const imageAlt = imageBlock.image?.caption?.[0]?.plain_text?.trim() || ''
 
-            // Throw an error if image has no alt text
-            if (!imageAlt && imageUrl) {
-              throw new Error(`Image without alt text detected: ${imageUrl}`)
+            if (imageUrl) {
+              // An image without a Notion caption used to throw here; the error was
+              // then swallowed by the catch below, turning the block into an empty
+              // string and silently dropping the image from the published article.
+              // Keep the image instead: fall back to a generic alt and warn so
+              // caption-less images can be spotted and fixed in Notion.
+              if (!imageAlt) {
+                console.warn(`Image without caption in Notion, using fallback alt text: ${imageUrl}`)
+                md = `![${IMAGE_FALLBACK_ALT}](${imageUrl})`
+              }
+
+              images.push({
+                url: imageUrl,
+                alt: imageAlt || IMAGE_FALLBACK_ALT,
+              })
             }
-
-            images.push({
-              url: imageUrl,
-              alt: imageAlt,
-            })
           }
 
           return md

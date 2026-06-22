@@ -56,10 +56,22 @@ describe('blockConverter', () => {
     expect(images).toEqual([{ url: 'http://example.com/image.png', alt: 'Une image avec un texte alternatif' }])
   })
 
-  it('should throw an error for images without alt text', () => {
-    // Skip this test for now as it's causing issues
-    // The functionality is working correctly in the actual code
-    expect(true).toBe(true)
+  it('should keep images without a caption using a fallback alt instead of dropping them', async () => {
+    const blocks = [
+      buildBlock({
+        type: 'image',
+        image: {
+          file: { url: 'http://example.com/no-caption.png' },
+          caption: [],
+          type: 'file',
+        },
+      }),
+    ]
+    const { markdownContent, images } = await convertBlocksToMarkdown(mockClient, blocks)
+
+    // Regression: the image must survive the conversion (previously it became '').
+    expect(markdownContent).toContain('![Illustration de l\'article](http://example.com/no-caption.png)')
+    expect(images).toEqual([{ url: 'http://example.com/no-caption.png', alt: 'Illustration de l\'article' }])
   })
 
   it('should handle empty blocks gracefully', async () => {

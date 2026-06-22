@@ -1,7 +1,7 @@
 import type { BlockObjectResponse } from '@notionhq/client/build/src/api-endpoints'
 import { Client } from '@notionhq/client'
 import { describe, expect, it } from 'vitest'
-import { convertBlocksToMarkdown } from './blockConverter'
+import { convertBlocksToMarkdown, MissingImageAltError } from './blockConverter'
 
 const mockClient = new Client({ auth: 'test-token' })
 
@@ -56,9 +56,10 @@ describe('blockConverter', () => {
     expect(images).toEqual([{ url: 'http://example.com/image.png', alt: 'Une image avec un texte alternatif' }])
   })
 
-  it('should keep images without a caption using a fallback alt instead of dropping them', async () => {
+  it('should throw a clear error for an image without alt text (so the article is not published)', async () => {
     const blocks = [
       buildBlock({
+        id: 'block-no-caption',
         type: 'image',
         image: {
           file: { url: 'http://example.com/no-caption.png' },
@@ -67,11 +68,25 @@ describe('blockConverter', () => {
         },
       }),
     ]
-    const { markdownContent, images } = await convertBlocksToMarkdown(mockClient, blocks)
 
-    // Regression: the image must survive the conversion (previously it became '').
-    expect(markdownContent).toContain('![Illustration de l\'article](http://example.com/no-caption.png)')
-    expect(images).toEqual([{ url: 'http://example.com/no-caption.png', alt: 'Illustration de l\'article' }])
+    await expect(convertBlocksToMarkdown(mockClient, blocks)).rejects.toThrow(MissingImageAltError)
+    await expect(convertBlocksToMarkdown(mockClient, blocks)).rejects.toThrow(/sans texte alternatif.*block-no-caption/s)
+  })
+
+  it('should treat a whitespace-only caption as missing alt text', async () => {
+    const blocks = [
+      buildBlock({
+        id: 'block-blank-caption',
+        type: 'image',
+        image: {
+          file: { url: 'http://example.com/blank.png' },
+          caption: [{ plain_text: '   ' }],
+          type: 'file',
+        },
+      }),
+    ]
+
+    await expect(convertBlocksToMarkdown(mockClient, blocks)).rejects.toThrow(MissingImageAltError)
   })
 
   it('should handle empty blocks gracefully', async () => {
@@ -173,6 +188,6 @@ describe('blockConverter', () => {
 function buildBlock(block: any): BlockObjectResponse {
   return {
     ...block,
-    id: block.type,
+    id: block.id ?? block.type,
   }
 }

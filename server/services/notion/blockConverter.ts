@@ -8,9 +8,21 @@ interface image {
   alt: string
 }
 
-// Fallback alt text for Notion images that have no caption. Keeps the image
-// (and the article) accessible instead of dropping it.
-const IMAGE_FALLBACK_ALT = 'Illustration de l\'article'
+/**
+ * Raised when a Notion image block has no caption (alt text). It is rethrown
+ * past the per-block catch so it aborts the whole conversion: an article with a
+ * caption-less image must NOT be published, and the publish flow surfaces this
+ * message to the author instead of silently dropping the image.
+ */
+export class MissingImageAltError extends Error {
+  constructor(blockId: string) {
+    super(
+      `Image sans texte alternatif détectée dans Notion (bloc ${blockId}). `
+      + `Ajoutez une légende (caption) à chaque image dans Notion avant de publier l'article.`,
+    )
+    this.name = 'MissingImageAltError'
+  }
+}
 
 export async function convertBlocksToMarkdown(notionClient: NotionClientInterface, blocks: BlockObjectResponse[]): Promise<{ markdownContent: string, images: image[] }> {
   const n2m = new NotionToMarkdown({ notionClient })
@@ -69,27 +81,27 @@ export async function convertBlocksToMarkdown(notionClient: NotionClientInterfac
             const imageUrl = imageBlock.image?.external?.url || imageBlock.image?.file?.url
             const imageAlt = imageBlock.image?.caption?.[0]?.plain_text?.trim() || ''
 
-            if (imageUrl) {
-              // An image without a Notion caption used to throw here; the error was
-              // then swallowed by the catch below, turning the block into an empty
-              // string and silently dropping the image from the published article.
-              // Keep the image instead: fall back to a generic alt and warn so
-              // caption-less images can be spotted and fixed in Notion.
-              if (!imageAlt) {
-                console.warn(`Image without caption in Notion, using fallback alt text: ${imageUrl}`)
-                md = `![${IMAGE_FALLBACK_ALT}](${imageUrl})`
-              }
-
-              images.push({
-                url: imageUrl,
-                alt: imageAlt || IMAGE_FALLBACK_ALT,
-              })
+            // Every image must have alt text. Fail loudly (and abort the publish)
+            // rather than dropping the image: missing alt is an accessibility
+            // defect the author must fix by adding a caption in Notion.
+            if (imageUrl && !imageAlt) {
+              throw new MissingImageAltError(imageBlock.id ?? 'unknown')
             }
+
+            images.push({
+              url: imageUrl,
+              alt: imageAlt,
+            })
           }
 
           return md
         }
         catch (error) {
+          // Accessibility errors must abort the conversion so the article is not
+          // published; only genuinely block-local conversion glitches are skipped.
+          if (error instanceof MissingImageAltError) {
+            throw error
+          }
           console.error(`Error converting block ${i + index + 1}:`, error)
           return ''
         }

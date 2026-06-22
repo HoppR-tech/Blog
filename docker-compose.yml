@@ -25,14 +25,10 @@ services:
         target: slack_bot_token
     networks:
       - traefik-network
-    volumes:
-      # Persist the Nuxt Content runtime SQLite DB so it is not rebuilt from
-      # Notion/GitHub on every restart (the cold-start sync is what caused the
-      # 10s render timeouts). The DB is regenerable cache, so a per-node local
-      # volume is acceptable. NOTE: replicas are spread across nodes and each
-      # gets its own copy; should two land on the same node they share this
-      # volume (SQLite WAL tolerates this for a read-mostly content cache).
-      - blog-content-db:/usr/src/app/.output/server/.data
+    # No volume for the Nuxt Content DB on purpose: the content is baked into the
+    # image at build time and restored to .output/server/.data on boot. Persisting
+    # it on a volume served STALE content across deploys (deleted/updated articles
+    # lingered). Each deploy must start from the freshly built content DB.
     healthcheck:
       # Readiness probe: /healthz verifies the content DB, not just that the
       # process serves a page. curl/wget are absent from the oven/bun image, so
@@ -85,9 +81,6 @@ services:
 networks:
   traefik-network:
     external: true
-
-volumes:
-  blog-content-db:
 
 secrets:
   blog-hoppr-prod-notion-api-key:

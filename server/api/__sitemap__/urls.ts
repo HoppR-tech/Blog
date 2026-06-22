@@ -2,6 +2,7 @@ import type { H3Event } from 'h3'
 import type { RawArticle } from '@/utils/authorsAggregation'
 import { aggregateAuthors } from '@/utils/authorsAggregation'
 import { categories } from '@/utils/categories'
+import { isSitemapArticle } from '@/utils/sitemapFilters'
 
 // Server-side queryCollection has signature (event, collection) but auto-import types only expose client-side (collection)
 // @ts-expect-error - Nuxt Content v3 server auto-import provides 2-arg overload at runtime
@@ -12,12 +13,17 @@ const MIN_ARTICLES_FOR_TAG_INDEX = 3
 interface SitemapArticle {
   path: string
   date?: string
+  published?: boolean
   tags?: string[]
   authors?: Array<{ id?: string, name?: string }>
 }
 
 export default defineEventHandler(async (event) => {
-  const articles: SitemapArticle[] = await serverQueryCollection(event, 'blogs').order('date', 'DESC').all()
+  const allArticles: SitemapArticle[] = await serverQueryCollection(event, 'blogs').order('date', 'DESC').all()
+
+  // Only advertise real, published article pages (see isSitemapArticle): drafts
+  // and malformed entries would render the catch-all 404 page for crawlers.
+  const articles: SitemapArticle[] = allArticles.filter(isSitemapArticle)
 
   const articleUrls = articles.map((article: SitemapArticle) => ({
     loc: article.path,

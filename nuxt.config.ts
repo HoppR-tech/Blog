@@ -97,6 +97,11 @@ export default defineNuxtConfig({
   },
 
   sitemap: {
+    // Rely solely on our own filtered source. Auto-detected app sources
+    // (prerendered routes + Nuxt Content docs) also surfaced drafts and
+    // malformed entries (e.g. /<notion-id>) that render the 404 page.
+    // /api/__sitemap__/urls already builds the full, published-only list.
+    excludeAppSources: true,
     sources: ['/api/__sitemap__/urls'],
     exclude: ['/404'],
   },

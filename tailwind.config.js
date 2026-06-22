@@ -45,6 +45,9 @@ module.exports = {
               fontSize: 'inherit',
               fontWeight: 'inherit',
               padding: '0',
+              // The border above is for inline code only; code blocks must not
+              // inherit it (otherwise the block shows an inner frame).
+              border: 'none',
             },
           },
         },
@@ -58,6 +61,8 @@ module.exports = {
             'pre code': {
               backgroundColor: 'transparent',
               color: 'inherit',
+              // Same here: keep code blocks identical to light mode (no frame).
+              border: 'none',
             },
           },
         },

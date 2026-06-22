@@ -70,6 +70,10 @@ async function copyCode() {
 .prose-pre-wrapper pre.shiki code.shiki {
   background-color: transparent !important;
   padding: 0 !important;
+  /* The prose typography "code" rule adds a border for inline code; code blocks
+     must never inherit it (it differed between light/dark and drew an inner
+     frame in dark mode). Force no border so blocks look identical in both modes. */
+  border: none !important;
   font-size: 0.875rem;
   display: block;
   width: fit-content;

@@ -8,11 +8,11 @@ function createFrontmatter(post: BlogPost, assetsFolder: string = './assets'): s
   const formattedAuthors = formatPersons(post.authors)
   const formattedReviewers = formatPersons(post.reviewers)
   return `---
-title: "${post.title.replace(/"/g, '\\"')}"
+title: ${escapeYaml(post.title)}
 date: ${post.date}
-description: "${post.description.replace(/"/g, '\\"')}"
+description: ${escapeYaml(post.description)}
 image: ${assetsFolder}/cover-image.webp
-alt: "${post.alt.replace(/"/g, '\\"')}"
+alt: ${escapeYaml(post.alt)}
 ogImage: ${assetsFolder}/cover-image.webp
 tags: [${post.tags.map(tag => `'${tag.toLowerCase()}'`).join(', ')}]
 published: ${post.published}
@@ -26,9 +26,13 @@ ${formattedReviewers}
 `
 }
 
+// Wrap a string as a YAML double-quoted scalar that is always valid: escape
+// backslashes and quotes, and collapse newlines to spaces. A raw newline (esp.
+// with trailing whitespace) inside a quoted scalar breaks the strict YAML parser
+// used by Nuxt Content, which silently drops every field after it (tags, authors,
+// published…). Used for every free-text field (title, description, alt, bio…).
 function escapeYaml(value: string): string {
-  // Escape doubles quotes and wrap. Bio can be multi-line; collapse newlines.
-  return `"${value.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\r?\n/g, ' ').trim()}"`
+  return `"${value.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\s*\r?\n\s*/g, ' ').trim()}"`
 }
 
 function formatPersons(people: Person[]): string {

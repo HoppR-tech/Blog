@@ -32,7 +32,7 @@ ${formattedReviewers}
 // used by Nuxt Content, which silently drops every field after it (tags, authors,
 // published…). Used for every free-text field (title, description, alt, bio…).
 function escapeYaml(value: string): string {
-  return `"${value.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\s*\r?\n\s*/g, ' ').trim()}"`
+  return `"${value.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\s*\n\s*/g, ' ').trim()}"`
 }
 
 function formatPersons(people: Person[]): string {

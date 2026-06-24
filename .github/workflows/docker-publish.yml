@@ -9,10 +9,7 @@ on:
 
 concurrency:
   group: deploy-production
-  # Cancel an older still-running/queued deploy when a newer push arrives so the
-  # latest commit always wins. With `false`, a queued run that never gets a runner
-  # (e.g. during a runner redeploy) deadlocks every later deploy behind it.
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 env:
   REGISTRY: ghcr.io

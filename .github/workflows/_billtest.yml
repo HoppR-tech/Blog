@@ -1,7 +1,11 @@
 name: _billtest
 on: workflow_dispatch
 jobs:
-  hosted:
-    runs-on: ubuntu-latest
+  sh_min:
+    runs-on: self-hosted
     steps:
-      - run: echo "hosted runner OK"
+      - run: echo "self-hosted (label minimal) OK"
+  sh_full:
+    runs-on: [self-hosted, linux, M]
+    steps:
+      - run: echo "self-hosted (self-hosted,linux,M) OK"

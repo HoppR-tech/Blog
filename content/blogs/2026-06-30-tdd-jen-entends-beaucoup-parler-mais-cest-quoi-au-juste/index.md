@@ -57,7 +57,7 @@ Il repose sur trois lois importantes :
 
 De cela, on peut tirer un cycle de trois étapes :
 
-- **🔴 RED** : J’écris un test qui **échoue**, car la fonctionnalité n’existe pas encore (_"Je veux que_ _`add(2, 3)`_ _retourne_ _`5`__, mais pour l’instant, ça ne compile même pas."_)
+- **🔴 RED** : J’écris un test qui **échoue**, car la fonctionnalité n’existe pas encore (_"Je veux que_ _`add(2, 3)`_ _retourne_ _`5`_ _, mais pour l’instant, ça ne compile même pas."_)
 
 - **🟢 GREEN** : J’écris le **code minimal** pour faire passer le test (_"OK, je retourne_ _`5`_ _en dur. C’est dégueu, mais ça passe."_)
 
@@ -104,21 +104,19 @@ Alors comme ça [tu n'as pas les bases](https://youtu.be/2bjk26RwjyU?si=sO2FNrBe
 
 C’est parti, faisons un peu de Java, je sais que tout le monde adore ça ! Un kata très connu est celui du [FizzBuzz](https://fr.wikipedia.org/wiki/Fizz_buzz). La règle est d’écrire une méthode qui prend un nombre en paramètre et qui : 
 
-- Retourne `Fizz` si le nombre est divisible par 3.
+- Retourne `Fizz` si le nombre est divisible par 3
 
-- Retourne `Buzz` si divisible par 5.
+- Retourne `Buzz` si divisible par 5
 
-- Retourne `FizzBuzz` si divisible par 3 et par 5 (donc par 15).
+- Retourne `FizzBuzz` si divisible par 3 et par 5 (donc par 15)
 
-- Retourne le nombre sinon.
+- Retourne le nombre sinon
 
 Premier baby step ? Commencer par le premier nombre : 1 doit renvoyer 1.
 
-
-
 Jusque là tout va bien. Deuxième baby step ? Et bien on passe à 2 : le code va devoir renvoyer autre chose que du “dur”. Troisième baby step ? 3 doit renvoyer `Fizz`.  Je vais t’épargner le code de chaque itération, mais on pourrait résumer les différentes étapes comme suit :
 
-|  | Action | Code | Statut tests | Commentaire |
+|  | Action | Code | Statut tests | Comment. |
 | --- | --- | --- | --- | --- |
 | 1 | 🔴 Test pour  1 | assertEquals("1", fizzBuzz(1)) | 🔴 | Nombres |
 | 2 | 🟢 Gère  1  en dur | return "1" | 🟢 |  |
@@ -133,23 +131,21 @@ Jusque là tout va bien. Deuxième baby step ? Et bien on passe à 2 : le code v
 | 9 | 🟢 Gère  6  en dur | if (n == 6) return "Fizz" | 🟢 |  |
 | 10 | 🔴 Test pour  9  (Fizz) | assertEquals("Fizz", fizzBuzz(9)) | 🔴 |  |
 | 11 | 🟢 Gère  9  en dur | if (n == 9) return "Fizz" | 🟢 |  |
-| 12 | 🔵 Généralisation avec modulo | if (n % 3 == 0) return "Fizz"; 
- | 🟢 |  |
+| 12 | 🔵 Généralisation modulo | if (n % 3 == 0) return "Fizz"; | 🟢 |  |
 | 13 | 🔴 Test pour  5  (Buzz) | assertEquals("Buzz", fizzBuzz(5)) | 🔴 | Buzz |
 | 14 | 🟢 Gère  5  en dur | if (n == 5) return "Buzz" | 🟢 |  |
 | 15 | 🔴 Test pour  10  (Buzz) | assertEquals("Buzz", fizzBuzz(10)) | 🔴 |  |
 | 16 | 🟢 Gère  10  en dur | if (n == 10) return "Buzz" | 🟢 |  |
 | 17 | 🔴 Test pour  20  (Buzz) | assertEquals("Buzz", fizzBuzz(20)) | 🔴 |  |
 | 18 | 🟢 Gère  20  en dur | if (n == 20) return "Buzz" | 🟢 |  |
-| 19 | 🔵 Généralisation avec modulo | if (n % 5 == 0) return "Buzz"; 
- | 🟢 |  |
+| 19 | 🔵 Généralisation modulo | if (n % 5 == 0) return "Buzz"; | 🟢 |  |
 | 20 | 🔴 Test pour  15  (FizzBuzz) | assertEquals("FizzBuzz", fizzBuzz(15) | 🔴 | FizzBuzz |
 | 21 | 🟢 Gère  15  en dur | if (n == 15) return "FizzBuzz" | 🟢 |  |
 | 22 | 🔴 Test pour  30  (FizzBuzz) | assertEquals("FizzBuzz", fizzBuzz(30) | 🔴 |  |
 | 23 | 🟢 Gère  30  en dur | if (n == 30) return "FizzBuzz" | 🟢 |  |
 | 24 | 🔴 Test pour  45  (FizzBuzz) | assertEquals("FizzBuzz", fizzBuzz(45) | 🔴 |  |
 | 25 | 🟢 Gère  45  en dur | if (n == 45) return "FizzBuzz" | 🟢 |  |
-| 26 | 🔵 Généralisation avec modulo | if (n % 15 == 0) return "FizzBuzz"; | 🟢 |  |
+| 26 | 🔵 Généralisation modulo | if (n % 15 == 0) return "FizzBuzz"; | 🟢 |  |
 
 
 > 💡 Ici, tu noteras que l’on fait 3 tests pour chaque étape avant le refacto, pour respecter une triangulation et être sûr de la généralisation pour chaque étape. C’est une manière de faire très scolaire, en pratique tu peux sauter quelques étapes sur un sujet aussi simple
@@ -169,13 +165,13 @@ public class FizzBuzz {
 
 Et bien entendu, il n’y a pas forcément qu’une façon de faire, je te propose la mienne. N’hésite pas à refaire l’exercice avec une autre implémentation/d’autres étapes. De plus, on ne manquera pas de compléter avec d’autres tests pertinents si nécessaire. Mais en résumé on retient bien ici que :
 
-- **On avance par baby steps** : Un seul nouveau comportement à la fois.
+- **On avance par baby steps** : Un seul nouveau comportement à la fois
 
-- **On ne généralise pas trop tôt** : On attend d’avoir plusieurs exemples avant de refactorer. Cela nous permet d’éviter d’aller trop loin trop tôt dans l’abstraction et de devoir retourner en arrière si cela bloque une implémentation.
+- **On ne généralise pas trop tôt** : On attend d’avoir plusieurs exemples avant de refactorer. Cela nous permet d’éviter d’aller trop loin trop tôt dans l’abstraction et de devoir retourner en arrière si cela bloque une implémentation
 
-- **Le code émerge des tests** : Pas de design "parfait" dès le début.
+- **Le code émerge des tests** : Pas de design "parfait" dès le début
 
-- **On refactore ensuite** : On améliore uniquement quand les tests sont verts.
+- **On refactore ensuite** : On améliore uniquement quand les tests sont verts
 
 Oui mais là c’est du Java ! Moi je code surtout en Python/Go/JavaScript/etc.
 

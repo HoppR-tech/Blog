@@ -52,6 +52,22 @@ describe('postChecker', () => {
     })
   })
 
+  describe('check tags', () => {
+    it('should throw Error when a tag contains an apostrophe', () => {
+      const post = buildDefaultPost()
+      post.tags = ['événement', '2026', 'agi\'lille', 'rex']
+      expect(() => checkPost(post)).toThrowError(
+        'Tag "agi\'lille" contains an apostrophe (\'), which breaks the article frontmatter. Rename the tag in Notion before publishing.',
+      )
+    })
+
+    it('should not throw Error for tags without apostrophe', () => {
+      const post = buildDefaultPost()
+      post.tags = ['événement', '2026', 'agilille', 'rex']
+      expect(() => checkPost(post)).not.toThrowError()
+    })
+  })
+
   describe('check blocks', () => {
     const paragraphBlock = buildDefaultParagraphBlock()
     const heading1Block = buildDefaultHeading1Block()

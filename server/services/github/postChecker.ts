@@ -5,6 +5,7 @@ export function checkPost(post: BlogPost) {
   checkImage(post.image)
   checkDate(post.date)
   checkContent(post.content)
+  checkTags(post.tags)
 }
 
 function checkImage(image: string) {
@@ -23,6 +24,14 @@ function checkDate(date: string) {
 function checkContent(content: string) {
   if (!content)
     throw new Error('Content is missing')
+}
+
+// Tags are serialized as single-quoted YAML scalars in the frontmatter: an
+// apostrophe inside a tag closes the scalar early and breaks the whole build.
+function checkTags(tags: string[]) {
+  const invalidTag = tags.find(tag => tag.includes('\''))
+  if (invalidTag)
+    throw new Error(`Tag "${invalidTag}" contains an apostrophe ('), which breaks the article frontmatter. Rename the tag in Notion before publishing.`)
 }
 
 export function checkBlocks(blocks: BlockObjectResponse[]) {

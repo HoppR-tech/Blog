@@ -5,7 +5,7 @@ description: "Mercredi 24 et jeudi 25 juin 2026, sous la canicule, j'étais à l
 image: ./assets/cover-image.webp
 alt: "Visuel de Emma en train de pitcher HoppR"
 ogImage: ./assets/cover-image.webp
-tags: ['événement', '2026', 'agi'lille', 'rex', 'others']
+tags: ['événement', '2026', 'agilille', 'rex', 'others']
 published: true
 authors:
   - id: 0bb914a6-f882-4951-bee6-53e8e8abb807

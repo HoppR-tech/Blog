@@ -38,6 +38,7 @@ Le fonctionnement réel est plus simple à décrire : le texte est découpé en 
 Un LLM génère donc une réponse **token après token**. Sa puissance ne vient pas d’une règle magique, mais de la quantité de données, de paramètres et de calcul mobilisée pour apprendre à faire ces prédictions.
 
 > **En bref**
+> Un Large Language Model est un réseau de neurones entraîné à prédire le prochain token d’une séquence. Le texte passe par un tokenizer, devient une suite de vecteurs, puis traverse des blocs Transformer composés principalement d’attention et de réseaux feed-forward. Le pré-entraînement lui apprend les régularités du langage ; le post-entraînement lui apprend à suivre des instructions et à se comporter comme un assistant.
 
 ---
 
@@ -67,7 +68,7 @@ Les valeurs sont fictives, mais le principe est exact. Le modèle calcule des sc
 
 L’architecture Transformer, introduite en 2017, a rendu ce traitement beaucoup plus efficace à grande échelle que les réseaux récurrents utilisés auparavant. Les modèles actuels l’ont fortement optimisée, mais ils reposent encore sur ses principes. ([Attention Is All You Need](https://arxiv.org/abs/1706.03762))
 
-### Le modèle n’est qu’une partie de l’assistant
+#### Le modèle n’est qu’une partie de l’assistant
 
 Un chatbot complet assemble souvent plusieurs composants :
 
@@ -141,7 +142,7 @@ Puis chaque fragment reçoit un identifiant :
 
 Ces identifiants désignent simplement des entrées dans le vocabulaire du modèle.
 
-### Pourquoi utiliser des sous-mots ?
+#### Pourquoi utiliser des sous-mots ?
 
 Un vocabulaire contenant tous les mots possibles serait trop grand et gérerait mal les noms propres, les fautes de frappe, le code ou les mots nouveaux. Les tokenizers utilisent donc souvent des **sous-mots** :
 
@@ -155,7 +156,7 @@ Les fragments fréquents peuvent devenir des tokens uniques, tandis que les term
 
 Le tokenizer a des conséquences concrètes. Il influence la longueur des séquences, le coût en tokens, la qualité multilingue et la capacité à traiter du code ou des nombres. Il ne peut pas être remplacé librement après l’entraînement, car chaque identifiant est lié à une représentation apprise par le modèle.
 
-### Les conversations sont aussi du texte
+#### Les conversations sont aussi du texte
 
 Une discussion est généralement convertie en une suite de tokens spéciaux :
 
@@ -190,7 +191,7 @@ J'ai ajouté un avocat dans la salade.
 
 Après plusieurs couches Transformer, sa représentation devient différente dans chaque phrase, parce que le modèle tient compte des mots qui l’entourent.
 
-### Ajouter la notion de position
+#### Ajouter la notion de position
 
 Le modèle doit aussi connaître l’ordre des tokens. Sans information de position, les phrases « le chien mord l’homme » et « l’homme mord le chien » contiendraient les mêmes éléments.
 
@@ -210,7 +211,7 @@ Un LLM contient une pile de blocs Transformer. Chaque bloc exécute surtout deux
 
 Des normalisations et des connexions résiduelles stabilisent le calcul et permettent de conserver les informations utiles d’une couche à la suivante.
 
-### L’attention : trouver les informations pertinentes
+#### L’attention : trouver les informations pertinentes
 
 Pour chaque token, le modèle construit trois représentations appelées **query**, **key** et **value**.
 
@@ -235,7 +236,7 @@ Token 4 peut voir : 1, 2, 3, 4
 
 L’attention utilise plusieurs têtes en parallèle. Elles peuvent apprendre des relations différentes, même si leurs rôles ne sont pas proprement séparés en catégories comme « grammaire » ou « mathématiques ».
 
-### Le MLP : transformer l’information
+#### Le MLP : transformer l’information
 
 Après l’attention, chaque token passe dans un petit réseau de neurones appelé **MLP** ou **feed-forward network**.
 
@@ -243,7 +244,7 @@ L’attention rassemble les informations utiles ; le MLP les transforme pour pr�
 
 Les LLM récents utilisent souvent des variantes comme **SwiGLU**, qui ajoutent un mécanisme de porte pour contrôler les caractéristiques transmises. ([GLU Variants Improve Transformer](https://arxiv.org/abs/2002.05202))
 
-### Pourquoi empiler autant de couches ?
+#### Pourquoi empiler autant de couches ?
 
 Une seule couche ne suffit pas à construire une représentation riche du texte. Les premières couches peuvent repérer des relations locales, tandis que les suivantes combinent ces informations pour représenter des structures plus abstraites.
 
@@ -280,13 +281,13 @@ Une étape d’entraînement suit alors ce cycle :
 
 Ce cycle est répété sur des milliards ou des milliers de milliards de tokens.
 
-### Où se trouvent les connaissances ?
+#### Où se trouvent les connaissances ?
 
 Les documents ne sont pas stockés tels quels dans une base interne. Les régularités apprises sont réparties entre les paramètres du réseau.
 
 Une règle grammaticale, une association factuelle ou une structure de code peut dépendre de nombreuses couches à la fois. Le modèle ressemble davantage à une compression statistique de ses données d’entraînement qu’à une encyclopédie dans laquelle il chercherait une page précise.
 
-### Pourquoi faut-il autant de GPU ?
+#### Pourquoi faut-il autant de GPU ?
 
 Un grand modèle et les états nécessaires à son entraînement ne tiennent pas sur un seul accélérateur. Le calcul est donc réparti entre plusieurs GPU : certains traitent des lots de données différents, d’autres se partagent les matrices ou les couches.
 
@@ -300,7 +301,7 @@ Les poids et les calculs utilisent aussi des formats numériques plus compacts, 
 
 Le **post-entraînement** lui apprend à produire des réponses plus utiles et plus adaptées au dialogue.
 
-### Le fine-tuning supervisé
+#### Le fine-tuning supervisé
 
 Le modèle est entraîné sur des exemples préparés :
 
@@ -311,13 +312,13 @@ Réponse attendue : ...
 
 Il apprend les formats de conversation, les réponses structurées, les appels d’outils et certains comportements de sécurité.
 
-### L’apprentissage par préférences
+#### L’apprentissage par préférences
 
 Plusieurs réponses peuvent être correctes, mais l’une peut être plus claire, mieux structurée ou plus prudente. Des humains ou d’autres modèles comparent alors des réponses, puis le système ajuste le LLM pour favoriser celles qui sont préférées.
 
 Le RLHF s’appuie sur un modèle de récompense et de l’apprentissage par renforcement. Des méthodes comme DPO apprennent plus directement à préférer une bonne réponse à une réponse rejetée. ([InstructGPT](https://arxiv.org/abs/2203.02155), [DPO](https://arxiv.org/abs/2305.18290))
 
-### Les modèles de raisonnement
+#### Les modèles de raisonnement
 
 Les modèles dits « raisonnants » utilisent souvent la même base Transformer. Leur post-entraînement les encourage à consacrer davantage de tokens aux problèmes difficiles, à tester plusieurs pistes et à vérifier certaines étapes.
 
@@ -331,15 +332,15 @@ Cette dépense supplémentaire de calcul peut améliorer les résultats en math�
 
 Lorsqu’un utilisateur envoie un prompt, l’inférence se déroule en deux phases.
 
-### Le prefill
+#### Le prefill
 
 Le modèle traite l’ensemble du prompt en parallèle et calcule les représentations nécessaires dans chaque couche. Cette phase influence surtout le délai avant le premier token.
 
-### Le décodage
+#### Le décodage
 
 Le modèle génère ensuite les tokens un par un. Cette phase est séquentielle, car chaque nouveau token dépend de celui qui vient d’être produit.
 
-### Le KV cache
+#### Le KV cache
 
 Sans optimisation, le modèle recalculerait tout le contexte à chaque token. Le **KV cache** (pour Key Value cache) conserve les informations déjà calculées par l’attention.
 
@@ -351,7 +352,7 @@ Cette mémoire accélère fortement la génération, mais elle grossit avec la l
 
 Les modèles modernes combinent plusieurs techniques. Chacune répond à un problème précis : réduire la mémoire, accélérer la génération, augmenter la capacité ou adapter le modèle à un usage.
 
-### GQA et MLA : réduire le coût du KV cache
+#### GQA et MLA : réduire le coût du KV cache
 
 Dans l’attention multi-têtes classique, chaque tête conserve ses propres keys et values. Cela produit un cache volumineux.
 
@@ -359,13 +360,13 @@ La **Grouped-Query Attention**, ou GQA, permet à plusieurs têtes de query de p
 
 La **Multi-head Latent Attention**, utilisée notamment dans la famille DeepSeek, compresse davantage les informations stockées dans le cache. Le principe reste le même : limiter la mémoire et les transferts pendant la génération.
 
-### FlashAttention : mieux utiliser la mémoire du GPU
+#### FlashAttention : mieux utiliser la mémoire du GPU
 
 L’attention complète compare de nombreux tokens entre eux et produit de grandes données intermédiaires. **FlashAttention** réorganise le calcul par blocs pour éviter des lectures et écritures inutiles dans la mémoire du GPU.
 
 Le résultat mathématique ne change pas, mais l’exécution devient plus rapide et consomme moins de mémoire. ([FlashAttention](https://arxiv.org/abs/2205.14135))
 
-### Mixture of Experts : activer seulement une partie du modèle
+#### Mixture of Experts : activer seulement une partie du modèle
 
 Dans un modèle dense, chaque token traverse le même MLP. Une architecture **Mixture of Experts**, ou MoE, remplace ce MLP par plusieurs experts.
 
@@ -377,19 +378,19 @@ Cette approche augmente la capacité sans multiplier le coût de calcul dans les
 
 Les experts ne correspondent pas forcément à des catégories claires comme « français », « Python » ou « mathématiques ». Leurs spécialisations sont apprises et restent souvent difficiles à interpréter. ([Mixtral of Experts](https://arxiv.org/abs/2401.04088), [DeepSeek-V3](https://arxiv.org/abs/2412.19437))
 
-### Attention locale et contexte long
+#### Attention locale et contexte long
 
 L’attention complète devient coûteuse lorsque le contexte s’allonge. Certains modèles utilisent donc une **attention locale**, dans laquelle un token ne consulte qu’une fenêtre récente. Des couches globales sont ajoutées à intervalles réguliers pour faire circuler l’information à plus longue distance.
 
 Les modèles doivent également être entraînés ou adaptés pour exploiter les positions longues. Des techniques comme YaRN étendent les encodages RoPE, mais une fenêtre annoncée à 128 000 tokens ne garantit pas que le modèle retrouvera chaque détail avec la même fiabilité. ([YaRN](https://arxiv.org/abs/2309.00071))
 
-### Prédiction multi-token et décodage spéculatif
+#### Prédiction multi-token et décodage spéculatif
 
 Un modèle autoregressif classique prédit un token à la fois. Certaines architectures ajoutent des têtes capables de proposer plusieurs tokens futurs.
 
 Le **décodage spéculatif** suit une idée proche : un petit modèle prépare rapidement plusieurs tokens, puis le grand modèle les vérifie en parallèle. Lorsque les propositions sont acceptées, plusieurs tokens sont générés en un seul passage du modèle principal. ([Fast Inference from Transformers via Speculative Decoding](https://arxiv.org/abs/2211.17192))
 
-### Quantification : utiliser moins de bits
+#### Quantification : utiliser moins de bits
 
 Les poids sont souvent stockés en 16 bits pendant l’entraînement ou le déploiement haut de gamme. La **quantification** les représente avec 8 ou 4 bits afin de réduire la mémoire et la bande passante.
 
@@ -403,13 +404,13 @@ La quantification introduit une approximation, si bien que les méthodes moderne
 
 Toutes les évolutions ne nécessitent pas un nouveau pré-entraînement.
 
-### LoRA
+#### LoRA
 
 **LoRA** ajoute de petites matrices entraînables à certaines couches, tandis que les poids principaux restent figés. L’adaptation utilise alors beaucoup moins de mémoire qu’un fine-tuning complet.
 
 Cette méthode convient bien pour modifier le ton, le format de réponse ou certaines compétences métier. Elle est moins adaptée aux connaissances qui changent souvent. ([LoRA](https://arxiv.org/abs/2106.09685))
 
-### RAG
+#### RAG
 
 Le **Retrieval-Augmented Generation** ajoute une recherche documentaire avant l’appel au modèle :
 
@@ -464,23 +465,23 @@ Certaines architectures connectent un encodeur visuel à un LLM existant. D’au
 
 ## 11. Construire un LLM en cinq étapes
 
-### 1. Définir le besoin
+#### 1. Définir le besoin
 
 L’équipe fixe les langues, les domaines, les modalités, la longueur de contexte et les contraintes de déploiement. Un modèle destiné à un téléphone ne sera pas conçu comme un modèle réparti sur des centaines de GPU.
 
-### 2. Préparer les données et le tokenizer
+#### 2. Préparer les données et le tokenizer
 
 Les données sont collectées, nettoyées, filtrées et dédupliquées. Le tokenizer est entraîné pour représenter efficacement les langues et les contenus ciblés.
 
-### 3. Choisir l’architecture et pré-entraîner
+#### 3. Choisir l’architecture et pré-entraîner
 
 L’équipe choisit la taille du réseau, le nombre de couches, le type d’attention, la présence éventuelle d’experts et les formats numériques. Le modèle apprend ensuite à prédire le prochain token sur un grand corpus.
 
-### 4. Effectuer le post-entraînement
+#### 4. Effectuer le post-entraînement
 
 Le modèle est adapté au dialogue, au suivi d’instructions, aux préférences, aux outils, à la sécurité et, selon les objectifs, au raisonnement prolongé.
 
-### 5. Évaluer et déployer
+#### 5. Évaluer et déployer
 
 La qualité des réponses ne suffit pas. Il faut aussi mesurer la latence, la mémoire, le débit, le coût, la robustesse et la sécurité. Le moteur d’inférence optimise ensuite le batching, le KV cache, la quantification et la répartition sur le matériel.
 

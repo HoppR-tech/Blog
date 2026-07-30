@@ -128,10 +128,6 @@ export default defineNuxtConfig({
         '/categories',
         '/tags',
         '/rss.xml',
-        '/categories/craft',
-        '/categories/cloud-platform',
-        '/categories/architecture',
-        '/categories/others',
       ],
       // Exclude OG image routes from prerendering (both legacy /__og-image__/**
       // and the new /_og/** path pattern emitted by nuxt-og-image v3+).
@@ -141,6 +137,27 @@ export default defineNuxtConfig({
       failOnError: false,
     },
     routeRules: {
+      // Query-string pagination must be rendered per request. A prerendered
+      // `/blogs` file is reused for every `?page=n` variant and would therefore
+      // serve page 1 content/canonical for the whole sequence.
+      '/blogs': {
+        prerender: false,
+      },
+      // Detail archives also support query-string pagination. Keep only the
+      // `/tags` and `/categories` hubs prerendered; render their children at
+      // runtime so direct page requests receive distinct HTML.
+      '/tags': {
+        prerender: true,
+      },
+      '/tags/**': {
+        prerender: false,
+      },
+      '/categories': {
+        prerender: true,
+      },
+      '/categories/**': {
+        prerender: false,
+      },
       '/insights/**': {
         cache: {
           maxAge: 60 * 60 * 24 * 7, // 7 jours en secondes

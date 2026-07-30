@@ -18,8 +18,20 @@ const { data: article, error } = await useAsyncData(`blog-post-${path}`, () => {
 })
 
 if (error.value) {
-  console.error('Error fetching article:', error.value)
-  navigateTo('/404')
+  throw createError({
+    status: 500,
+    statusText: 'Impossible de charger cet article',
+    cause: error.value,
+    fatal: true,
+  })
+}
+
+if (!article.value || article.value.published !== true) {
+  throw createError({
+    status: 404,
+    statusText: 'Article introuvable',
+    fatal: true,
+  })
 }
 
 const blogPostProps = computed(() => {

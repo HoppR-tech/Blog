@@ -36,9 +36,11 @@ export interface HeadConfig {
 }
 
 /**
- * Type for the useHead mock function that accepts a HeadConfig argument.
+ * Type for the useHead mock function. Nuxt accepts both a static config and a
+ * getter so head entries can react to route changes.
  */
-export type UseHeadFn = (config: HeadConfig) => void
+export type HeadConfigInput = HeadConfig | (() => HeadConfig)
+export type UseHeadFn = (config: HeadConfigInput) => void
 
 /**
  * Type for the useRuntimeConfig mock function.
@@ -72,7 +74,8 @@ export function getLastHeadCall(mockUseHead: ReturnType<typeof mock<UseHeadFn>>)
   if (!lastCall) {
     throw new Error('useHead was never called')
   }
-  return lastCall[0]
+  const input = lastCall[0]
+  return typeof input === 'function' ? input() : input
 }
 
 /**

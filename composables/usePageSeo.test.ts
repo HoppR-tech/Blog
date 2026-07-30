@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'bun:test'
+import { ref } from 'vue'
 import { getLastHeadCall, setupSeoMocks } from '@/tests/seo/test-helpers'
 
 const { mockUseHead } = setupSeoMocks()
@@ -165,5 +166,25 @@ describe('usePageSeo', () => {
     const call = getLastHeadCall(mockUseHead)
     const robots = call.meta.find((m: { name?: string }) => m.name === 'robots')
     expect(robots).toBeUndefined()
+  })
+
+  it('should react to canonical and robots changes', () => {
+    const url = ref('/blogs')
+    const noindex = ref(false)
+
+    usePageSeo({
+      title: 'Test',
+      description: 'Desc',
+      url,
+      noindex,
+    })
+
+    url.value = '/blogs?page=2'
+    noindex.value = true
+
+    const call = getLastHeadCall(mockUseHead)
+    expect(call.link[0]?.href).toBe('https://blog.hoppr.tech/blogs?page=2')
+    expect(call.meta.find((meta: { name?: string }) => meta.name === 'robots')?.content)
+      .toBe('noindex, follow')
   })
 })

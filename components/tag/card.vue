@@ -1,9 +1,9 @@
 <script setup lang="ts">
 interface Props {
-  title: string
-  count: number
-  index: number
-  totalTags: number
+  title?: string
+  count?: number
+  index?: number
+  totalTags?: number
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -44,28 +44,30 @@ const colors = {
   ],
 }
 
-const colorMode = useColorMode()
-
-const picAColor = computed(() => {
-  const currentColors = colorMode.value === 'dark' ? colors.dark : colors.light
-  return currentColors[props.index % currentColors.length]
-})
+const lightColor = computed(() => colors.light[props.index % colors.light.length])
+const darkColor = computed(() => colors.dark[props.index % colors.dark.length])
 </script>
 
 <template>
-  <ClientOnly>
-    <div class="px-5 py-3 rounded rand-bg-color hover:scale-110 transition-all duration-300">
-      <NuxtLink :to="`/tags/${title.toLocaleLowerCase()}`" class="text-lg font-extrabold tracking-wider">
-        <h1 :class="{ 'text-white': colorMode.value === 'light', 'text-hoppr-black': colorMode.value === 'dark' }">
-          #{{ title }} ({{ count }})
-        </h1>
-      </NuxtLink>
-    </div>
-  </ClientOnly>
+  <div
+    class="px-5 py-3 rounded rand-bg-color hover:scale-110 transition-all duration-300"
+    :style="{ '--tag-color-light': lightColor, '--tag-color-dark': darkColor }"
+  >
+    <NuxtLink
+      :to="`/tags/${title.toLocaleLowerCase()}`"
+      class="text-lg font-extrabold tracking-wider text-white dark:text-hoppr-black"
+    >
+      <span>#{{ title }} ({{ count }})</span>
+    </NuxtLink>
+  </div>
 </template>
 
 <style scoped>
 .rand-bg-color {
-  background-color: v-bind(picAColor);
+  background-color: var(--tag-color-light);
+}
+
+:global(.dark) .rand-bg-color {
+  background-color: var(--tag-color-dark);
 }
 </style>

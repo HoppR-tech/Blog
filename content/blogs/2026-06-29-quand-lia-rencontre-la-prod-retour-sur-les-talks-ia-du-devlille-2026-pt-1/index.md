@@ -1,7 +1,9 @@
 ---
 title: "Quand l'IA rencontre la prod : retour sur les talks IA du DevLille 2026 (Pt 1)"
+seoTitle: "IA en production : les leçons de DevLille 2026"
 date: 2026-06-29T07:49:02.136Z
 description: "L'été pointe le bout de son nez, les terrasses se remplissent, les journées s'étirent jusque tard dans la soirée, et le DevLille fait son retour pour une nouvelle édition.  Les 11 et 12 juin 2026, le"
+seoDescription: "Agents IA, validation des LLM, spec coding et observabilité : les enseignements des talks IA de DevLille 2026 pour passer du prototype à la production."
 image: ./assets/cover-image.webp
 alt: "Photo de groupe de neuf membres de l'équipe HoppR portant des vêtements violets aux couleurs de l’entreprise, posant ensemble lors de l'événement DevLille."
 ogImage: ./assets/cover-image.webp
@@ -168,4 +170,3 @@ Pour ne rien manquer de la suite :
 - Suivez [HoppR sur LinkedIn](https://www.linkedin.com/company/hopprtech/?viewAsMember=true) pour être notifié·e de la publication des prochains articles.
 
 À très vite pour la partie 2 !
-

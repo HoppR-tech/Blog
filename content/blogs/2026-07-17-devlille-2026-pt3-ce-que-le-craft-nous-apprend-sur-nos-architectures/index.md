@@ -1,7 +1,9 @@
 ---
 title: "DevLille 2026 pt.3 : ce que le craft nous apprend sur nos architectures"
+seoTitle: "DevLille 2026 : craft, architecture et frontend"
 date: 2026-07-17T07:53:47.656Z
 description: "Dernière partie de nos retours du Devlille 2026 et cette fois-ci elle est consacrée au craft, à l’archi et au front end !  Vous pouvez retrouver la partie 1 ici et la partie 2 là.   On espère que vo"
+seoDescription: "Les enseignements craft de DevLille 2026 : interfaces pour agents, TanStack DB, architecture frontend et pratiques pour mieux concevoir nos applications."
 image: ./assets/cover-image.webp
 alt: "L'équipe HoppR, une douzaine de personnes en sweats à capuche violets floqués du logo, pose souriante devant un stand au Devlille 2026"
 ogImage: ./assets/cover-image.webp
@@ -203,4 +205,3 @@ C’est la fin de notre  retour sur le Devlille on espère que ça vous aura plu
 - Vous avez manqué le premier volet et le deuxième volet  ? Retrouvez notre [**REX DevLille 2026 sur l'intelligence artificielle**](https://blog.hoppr.tech/blogs/2026-06-29-quand-lia-rencontre-la-prod-retour-sur-les-talks-ia-du-devlille-2026-pt-1)  et …
 
 - Suivez [HoppR sur LinkedIn](https://www.linkedin.com/company/hopprtech/?viewAsMember=true) pour ne rien manquer de nos prochains contenus.
-

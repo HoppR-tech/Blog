@@ -1,7 +1,9 @@
 ---
 title: "Le vert ne suffit pas : 3 façons de douter de son code"
+seoTitle: "Tests au vert : trois techniques pour douter"
 date: 2026-06-23T07:27:57.384Z
 description: "Retour de DevLille 2026, côté Java/Kotlin/Springboot.  BUILD SUCCESS. Coverage à 98 %. Toute la suite de tests au vert. On connaît tous ce petit shot de dopamine du pipeline tout propre. Et on connaît"
+seoDescription: "Mutation testing, analyse statique et chaos engineering : trois techniques de DevLille pour vérifier ce que vos tests et votre code garantissent vraiment."
 image: ./assets/cover-image.webp
 alt: "Illustration de couverture pour l'article \"Le vert ne suffit pas\". Au centre, un grand badge vert fissuré affichant \"ALL TESTS GREEN : Coverage 98%\" avec une coche, entouré de flammes et de fumée : symbolisant une fausse confiance. Trois personnages cartoon l'entourent : à gauche, un petit monstre vert avec des cornes tenant un drapeau \"SURVIVED\" : représentant les mutants survivants du mutation testing ; au centre-bas, un petit robot bleu avec un point d'interrogation tenant un badge \"✅ COMPILES\" et l'air perplexe : représentant les limites de l'analyse statique ; à droite, un singe malicieux tirant des fils : représentant le Chaos Monkey et le chaos engineering. En bas, le titre en gras : \"Le vert ne suffit pas\". Fond bleu clair."
 ogImage: ./assets/cover-image.webp
@@ -313,4 +315,3 @@ Et il y a une raison de prendre ça au sérieux maintenant, plus qu'il y a deux 
 - [Chaos Monkey for Spring Boot](https://codecentric.github.io/chaos-monkey-spring-boot/latest/), [Resilience4j](https://resilience4j.readme.io/) et [Toxiproxy](https://github.com/Shopify/toxiproxy)
 
 - [Principles of Chaos Engineering](https://principlesofchaos.org/)
-

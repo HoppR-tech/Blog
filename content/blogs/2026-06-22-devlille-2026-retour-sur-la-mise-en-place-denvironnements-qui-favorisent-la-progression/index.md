@@ -1,7 +1,9 @@
 ---
 title: "Devlille 2026 : Retour sur la mise en place d’environnements qui favorisent la progression"
+seoTitle: "DevLille 2026 : des équipes qui progressent"
 date: 2026-06-22T13:31:39.592Z
 description: "La semaine dernière, j'ai eu la chance d'assister à DevLille, l'un des rendez-vous incontournables de l'écosystème tech lillois. Au-delà des sujets purement techniques, plusieurs conférences ont parti"
+seoDescription: "Culture de l’erreur, expérience développeur et carrière des experts : les enseignements de DevLille 2026 pour créer des équipes qui apprennent."
 image: ./assets/cover-image.webp
 alt: "Photo de groupe au DevLille"
 ogImage: ./assets/cover-image.webp

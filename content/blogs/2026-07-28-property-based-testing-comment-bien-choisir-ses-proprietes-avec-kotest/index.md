@@ -1,7 +1,9 @@
 ---
 title: "Property based testing : comment bien choisir ses propriétés avec Kotest"
+seoTitle: "Property-based testing avec Kotest : 6 patterns"
 date: 2026-07-28T09:48:44.449Z
 description: "Un test unitaire, tout le monde connait : on choisit une entrée, on vérifie la sortie. `[3, 1, 2]` trié doit rendre `[1, 2, 3]`. C'est efficace, mais on ne teste que les cas qu'on a imaginés. Le prope"
+seoDescription: "Découvrez six patterns pour choisir des propriétés solides avec Kotest, générer des cas limites et éviter les tests trop faibles en Kotlin."
 image: ./assets/cover-image.webp
 alt: "Illustration isométrique violette sur fond blanc. Un cube central marqué f(x) représente la fonction testée, relié par des connecteurs verts à six tuiles hexagonales disposées en couronne, chacune validée par une coche verte et illustrant un pattern de property based testing : round-trip, idempotence, invariants, oracle, algebraic et easy to verify."
 ogImage: ./assets/cover-image.webp
@@ -433,4 +435,3 @@ Par où commencer dans une vraie codebase ? Je vise d'abord deux endroits : les 
 - [Choosing properties for property-based testing](https://fsharpforfunandprofit.com/posts/property-based-testing-2/), la source de ces patterns, par Scott Wlaschin. Il en liste sept, le septième porte sur les structures récursives
 
 - [jqwik](https://jqwik.net/) côté JUnit 5, comparé à Kotest dans mon REX
-

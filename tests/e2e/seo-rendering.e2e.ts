@@ -1,3 +1,5 @@
+import { existsSync, readdirSync, readFileSync } from 'node:fs'
+import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { fetch as fetchPage, setup } from '@nuxt/test-utils/e2e'
 import { describe, expect, it } from 'vitest'
@@ -6,6 +8,7 @@ const rootDir = fileURLToPath(new URL('../..', import.meta.url))
 const buildDir = fileURLToPath(new URL('../../node_modules/.cache/nuxt/.nuxt-e2e', import.meta.url))
 const H1_PATTERN = /<h1(?:\s|>)/g
 const ROBOTS_NOINDEX_PATTERN = /<meta[^>]+name="robots"[^>]+content="noindex, follow"/
+const contentDir = fileURLToPath(new URL('../../content/blogs', import.meta.url))
 
 function getLinkHref(html: string, rel: string): string | undefined {
   return html.match(new RegExp(`<link[^>]+rel="${rel}"[^>]+href="([^"]+)"`))?.[1]
@@ -21,6 +24,49 @@ function getArticleLinks(html: string): string[] {
 
 function countH1(html: string): number {
   return html.match(H1_PATTERN)?.length ?? 0
+}
+
+function getMetaContent(html: string, name: string): string | undefined {
+  const marker = `<meta name="${name}" content="`
+  const contentStart = html.indexOf(marker)
+  if (contentStart === -1)
+    return undefined
+
+  const valueStart = contentStart + marker.length
+  const valueEnd = html.indexOf('">', valueStart)
+  return valueEnd === -1 ? undefined : html.slice(valueStart, valueEnd)
+}
+
+function getFrontmatterValue(markdown: string, key: string): string | undefined {
+  const prefix = `${key}:`
+  return markdown
+    .split('\n')
+    .find(line => line.startsWith(prefix))
+    ?.slice(prefix.length)
+    .trim()
+}
+
+function getExpectedArticleLinks(tag: string): string[] {
+  return readdirSync(contentDir, { withFileTypes: true })
+    .filter(entry => entry.isDirectory())
+    .map((entry) => {
+      const articleFile = join(contentDir, entry.name, 'index.md')
+      if (!existsSync(articleFile))
+        return null
+
+      const markdown = readFileSync(articleFile, 'utf8')
+      const date = getFrontmatterValue(markdown, 'date')
+      const tags = getFrontmatterValue(markdown, 'tags')?.slice(1, -1) ?? ''
+      const published = getFrontmatterValue(markdown, 'published') === 'true'
+
+      if (!published || !date || !tags.split(',').some(value => value.trim().replaceAll('\'', '') === tag))
+        return null
+
+      return { date, link: `/blogs/${entry.name}` }
+    })
+    .filter((article): article is { date: string, link: string } => article !== null)
+    .sort((left, right) => right.date.localeCompare(left.date))
+    .map(article => article.link)
 }
 
 async function getPage(path: string): Promise<{ response: Response, html: string }> {
@@ -128,5 +174,30 @@ describe('SEO HTTP and server rendering', async () => {
       .toBe('https://blog.hoppr.tech/tags/craft?page=2')
     expect(getLinkHref(categoryPage.html, 'canonical'))
       .toBe('https://blog.hoppr.tech/categories/craft?page=2')
+  })
+
+  it('orders tag and category archives from newest to oldest', async () => {
+    const expectedLinks = getExpectedArticleLinks('craft').slice(0, 12)
+    const tagPage = await getPage('/tags/craft')
+    const categoryPage = await getPage('/categories/craft')
+
+    expect(getArticleLinks(tagPage.html)).toEqual(expectedLinks)
+    expect(getArticleLinks(categoryPage.html)).toEqual(expectedLinks)
+  })
+
+  it('uses dedicated SEO metadata without changing the editorial H1', async () => {
+    const { response, html } = await getPage(
+      '/blogs/2026-06-22-clean-architecture-avec-react-remettre-des-frontieres-dans-un-frontend-qui-grandit',
+    )
+
+    expect(response.status).toBe(200)
+    expect(html).toContain('<title>Clean Architecture React : structurer un frontend | HoppR</title>')
+    expect(getMetaContent(html, 'description')).toBe('Structurez un frontend React avec la Clean Architecture : couches, dépendances et frontières claires pour faire évoluer l’application sans dette.')
+    expect(html).toContain('Clean Architecture avec React : remettre des frontières dans un frontend qui grandit')
+    expect(countH1(html)).toBe(1)
+
+    const fallback = await getPage('/blogs/2026-05-18-react-compiler')
+    expect(fallback.html).toContain('<title>React Compiler | HoppR</title>')
+    expect(getMetaContent(fallback.html, 'description')).toContain('Depuis que React Compiler est passé en version stable')
   })
 })

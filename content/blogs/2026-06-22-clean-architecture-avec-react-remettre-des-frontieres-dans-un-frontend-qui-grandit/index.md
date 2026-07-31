@@ -1,7 +1,9 @@
 ---
 title: "Clean Architecture avec React : remettre des frontières dans un frontend qui grandit"
+seoTitle: "Clean Architecture React : structurer un frontend"
 date: 2026-06-22T13:31:39.593Z
 description: "Avez-vous déjà vu un frontend React devenir un monstre difficile à dompter ?  J’ai été amené à travailler sur plusieurs projets de refonte du frontend, et tous avaient le même problème.  Un composant "
+seoDescription: "Structurez un frontend React avec la Clean Architecture : couches, dépendances et frontières claires pour faire évoluer l’application sans dette."
 image: ./assets/cover-image.webp
 alt: "Du monstre spaghetti à la clean architecture avec react"
 ogImage: ./assets/cover-image.webp
@@ -489,4 +491,3 @@ Si le sujet t’intéresse, j’ai publié le code et les décisions d’archite
 Si tu veux challenger l’approche, t’en inspirer, ou simplement comparer avec ce que tu fais déjà en équipe, le plus simple est encore d’aller voir le lab, de parcourir les ADRs et de confronter cela à tes propres contraintes de terrain.
 
 Car au final, dans un projet frontend, ce n’est pas React le centre de l’application mais le besoin métier.
-

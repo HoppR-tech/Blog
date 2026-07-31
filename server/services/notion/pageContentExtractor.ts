@@ -20,10 +20,14 @@ export async function getPageContent(notionClient: NotionClientInterface, page: 
     const tagsNames = extractTags(page)
     const coverImage = extractCoverImage(page)
     const coverImageAlt = extractCoverImageAlt(page)
+    const seoTitle = extractOptionalRichText(page, 'SEO Title')
+    const seoDescription = extractOptionalRichText(page, 'SEO Description')
 
     return {
       notionId: page.id,
       title: extractTitleFromPage(page),
+      seoTitle,
+      seoDescription,
       authors,
       reviewers,
       coverImage,
@@ -68,6 +72,16 @@ function extractCoverImage(page: NotionPage) {
 
 function extractCoverImageAlt(page: NotionPage) {
   return safeGetProperty(page, ['properties', 'Cover Image Alt', 'rich_text', '0', 'plain_text'], '')
+}
+
+function extractOptionalRichText(page: NotionPage, propertyName: 'SEO Title' | 'SEO Description'): string | undefined {
+  const property = page.properties[propertyName]
+  const value = property?.rich_text
+    ?.map(text => text.plain_text)
+    .join('')
+    .trim()
+
+  return value || undefined
 }
 
 export async function fetchAllBlocks({ notionClient, page, nextPageCursor }: {
@@ -120,7 +134,6 @@ async function processBlocks(
 
 async function processTableBlock(notionClient: NotionClientInterface, block: BlockObjectResponse): Promise<void> {
   try {
-    console.log(`Fetching children for table block ${block.id}`)
     const tableRows = await notionClient.blocks.children.list({ block_id: block.id })
 
     if (!hasTableRows(tableRows)) {
@@ -129,7 +142,6 @@ async function processTableBlock(notionClient: NotionClientInterface, block: Blo
     }
 
     const firstRow = tableRows.results[0]
-    console.log('Structure de la première ligne:', JSON.stringify(firstRow, null, 2))
 
     if (isValidTableRow(firstRow)) {
       addFormattedRowsToTable(block, tableRows)
@@ -155,7 +167,6 @@ function isValidTableRow(row: any): boolean {
 }
 
 function addFormattedRowsToTable(block: BlockObjectResponse, tableRows: any): void {
-  console.log('Adapting table rows from table_row format')
   const formattedRows = tableRows.results
     .filter((row: any) => row.type === 'table_row')
     .map((row: any) => ({
@@ -163,12 +174,10 @@ function addFormattedRowsToTable(block: BlockObjectResponse, tableRows: any): vo
     }));
 
   ((block as any).table as any).children = formattedRows
-  console.log(`Added ${formattedRows.length} formatted rows to table block`)
 }
 
 function addOriginalRowsToTable(block: BlockObjectResponse, tableRows: any): void {
   ((block as any).table as any).children = tableRows.results.filter(isBlockObjectResponse)
-  console.log(`Added ${((block as any).table as any).children.length} original rows to table block`)
 }
 
 export function extractTitleFromPage(page: NotionPage): string {

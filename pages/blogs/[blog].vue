@@ -69,7 +69,11 @@ const reviewers: Person[] = (article.value?.reviewers || []).map(r => ({
   jobTitle: (r as { jobTitle?: string }).jobTitle,
   bio: (r as { bio?: string }).bio,
 }))
-const ogDescription = computed(() => stripMarkdown(blogPostProps.value.description))
+const seoTitle = computed(() => article.value?.seoTitle?.trim() || blogPostProps.value.title)
+const seoDescription = computed(() => {
+  const description = article.value?.seoDescription?.trim() || blogPostProps.value.description
+  return stripMarkdown(description)
+})
 
 const absoluteImage = computed(() => useAbsoluteUrl(blogPostProps.value.ogImage || blogPostProps.value.image))
 
@@ -97,7 +101,7 @@ const structuredData = computed(() => buildBlogPostingJsonLd({
   baseUrl,
   path: articlePath.value,
   title: blogPostProps.value.title,
-  description: ogDescription.value,
+  description: seoDescription.value,
   image: absoluteImage.value,
   datePublished: blogPostProps.value.date,
   dateModified: articleDateModified.value,
@@ -108,8 +112,8 @@ const structuredData = computed(() => buildBlogPostingJsonLd({
 }))
 
 usePageSeo({
-  title: blogPostProps.value.title || '',
-  description: ogDescription.value,
+  title: seoTitle,
+  description: seoDescription,
   url: path,
   image: blogPostProps.value.ogImage || blogPostProps.value.image,
   type: 'article',
@@ -139,8 +143,8 @@ if (extraJsonLdScripts.length > 0) {
 // Generate OG Image
 defineOgImageComponent('About', {
   headline: 'Bienvenue 👋',
-  mainTitle: blogPostProps.value.title || '',
-  description: ogDescription.value || '',
+  mainTitle: seoTitle.value,
+  description: seoDescription.value,
   imageTop: '/images/og-post.png',
   imageBottom: '/images/og-home.png',
 })

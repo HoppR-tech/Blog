@@ -113,6 +113,12 @@ describe('pageContentExtractor', () => {
         'Cover Image Alt': {
           rich_text: [],
         },
+        'SEO Title': {
+          rich_text: [{ plain_text: 'A concise ' }, { plain_text: 'SEO title' }],
+        },
+        'SEO Description': {
+          rich_text: [{ plain_text: 'A unique search description.' }],
+        },
       },
     }
 
@@ -123,6 +129,8 @@ describe('pageContentExtractor', () => {
 
     expect(content.notionId).toBe('page-id')
     expect(content.title).toBe('Test Title')
+    expect(content.seoTitle).toBe('A concise SEO title')
+    expect(content.seoDescription).toBe('A unique search description.')
     expect(content.content).toContain('Hello\n\n')
     expect(content.authors).toBeDefined()
     expect(content.authors.length).toBe(1)
@@ -168,7 +176,7 @@ describe('pageContentExtractor', () => {
     const mockClient = {
       blocks: {
         children: {
-          list: ({ block_id, start_cursor }): Promise<ListBlockChildrenResponse> => {
+          list: ({ block_id: _blockId, start_cursor }): Promise<ListBlockChildrenResponse> => {
             if (!start_cursor) {
               return Promise.resolve({
                 object: 'list' as const,

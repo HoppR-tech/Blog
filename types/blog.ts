@@ -1,8 +1,10 @@
 export interface BlogPost {
   notionId: string
   title: string
+  seoTitle?: string
   date: string
   description: string
+  seoDescription?: string
   image: string
   alt: string
   ogImage: string
@@ -21,6 +23,8 @@ export interface PageContent {
   coverImageAlt: string
   tags: string[]
   title: string
+  seoTitle?: string
+  seoDescription?: string
   content: string
   images: { url: string, alt: string }[]
 }

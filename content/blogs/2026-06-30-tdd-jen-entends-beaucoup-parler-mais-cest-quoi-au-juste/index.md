@@ -1,7 +1,9 @@
 ---
 title: "TDD : J’en entends beaucoup parler, mais c’est quoi au juste ?"
+seoTitle: "TDD : comprendre le cycle Red Green Refactor"
 date: 2026-06-30T06:53:44.243Z
 description: "TDD ou Test-Driven Development… Ce terme revient souvent dans les discussions entre développeurs, dans les offres d’emploi, ou même lors des revues de code. \"On devrait adopter le TDD sur ce projet !\""
+seoDescription: "Comprenez le TDD, ses trois lois et le cycle Red Green Refactor avec un exemple Java pour concevoir du code par petits pas, au-delà du test-first."
 image: ./assets/cover-image.webp
 alt: "Une développeuse HoppR faisant du TDD en Java. Sur un de ses écrans, le fameux cycle red → green → refactor caractéristique du TDD. Sur l’autre, du code en Java."
 ogImage: ./assets/cover-image.webp

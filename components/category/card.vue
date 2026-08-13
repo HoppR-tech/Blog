@@ -2,11 +2,11 @@
 import { Icon } from '#components'
 
 interface Props {
-  title: string
+  title?: string
   value: string
-  count: number
-  index: number
-  totalTags: number
+  count?: number
+  index?: number
+  totalTags?: number
   icon: string
   colors: {
     light: string
@@ -20,31 +20,36 @@ const props = withDefaults(defineProps<Props>(), {
   index: 0,
   totalTags: 1,
 })
-
-const colorMode = useColorMode()
-
-const getCategoryColor = computed(() => {
-  return colorMode.value === 'dark' ? props.colors.dark : props.colors.light
-})
 </script>
 
 <template>
-  <ClientOnly>
-    <div
-      class="px-5 py-3 rounded hover:scale-110 transition-all duration-300"
-      :style="{ backgroundColor: getCategoryColor }"
+  <div
+    class="category-card px-5 py-3 rounded hover:scale-110 transition-all duration-300"
+    :style="{
+      '--category-color-light': props.colors.light,
+      '--category-color-dark': props.colors.dark,
+    }"
+  >
+    <NuxtLink
+      :to="`/categories/${props.value}`"
+      class="text-lg font-extrabold tracking-wider flex items-center text-white dark:text-hoppr-black"
     >
-      <NuxtLink :to="`/categories/${props.value}`" class="text-lg font-extrabold tracking-wider flex items-center">
-        <Icon
-          :name="props.icon"
-          size="24"
-          class="mr-2"
-          :class="{ 'text-white': colorMode.value === 'light', 'text-hoppr-black': colorMode.value === 'dark' }"
-        />
-        <h1 :class="{ 'text-white': colorMode.value === 'light', 'text-hoppr-black': colorMode.value === 'dark' }">
-          {{ title }} ({{ count }})
-        </h1>
-      </NuxtLink>
-    </div>
-  </ClientOnly>
+      <Icon
+        :name="props.icon"
+        size="24"
+        class="mr-2"
+      />
+      <span>{{ title }} ({{ count }})</span>
+    </NuxtLink>
+  </div>
 </template>
+
+<style scoped>
+.category-card {
+  background-color: var(--category-color-light);
+}
+
+:global(.dark) .category-card {
+  background-color: var(--category-color-dark);
+}
+</style>

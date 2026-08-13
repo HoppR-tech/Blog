@@ -1,11 +1,13 @@
 import type { BlockObjectResponse } from '@notionhq/client/build/src/api-endpoints'
 import type { BlogPost } from '@/types/blog'
+import { SEO_DESCRIPTION_MAX_LENGTH, SEO_TITLE_MAX_LENGTH } from '@/utils/seoLimits'
 
 export function checkPost(post: BlogPost) {
   checkImage(post.image)
   checkDate(post.date)
   checkContent(post.content)
   checkTags(post.tags)
+  checkSeoMetadata(post)
 }
 
 function checkImage(image: string) {
@@ -34,11 +36,21 @@ function checkTags(tags: string[]) {
     throw new Error(`Tag "${invalidTag}" contains an apostrophe ('), which breaks the article frontmatter. Rename the tag in Notion before publishing.`)
 }
 
+function checkSeoMetadata(post: BlogPost) {
+  if (post.seoTitle && post.seoTitle.trim().length > SEO_TITLE_MAX_LENGTH) {
+    throw new Error(`SEO Title must be ${SEO_TITLE_MAX_LENGTH} characters or fewer so the HoppR suffix stays within 60 characters.`)
+  }
+
+  if (post.seoDescription && post.seoDescription.trim().length > SEO_DESCRIPTION_MAX_LENGTH) {
+    throw new Error(`SEO Description must be ${SEO_DESCRIPTION_MAX_LENGTH} characters or fewer.`)
+  }
+}
+
 export function checkBlocks(blocks: BlockObjectResponse[]) {
   const firstBlock = blocks[0]
   if (!firstBlock)
     throw new Error('Content is empty')
-  if (firstBlock.type != 'heading_1' && firstBlock.type != 'paragraph')
+  if (firstBlock.type !== 'heading_1' && firstBlock.type !== 'paragraph')
     throw new Error('An article must start with a title or an introduction')
 
   if (blocks.slice(1).some(b => b.type === 'heading_1'))

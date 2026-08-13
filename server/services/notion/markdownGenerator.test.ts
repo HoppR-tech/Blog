@@ -7,8 +7,10 @@ describe('markdown Utils', () => {
     const post: BlogPost = {
       notionId: '1',
       title: 'Test Title',
+      seoTitle: 'Concise SEO title',
       date: new Date('2024-08-02T15:59:20.808Z').toISOString(),
       description: 'This is a test description.',
+      seoDescription: 'A specific description for search results.',
       image: 'http://example.com/image.jpg',
       alt: 'Test Image',
       ogImage: 'http://example.com/og-image.jpg',
@@ -23,8 +25,10 @@ describe('markdown Utils', () => {
 
     expect(markdown).toContain('---')
     expect(markdown).toContain(`title: "${post.title}"`)
+    expect(markdown).toContain(`seoTitle: "${post.seoTitle}"`)
     expect(markdown).toContain(`date: ${post.date}`)
     expect(markdown).toContain(`description: "${post.description}"`)
+    expect(markdown).toContain(`seoDescription: "${post.seoDescription}"`)
     expect(markdown).toContain('image: ./assets/cover-image.webp')
     expect(markdown).toContain(`alt: "${post.alt}"`)
     expect(markdown).toContain(`tags: [${post.tags.map(tag => `'${tag}'`).join(', ')}]`)
@@ -52,6 +56,8 @@ describe('markdown Utils', () => {
 
     expect(markdown).toContain('---')
     expect(markdown).toContain(`title: "${post.title}"`)
+    expect(markdown).not.toContain('seoTitle:')
+    expect(markdown).not.toContain('seoDescription:')
     expect(markdown).toContain('---')
     expect(markdown).toContain(content)
   })

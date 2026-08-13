@@ -68,6 +68,30 @@ describe('postChecker', () => {
     })
   })
 
+  describe('check SEO metadata', () => {
+    it('should reject an SEO title that makes the rendered title exceed 60 characters', () => {
+      const post = buildDefaultPost()
+      post.seoTitle = 'A'.repeat(53)
+
+      expect(() => checkPost(post)).toThrowError('SEO Title must be 52 characters or fewer')
+    })
+
+    it('should reject an SEO description longer than 160 characters', () => {
+      const post = buildDefaultPost()
+      post.seoDescription = 'A'.repeat(161)
+
+      expect(() => checkPost(post)).toThrowError('SEO Description must be 160 characters or fewer')
+    })
+
+    it('should accept SEO metadata within the recommended limits', () => {
+      const post = buildDefaultPost()
+      post.seoTitle = 'A'.repeat(52)
+      post.seoDescription = 'A'.repeat(160)
+
+      expect(() => checkPost(post)).not.toThrowError()
+    })
+  })
+
   describe('check blocks', () => {
     const paragraphBlock = buildDefaultParagraphBlock()
     const heading1Block = buildDefaultHeading1Block()

@@ -7,7 +7,8 @@ import { makeFirstCharUpper } from '../../utils/helper'
 // ne jamais propager une éventuelle erreur SQLite en 500 sur la route.
 const { data } = await useAsyncData('all-blog-posts-tags', async () => {
   try {
-    return await queryCollection('blogs').order('date', 'DESC').all()
+    const articles = await queryCollection('blogs').order('date', 'DESC').all()
+    return articles.filter(article => article.published === true)
   }
   catch (err) {
     console.error('[tags/index] queryCollection failed', err)
@@ -58,7 +59,9 @@ defineOgImageComponent('About', {
   <main class="container max-w-5xl mx-auto text-zinc-600">
     <TagHero />
     <div class="px-6 mt-8">
+      <label for="tag-search" class="sr-only">Rechercher un tag</label>
       <input
+        id="tag-search"
         v-model="searchQuery" type="text" placeholder="Rechercher un tag"
         class="block w-full bg-[#F1F2F4] dark:bg-slate-900 dark:placeholder-zinc-500 text-zinc-800 dark:text-zinc-300 rounded-md border-gray-300 dark:border-zinc-500 shadow-sm focus:border-hoppr-green focus:ring focus:ring-hoppr-green focus:ring-opacity-50"
       >

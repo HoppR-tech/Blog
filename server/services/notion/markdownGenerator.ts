@@ -7,23 +7,30 @@ export function generateMarkdownContent(post: BlogPost, content: string): string
 function createFrontmatter(post: BlogPost, assetsFolder: string = './assets'): string {
   const formattedAuthors = formatPersons(post.authors)
   const formattedReviewers = formatPersons(post.reviewers)
-  return `---
-title: ${escapeYaml(post.title)}
-date: ${post.date}
-description: ${escapeYaml(post.description)}
-image: ${assetsFolder}/cover-image.webp
-alt: ${escapeYaml(post.alt)}
-ogImage: ${assetsFolder}/cover-image.webp
-tags: [${post.tags.map(tag => `'${tag.toLowerCase()}'`).join(', ')}]
-published: ${post.published}
-authors:
-${formattedAuthors}
-reviewers:
-${formattedReviewers}
----
+  const seoTitle = post.seoTitle?.trim()
+  const seoDescription = post.seoDescription?.trim()
+  const fields = [
+    '---',
+    `title: ${escapeYaml(post.title)}`,
+    ...(seoTitle ? [`seoTitle: ${escapeYaml(seoTitle)}`] : []),
+    `date: ${post.date}`,
+    `description: ${escapeYaml(post.description)}`,
+    ...(seoDescription ? [`seoDescription: ${escapeYaml(seoDescription)}`] : []),
+    `image: ${assetsFolder}/cover-image.webp`,
+    `alt: ${escapeYaml(post.alt)}`,
+    `ogImage: ${assetsFolder}/cover-image.webp`,
+    `tags: [${post.tags.map(tag => `'${tag.toLowerCase()}'`).join(', ')}]`,
+    `published: ${post.published}`,
+    'authors:',
+    formattedAuthors,
+    'reviewers:',
+    formattedReviewers,
+    '---',
+    '',
+    '<!-- markdownlint-disable-file -->',
+  ]
 
-<!-- markdownlint-disable-file -->
-`
+  return `${fields.join('\n')}\n`
 }
 
 // Wrap a string as a YAML double-quoted scalar that is always valid: escape

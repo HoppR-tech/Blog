@@ -16,6 +16,7 @@
     "build": "nuxt build",
     "dev": "NODE_OPTIONS='--disable-warning=DEP0040' NODE_ENV=development nuxt dev",
     "test": "bun test",
+    "test:e2e": "vitest run --config vitest.e2e.config.ts",
     "coverage": "npx vitest run --coverage",
     "generate": "nuxt generate",
     "preview": "nuxt preview",

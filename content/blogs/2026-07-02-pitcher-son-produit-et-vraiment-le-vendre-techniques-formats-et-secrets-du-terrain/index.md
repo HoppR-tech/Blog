@@ -1,7 +1,9 @@
 ---
 title: "Pitcher son produit (et vraiment le vendre) : techniques, formats et secrets du terrain"
+seoTitle: "Comment construire un pitch produit convaincant"
 date: 2026-07-02T09:00:36.582Z
 description: "Mercredi 24 et jeudi 25 juin 2026, sous la canicule, j'étais à la dernière édition d'Agi'Lille. Je souhaite faire un retour d'expérience sur cet atelier que j'ai beaucoup aimé.  En binôme, nous avons"
+seoDescription: "Golden Circle, Hero’s Journey, objections et appel à l’action : des techniques concrètes pour structurer un pitch produit qui provoque une décision."
 image: ./assets/cover-image.webp
 alt: "Visuel de Emma en train de pitcher HoppR"
 ogImage: ./assets/cover-image.webp
@@ -204,6 +206,5 @@ Car un bon pitch n'est pas une démonstration d'éloquence. C'est la capacité �
 
 
 Et vous, quel framework utilisez-vous le plus au quotidien : **Golden Circle, Hero's Journey ou ABT** ? Ou en connaissez-vous d'autres qui ont fait leurs preuves ?
-
 
 

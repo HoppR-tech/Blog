@@ -8,7 +8,8 @@ import { categories } from '@/utils/categories'
 // jamais propager une éventuelle erreur SQLite en 500 sur la route.
 const { data } = await useAsyncData('all-blog-posts-categories', async () => {
   try {
-    return await queryCollection('blogs').order('date', 'DESC').all()
+    const articles = await queryCollection('blogs').order('date', 'DESC').all()
+    return articles.filter(article => article.published === true)
   }
   catch (err) {
     console.error('[categories/index] queryCollection failed', err)

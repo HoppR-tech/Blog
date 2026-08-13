@@ -1,13 +1,17 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
+import { buildPaginationUrl } from '@/utils/pagination'
 
 interface Props {
   currentPage: number
   totalPages: number
   baseUrl: string
+  query?: Record<string, string>
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  query: () => ({}),
+})
 const emit = defineEmits<{
   (e: 'pageChange', page: number): void
 }>()
@@ -46,9 +50,7 @@ const pageRange = computed(() => {
 })
 
 function pageUrl(page: number): string {
-  if (page === 1)
-    return props.baseUrl
-  return `${props.baseUrl}?page=${page}`
+  return buildPaginationUrl(props.baseUrl, page, props.query)
 }
 
 function goToPage(page: number) {

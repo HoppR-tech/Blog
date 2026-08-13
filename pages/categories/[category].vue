@@ -3,24 +3,42 @@ import { useAbsoluteUrl } from '@/composables/useAbsoluteUrl'
 import { usePageSeo } from '@/composables/usePageSeo'
 import { categories } from '@/utils/categories'
 import { wrapInGraph } from '@/utils/organization'
+import { buildPaginationHeadLinks, resolvePageNumber } from '@/utils/pagination'
+
+definePageMeta({
+  key: route => route.path,
+})
 
 const route = useRoute()
 const router = useRouter()
-const categoryValue = computed(() => route.params.category as string)
+const routeCategory = route.params.category
+const categoryValue = Array.isArray(routeCategory) ? routeCategory.at(0) || '' : routeCategory || ''
+const category = categories.find(cat => cat.value === categoryValue)
 
-const category = computed(() => {
-  return categories.find(cat => cat.value === categoryValue.value) || {
-    label: categoryValue.value,
-    icon: 'mdi:tag',
-    colors: { light: '#3b82f6', dark: '#60A5FA' },
-    seoDescription: `Articles HoppR dans la catégorie ${categoryValue.value}.`,
-  }
+if (!category) {
+  throw createError({
+    status: 404,
+    statusText: 'Catégorie introuvable',
+    fatal: true,
+  })
+}
+
+const { data, error } = await useAsyncData(`category-${categoryValue}`, async () => {
+  const allPosts = await queryCollection('blogs').order('date', 'DESC').all()
+  return allPosts.filter(article =>
+    article.published === true
+    && article.tags?.some(tag => tag.toLowerCase() === categoryValue.toLowerCase()),
+  )
 })
 
-const { data } = await useAsyncData(`category-${categoryValue.value}`, async () => {
-  const allPosts = await queryCollection('blogs').all()
-  return allPosts.filter(article => article.tags?.includes(categoryValue.value))
-})
+if (error.value) {
+  throw createError({
+    status: 500,
+    statusText: 'Impossible de charger cette catégorie',
+    cause: error.value,
+    fatal: true,
+  })
+}
 
 const formattedData = computed(() => {
   return data.value?.map((article) => {
@@ -40,9 +58,21 @@ const formattedData = computed(() => {
 
 const elementPerPage = 12
 
+const totalPages = computed(() => {
+  const ttlContent = formattedData.value?.length || 0
+  return Math.ceil(ttlContent / elementPerPage)
+})
+
 const pageNumber = computed(() => {
-  const p = Number(route.query.page)
-  return (Number.isFinite(p) && p >= 1) ? p : 1
+  const page = resolvePageNumber(route.query.page, totalPages.value)
+  if (page === null) {
+    throw createError({
+      status: 404,
+      statusText: 'Page de catégorie introuvable',
+      fatal: true,
+    })
+  }
+  return page
 })
 
 const paginatedData = computed(() => {
@@ -53,38 +83,24 @@ const paginatedData = computed(() => {
   }) || []
 })
 
-const totalPages = computed(() => {
-  const ttlContent = formattedData.value?.length || 0
-  return Math.ceil(ttlContent / elementPerPage)
-})
-
 function onPageChange(page: number) {
   router.push({
-    path: `/categories/${categoryValue.value}`,
+    path: `/categories/${categoryValue}`,
     query: { ...(page > 1 && { page: String(page) }) },
   })
 }
 
 const canonicalUrl = computed(() => {
-  const base = `/categories/${categoryValue.value}`
+  const base = `/categories/${categoryValue}`
   return pageNumber.value > 1 ? `${base}?page=${pageNumber.value}` : base
 })
 
 const prevNextLinks = computed(() => {
-  const base = `/categories/${categoryValue.value}`
-  const links: Array<{ rel: string, href: string }> = []
-  if (pageNumber.value > 1) {
-    const prevPage = pageNumber.value === 2 ? base : `${base}?page=${pageNumber.value - 1}`
-    links.push({ rel: 'prev', href: prevPage })
-  }
-  if (pageNumber.value < totalPages.value) {
-    links.push({ rel: 'next', href: `${base}?page=${pageNumber.value + 1}` })
-  }
-  return links
+  return buildPaginationHeadLinks(`/categories/${categoryValue}`, pageNumber.value, totalPages.value)
 })
 
 const seoDescription = computed(() => {
-  const base = category.value.seoDescription
+  const base = category.seoDescription
   const count = formattedData.value?.length ?? 0
   return count > 0 ? `${base} ${count} articles publiés.` : base
 })
@@ -92,30 +108,32 @@ const seoDescription = computed(() => {
 const categoryBaseUrl = useAbsoluteUrl('/')
 const categoryTrimmedBase = categoryBaseUrl.replace(/\/$/, '')
 
+const categoryJsonLd = computed(() => wrapInGraph(categoryBaseUrl, {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  '@id': `${categoryTrimmedBase}/categories/${categoryValue}#collectionpage`,
+  'url': `${categoryTrimmedBase}/categories/${categoryValue}`,
+  'name': `Catégorie : ${category.label}`,
+  'description': seoDescription.value,
+  'inLanguage': 'fr-FR',
+  'isPartOf': { '@id': `${categoryTrimmedBase}/#website` },
+  'about': { '@id': 'https://hoppr.tech/#organization' },
+}))
+
 usePageSeo({
-  title: `Articles ${category.value.label}`,
-  description: seoDescription.value,
-  url: canonicalUrl.value,
-  jsonLd: wrapInGraph(categoryBaseUrl, {
-    '@context': 'https://schema.org',
-    '@type': 'CollectionPage',
-    '@id': `${categoryTrimmedBase}/categories/${categoryValue.value}#collectionpage`,
-    'url': `${categoryTrimmedBase}/categories/${categoryValue.value}`,
-    'name': `Catégorie : ${category.value.label}`,
-    'description': seoDescription.value,
-    'inLanguage': 'fr-FR',
-    'isPartOf': { '@id': `${categoryTrimmedBase}/#website` },
-    'about': { '@id': 'https://hoppr.tech/#organization' },
-  }),
+  title: `Articles ${category.label}`,
+  description: seoDescription,
+  url: canonicalUrl,
+  jsonLd: categoryJsonLd,
 })
 
-useHead({
+useHead(() => ({
   link: prevNextLinks.value,
-})
+}))
 
 // Generate OG Image
 defineOgImage('About', {
-  mainTitle: `Catégorie: ${category.value.label}`,
+  mainTitle: `Catégorie: ${category.label}`,
   description: seoDescription.value,
 })
 </script>

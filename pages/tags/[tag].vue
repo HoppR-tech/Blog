@@ -1,27 +1,44 @@
 <script lang="ts" setup>
 import { usePageSeo } from '@/composables/usePageSeo'
+import { buildPaginationHeadLinks, resolvePageNumber } from '@/utils/pagination'
 import { capitalize } from '@/utils/stringUtils'
+
+definePageMeta({
+  key: route => route.path,
+})
 
 const route = useRoute()
 const router = useRouter()
 
-const tag = computed(() => {
-  const name = route.params.tag || ''
-  let strName = ''
-
-  if (Array.isArray(name))
-    strName = name.at(0) || ''
-  else
-    strName = name
-  return strName.toLowerCase()
-})
+const routeTag = route.params.tag
+const tag = (Array.isArray(routeTag) ? routeTag.at(0) : routeTag)?.toLowerCase() || ''
 
 const MIN_ARTICLES_FOR_INDEX = 3
 
-const { data } = await useAsyncData(`tag-data-${tag.value}`, async () => {
-  const allPosts = await queryCollection('blogs').all()
-  return allPosts.filter(article => article.tags?.includes(tag.value))
+const { data, error } = await useAsyncData(`tag-data-${tag}`, async () => {
+  const allPosts = await queryCollection('blogs').order('date', 'DESC').all()
+  return allPosts.filter(article =>
+    article.published === true
+    && article.tags?.some(articleTag => articleTag.toLowerCase() === tag),
+  )
 })
+
+if (error.value) {
+  throw createError({
+    status: 500,
+    statusText: 'Impossible de charger ce tag',
+    cause: error.value,
+    fatal: true,
+  })
+}
+
+if (!tag || !data.value || data.value.length === 0) {
+  throw createError({
+    status: 404,
+    statusText: 'Tag introuvable',
+    fatal: true,
+  })
+}
 
 const formattedData = computed(() => {
   return data.value?.map((articles) => {
@@ -41,9 +58,21 @@ const formattedData = computed(() => {
 
 const elementPerPage = 12
 
+const totalPages = computed(() => {
+  const ttlContent = formattedData.value?.length || 0
+  return Math.ceil(ttlContent / elementPerPage)
+})
+
 const pageNumber = computed(() => {
-  const p = Number(route.query.page)
-  return (Number.isFinite(p) && p >= 1) ? p : 1
+  const page = resolvePageNumber(route.query.page, totalPages.value)
+  if (page === null) {
+    throw createError({
+      status: 404,
+      statusText: 'Page de tag introuvable',
+      fatal: true,
+    })
+  }
+  return page
 })
 
 const paginatedData = computed(() => {
@@ -54,14 +83,9 @@ const paginatedData = computed(() => {
   }) || []
 })
 
-const totalPages = computed(() => {
-  const ttlContent = formattedData.value?.length || 0
-  return Math.ceil(ttlContent / elementPerPage)
-})
-
 function onPageChange(page: number) {
   router.push({
-    path: `/tags/${tag.value}`,
+    path: `/tags/${tag}`,
     query: { ...(page > 1 && { page: String(page) }) },
   })
 }
@@ -69,33 +93,24 @@ function onPageChange(page: number) {
 const shouldNoindex = computed(() => (data.value?.length || 0) < MIN_ARTICLES_FOR_INDEX)
 
 const canonicalUrl = computed(() => {
-  const base = `/tags/${tag.value}`
+  const base = `/tags/${tag}`
   return pageNumber.value > 1 ? `${base}?page=${pageNumber.value}` : base
 })
 
 const prevNextLinks = computed(() => {
-  const base = `/tags/${tag.value}`
-  const links: Array<{ rel: string, href: string }> = []
-  if (pageNumber.value > 1) {
-    const prevPage = pageNumber.value === 2 ? base : `${base}?page=${pageNumber.value - 1}`
-    links.push({ rel: 'prev', href: prevPage })
-  }
-  if (pageNumber.value < totalPages.value) {
-    links.push({ rel: 'next', href: `${base}?page=${pageNumber.value + 1}` })
-  }
-  return links
+  return buildPaginationHeadLinks(`/tags/${tag}`, pageNumber.value, totalPages.value)
 })
 
 const MAX_RECENT_TITLES_IN_DESCRIPTION = 3
 const MAX_TITLE_CHARS = 40
 
-const tagLabel = computed(() => capitalize(tag.value))
+const tagLabel = capitalize(tag)
 
 const seoDescription = computed(() => {
   const count = data.value?.length ?? 0
 
   if (count === 0)
-    return `Articles HoppR tagués "${tag.value}" — Software Craftsmanship, Cloud et Architecture par l'équipe tech HoppR.`
+    return `Articles HoppR tagués "${tag}" — Software Craftsmanship, Cloud et Architecture par l'équipe tech HoppR.`
 
   const recentTitles = (data.value ?? [])
     .slice(0, MAX_RECENT_TITLES_IN_DESCRIPTION)
@@ -106,24 +121,24 @@ const seoDescription = computed(() => {
     .filter((t): t is string => t.length > 0)
 
   const titlesPart = recentTitles.length > 0 ? ` Récents : ${recentTitles.join(' · ')}.` : ''
-  return `${count} article${count > 1 ? 's' : ''} HoppR tagué${count > 1 ? 's' : ''} "${tag.value}".${titlesPart}`
+  return `${count} article${count > 1 ? 's' : ''} HoppR tagué${count > 1 ? 's' : ''} "${tag}".${titlesPart}`
 })
 
 usePageSeo({
-  title: tagLabel.value,
-  description: seoDescription.value,
-  url: canonicalUrl.value,
-  noindex: shouldNoindex.value,
+  title: tagLabel,
+  description: seoDescription,
+  url: canonicalUrl,
+  noindex: shouldNoindex,
 })
 
-useHead({
+useHead(() => ({
   link: prevNextLinks.value,
-})
+}))
 
 // Generate OG Image — defineOgImageComponent + nom de composant explicite,
 // sinon unhead plante "originalName.split is not a function" → 500 SSR.
 defineOgImageComponent('About', {
-  title: tagLabel.value,
+  title: tagLabel,
   description: seoDescription.value,
 })
 </script>

@@ -1,7 +1,9 @@
 ---
 title: "LLM : ce qui se passe vraiment du token à la réponse"
+seoTitle: "Comment fonctionne un LLM, du token à la réponse"
 date: 2026-07-24T07:41:51.993Z
 description: "Vous saisissez une question et, quelques instants plus tard, une réponse structurée apparaît. Cette fluidité donne l’impression que le modèle a compris la demande, réfléchi, puis rédigé son texte comm"
+seoDescription: "Comprenez comment un LLM transforme des tokens en réponse : tokenisation, embeddings, attention, blocs Transformer, entraînement et génération."
 image: ./assets/cover-image.webp
 alt: "Du token à la réponse : représentation d’un LLM ouvert, avec des tokens traversant ses couches avant de devenir du texte."
 ogImage: ./assets/cover-image.webp

@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import type { NuxtError } from 'nuxt/app'
 import { computed, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { usePageSeo } from '@/composables/usePageSeo'
+import { buildPaginationHeadLinks, resolvePageNumber } from '@/utils/pagination'
 
 const route = useRoute()
 const router = useRouter()
@@ -10,26 +10,25 @@ const { data, error } = await useAsyncData('all-blog-post', () =>
   queryCollection('blogs')
     .order('date', 'DESC')
     .all()
-    .catch((err: Error) => {
-      console.error('Erreur lors de la récupération des articles:', err)
-      error.value = { statusCode: 500, message: 'Impossible de charger les articles. Veuillez réessayer plus tard.' } as NuxtError
-      return []
-    }))
+    .then(articles => articles.filter(article => article.published === true)))
+
+if (error.value) {
+  throw createError({
+    status: 500,
+    statusText: 'Impossible de charger les articles',
+    cause: error.value,
+    fatal: true,
+  })
+}
 
 const elementPerPage = 12
-const pageNumber = computed(() => {
-  const p = Number(route.query.page)
-  return (Number.isFinite(p) && p >= 1) ? p : 1
-})
 const searchTest = ref('')
+const routeSearchTerm = computed(() => {
+  return typeof route.query.search === 'string' ? route.query.search.trim() : ''
+})
 
 watch(() => route.query.search, (newSearch) => {
-  if (newSearch) {
-    searchTest.value = newSearch as string
-  }
-  else {
-    searchTest.value = ''
-  }
+  searchTest.value = typeof newSearch === 'string' ? newSearch.trim() : ''
 }, { immediate: true })
 
 const formattedData = computed(() => {
@@ -68,17 +67,45 @@ const searchData = computed(() => {
   })
 })
 
+const totalPage = computed(() => {
+  const ttlContent = searchData.value?.length || 0
+  return Math.ceil(ttlContent / elementPerPage)
+})
+
+const routeSearchTotalPage = computed(() => {
+  const term = routeSearchTerm.value.toLowerCase()
+  const articles = formattedData.value || []
+  const total = term
+    ? articles.filter((article) => {
+      return article.title.toLowerCase().includes(term)
+        || article.description.toLowerCase().includes(term)
+        || article.content.toLowerCase().includes(term)
+        || article.tags.some((tag: string) => tag.toLowerCase().includes(term))
+        || article.authors.some((author: { name: string }) => author.name.toLowerCase().includes(term))
+    }).length
+    : articles.length
+
+  return Math.ceil(total / elementPerPage)
+})
+
+const pageNumber = computed(() => {
+  const page = resolvePageNumber(route.query.page, routeSearchTotalPage.value)
+  if (page === null) {
+    throw createError({
+      status: 404,
+      statusText: 'Page d’articles introuvable',
+      fatal: true,
+    })
+  }
+  return page
+})
+
 const paginatedData = computed(() => {
   return searchData.value?.filter((_data, idx) => {
     const startInd = ((pageNumber.value - 1) * elementPerPage)
     const endInd = (pageNumber.value * elementPerPage) - 1
     return idx >= startInd && idx <= endInd
   }) || []
-})
-
-const totalPage = computed(() => {
-  const ttlContent = searchData.value?.length || 0
-  return Math.ceil(ttlContent / elementPerPage)
 })
 
 function onPageChange(page: number) {
@@ -90,31 +117,36 @@ function onPageChange(page: number) {
   router.push({ path: '/blogs', query })
 }
 
+const hasSearchQuery = computed(() => {
+  return routeSearchTerm.value.length > 0
+})
+
+const paginationQuery = computed<Record<string, string>>(() => {
+  return searchTest.value ? { search: searchTest.value } : {}
+})
+
 const canonicalUrl = computed(() => {
+  if (hasSearchQuery.value)
+    return '/blogs'
   return pageNumber.value > 1 ? `/blogs?page=${pageNumber.value}` : '/blogs'
 })
 
 const prevNextLinks = computed(() => {
-  const links: Array<{ rel: string, href: string }> = []
-  if (pageNumber.value > 1) {
-    const prevPage = pageNumber.value === 2 ? '/blogs' : `/blogs?page=${pageNumber.value - 1}`
-    links.push({ rel: 'prev', href: prevPage })
-  }
-  if (pageNumber.value < totalPage.value) {
-    links.push({ rel: 'next', href: `/blogs?page=${pageNumber.value + 1}` })
-  }
-  return links
+  if (hasSearchQuery.value)
+    return []
+  return buildPaginationHeadLinks('/blogs', pageNumber.value, totalPage.value)
 })
 
 usePageSeo({
   title: 'Tous nos Articles',
   description: 'Toutes les publications sur le blog d\'HoppR sont ici. Découvrez nos articles sur le Software Craftsmanship, le Cloud, l\'Architecture et la Tech.',
-  url: canonicalUrl.value,
+  url: canonicalUrl,
+  noindex: hasSearchQuery,
 })
 
-useHead({
+useHead(() => ({
   link: prevNextLinks.value,
-})
+}))
 
 // Generate OG Image — defineOgImageComponent + nom de composant explicite,
 // sinon unhead plante "originalName.split is not a function" → 500 SSR.
@@ -127,10 +159,6 @@ defineOgImageComponent('About', {
 <template>
   <main class="container max-w-6xl mx-auto text-zinc-600">
     <ArchiveHero />
-
-    <div v-if="error" class="px-6 py-4 bg-red-100 border border-red-400 text-red-700 rounded">
-      {{ error }}
-    </div>
 
     <div class="px-6">
       <label for="search-input" class="sr-only">Rechercher un article</label>
@@ -150,9 +178,6 @@ defineOgImageComponent('About', {
       <BlogLoader />
       <BlogLoader />
     </div>
-    <div v-else-if="error" class="space-y-5 my-5 px-4">
-      <p>{{ error }}</p>
-    </div>
     <div v-else class="space-y-5 my-5 px-4">
       <template v-for="post in paginatedData" :key="post.title">
         <ArchiveCard
@@ -170,6 +195,7 @@ defineOgImageComponent('About', {
       :current-page="pageNumber"
       :total-pages="totalPage"
       base-url="/blogs"
+      :query="paginationQuery"
       @page-change="onPageChange"
     />
   </main>

@@ -1,7 +1,9 @@
 ---
 title: "Souveraineté & éco-conception : notre REX DevLille 2026 (Pt 2)"
+seoTitle: "DevLille 2026 : souveraineté et éco-conception"
 date: 2026-07-08T09:39:41.771Z
 description: "On vous retrouve pour la partie 2 de nos retours du Devlille, cette fois ci orientés autour des notions de souveraineté et d’éco conception   Si vous avez manqué la partie 1, c’est par ici   Souverain"
+seoDescription: "Cinq retours de DevLille sur le cloud souverain, l’open source, l’auto-hébergement et l’éco-conception pour reprendre le contrôle de sa plateforme."
 image: ./assets/cover-image.webp
 alt: "Selfie de groupe de six membres de l'équipe HoppR souriants au DevLille. Ils portent des sweat-shirts violets de l'entreprise et posent ensemble dans le grand hall du centre de conférence."
 ogImage: ./assets/cover-image.webp
@@ -158,4 +160,3 @@ D'un talk à l'autre, le même constat s'impose : **la souveraineté et la sobri
 - Suivez [HoppR sur LinkedIn](https://www.linkedin.com/company/hopprtech/?viewAsMember=true) pour ne rien manquer de nos prochains contenus.
 
 À très vite pour la suite de nos retours !
-

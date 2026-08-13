@@ -49,5 +49,11 @@ export interface NotionPage {
     'Cover Image Alt': {
       rich_text: Array<{ plain_text: string }>
     }
+    'SEO Title'?: {
+      rich_text: Array<{ plain_text: string }>
+    }
+    'SEO Description'?: {
+      rich_text: Array<{ plain_text: string }>
+    }
   }
 }

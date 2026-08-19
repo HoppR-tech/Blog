@@ -43,7 +43,7 @@ const filteredTags = computed(() => {
 
 usePageSeo({
   title: 'Catégories',
-  description: 'Découvrez nos articles classés par catégories. Explorez nos contenus sur le Craft, le Cloud & Platform, l\'Architecture, et d\'autres sujets passionnants de la tech.',
+  description: 'Découvrez nos articles classés par catégories. Explorez nos contenus sur le Craft, le Cloud & Platform, l’Architecture, l’intelligence artificielle, et d’autres sujets passionnants de la tech.',
   url: '/categories',
 })
 
@@ -52,7 +52,7 @@ usePageSeo({
 // sur le SSR runtime de la route → 500. Voir aussi tags/, blogs/.)
 defineOgImageComponent('About', {
   title: 'Catégories',
-  description: 'Découvrez nos articles classés par catégories. Explorez nos contenus sur le Craft, le Cloud & Platform, l\'Architecture, et d\'autres sujets passionnants de la tech.',
+  description: 'Découvrez nos articles classés par catégories. Explorez nos contenus sur le Craft, le Cloud & Platform, l’Architecture, l’intelligence artificielle, et d’autres sujets passionnants de la tech.',
 })
 
 function getCategoryCount(categoryValue: string): number {

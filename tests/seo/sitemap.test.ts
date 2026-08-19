@@ -74,23 +74,25 @@ describe('sitemap - article entries with lastmod (TASK-035)', () => {
 })
 
 describe('sitemap - category entries (TASK-040)', () => {
-  it('should include all 4 categories in the sitemap', () => {
+  it('should include all 5 categories in the sitemap', () => {
     const categories = [
       { value: 'craft' },
       { value: 'cloud-platform' },
       { value: 'architecture' },
       { value: 'others' },
+      { value: 'ia' },
     ]
     const articlesByCategory: Record<string, Array<{ date: string }>> = {
       'craft': [{ date: '2024-06-10' }, { date: '2024-07-01' }],
       'cloud-platform': [{ date: '2024-05-01' }],
       'architecture': [{ date: '2024-08-01' }],
       'others': [{ date: '2024-04-01' }],
+      'ia': [{ date: '2025-09-03' }],
     }
 
     const entries = buildCategorySitemapEntries(categories, articlesByCategory, 'https://blog.hoppr.tech')
 
-    expect(entries).toHaveLength(4)
+    expect(entries).toHaveLength(5)
     expect(entries[0]?.loc).toBe('https://blog.hoppr.tech/categories/craft')
     // lastmod should be the latest article date in that category
     expect(entries[0]?.lastmod).toBe('2024-07-01')

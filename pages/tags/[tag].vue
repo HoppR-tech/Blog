@@ -19,7 +19,7 @@ const tag = computed(() => {
 const MIN_ARTICLES_FOR_INDEX = 3
 
 const { data } = await useAsyncData(`tag-data-${tag.value}`, async () => {
-  const allPosts = await queryCollection('blogs').all()
+  const allPosts = await queryCollection('blogs').order('date', 'DESC').all()
   return allPosts.filter(article => article.tags?.includes(tag.value))
 })
 

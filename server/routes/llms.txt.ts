@@ -25,6 +25,7 @@ export default defineEventHandler((event) => {
 - [Software Craftsmanship](${siteURL}/categories/craft): TDD, refactoring, DDD, clean code, BDD
 - [Cloud & Platform](${siteURL}/categories/cloud-platform): AWS, GCP, Kubernetes, IaC, plateformes internes
 - [Architecture](${siteURL}/categories/architecture): patterns, événementiel, microservices, hexagonal, DDD
+- [Intelligence artificielle](${siteURL}/categories/ia): IA générative, LLM, agents et usages en production
 - [Autres & Événements](${siteURL}/categories/others): conférences, REX communauté, formations
 
 ## Ressources techniques

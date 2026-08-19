@@ -32,6 +32,11 @@ describe('category pages - title with human label (TASK-052)', () => {
     expect(label).toBe('Autres & Événements')
   })
 
+  it('should use "Intelligence artificielle" label for ia slug', () => {
+    const label = getCategoryLabel('ia')
+    expect(label).toBe('Intelligence artificielle')
+  })
+
   it('should generate correct title for a category page', () => {
     const slug = 'cloud-platform'
     const title = `Articles ${getCategoryLabel(slug)}`
@@ -59,6 +64,7 @@ describe('category seoDescription — per-category SEO copy', () => {
     expect(categorySeoDescriptions.craft.toLowerCase()).toContain('craftsmanship')
     expect(categorySeoDescriptions['cloud-platform'].toLowerCase()).toContain('cloud')
     expect(categorySeoDescriptions.architecture.toLowerCase()).toContain('architecture')
+    expect(categorySeoDescriptions.ia.toLowerCase()).toContain('intelligence artificielle')
     expect(categorySeoDescriptions.others.toLowerCase()).toContain('communauté')
   })
 })

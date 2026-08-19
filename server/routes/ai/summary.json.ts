@@ -59,6 +59,7 @@ export default defineEventHandler((event) => {
       software_craftsmanship: `${siteURL}/categories/craft`,
       cloud_platform: `${siteURL}/categories/cloud-platform`,
       architecture: `${siteURL}/categories/architecture`,
+      intelligence_artificielle: `${siteURL}/categories/ia`,
       events: `${siteURL}/categories/others`,
       about: `${siteURL}/a-propos`,
     },

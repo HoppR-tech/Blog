@@ -18,7 +18,7 @@ const category = computed(() => {
 })
 
 const { data } = await useAsyncData(`category-${categoryValue.value}`, async () => {
-  const allPosts = await queryCollection('blogs').all()
+  const allPosts = await queryCollection('blogs').order('date', 'DESC').all()
   return allPosts.filter(article => article.tags?.includes(categoryValue.value))
 })
 

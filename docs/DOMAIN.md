@@ -25,7 +25,7 @@
 | lastmod | Date de dernière modification dans le sitemap, utilisée par les moteurs pour prioriser le crawl | SEO, Sitemap |
 | Thin Content | Page avec peu de contenu propre, considérée comme de faible valeur par les moteurs | SEO, Qualité |
 | Tag (taxonomie) | Mot-clé libre associé à un article pour le classifier | Blog, Classification |
-| Catégorie (taxonomie) | Classification officielle d'un article parmi 4 thématiques prédéfinies (Craft, Cloud & Platform, Architecture, Autres & Événements) | Blog, Classification |
+| Catégorie (taxonomie) | Classification officielle d'un article parmi 5 thématiques prédéfinies (Craft, Cloud & Platform, Architecture, Intelligence artificielle, Autres & Événements) | Blog, Classification |
 | Maillage interne | Ensemble des liens entre les pages d'un même site, favorisant la navigation et le référencement | SEO, Navigation |
 | Related Posts | Articles connexes suggérés en fin d'article, basés sur un scoring par tags communs | Blog, Maillage interne |
 

@@ -62,6 +62,15 @@ La conversion des éléments de texte enrichi est effectuée dans la fonction `c
 - Conversion des blocs de code avec préservation de la coloration syntaxique.
 - Gestion des liens et du formatage de texte (gras, italique, etc.).
 
+## Rendu interactif des images d’article
+
+Les images Markdown du corps d’un article sont rendues par `components/content/ProseImg.vue`.
+
+- Sur desktop avec pointeur, « Agrandir » apparaît au survol ; le focus clavier le révèle aussi.
+- Sur un appareil sans survol à largeur desktop, le contrôle reste visible et tactile ; sous `lg`, il n’est pas affiché.
+- L’inspecteur natif conserve l’image entière, Escape, un bouton icône nommé « Fermer l’image agrandie » et le retour du focus.
+- L’image de couverture reste hors de ce comportement.
+
 ## Extraction et formatage des métadonnées
 
 L'extraction et le formatage des métadonnées sont réalisés en deux étapes principales :

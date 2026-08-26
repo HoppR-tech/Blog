@@ -95,7 +95,7 @@ Vous comprendrez donc assez vite pourquoi une bonne partie des mécanismes dont 
 
 Le _harness_, c’est l’environnement dans lequel tourne le modèle. Codex App/CLI, Claude Code, Amp, OpenCode, Pi en sont des exemples.
 
-C’est bien beau mais à quoi ça sert en pratique ? D’abord, il fournit au LLM des pré-instructions qui vont définir _les agents_. Ensuite, il met à disposition du modèle un éventail de _tools_ qu’il pourra utiliser. C’est majoritairement ce point qui lui donne sa force, la qualité des outils mit à disposition.
+C’est bien beau mais à quoi ça sert en pratique ? D’abord, il fournit au LLM des pré-instructions qui vont définir _les agents_. Ensuite, il met à disposition du modèle un éventail de _tools_ qu’il pourra utiliser. C’est majoritairement ce point qui lui donne sa force, la qualité des outils mis à disposition.
 
 Un même modèle peut donner des résultats drastiquement différents selon le harness dans lequel il tourne.
 

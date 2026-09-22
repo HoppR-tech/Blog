@@ -41,7 +41,7 @@ reviewers:
 <!-- markdownlint-disable-file -->
 
 
-**Disclaimer****:** le but de cet article n’est pas de comparer les usages quotidiens de [Next.js](https://nextjs.org/) et de [Tanstack Router](https://tanstack.com/router/latest). Il retrace plutôt la migration de l’un vers l’autre, réalisée avec l’aide de l’IA, et présente la stratégie adoptée pour mener un chantier de cette ampleur tout en conservant une application fonctionnelle de bout en bout à chaque étape de la migration.
+**Disclaimer:** le but de cet article n’est pas de comparer les usages quotidiens de [Next.js](https://nextjs.org/) et de [Tanstack Router](https://tanstack.com/router/latest). Il retrace plutôt la migration de l’un vers l’autre, réalisée avec l’aide de l’IA, et présente la stratégie adoptée pour mener un chantier de cette ampleur tout en conservant une application fonctionnelle de bout en bout à chaque étape de la migration.
 
 ## Etat de l’art
 
@@ -243,12 +243,18 @@ Avec tout cela, on répond à toutes les contraintes que j’avais. Enfin, _sur 
 Pour commencer, quelques métriques intéressantes pour mesurer ce que la migration représente:
 
 - Nombre de [chats](https://blog.hoppr.tech/blogs/2026-08-19-prompt-tokens-mcp-harness-le-lexique-ia-a-connaitre-en-2026#un-chat) requis pour l’exécution du plan : **11 chats au total**
-
+  - **2** chats utilisateur
+  - **9** [subagents](https://blog.hoppr.tech/blogs/2026-08-19-prompt-tokens-mcp-harness-le-lexique-ia-a-connaitre-en-2026#les-subagents)
 - Temps d’exécution : un peu plus de **30h d’exécution cumulée**
-
 - Quantité de tokens consommés lors de la migration : **244 104 236** [**tokens**](https://blog.hoppr.tech/blogs/2026-08-19-prompt-tokens-mcp-harness-le-lexique-ia-a-connaitre-en-2026#les-tokens)
-
+  - tokens en entrée: **243 253 465**
+  - tokens en cache: **225 942 400**
+  - tokens en sortie: **850 771**, dont **199 281 tokens de raisonnement**, soit un **output réel à environ 651 490 tokens**
 - Quantité de compactions : **23**
+  - premier chat principal : **12 compactions**
+  - second chat principal : **5 compactions**
+  - 6 subagents : **1 compaction chacun**
+  - 3 subagents : **0 compaction**
 
 Alors comment mon [harness](https://blog.hoppr.tech/blogs/2026-08-19-prompt-tokens-mcp-harness-le-lexique-ia-a-connaitre-en-2026#le-harness) a-t-il géré la chose ?
 

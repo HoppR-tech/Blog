@@ -34,6 +34,7 @@
     "estree-walker": "^2.0.2",
     "katex": "^0.16.45",
     "markdown-it": "^14.1.0",
+    "mermaid": "^12.1.0",
     "notion-to-md": "^3.1.1",
     "octokit": "^5.0.5",
     "rehype-katex": "^7.0.1",
@@ -47,6 +48,7 @@
   "devDependencies": {
     "@antfu/eslint-config": "^8.0.0",
     "@formkit/auto-animate": "^0.9.0",
+    "@happy-dom/global-registrator": "^20.8.9",
     "@nuxt/content": "^3.12.0",
     "@nuxt/icon": "2.2.1",
     "@nuxt/test-utils": "^4.0.0",

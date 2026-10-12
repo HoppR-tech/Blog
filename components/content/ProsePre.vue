@@ -25,6 +25,8 @@ const props = defineProps({
 })
 
 const copied = ref(false)
+// Mermaid blocks are drawn as diagrams; if Mermaid cannot render one, show its source as a regular code block.
+const mermaidFailed = ref(false)
 
 async function copyCode() {
   try {
@@ -41,7 +43,12 @@ async function copyCode() {
 </script>
 
 <template>
-  <div class="prose-pre-wrapper relative rounded-lg overflow-hidden my-4">
+  <BlogMermaidDiagram
+    v-if="language === 'mermaid' && !mermaidFailed"
+    :code="code"
+    @error="mermaidFailed = true"
+  />
+  <div v-else class="prose-pre-wrapper relative rounded-lg overflow-hidden my-4">
     <div class="flex items-center justify-between px-3 py-1.5 bg-gray-900 rounded-t-lg">
       <span v-if="language" class="prose-pre-lang">{{ language }}</span>
       <button

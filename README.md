@@ -23,6 +23,7 @@ Bienvenue dans la documentation du Blog HoppR. Ce projet est une plateforme de b
 - [Publier un article](docs/user-guide/02_publishing_article.md)
 - [Gérer les auteurs](docs/user-guide/03_managing_authors.md)
 - [Utilisation des équations mathématiques](docs/user-guide/04_math_equations.md)
+- [Diagrammes Mermaid](docs/user-guide/05_mermaid_diagrams.md)
 
 ## Documentation technique
 

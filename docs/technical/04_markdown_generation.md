@@ -71,6 +71,17 @@ Les images Markdown du corps d’un article sont rendues par `components/content
 - L’inspecteur natif conserve l’image entière, Escape, un bouton icône nommé « Fermer l’image agrandie » et le retour du focus.
 - L’image de couverture reste hors de ce comportement.
 
+## Rendu des diagrammes Mermaid
+
+Les blocs ` ```mermaid ` sont interceptés par `components/content/ProsePre.vue` et dessinés par `components/blog/MermaidDiagram.vue`.
+
+- Le rendu se fait côté navigateur : la bibliothèque `mermaid` est importée dynamiquement, uniquement sur les pages qui contiennent un diagramme. Le SSR affiche un emplacement « Chargement du diagramme… ».
+- Le thème Mermaid (`default` / `dark`) suit le mode de couleur du site et le diagramme est redessiné quand il change.
+- Un diagramme large est réduit pour tenir dans la colonne, jusqu'à 60 % de sa taille naturelle ; en dessous, il défile horizontalement pour garder un texte lisible.
+- En cas d'erreur de syntaxe, le bloc retombe sur le rendu de code classique avec le source du diagramme.
+
+Ce comportement est couvert par les tests de composants de `tests/components/` (Mermaid y est simulé). `bun test` compile les `.vue` grâce au préchargement `tests/setup/vue-sfc-loader.ts` déclaré dans `bunfig.toml` ; chaque fichier de test de composant appelle `setupComponentTests()`, qui fournit un DOM happy-dom limité à ce fichier.
+
 ## Extraction et formatage des métadonnées
 
 L'extraction et le formatage des métadonnées sont réalisés en deux étapes principales :

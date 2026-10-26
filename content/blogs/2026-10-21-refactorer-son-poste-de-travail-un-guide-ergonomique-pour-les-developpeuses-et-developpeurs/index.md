@@ -72,7 +72,13 @@ De mon côté, j’ai choisi un bon clavier mécanique. Avec l’essor des out
 
 L’ergonomie de saisie ne s’arrête pas au matériel, elle passe aussi par nos habitudes logicielles. Apprendre les raccourcis clavier de ton IDE, de ton navigateur ou utiliser un lanceur d’applications permet de limiter les allers-retours répétitifs vers la souris. Moins de mouvements brusques vers le côté signifie moins de fatigue accumulée dans l’épaule et le poignet. Si l’utilisation d’une souris classique reste une source de tension au poignet, des alternatives comme une souris verticale (qui respecte l’alignement naturel de l’avant-bras) ou un trackball méritent d’être testés.
 
+> 💬 **Paroles d'équipe — Claviers split & Périphériques ergonomiques**
 > 
+> **Bastien :** « J’aime beaucoup les claviers qu’ils soient tout faits, customs, DIY… j’en ai essayé des dizaines avant de trouver le format idéal : le *split keyboard*.
+> 
+> Ce qui m'a poussé à franchir le pas ? Je saisis du texte toute la journée et, malgré un setup soigné (bureau assis-debout, bonne chaise, écrans réglés) ; il y a quelques années, j’ai commencé à avoir des signes de canal carpien : de violents « coups de jus » dans les avant-bras. Je me suis dit : *« Ok, c'est le moment d'essayer »*.
+> 
+> En 2 semaines, les douleurs avaient disparu. L'apprentissage demande un petit effort (1 à 2 semaines pour être à l'aise, 3 semaines pour retrouver ma vitesse max), mais les bénéfices sont incomparables : épaules ouvertes, coudes relâchés, zéro cassure aux poignets. Et pour un adepte du *keyboard maxxing* (tout piloter au clavier sans souris), c'est le format parfait à modder. Je recommande à 200 % ! »
 
 ## **Commencer par la chaise, puis régler le reste**
 
@@ -142,7 +148,13 @@ Avec plusieurs écrans, la bonne disposition dépend moins de leur nombre que d
 
 Un bras articulé compatible VESA libère de la place et facilite le réglage en hauteur, en profondeur et en inclinaison. Avant l’achat, vérifie la compatibilité VESA, le poids de chaque écran, l’épaisseur du plateau et le type de fixation. Si le pied fourni offre déjà les bons réglages, tu peux bien sûr le conserver.
 
+> 💬 **Paroles d'équipe — Ultrawide vs Multi-écrans**
 > 
+> **Florian :** « Je suis team multi-écrans (3 pour être précis) pour avoir plus de flexibilité sur le layout des applications et pouvoir switch facilement entre 2 PC (pro et perso). »
+> 
+> ---
+> 
+> **Bastien :** « Je suis plutôt team ultrawide : j’aime avoir un seul moniteur qui me permet de ne pas me disperser dans mes tâches. Des outils de fenêtrage (comme Niri sous Linux ou OmniWM sous macOS) combinés au clavier me permettent de tirer le meilleur parti de tout cet espace d'affichage. »
 
 ## **L’éclairage et l'environnement : trouver l’équilibre autour des écrans**
 
@@ -158,7 +170,9 @@ Le but n’est pas d’inonder la pièce de lumière, mais d’éviter un contr
 
 L’ajustement du contraste passe aussi par le choix du thème de ton éditeur de code : mode sombre ou mode clair ? Si le mode sombre est plébiscité par beaucoup de dev, un thème clair (_light mode_) fatigue souvent moins les yeux dans une pièce très lumineuse ou à côté d’une fenêtre, car la contraction de la pupille limite les aberrations optiques et les reflets. En revanche, le mode sombre reste idéal pour les fins de journée ou les environnements plus sombres. L’important est d’aligner le fond de tes applications avec la luminosité ambiante pour éviter l’effet « phare de voiture dans la nuit ».
 
+> 💬 **Paroles d'équipe — Ambiance lumineuse & Thème d'IDE**
 > 
+> **Bastien :** « Je suis team *light theme* en permanence ! J’affectionne particulièrement le thème Gruvbox Light. Pour mon setup, j’ai un éclairage Philips Hue pour moduler l’ambiance de la pièce, ainsi qu'une barre lumineuse fixée sur mon écran qui éclaire le bureau (clavier, etc.) sans aucun reflet sur la dalle. Et on l’oublie souvent, mais avoir des plantes autour de soi aide aussi à créer un cadre de travail sain et apaisant. »
 
 ## **Le bureau assis-debout : un outil de variation, pas une posture miracle**
 
@@ -182,7 +196,11 @@ J’ai choisi un modèle bi-moteur pour répartir l’effort entre les deux mote
 
 Il faut aussi lire attentivement la charge annoncée par le fabricant. Une capacité de 100 kg peut désigner celle du châssis et ne pas inclure le plateau : une fois les 25 à 30 kg du plateau déduits, il ne reste plus que 70 à 75 kg pour le matériel. Cette capacité demeure confortable, mais je conseille personnellement de viser au moins 100 kg de charge utile (châssis et plateau inclus). Cette marge permet au mécanisme de ne pas fonctionner en permanence près de sa limite et couvre les surcharges ponctuelles, par exemple lorsque je prends appui sur le bureau pendant qu’il monte. Les systèmes anticollision apportent une sécurité supplémentaire, mais leur réaction n’est pas toujours instantanée.
 
+> 💬 **Paroles d'équipe — Utilisation du bureau assis-debout**
 > 
+> **Bastien :** « J’utilise la méthode Pomodoro : sans même y penser, j'alterne assis/debout toutes les 2 sessions, ce qui permet de varier sans avoir à mettre de rappel. Et si je veux rester debout ou assis plus longtemps, je le fais : il ne faut pas se mettre trop de contraintes pour prendre l'habitude. Par contre, prenez impérativement un modèle motorisé, autrement il finira toujours par rester en position assise !
+> 
+> J’ai également testé le tapis de marche, mais je n’ai pas accroché à l’expérience de taper du code en marchant, même lentement. »
 
 ## **La meilleure posture est souvent la suivante**
 
@@ -212,7 +230,11 @@ La fatigue visuelle (yeux secs, rougeurs, picotements, maux de tête) n'est
 
 Enfin, n'oublie pas le suivi médical : à partir de 40-45 ans (période d'apparition de la presbytie), un contrôle tous les deux ans chez l'ophtalmologiste est essentiel. Des verres de mi-distance ou de proximité (adaptés à la vision écran entre 30 cm et 120 cm) apportent un vrai soulagement. En cas de maux de tête récurrents ou de fatigue visuelle tenace, un bilan chez un orthoptiste peut également aider à rééduquer la vision.
 
+> 💬 **Paroles d'équipe — Rituels & Mouvement au quotidien**
 > 
+> **Bastien :** « Le Pomodoro me permet de prendre des pauses régulières pour me lever, marcher un peu et changer de posture. Autre astuce toute bête : évitez les grands verres d’eau sur le bureau, cela vous forcera à vous lever régulièrement jusqu'à la cuisine pour vous hydrater ! »
+> 
+> **Emma :** « je vais courir ou marcher le matin, midi ou soir pour faire 10000 pas par jour. Aussi, j’essaye de faire des répétitions de mouvements des pieds : je garde les orteils et la plante des pieds bien ancrés au sol, puis je souleve lentement les talons le plus haut possible et je fais aussi l’opposé en gardant les talons collés au sol et en soulevant uniquement les orteils vers le haut. Cela permet une meilleure circulation sanguine dans les jambes. »
 
 ![Femme alternant entre le travail assis, debout et la marche pour aller boire.](./assets/img2.webp)
 

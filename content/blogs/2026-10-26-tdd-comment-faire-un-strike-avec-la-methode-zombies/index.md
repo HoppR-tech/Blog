@@ -47,7 +47,12 @@ Plus tard, un de mes amis m’a souvent demandé « Ok c’est cool le TDD mais
 
 ## Z.O.M.B.I.E.S, c'est quoi ?
 
-De son nom de code **Z.O.M.B.I.E.S**. Il s’agit surtout d’une heuristique qui permet de guider le prochain test en TDD.
+<details>
+  <summary>De son nom de code <strong>Z.O.M.B.I.E.S</strong>, il s'agit d'une heuristique qui permet de guider le choix du prochain test en TDD.</summary>
+  <p>
+    <i>À la fin des années 1990, <strong>James Grenning</strong> observe notamment <strong>Kent Beck</strong> pratiquer le TDD en progressant des cas les plus simples aux plus complexes, selon l'approche <em>Zero, One, Many</em>. En 2016, Grenning enrichit cette idée avec les notions de limites, d'interfaces, d'exceptions et de simplicité pour formaliser l'heuristique <strong>ZOMBIES</strong>.</i>
+  </p>
+</details>
 
 Il ne s’agit pas d’une méthode TDD complète qui elle, ne change pas et conserve le même cycle :
 
@@ -147,7 +152,7 @@ Bien, maintenant que nos tests sont setup, nous pouvons commencer.
 
 La première lettre de zombies nous dit **Z pour Zero** ou aucune donnée. Pour notre exemple littéralement “commencer par zéro”, donc allons-y:
 
-**Scénario : dix frames à zéro donnent** **`0`** 
+**Scénario : dix frames à zéro donnent `0`** 
 
 On commence par le test où l’on simule un joueur qui a fait des gouttières toute sa partie – le pauvre – il est donc censé avoir 0 points, super le test est rouge. On peut le faire passer au vert de la manière la plus simple possible : on **retourne 0**.
 
@@ -172,9 +177,9 @@ fn calculate_for_a_loser() {
 
 La lettre **O pour One** nous invite maintenant à introduire une première donnée qui change le résultat : une seule quille renversée.
 
-**Scénario : une quille à la première frame, puis des zéros, donnent** **`1`** 
+**Scénario : une quille à la première frame, puis des zéros, donnent `1`** 
 
-Notre joueur renverse une quille sur son premier lancer, puis fait des gouttières jusqu’à la fin de la partie. Le nouveau test est rouge : la fonction retourne toujours `0`. Pour le faire passer au vert, on ajoute un cas spécifique : **si le premier lancer vaut** **`1`****, on retourne** **`1`** .
+Notre joueur renverse une quille sur son premier lancer, puis fait des gouttières jusqu’à la fin de la partie. Le nouveau test est rouge : la fonction retourne toujours `0`. Pour le faire passer au vert, on ajoute un cas spécifique : **si le premier lancer vaut `1`, on retourne `1`** .
 
 ```rust
 pub fn calculate_bowling_score(raw_scores: Vec<(Roll, Roll)>) -> i32 {
@@ -205,9 +210,9 @@ Les deux tests passent désormais : la partie à zéro et celle à un point. On
 
 Pour la suivante on reste sur **O pour One**, avec une autre valeur pour le premier lancer. Cet exemple nous aidera à faire émerger une règle plus générale.
 
-**Scénario : cinq quilles à la première frame, puis des zéros, donnent** **`5`** 
+**Scénario : cinq quilles à la première frame, puis des zéros, donnent `5`** 
 
-Notre joueur renverse maintenant 5 quilles sur son premier lancer. Le nouveau test est rouge : notre fonction retourne `0` pour cette valeur. On avance d’une baby step en ajoutant un deuxième cas spécifique : **si le premier lancer vaut** **`5`****, on retourne** **`5`**.
+Notre joueur renverse maintenant 5 quilles sur son premier lancer. Le nouveau test est rouge : notre fonction retourne `0` pour cette valeur. On avance d’une baby step en ajoutant un deuxième cas spécifique : **si le premier lancer vaut `5`, on retourne `5`**.
 
 ```rust
 pub fn calculate_bowling_score(raw_scores: Vec<(Roll, Roll)>) -> i32 {
@@ -250,9 +255,9 @@ pub fn calculate_bowling_score(raw_scores: Vec<(Roll, Roll)>) -> i32 {
 
 On poursuit encore avec **O**, en faisant maintenant marquer des points au deuxième lancer de la première frame.
 
-**Scénario : six quilles, puis deux quilles à la première frame, donnent** **`8`**
+**Scénario : six quilles, puis deux quilles à la première frame, donnent `8`**
 
-Cette fois, le joueur renverse six quilles au premier lancer et deux au second, puis fait uniquement des gouttières. Le nouveau test est rouge : notre fonction retourne seulement `6`. Pour le faire passer au vert, on ajoute un cas spécifique : **si le deuxième lancer vaut** **`2`****, on retourne** **`8`**.
+Cette fois, le joueur renverse six quilles au premier lancer et deux au second, puis fait uniquement des gouttières. Le nouveau test est rouge : notre fonction retourne seulement `6`. Pour le faire passer au vert, on ajoute un cas spécifique : **si le deuxième lancer vaut `2`, on retourne `8`**.
 
 ```rust
 pub fn calculate_bowling_score(raw_scores: Vec<(Roll, Roll)>) -> i32 {
@@ -281,9 +286,9 @@ fn calculate_for_six_then_two_pins() {
 
 Cette baby step fait passer notre nouvel exemple. Les suivants nous permettront de généraliser le calcul aux deux lancers de la frame.
 
-**Scénario : deux quilles, puis quatre quilles à la première frame, donnent** **`6`**
+**Scénario : deux quilles, puis quatre quilles à la première frame, donnent `6`**
 
-Notre joueur renverse deux quilles au premier lancer et quatre au second, puis fait uniquement des gouttières. On ajoute un nouveau cas spécifique : **si le deuxième lancer vaut** **`4`****, on retourne** **`6`**.
+Notre joueur renverse deux quilles au premier lancer et quatre au second, puis fait uniquement des gouttières. On ajoute un nouveau cas spécifique : **si le deuxième lancer vaut `4`, on retourne `6`**.
 
 ```rust
 pub fn calculate_bowling_score(raw_scores: Vec<(Roll, Roll)>) -> i32 {
@@ -316,9 +321,9 @@ fn calculate_for_two_then_four_pins() {
 
 Les exemples passent, mais les cas particuliers s’accumulent. Un prochain exemple nous aidera à faire émerger la règle commune.
 
-**Scénario : trois quilles, puis cinq quilles à la première frame, donnent** **`8`**
+**Scénario : trois quilles, puis cinq quilles à la première frame, donnent `8`**
 
-Le nouveau test est rouge : notre fonction retourne seulement `3`. On ajoute un cas spécifique : **si les deux lancers valent** **`3`** **et** **`5`****, on retourne** **`8`**.
+Le nouveau test est rouge : notre fonction retourne seulement `3`. On ajoute un cas spécifique : **si les deux lancers valent `3` et `5`, on retourne `8`**.
 
 ```rust
 pub fn calculate_bowling_score(raw_scores: Vec<(Roll, Roll)>) -> i32 {
@@ -367,9 +372,9 @@ pub fn calculate_bowling_score(raw_scores: Vec<(Roll, Roll)>) -> i32 {
 
 La lettre **M pour Many** nous invite maintenant à considérer plusieurs frames qui marquent des points.
 
-**Scénario : dix frames à deux quilles, puis deux quilles, donnent** **`40`** 
+**Scénario : dix frames à deux quilles, puis deux quilles, donnent `40`** 
 
-Notre joueur renverse deux quilles à chaque lancer, pendant toute la partie. Le nouveau test est rouge : notre fonction calcule uniquement la première frame et retourne `4`. Pour le faire passer au vert, on ajoute un cas spécifique : **si toutes les frames valent** **`2+2`****, on retourne** **`40`**.
+Notre joueur renverse deux quilles à chaque lancer, pendant toute la partie. Le nouveau test est rouge : notre fonction calcule uniquement la première frame et retourne `4`. Pour le faire passer au vert, on ajoute un cas spécifique : **si toutes les frames valent `2+2`, on retourne `40`**.
 
 ```rust
 pub fn calculate_bowling_score(raw_scores: Vec<(Roll, Roll)>) -> i32 {
@@ -399,7 +404,7 @@ fn calculate_for_two_then_two_on_every_frame() {
 
 On poursuit avec **M pour Many**, en changeant les valeurs de lancers sur toute la partie. À partir d’ici, nous allons un peu accélérer car je pense que vous avez compris la logique.
 
-**Scénario : dix frames à trois quilles, puis deux quilles, donnent** **`50`**
+**Scénario : dix frames à trois quilles, puis deux quilles, donnent `50`**
 
 On refait la même chose qu’au test précédent mais cette fois, toutes les frames font `3+2` on s’attend à `50` comme résultat.
 
@@ -453,9 +458,9 @@ Voici donc notre refactor, on additionne toutes les frames. _« Beurk, une for 
 
 La lettre **B pour Boundary** nous invite à explorer une limite où les règles du calcul changent : lorsque les deux lancers d’une frame totalisent dix quilles, on obtient un **spare**.
 
-**Scénario : un spare à cinq puis cinq, suivi de cinq puis zéro, donne** **`20`** 
+**Scénario : un spare à cinq puis cinq, suivi de cinq puis zéro, donne `20`** 
 
-Notre joueur renverse cinq quilles à chacun des deux premiers lancers, puis cinq quilles au lancer suivant. Le nouveau test est rouge : notre fonction additionne les quilles et retourne `15`. Avec un **spare**, la première frame vaut dix points, auxquels on ajoute le prochain lancer : `10 + 5`. La deuxième frame vaut `5`, soit **`20`** **au total**.
+Notre joueur renverse cinq quilles à chacun des deux premiers lancers, puis cinq quilles au lancer suivant. Le nouveau test est rouge : notre fonction additionne les quilles et retourne `15`. Avec un **spare**, la première frame vaut dix points, auxquels on ajoute le prochain lancer : `10 + 5`. La deuxième frame vaut `5`, soit **`20` au total**.
 
 ```rust
 pub fn calculate_bowling_score(raw_scores: Vec<(Roll, Roll)>) -> i32 {
@@ -497,7 +502,7 @@ Ici, je fais un pas plus large : j’introduis directement la détection du spa
 
 Le spare étant pris en compte, on profite de la phase de refactoring pour faire évoluer notre modèle, ce qui va naturellement nous faire toucher la lettre **I de ZOMBIES : Interface**.
 
-**Refactoring : regrouper le calcul dans** **`BowlingGame`**
+**Refactoring : regrouper le calcul dans `BowlingGame`**
 
 On introduit une structure `BowlingGame` et on y déplace le calcul du score ainsi que la détection du spare. À ce stade, ce type ne contient aucune donnée : les frames sont toujours passées à la méthode de calcul.
 
@@ -623,9 +628,9 @@ Nous avons bien refactoré, on peut continuer. On revient à **B pour Boundary**
 
 ### Le strike
 
-**Scénario : un strike, suivi de quatre puis trois quilles, donne** **`24`**
+**Scénario : un strike, suivi de quatre puis trois quilles, donne `24`**
 
-Notre joueur renverse les dix quilles au premier lancer, puis quatre et trois à la frame suivante. Le nouveau test est rouge : notre code considère encore la première frame comme un spare et retourne `21`. Le strike doit valoir `10 + 4 + 3`, puis la frame suivante vaut `7`, soit **`24`** **au total**.
+Notre joueur renverse les dix quilles au premier lancer, puis quatre et trois à la frame suivante. Le nouveau test est rouge : notre code considère encore la première frame comme un spare et retourne `21`. Le strike doit valoir `10 + 4 + 3`, puis la frame suivante vaut `7`, soit **`24` au total**.
 
 On ajoute une variante `Strike`, que l’on reconnaît avant de vérifier le spare. Pour calculer les bonus, on transforme les frames suivants en une suite de lancers : un strike fournit un seul lancer, les autres en fournissent deux.
 
@@ -721,7 +726,7 @@ fn calculate_for_a_perfect_game() {
 }
 ```
 
-Le test de la partie parfaite passe maintenant : les neuf premières frames valent chacune `30`, puis les trois lancers de la dernière frame ajoutent `30`, soit **`300`** **au total**.
+Le test de la partie parfaite passe maintenant : les neuf premières frames valent chacune `30`, puis les trois lancers de la dernière frame ajoutent `30`, soit **`300` au total**.
 
 Retenez que **boundary** = tester les transitions/valeurs limites où le **comportement risque de changer**.
 

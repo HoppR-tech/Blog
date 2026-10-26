@@ -1,11 +1,60 @@
 import type { BlockObjectResponse } from '@notionhq/client/build/src/api-endpoints'
 import { Client } from '@notionhq/client'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { convertBlocksToMarkdown, MissingImageAltError } from './blockConverter'
 
 const mockClient = new Client({ auth: 'test-token' })
 
 describe('blockConverter', () => {
+  it('preserves interview paragraphs, formatting and dividers inside an empty quote', async () => {
+    const list = vi.fn().mockResolvedValue({
+      results: [
+        paragraph('Paroles d’équipe', { bold: true }),
+        paragraph('Premier témoignage'),
+        buildBlock({ type: 'divider' }),
+        paragraph('Second témoignage'),
+      ],
+      has_more: false,
+      next_cursor: null,
+    })
+    const { markdownContent } = await convertBlocksToMarkdown(clientWithChildren(list), [quote('interview')])
+
+    expect(markdownContent).toBe('> **Paroles d’équipe**\n>\n> Premier témoignage\n>\n> ---\n>\n> Second témoignage')
+    expect(list).toHaveBeenCalledWith(expect.objectContaining({ block_id: 'interview' }))
+  })
+
+  it('preserves parent text, paginated children and nested quotes in order without duplicates', async () => {
+    const list = vi.fn().mockImplementation(async ({ block_id, start_cursor }) => {
+      if (block_id === 'nested')
+        return { results: [paragraph('Réponse imbriquée')], has_more: false, next_cursor: null }
+      if (start_cursor === 'page-2')
+        return { results: [quote('nested'), paragraph('Conclusion')], has_more: false, next_cursor: null }
+      return { results: [paragraph('Introduction')], has_more: true, next_cursor: 'page-2' }
+    })
+    const { markdownContent } = await convertBlocksToMarkdown(clientWithChildren(list), [quote('interview', 'Titre')])
+
+    expect(markdownContent).toBe('> Titre\n>\n> Introduction\n>\n> > Réponse imbriquée\n>\n> Conclusion')
+    expect(list).toHaveBeenCalledWith(expect.objectContaining({ block_id: 'interview', start_cursor: 'page-2' }))
+    expect(list).toHaveBeenCalledTimes(3)
+  })
+
+  it('collects images inside quotes and retains their alt validation', async () => {
+    const image = buildBlock({ type: 'image', image: { type: 'external', external: { url: 'https://example.com/setup.png' }, caption: [{ plain_text: 'Poste de travail' }] } })
+    const list = vi.fn().mockResolvedValue({ results: [image], has_more: false, next_cursor: null })
+    const { markdownContent, images } = await convertBlocksToMarkdown(clientWithChildren(list), [quote('interview')])
+
+    expect(markdownContent).toBe('> ![Poste de travail](https://example.com/setup.png)')
+    expect(images).toEqual([{ url: 'https://example.com/setup.png', alt: 'Poste de travail' }])
+
+    list.mockResolvedValue({ results: [buildBlock({ ...image, image: { ...('image' in image && image.image), caption: [] } })], has_more: false, next_cursor: null })
+    await expect(convertBlocksToMarkdown(clientWithChildren(list), [quote('interview')])).rejects.toThrow(MissingImageAltError)
+  })
+
+  it('fails conversion when fetching quote children fails instead of publishing an incomplete article', async () => {
+    const list = vi.fn().mockRejectedValue(new Error('Notion unavailable'))
+    await expect(convertBlocksToMarkdown(clientWithChildren(list), [quote('interview')])).rejects.toThrow('Notion unavailable')
+  })
+
   it('should convert various block types to markdown', async () => {
     const blocks = [
       buildBlock({ type: 'paragraph', paragraph: { rich_text: [{ plain_text: 'Hello', annotations: {} }] } }),
@@ -190,4 +239,16 @@ function buildBlock(block: any): BlockObjectResponse {
     ...block,
     id: block.id ?? block.type,
   }
+}
+
+function paragraph(text: string, annotations = {}) {
+  return buildBlock({ type: 'paragraph', paragraph: { rich_text: [{ plain_text: text, annotations }] } })
+}
+
+function quote(id: string, text = '') {
+  return buildBlock({ id, type: 'quote', has_children: true, quote: { rich_text: text ? [{ plain_text: text, annotations: {} }] : [] } })
+}
+
+function clientWithChildren(list: ReturnType<typeof vi.fn>): Client {
+  return { blocks: { children: { list } } } as unknown as Client
 }

@@ -72,6 +72,27 @@ export async function convertBlocksToMarkdown(notionClient: NotionClientInterfac
             md = await n2m.blockToMarkdown(block as any)
           }
 
+          if (block.type === 'quote' && block.has_children) {
+            const children: BlockObjectResponse[] = []
+            let cursor: string | undefined
+            do {
+              const response = await notionClient.blocks.children.list({ block_id: block.id, start_cursor: cursor })
+              children.push(...response.results.filter((child): child is BlockObjectResponse => 'type' in child))
+              cursor = response.has_more ? response.next_cursor ?? undefined : undefined
+            } while (cursor)
+
+            // Reuse our converters so nested quotes and image accessibility rules
+            // behave exactly like top-level blocks.
+            const converted = await convertBlocksToMarkdown(notionClient, children)
+            images.push(...converted.images)
+            const quotedChildren = converted.markdownContent.trim()
+              .split('\n')
+              .map(line => line ? `> ${line}` : '>')
+              .join('\n')
+            if (converted.markdownContent.trim())
+              md = block.quote.rich_text.length ? `${md}\n>\n${quotedChildren}` : quotedChildren
+          }
+
           const globalIndex = i + index
           console.log(`Successfully converted block ${globalIndex + 1}/${blocks.length}`)
 
@@ -97,9 +118,8 @@ export async function convertBlocksToMarkdown(notionClient: NotionClientInterfac
           return md
         }
         catch (error) {
-          // Accessibility errors must abort the conversion so the article is not
-          // published; only genuinely block-local conversion glitches are skipped.
-          if (error instanceof MissingImageAltError) {
+          // Never publish an incomplete interview or an inaccessible image.
+          if (error instanceof MissingImageAltError || (block.type === 'quote' && block.has_children)) {
             throw error
           }
           console.error(`Error converting block ${i + index + 1}:`, error)

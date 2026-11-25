@@ -38,13 +38,17 @@ export function checkBlocks(blocks: BlockObjectResponse[]) {
   const firstBlock = blocks[0]
   if (!firstBlock)
     throw new Error('Content is empty')
-  if (firstBlock.type != 'heading_1' && firstBlock.type != 'paragraph')
-    throw new Error('An article must start with a title or an introduction')
+  checkInitialBlockType(firstBlock)
 
   if (blocks.slice(1).some(b => b.type === 'heading_1'))
     throw new Error('Heading 1 is only permitted at the start of the article content')
 
   checkHeadingHierarchy(blocks)
+}
+
+function checkInitialBlockType(firstBlock: BlockObjectResponse) {
+  if (firstBlock.type !== 'heading_1' && firstBlock.type !== 'paragraph' && firstBlock.type !== 'callout')
+    throw new Error(`An article must start with a title, introduction or a callout. First block type is: ${firstBlock.type}`)
 }
 
 function checkHeadingHierarchy(blocks: BlockObjectResponse[]): void {

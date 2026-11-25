@@ -1,4 +1,4 @@
-import type { BlockObjectResponse, Heading1BlockObjectResponse, Heading2BlockObjectResponse, Heading3BlockObjectResponse, ParagraphBlockObjectResponse } from '@notionhq/client/build/src/api-endpoints'
+import type { BlockObjectResponse, CalloutBlockObjectResponse, Heading1BlockObjectResponse, Heading2BlockObjectResponse, Heading3BlockObjectResponse, ParagraphBlockObjectResponse } from '@notionhq/client/build/src/api-endpoints'
 import type { BlogPost } from '@/types/blog'
 import { describe, expect, it } from 'vitest'
 import { checkBlocks, checkPost } from './postChecker'
@@ -72,9 +72,18 @@ describe('postChecker', () => {
     const paragraphBlock = buildDefaultParagraphBlock()
     const heading1Block = buildDefaultHeading1Block()
     const heading2Block = buildDefaultHeading2Block()
+    const calloutBlock = buildDefaultCalloutBlock()
+
+    it('should throw Error when article content is empty', () => {
+      expect(() => checkBlocks([])).toThrowError('Content is empty')
+    })
 
     it('should not throw Error without heading 1', () => {
       expect(() => checkBlocks([paragraphBlock])).not.toThrowError()
+    })
+
+    it('should not throw Error when article starts with a callout', () => {
+      expect(() => checkBlocks([calloutBlock, paragraphBlock])).not.toThrowError()
     })
 
     it('should not throw Error for heading 1 at start', () => {
@@ -89,8 +98,10 @@ describe('postChecker', () => {
       expect(() => checkBlocks([paragraphBlock, heading1Block])).toThrowError('Heading 1 is only permitted at the start of the article content')
     })
 
-    it('should throw Error is starts with other than heading 1 or paragraph block', () => {
-      expect(() => checkBlocks([heading2Block, paragraphBlock])).toThrowError('An article must start with a title or an introduction')
+    it('should throw Error when article starts with an unsupported block type', () => {
+      expect(() => checkBlocks([heading2Block, paragraphBlock])).toThrowError(
+        'An article must start with a title, introduction or a callout. First block type is: heading_2',
+      )
     })
   })
 
@@ -181,6 +192,18 @@ function buildDefaultHeading3Block(): Heading3BlockObjectResponse {
       is_toggleable: true,
     },
   } as Heading3BlockObjectResponse
+}
+
+function buildDefaultCalloutBlock(): CalloutBlockObjectResponse {
+  return {
+    ...buildDefaultBlock(),
+    type: 'callout',
+    callout: {
+      rich_text: [],
+      icon: null,
+      color: 'default',
+    },
+  } as CalloutBlockObjectResponse
 }
 
 function buildDefaultBlock(): Partial<BlockObjectResponse> {
